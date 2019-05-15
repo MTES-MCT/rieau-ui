@@ -3,3 +3,4 @@ build/
 .eslintrc.json
 .gitignore
 .git/
+package-lock.json
