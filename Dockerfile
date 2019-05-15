@@ -1,7 +1,7 @@
 # Stage 0, "build-stage", based on Node.js, to build and compile the frontend
 FROM node:10.15-alpine as build-stage
 WORKDIR /app
-COPY package*.json /app/
+COPY package.json /app/
 COPY src/ /app/src
 COPY static/ /app/static
 COPY public/ /app/public
