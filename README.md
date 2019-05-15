@@ -37,7 +37,7 @@ npm run analyze
 Depuis la branche `master`:
 
 ```
-npm run deploy
+PUBLIC_URL="https://mtes-mct.github.io/permis-construire-facile-ui" npm run deploy
 ```
 
 Depuis le navigateur: [https://mtes-mct.github.io/permis-construire-facile-ui/](https://mtes-mct.github.io/permis-construire-facile-ui/).
@@ -55,3 +55,5 @@ docker build -t permis-construire-facile-ui .
 ```
 docker run -p 3000:3000 permis-construire-facile-ui
 ```
+
+Depuis le navigateur: [http://localhost:3000](http://localhost:3000).
