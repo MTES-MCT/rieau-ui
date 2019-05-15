@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.js": "/permis-construire-facile-ui/static/js/main.6e5b41dc.chunk.js",
-    "main.js.map": "/permis-construire-facile-ui/static/js/main.6e5b41dc.chunk.js.map",
-    "runtime~main.js": "/permis-construire-facile-ui/static/js/runtime~main.e42b7609.js",
-    "runtime~main.js.map": "/permis-construire-facile-ui/static/js/runtime~main.e42b7609.js.map",
-    "static/js/2.a620ea10.chunk.js": "/permis-construire-facile-ui/static/js/2.a620ea10.chunk.js",
-    "static/js/2.a620ea10.chunk.js.map": "/permis-construire-facile-ui/static/js/2.a620ea10.chunk.js.map",
-    "index.html": "/permis-construire-facile-ui/index.html",
-    "precache-manifest.ff4f5d7bb793f53f9936b3489cc778c8.js": "/permis-construire-facile-ui/precache-manifest.ff4f5d7bb793f53f9936b3489cc778c8.js",
-    "service-worker.js": "/permis-construire-facile-ui/service-worker.js",
-    "static/media/help.md": "/permis-construire-facile-ui/static/media/help.038db24d.md",
-    "static/media/privacy.md": "/permis-construire-facile-ui/static/media/privacy.4835588e.md",
-    "static/media/terms.md": "/permis-construire-facile-ui/static/media/terms.038db24d.md"
+    "main.js": "./static/js/main.fa06ace8.chunk.js",
+    "main.js.map": "./static/js/main.fa06ace8.chunk.js.map",
+    "runtime~main.js": "./static/js/runtime~main.d653cc00.js",
+    "runtime~main.js.map": "./static/js/runtime~main.d653cc00.js.map",
+    "static/js/2.a620ea10.chunk.js": "./static/js/2.a620ea10.chunk.js",
+    "static/js/2.a620ea10.chunk.js.map": "./static/js/2.a620ea10.chunk.js.map",
+    "index.html": "./index.html",
+    "precache-manifest.dd84dd03a044b81f250a95239d15db8d.js": "./precache-manifest.dd84dd03a044b81f250a95239d15db8d.js",
+    "service-worker.js": "./service-worker.js",
+    "static/media/help.md": "./static/media/help.038db24d.md",
+    "static/media/privacy.md": "./static/media/privacy.4835588e.md",
+    "static/media/terms.md": "./static/media/terms.038db24d.md"
   }
 }
