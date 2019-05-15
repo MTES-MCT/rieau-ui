@@ -39,3 +39,19 @@ Depuis la branche `master`:
 ```
 npm run deploy
 ```
+
+Depuis le navigateur: [https://mtes-mct.github.io/permis-construire-facile-ui/](https://mtes-mct.github.io/permis-construire-facile-ui/).
+
+### Docker
+
+* Build:
+
+```
+docker build -t permis-construire-facile-ui .
+```
+
+* Run:
+
+```
+docker run -p 3000:3000 permis-construire-facile-ui
+```
