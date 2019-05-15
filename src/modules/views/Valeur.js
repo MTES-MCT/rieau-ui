@@ -12,7 +12,6 @@ const styles = theme => ({
   root: {
     display: 'flex',
     overflow: 'hidden',
-    backgroundColor: theme.palette.secondary.light,
   },
   container: {
     marginTop: theme.spacing(5),
@@ -27,7 +26,7 @@ const styles = theme => ({
     padding: theme.spacing(0, 5),
   },
   image: {
-    height: 55,
+    fontSize: 64,
   },
   title: {
     marginTop: theme.spacing(5),
@@ -46,18 +45,13 @@ function Valeur(props) {
   return (
     <section className={classes.root}>
       <Container className={classes.container}>
-        <img
-          src="/static/images/theme/appCurvyLines.png"
-          className={classes.curvyLines}
-          alt="curvy lines"
-        />
         <Grid container spacing={1}>
           <Grid item xs={12} md={4}>
             <div className={classes.item}>
               <EuroSymbol
                 className={classes.image} />
               <Typography variant="h6" className={classes.title}>
-                Des économies
+                Plus économique
               </Typography>
               <Typography variant="h5">
                 {'Fini les impressions papiers, les multiples exemplaires et les courriers recommandés.'}

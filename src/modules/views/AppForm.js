@@ -8,8 +8,6 @@ import Paper from '../components/Paper';
 const styles = theme => ({
   root: {
     display: 'flex',
-    backgroundImage: 'url(/static/images/theme/appCurvyLines.png)',
-    backgroundRepeat: 'no-repeat',
   },
   paper: {
     padding: theme.spacing(4, 3),

@@ -43,7 +43,7 @@ const fontHeader = {
   color: rawTheme.palette.text.primary,
   fontWeight: rawTheme.typography.fontWeightMedium,
   fontFamily: rawTheme.typography.fontFamilySecondary,
-  textTransform: 'uppercase',
+  // textTransform: 'uppercase',
 };
 
 const theme = {

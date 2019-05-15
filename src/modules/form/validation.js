@@ -1,5 +1,5 @@
 function isEmail(value) {
-  return true;
+  return true; // TODO
 }
 
 export function email(value) {

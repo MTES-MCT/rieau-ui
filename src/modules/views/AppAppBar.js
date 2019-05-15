@@ -49,7 +49,7 @@ function AppAppBar(props) {
             className={classes.title}
             href="/"
           >
-            <img src='/static/images/marianne.png' className={classes.logo} alt="logo" />
+            <img src='/static/images/marianne.png' className={classes.logo} alt="accueil" />
           </Link>
           <div className={classes.right}>
             <Link

@@ -12,7 +12,6 @@ import People from '@material-ui/icons/People';
 const styles = theme => ({
   root: {
     display: 'flex',
-    backgroundColor: theme.palette.secondary.light,
     overflow: 'hidden',
   },
   container: {
@@ -39,14 +38,8 @@ const styles = theme => ({
     fontWeight: theme.typography.fontWeightMedium,
   },
   icon: {
-    fontSize: 32,
+    fontSize: 64,
     margin: theme.spacing(4),
-  },
-  curvyLines: {
-    pointerEvents: 'none',
-    position: 'absolute',
-    top: -180,
-    opacity: 0.7,
   },
   button: {
     marginTop: theme.spacing(8),
@@ -59,11 +52,6 @@ function CommentFaire(props) {
   return (
     <section className={classes.root}>
       <Container className={classes.container}>
-        <img
-          src="/static/images/theme/appCurvyLines.png"
-          className={classes.curvyLines}
-          alt="curvy lines"
-        />
         <Typography variant="h4" marked="center" className={classes.title} component="h2">
           Comment faire ?
         </Typography>
