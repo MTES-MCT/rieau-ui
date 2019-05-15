@@ -1,0 +1,125 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
+import Button from '../components/Button';
+import Typography from '../components/Typography';
+import Map from '@material-ui/icons/Map';
+import Edit from '@material-ui/icons/Edit';
+import People from '@material-ui/icons/People';
+
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    backgroundColor: theme.palette.secondary.light,
+    overflow: 'hidden',
+  },
+  container: {
+    marginTop: theme.spacing(10),
+    marginBottom: theme.spacing(15),
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  item: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: theme.spacing(0, 5),
+  },
+  title: {
+    marginBottom: theme.spacing(14),
+  },
+  number: {
+    fontSize: 24,
+    fontFamily: theme.typography.fontFamily,
+    color: theme.palette.secondary.main,
+    fontWeight: theme.typography.fontWeightMedium,
+  },
+  icon: {
+    fontSize: 32,
+    margin: theme.spacing(4),
+  },
+  curvyLines: {
+    pointerEvents: 'none',
+    position: 'absolute',
+    top: -180,
+    opacity: 0.7,
+  },
+  button: {
+    marginTop: theme.spacing(8),
+  },
+});
+
+function CommentFaire(props) {
+  const { classes } = props;
+
+  return (
+    <section className={classes.root}>
+      <Container className={classes.container}>
+        <img
+          src="/static/images/theme/appCurvyLines.png"
+          className={classes.curvyLines}
+          alt="curvy lines"
+        />
+        <Typography variant="h4" marked="center" className={classes.title} component="h2">
+          Comment faire ?
+        </Typography>
+        <div>
+          <Grid container spacing={5}>
+            <Grid item xs={12} md={4}>
+              <div className={classes.item}>
+                <div className={classes.number}>1.</div>
+                <Map alt="map"
+                  className={classes.icon}/>
+                <Typography variant="h5" align="center">
+                  Localiser son projet
+                </Typography>
+              </div>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <div className={classes.item}>
+                <div className={classes.number}>2.</div>
+                <Edit alt="edit"
+                  className={classes.icon}/>
+                <Typography variant="h5" align="center">
+                  <p>{'Préciser la nature du projet'}</p>
+                  <p>{'Préciser les surfaces habitables'}</p>
+                  <p>{'Déposer les pièces jointes (photos, plans, notices)'}</p>
+                </Typography>
+              </div>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <div className={classes.item}>
+                <div className={classes.number}>3.</div>
+                <People alt="people"
+                  className={classes.icon}/>
+                <Typography variant="h5" align="center">
+                  {"Suivre l'avancement de l'instruction de la demande"}
+                </Typography>
+              </div>
+            </Grid>
+          </Grid>
+        </div>
+        <Button
+          color="secondary"
+          size="large"
+          variant="contained"
+          className={classes.button}
+          component="a"
+          href="/connexion"
+        >
+          Déposer
+        </Button>
+      </Container>
+    </section>
+  );
+}
+
+CommentFaire.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(CommentFaire);
