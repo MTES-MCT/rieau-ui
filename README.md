@@ -17,6 +17,18 @@ npm start
 
 Depuis le navigateur: [http://localhost:3000](http://localhost:3000).
 
+### Formatage du code
+
+```
+npm run prettier
+```
+
+### Correction du code
+
+```
+npm run lint
+```
+
 ### Analyser la taille du bundle
 
 ```

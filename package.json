@@ -2,6 +2,11 @@
   "name": "permis-construire-facile-ui",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "email": "tristan.robert.44@gmail.com",
+    "name": "Tristan Robert",
+    "url": "https://github.com/tristanrobert"
+  },
   "dependencies": {
     "@material-ui/core": "^4.0.0-beta.2",
     "@material-ui/icons": "^4.0.0-beta.0",
@@ -16,6 +21,8 @@
   },
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "prettier": "prettier --single-quote --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
+    "lint": "eslint src/",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -25,6 +32,17 @@
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --single-quote --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "browserslist": {
     "production": [
@@ -39,7 +57,12 @@
     ]
   },
   "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-plugin-react": "^7.13.0",
     "gh-pages": "^2.0.1",
+    "husky": "^2.3.0",
+    "lint-staged": "^8.1.7",
+    "prettier": "^1.17.1",
     "source-map-explorer": "^1.8.0"
   }
 }
