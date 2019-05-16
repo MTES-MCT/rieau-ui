@@ -1,0 +1,334 @@
+# Foire aux questions
+
+## Etape 1 - avant le dépôt Je m\'informe sur la faisabilité de mon projet {#etape1}
+
+### C'est quoi ce site/service ? Pourquoi ai-je été envoyé ici ?
+
+Permis de construire facile est une start-up incubée par le ministère de
+la cohésion des territoires et des relations avec les collectivités
+territoriales. Le service proposé a pour objectif de faciliter
+l'obtention d'une déclaration préalable, une autorisation administrative
+qui est indispensable pour effectuer certains types de travaux.
+
+Ce site est **public et gratuit**. Il vous permet notamment de **déposer
+100% en ligne votre demande et d\'interagir simplement** avec le service
+en charge d'instruire votre dossier.
+
+Ce site a vocation à évoluer pour répondre au mieux aux attentes des
+usagers. Les fonctionnalités accessibles aujourd'hui peuvent être
+enrichies. N'hésitez pas à nous faire des retours par mail à
+[ads-relations-collectivites\@developpement-durable.gouv.fr](mailto:%20ads-relations-collectivites@developpement-durable.gouv.fr).
+
+### Déclaration préalable, permis de construire... quelle différence ?
+
+La délivrance d\'une autorisation d\'urbanisme permet à la commune de
+vérifier la conformité des travaux par rapport aux règles d\'urbanisme.
+Selon l\'importance des travaux, il faut déposer une demande de permis
+(permis de construire, d\'aménager\...) ou une déclaration préalable.
+
+D\'une manière générale :
+
+- la **déclaration préalable** concerne la réalisation de **travaux de
+  faible importance** (ex. changement de fenêtre, construction de
+  clôture, etc.)
+- le **permis de construire** concerne les **travaux de construction
+  de grande ampleur** (construction d\'une maison individuelle et/ou
+  ses annexes). Toutefois, il s\'applique également à plusieurs autres
+  cas (certains agrandissements +40m², construction d\'un abri de
+  jardin de plus de 20 m²\...)
+
+Permis de construire facile vous guidera en fonction de votre projet.
+
+### Pourquoi le site ne traite que les déclarations préalables (DP) de travaux ?
+
+En tant que start-up d'état, «Permis de construire facile» réfléchit à
+la problématique de la dématérialisation des demandes d'urbanisme avec
+une approche startup : au plus près des besoins des utilisateurs et avec
+des moyens limités.
+
+Il a fallu faire des choix pour commencer. Nous avons choisi de démarrer
+avec les demandes préalables pour 2 raisons :
+
+- il y a beaucoup plus de déclarations préalables que de permis de
+  construire en France : nous avons préféré nous concentrer sur la
+  démarche qui aurait le plus d'impact pour les citoyens
+- la déclaration préalable est une démarche plus simple que le permis
+  de construire, c'était le signe pour nous que nous pouvons plus
+  rapidement apporter des réponses et résoudre ce problème
+
+Par la suite, nous travaillerons à élargir les types d'autorisations qui
+peuvent être déposées en ligne.
+
+### Où vérifier la faisabilité de mon projet ? {#faisabilite}
+
+C'est important ! En effet, lorsque vous construisez sur votre terrain,
+que vous agrandissez votre maison ou que vous modifiez l'aspect
+extérieur de votre habitat, les services d'urbanisme de votre commune
+ont un droit de regard sur votre projet.
+
+Attention : chaque commune dispose de ses propres réglementations
+d'urbanisme. Le choix des couleurs, des matériaux et le rendu final du
+projet doivent être en accord avec le paysage environnant et les
+contraintes. C'est notamment le cas si votre projet se situe dans une
+zone protégée ou à proximité d'un monument classé. La majorité des
+communes ont spécifié les réglementations en vigueur à respecter en
+terme de construction dans un Plan Local d'Urbanisme (PLU).
+
+Ainsi, avant de vous lancer dans vos travaux nous recommandons :
+
+- de consulter le Plan Local D\'urbanisme (PLU) de votre commune s'il
+  à été mis en ligne le site géoportail de l'urbanisme
+  ([https://www.geoportail.gouv.fr/](https://www.geoportail.gouv.fr))
+- ou de vous renseigner auprès de votre mairie si l'information n'est
+  pas accessible (site internet ou appel du service d'urbanisme)
+
+## Étape 2 - je précise mon projet et ma commune d'habitation {#etape2}
+
+### Pourquoi ma ville n'est-elle pas présente parmi les partenaires ?
+
+En tant que start-up d'état, «Permis de construire facile» s'attaque au
+défi de la dématérialisation des demandes d'autorisation d'urbanisme en
+travaillant au plus près avec les utilisateurs : une partie de nos
+utilisateurs sont les villes qui instruisent les dossiers. Celles que
+vous voyez apparaître travaillent déjà avec nous pour construire les
+outils de dématérialisation.
+
+N'hésitez pas à suggérer à votre mairie de nous contacter pour
+participer à cette expérience !
+
+## Étape 3 - je complète le formulaire spécifique et dépose les PJ obligatoires {#etape3}
+
+### Pourquoi toutes ces questions sur mon projet ?
+
+Pour déposer votre dossier, vous devez remplir un **formulaire** dont
+les questions varient en fonction de votre projet.
+
+Les informations requises ne sortent pas de nulle part : elles sont le
+reflet des différents formulaires CERFA utilisés aujourd'hui dans
+l'administration. Ces informations sont ensuites utilisées par les
+services en charge d'étudier le dossier afin de déterminer s'il est ou
+non cohérent vis-à-vis des règles d'urbanismes locales et nationales
+(ex. si vous êtes dans une zone où coexistent des monuments historiques
+ou si une cohérence est recherchée en matière d'urbanisme). Ces règles
+sont précisées dans les Plans Locaux d'Urbanisme (PLU).
+
+### Quelles sont les pièces jointes obligatoires ?
+
+Les pièces-jointes permettent d'étudier votre dossier : est-il conforme
+aux exigences d'urbanisme local ? En fonction du projet, des pièces
+différentes pourraient vous être demandées.
+
+**Les pièces les plus courantes**
+
+N° Nom Description et précisions
+
+---
+
+DP1 Plan de situation du terrain Ce plan permet de situer le terrain sur la commune et de localiser sa zone pour identifier les règles d\'urbanisme applicables
+DP2 Plan de masse coté dans les 3 dimensions \- À fournir si votre projet modifie le profil du terrain (exemple : piscine enterrée...)
+DP3 Plan en coupe précisant l'implantation de la construction par rapport au profil du terrain Ce plan montre le profil du terrain : permet de voir les volumes des constructions et les implantations par rapport au profil. À fournir si votre projet les modifie (exemple : pose d'une fenêtre de toit, création d'une porte..). Inutile pour un simple ravalement de façade.
+DP4 Plan des façades et des toitures Ces plans permettent d'apprécier l'aspect extérieur de la construction ainsi que ses hauteurs.
+
+Si votre projet si votre projet est **visible depuis l\'espace public**
+ou s\'il se situe dans une zone dite **Architectes de Batiments de
+France (ABF)** (c\'est souvent à proximité de monuments historiques),
+les pièces qui suivent sont souvent demandées.
+
+N° Nom Description et précisions
+
+---
+
+DP6 Document graphique 3D Permet d'apprécier l'insertion du projet de construction dans son environnement (depuis l\'espace public)
+DP7 Photographie permettant de situer le terrain dans l\'environnement proche Pour voir les constructions proches, sauf si vous justifiez qu'aucune photographie de loin n'est possible
+DP8 Photographie permettant de situer le terrain dans le paysage lointain Pour voir les constructions proches (si existantes)
+DP11 Notice faisant apparaitre les matériaux utilisés et les modalités d\'exécution des travaux
+
+### Pourquoi est-ce important de connaître la surface de plancher ?
+
+La surface de plancher est à définir précisément lors de l'élaboration
+d'une demande d'autorisation car elle détermine le type d'autorisation
+que vous devez obtenir. Elle correspond à la somme des surfaces de
+chaque niveau clos et couvert. Ces surfaces sont comptabilisées à partir
+du nu intérieur des murs, c'est-à-dire sans l'épaisseur des murs
+extérieurs.
+
+Surface de plancher
+
+![Surface de plancher](/static/images/faq/surface-de-plancher.png)
+
+Quelle différence avec la **surface d'emprise au sol** ?
+
+La surface d'emprise au sol correspond à la projection verticale au sol
+des constructions.
+
+![Emprise au sol](/static/images/faq/emprise-au-sol.png)
+
+## Étape 4 - je valide le dépôt de mon dossier 100% en ligne {#etape4}
+
+### Le dépôt en ligne est-il juridiquement valable ?
+
+Oui ! La **confirmation et la transmission** du formulaire (= dépôt
+électronique) vaut **signature et équivaut au dépôt physique**. En
+revanche, l'envoi d'un dossier via le service ne garantit pas
+l'acceptation d'une demande. De plus, le délai officiel de traitement du
+dossier ne démarrera un jour ouvré à partir de la date de la réception
+de l'accusé d'enregistrement électronique (ex. si vous déposez votre
+demande un samedi à 19h40, le délai ne démarrera qu'à partir du lundi
+8h40).
+
+En application de l'article L.112-9 du Code des Relations entre le
+Public et l\'Administration (CRPA), lorsqu\'elle a mis en place un
+téléservice réservé à l\'accomplissement de certaines démarches
+administratives, une administration n\'est régulièrement saisie par voie
+électronique que par l\'usage de ce téléservice.
+
+Si vous souhaitez plus d'infos sur les aspects juridiques, n'hésitez pas
+à vous plonger dans les [Conditions Générales
+d'Utilisation](<%7B%7B%20path('route_static_cgu')%20%7D%7D>) qui
+détaillent ces aspects !
+
+### Puis-je toujours déposer mon dossier en Mairie ?
+
+#### ...et si je n'ai pas de scanner ?
+
+Il est toujours possible de déposer votre dossier en version papier au
+guichet unique de votre mairie en respectant les consignes précisées
+dans les formulaires (Cerfa).
+
+Si vous n'avez pas de scanner : il est tout à fait possible de faire des
+photos de vos plans. Faites juste attention à la qualité et à la couleur
+(les instructeurs doivent pouvoir les comprendre facilement) !
+
+## Étape 5 - je suis le traitement de ma demande {#etape1}
+
+### Qui est en charge d'instruire ma déclaration préalable de travaux ?
+
+Ça dépend ! Un service instructeur se charge d'étudier les dossiers. Des
+fois, ce service instructeur est au niveau de la ville elle-même, des
+fois au niveau d'un regroupement de communes... de nombreuses
+configurations existent car les villes choisissent comment elles veulent
+s'organiser.
+
+Par ailleurs, en fonction de votre projet et de ses besoins, les
+services instructeurs peuvent solliciter l'avis d'un certain nombre de
+service externes pouvant allonger les délais.:
+
+- Architectes des bâtiments de France : si votre projet a lieu dans
+  les abords d'un monument historique ou dans une zone protégée, ils
+  doivent donner leur accord
+- Pompiers : pensent-ils que ce projet pose problème en cas
+  d'incendie, ici ou chez des voisins ?
+- Réseaux d'eau, d'électricité : quel est l'impact de ce projet sur
+  les raccordements, ici et dans le quartier ?
+- ... et d'autres encore, en fonction de votre projet et de ses
+  caractéristiques !
+
+### Puis-je échanger directement avec le service qui instruit si j'ai une question ?
+
+Oui, si besoin vous pourrez communiquer directement par le biais de la
+messagerie interne avec le service qui étudie votre dossier.
+
+### Quel est le délai de traitement de ma demande ?
+
+Le délai d\'instruction est de **1 mois** à partir de la réception de
+votre demande.
+
+Si votre dossier n\'est pas complet, la mairie a 1 mois pour réclamer
+les pièces manquantes. Vous avez alors 3 mois pour compléter votre
+dossier. Si vous ne le faites pas, votre DP est considérée comme
+rejetée..
+
+Le délai d'instruction peut être modifié pendant un délai d'un mois en
+fonction de la localisation de votre projet.
+
+En effet, dans certains cas, notamment lorsque le terrain est situé dans
+un secteur sauvegardé (ex. zone patrimoniale, site Nature N2000, etc.),
+le délai d\'instruction peut être plus long. Vous pouvez vous renseigner
+sur ce délai :
+
+- auprès de votre mairie
+- ou en échangeant via le service avec le service en charge de
+  l'instruction une fois votre demande déposée
+
+## Etape 6 - je récupère la décision à ma demande {#etape1}
+
+### Quel est le document qui atteste de l'acceptation de mon projet ?
+
+Lorsque la mairie accepte votre projet tel qui est décrit dans la DP, sa
+décision prend la forme d\'un arrêté. Cette décision à partir du moment
+où elle est consultable à partir du téléservice, qu'elle comporte les
+prénoms, nom et qualité du l'autorité qui l'a délivrée, elle est alors
+dispensée de signature.
+
+Ci-après, la base juridique de ce point de droit.
+
+En application de l'article L212-2 du CRPA, sont dispensés de la
+signature de leur auteur, dès lors qu\'ils auquel celui-ci appartient,
+les actes suivants :
+
+1° Les décisions administratives qui sont notifiées au public par
+l\'intermédiaire d\'un téléservice conforme à l\'article L. 112-9 et aux
+articles 9 à 12 de l\'ordonnance n° 2005-1516 du 8 décembre 2005
+relative aux échanges électroniques entre les usagers et les autorités
+administratives et entre les autorités administratives ainsi que les
+actes préparatoires à ces décisions ;
+
+### Qu'est-ce que le tacite ?
+
+Si vous n\'avez pas de réponse de la mairie au terme du délai
+d\'instruction qu\'elle vous a indiqué, cela signifie qu\'elle ne
+s\'oppose pas à votre projet. Vous bénéficiez donc d\'une décision
+**tacite** dite aussi **décision de non-opposition** à la demande
+préalable.
+
+En pratique, nous vous recommandons de réclamer à la mairie un
+certificat attestant son absence d\'opposition.
+
+Cela vous permet :
+
+- de disposer d\'une preuve de la réalité de la décision tacite par
+  laquelle la mairie a décidé de ne pas s\'opposer à votre projet,
+- et de faire valoir vos droits (obtention d\'un prêt, souscription
+  d\'assurances).
+
+### Quels sont les motifs de refus potentiels ?
+
+Le non respect des règles contenues dans un document d'urbanisme peut
+entraîner le refus de la demande.
+
+Avant le dépôt de sa demande, il est donc important de vérifier la
+faisabilité juridique de sa demande (cf. question ["Où vérifier la
+faisabilité de mon projet ?"](#faisabilite))
+
+### Quels sont mes recours possibles en cas de refus de mon projet ?
+
+Si vous recevez une décision de refus qui indique que la mairie
+s\'oppose à votre projet tel qu\'il est décrit dans votre demande il est
+possible de faire un recours. Un recours consiste à re-demander à
+l'autorité responsable de revoir sa position. Pour appuyer votre
+recours, vous devez exposer clairement les raisons qui vous permettent
+de justifier votre droit à l\'obtention d\'une DP et notamment les
+documents qui vous semble pertinent.
+
+Si un recours est souvent fait par lettre recommandée avec avis de
+réception envoyée dans les 2 mois qui suivent la décision, un
+téléservice peut vous proposer de déposer un tel recours par voie
+dématérialisée !
+
+Si vous recevez un nouveau refus, vous avez 2 mois à partir de la
+notification du refus pour saisir le tribunal administratif par lettre
+recommandée avec avis de réception.
+
+### Quelle est la durée de validité d\'une autorisation ?
+
+La durée de validité de la décision accordant la DP (ou la décision
+tacite) est de **3 ans**. Si vos travaux n\'ont pas commencé avant
+l\'expiration de ce délai, votre DP n\'est plus valable et il faudra
+refaire une demande. Important : ce délai de 3 ans peut être prolongé de
+2 fois 1 an.
+
+### Puis-je commencer mes travaux avant d'avoir reçu la décision ?
+
+**Non**. Néanmoins, une fois que votre déclaration est acceptée, vous
+n'avez pas besoin d'informer la mairie du commencement de vos travaux
+contrairement au permis de construire.

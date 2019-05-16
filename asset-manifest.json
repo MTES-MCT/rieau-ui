@@ -1,16 +1,15 @@
 {
   "files": {
-    "main.js": "https://mtes-mct.github.io/permis-construire-facile-ui/static/js/main.66e8adbe.chunk.js",
-    "main.js.map": "https://mtes-mct.github.io/permis-construire-facile-ui/static/js/main.66e8adbe.chunk.js.map",
+    "main.js": "https://mtes-mct.github.io/permis-construire-facile-ui/static/js/main.79ac50a8.chunk.js",
+    "main.js.map": "https://mtes-mct.github.io/permis-construire-facile-ui/static/js/main.79ac50a8.chunk.js.map",
     "runtime~main.js": "https://mtes-mct.github.io/permis-construire-facile-ui/static/js/runtime~main.aedd6f3a.js",
     "runtime~main.js.map": "https://mtes-mct.github.io/permis-construire-facile-ui/static/js/runtime~main.aedd6f3a.js.map",
-    "static/js/2.a620ea10.chunk.js": "https://mtes-mct.github.io/permis-construire-facile-ui/static/js/2.a620ea10.chunk.js",
-    "static/js/2.a620ea10.chunk.js.map": "https://mtes-mct.github.io/permis-construire-facile-ui/static/js/2.a620ea10.chunk.js.map",
+    "static/js/2.b50a34b4.chunk.js": "https://mtes-mct.github.io/permis-construire-facile-ui/static/js/2.b50a34b4.chunk.js",
+    "static/js/2.b50a34b4.chunk.js.map": "https://mtes-mct.github.io/permis-construire-facile-ui/static/js/2.b50a34b4.chunk.js.map",
     "index.html": "https://mtes-mct.github.io/permis-construire-facile-ui/index.html",
-    "precache-manifest.e37be898193e5131f7bc8e9d8ef2b225.js": "https://mtes-mct.github.io/permis-construire-facile-ui/precache-manifest.e37be898193e5131f7bc8e9d8ef2b225.js",
+    "precache-manifest.da9df70642fc9b78132004e24a01d0bc.js": "https://mtes-mct.github.io/permis-construire-facile-ui/precache-manifest.da9df70642fc9b78132004e24a01d0bc.js",
     "service-worker.js": "https://mtes-mct.github.io/permis-construire-facile-ui/service-worker.js",
-    "static/media/help.md": "https://mtes-mct.github.io/permis-construire-facile-ui/static/media/help.038db24d.md",
-    "static/media/privacy.md": "https://mtes-mct.github.io/permis-construire-facile-ui/static/media/privacy.4835588e.md",
-    "static/media/terms.md": "https://mtes-mct.github.io/permis-construire-facile-ui/static/media/terms.038db24d.md"
+    "static/media/cgu.md": "https://mtes-mct.github.io/permis-construire-facile-ui/static/media/cgu.a1d408a3.md",
+    "static/media/faq.md": "https://mtes-mct.github.io/permis-construire-facile-ui/static/media/faq.765a8452.md"
   }
 }
