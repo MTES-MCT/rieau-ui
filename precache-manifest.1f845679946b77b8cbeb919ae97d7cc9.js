@@ -1,15 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "21fe5b0821c38948b7f599636a810293",
+    "revision": "8d74bba60c41fdfac9da01bb7ec2aeec",
     "url": "https://mtes-mct.github.io/permis-construire-facile-ui/index.html"
   },
   {
-    "revision": "b755a07e1883a37663b2",
-    "url": "https://mtes-mct.github.io/permis-construire-facile-ui/static/js/2.b50a34b4.chunk.js"
+    "revision": "6638424ffb26f3245f2c",
+    "url": "https://mtes-mct.github.io/permis-construire-facile-ui/static/css/main.49969df1.chunk.css"
   },
   {
-    "revision": "e6374728cf258adaf4f3",
-    "url": "https://mtes-mct.github.io/permis-construire-facile-ui/static/js/main.79ac50a8.chunk.js"
+    "revision": "bd53fd7911886f49f364",
+    "url": "https://mtes-mct.github.io/permis-construire-facile-ui/static/js/2.81faac5a.chunk.js"
+  },
+  {
+    "revision": "6638424ffb26f3245f2c",
+    "url": "https://mtes-mct.github.io/permis-construire-facile-ui/static/js/main.81b85a63.chunk.js"
   },
   {
     "revision": "746cce400668e89eaa92",
@@ -22,5 +26,9 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "765a84524721bc8d112ce51e2d8882d0",
     "url": "https://mtes-mct.github.io/permis-construire-facile-ui/static/media/faq.765a8452.md"
+  },
+  {
+    "revision": "463b5ee075998cc0dce34697ed0fdd5e",
+    "url": "https://mtes-mct.github.io/permis-construire-facile-ui/static/media/hero.463b5ee0.jpg"
   }
 ]);
