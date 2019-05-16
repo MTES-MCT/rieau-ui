@@ -2,18 +2,12 @@ import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '../components/Button';
-import Typography from '../components/Typography';
-import ProductHeroLayout from './ProductHeroLayout';
-
-const backgroundImage = '/static/images/hero.jpg';
+import Button from '../../components/Button';
+import Typography from '../../components/Typography';
+import ProductHeroLayout from './Layout';
+import hero from './hero.jpg';
 
 const styles = theme => ({
-  background: {
-    backgroundImage: `url(${backgroundImage})`,
-    backgroundColor: '#90caf9', // Average color of the background image.
-    backgroundPosition: 'center'
-  },
   button: {
     minWidth: 200
   },
@@ -33,9 +27,9 @@ function ProductHero(props) {
   const { classes } = props;
 
   return (
-    <ProductHeroLayout backgroundClassName={classes.background}>
+    <ProductHeroLayout>
       {/* Increase the network loading priority of the background image. */}
-      <img style={{ display: 'none' }} src={backgroundImage} alt="hero" />
+      <img style={{ display: 'none' }} src={hero} alt="hero" />
       <Typography color="inherit" align="center" variant="h2" marked="center">
         Permis de construire facile
       </Typography>

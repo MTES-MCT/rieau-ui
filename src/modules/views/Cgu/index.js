@@ -1,12 +1,12 @@
-import withRoot from './modules/withRoot';
+import withRoot from '../../withRoot';
 import React from 'react';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import Markdown from './modules/components/Markdown';
-import Typography from './modules/components/Typography';
-import AppAppBar from './modules/views/AppAppBar';
-import faq from './modules/views/faq.md';
-import AppFooter from './modules/views/AppFooter';
+import Markdown from '../../components/Markdown';
+import Typography from '../../components/Typography';
+import AppAppBar from '../AppAppBar';
+import cgu from './cgu.md';
+import AppFooter from '../AppFooter';
 
 function Help() {
   return (
@@ -15,9 +15,9 @@ function Help() {
       <Container>
         <Box mt={7} mb={12}>
           <Typography variant="h3" gutterBottom marked="center" align="center">
-            Aide
+            CGU
           </Typography>
-          <Markdown>{faq}</Markdown>
+          <Markdown>{cgu}</Markdown>
         </Box>
       </Container>
       <AppFooter />

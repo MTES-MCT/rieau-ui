@@ -4,8 +4,9 @@ import clsx from 'clsx';
 import { withStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
 import { Link as RouterLink } from 'react-router-dom';
-import AppBar from '../components/AppBar';
-import Toolbar, { styles as toolbarStyles } from '../components/Toolbar';
+import AppBar from '../../components/AppBar';
+import Toolbar, { styles as toolbarStyles } from '../../components/Toolbar';
+import logo from './marianne.png';
 
 const styles = theme => ({
   title: {
@@ -51,11 +52,7 @@ function AppAppBar(props) {
             component={RouterLink}
             to="/"
           >
-            <img
-              src="/static/images/marianne.png"
-              className={classes.logo}
-              alt="accueil"
-            />
+            <img src={logo} className={classes.logo} alt="accueil" />
           </Link>
           <div className={classes.right}>
             <Link

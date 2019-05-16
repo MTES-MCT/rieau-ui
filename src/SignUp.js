@@ -1,4 +1,5 @@
 import withRoot from './modules/withRoot';
+import { Link as RouterLink } from 'react-router-dom';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -70,7 +71,7 @@ class SignUp extends React.Component {
               Inscription
             </Typography>
             <Typography variant="body2" align="center">
-              <Link href="/connexion" underline="always">
+              <Link component={RouterLink} to="/connexion" underline="always">
                 Vous avez déjà un compte ?
               </Link>
             </Typography>

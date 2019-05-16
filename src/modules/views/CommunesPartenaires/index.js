@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Container from '@material-ui/core/Container';
-import Typography from '../components/Typography';
+import Typography from '../../components/Typography';
 
 const styles = theme => ({
   root: {
@@ -88,32 +88,32 @@ function CommunesPartenaires(props) {
 
   const images = [
     {
-      url: '/static/images/communes/andeville.jpg',
+      url: './andeville.jpg',
       title: 'Andeville',
       width: '33%'
     },
     {
-      url: '/static/images/communes/baziege.jpg',
+      url: './baziege.jpg',
       title: 'Baziège',
       width: '33%'
     },
     {
-      url: '/static/images/communes/castanet-tolosan.jpg',
+      url: './castanet-tolosan.jpg',
       title: 'Castanet-Tolosan',
       width: '33%'
     },
     {
-      url: '/static/images/communes/la-creche.svg',
+      url: './la-creche.jpg',
       title: 'La Crèche',
       width: '33%'
     },
     {
-      url: '/static/images/communes/mours.jpg',
+      url: './mours.jpg',
       title: 'Mours',
       width: '33%'
     },
     {
-      url: '/static/images/communes/nogent-sur-oise.jpg',
+      url: './nogent-sur-oise.jpg',
       title: 'Nogent-sur-Oise',
       width: '33%'
     },
@@ -123,7 +123,7 @@ function CommunesPartenaires(props) {
       width: '33%'
     },
     {
-      url: '/static/images/communes/saint-tropez.jpg',
+      url: './saint-tropez.jpg',
       title: 'Saint-Tropez',
       width: '33%'
     },

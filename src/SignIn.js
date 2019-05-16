@@ -1,5 +1,6 @@
 import withRoot from './modules/withRoot';
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Field, Form, FormSpy } from 'react-final-form';
 import { withStyles } from '@material-ui/core/styles';
@@ -66,7 +67,12 @@ class SignIn extends React.Component {
             </Typography>
             <Typography variant="body2" align="center">
               {'Pas encore de compte ? '}
-              <Link href="/inscrire" align="center" underline="always">
+              <Link
+                component={RouterLink}
+                to="/inscrire"
+                align="center"
+                underline="always"
+              >
                 Inscrivez-vous
               </Link>
             </Typography>
@@ -124,7 +130,7 @@ class SignIn extends React.Component {
             )}
           </Form>
           <Typography align="center">
-            <Link underline="always" href="/reinitialiser">
+            <Link underline="always" component={RouterLink} to="/reinitialiser">
               Mot de passe oublié ?
             </Link>
           </Typography>

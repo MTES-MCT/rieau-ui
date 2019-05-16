@@ -5,8 +5,8 @@ import Home from './Home';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import ForgotPassword from './ForgotPassword';
-import Aide from './Aide';
-import Cgu from './Cgu';
+import Aide from './modules/views/Aide';
+import Cgu from './modules/views/Cgu';
 
 function Page() {
   return (

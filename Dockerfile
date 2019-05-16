@@ -4,7 +4,6 @@ LABEL maintainer="tristan.robert.44@gmail.com"
 WORKDIR /app
 COPY package.json /app
 COPY src/ /app/src
-COPY static/ /app/static
 COPY public/ /app/public
 COPY manifest.json /app
 RUN npm install

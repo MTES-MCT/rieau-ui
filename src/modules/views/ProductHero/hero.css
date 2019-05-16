@@ -1,0 +1,5 @@
+.hero {
+  background-image: url(./hero.jpg);
+  background-color: '#90caf9'; /* Average color of the background image. */
+  background-position: 'center';
+}

@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import './hero.css';
 
 const styles = theme => ({
   root: {
@@ -52,14 +53,14 @@ const styles = theme => ({
 });
 
 function ProductHeroLayout(props) {
-  const { backgroundClassName, children, classes } = props;
+  const { children, classes } = props;
 
   return (
     <section className={classes.root}>
       <Container className={classes.container}>
         {children}
         <div className={classes.backdrop} />
-        <div className={clsx(classes.background, backgroundClassName)} />
+        <div className={clsx(classes.background, 'hero')} />
         <ExpandMore className={classes.arrowDown} />
       </Container>
     </section>
@@ -67,7 +68,6 @@ function ProductHeroLayout(props) {
 }
 
 ProductHeroLayout.propTypes = {
-  backgroundClassName: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   classes: PropTypes.object.isRequired
 };
