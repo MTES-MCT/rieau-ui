@@ -16,20 +16,20 @@ import compose from './modules/utils/compose';
 
 const styles = theme => ({
   form: {
-    marginTop: theme.spacing(6),
+    marginTop: theme.spacing(6)
   },
   button: {
     marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(2)
   },
   feedback: {
-    marginTop: theme.spacing(2),
-  },
+    marginTop: theme.spacing(2)
+  }
 });
 
 class SignIn extends React.Component {
   state = {
-    sent: false,
+    sent: false
   };
 
   validate = values => {
@@ -56,7 +56,12 @@ class SignIn extends React.Component {
         <AppAppBar />
         <AppForm>
           <React.Fragment>
-            <Typography variant="h3" gutterBottom marked="center" align="center">
+            <Typography
+              variant="h3"
+              gutterBottom
+              marked="center"
+              align="center"
+            >
               Connexion
             </Typography>
             <Typography variant="body2" align="center">
@@ -131,10 +136,10 @@ class SignIn extends React.Component {
 }
 
 SignIn.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default compose(
   withRoot,
-  withStyles(styles),
+  withStyles(styles)
 )(SignIn);

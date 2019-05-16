@@ -8,12 +8,12 @@ import Typography from '../components/Typography';
 const styles = theme => ({
   root: {
     marginTop: theme.spacing(8),
-    marginBottom: theme.spacing(4),
+    marginBottom: theme.spacing(4)
   },
   images: {
     marginTop: theme.spacing(8),
     display: 'flex',
-    flexWrap: 'wrap',
+    flexWrap: 'wrap'
   },
   imageWrapper: {
     position: 'relative',
@@ -23,20 +23,20 @@ const styles = theme => ({
     height: '40vh',
     [theme.breakpoints.down('sm')]: {
       width: '100% !important',
-      height: 100,
+      height: 100
     },
     '&:hover': {
-      zIndex: 1,
+      zIndex: 1
     },
     '&:hover $imageBackdrop': {
-      opacity: 0.15,
+      opacity: 0.15
     },
     '&:hover $imageMarked': {
-      opacity: 0,
+      opacity: 0
     },
     '&:hover $imageTitle': {
-      border: '4px solid currentColor',
-    },
+      border: '4px solid currentColor'
+    }
   },
   imageButton: {
     position: 'absolute',
@@ -47,7 +47,7 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    color: theme.palette.common.white,
+    color: theme.palette.common.white
   },
   imageSrc: {
     position: 'absolute',
@@ -56,7 +56,7 @@ const styles = theme => ({
     top: 0,
     bottom: 0,
     backgroundSize: 'cover',
-    backgroundPosition: 'center 33%',
+    backgroundPosition: 'center 33%'
   },
   imageBackdrop: {
     position: 'absolute',
@@ -66,11 +66,11 @@ const styles = theme => ({
     bottom: 0,
     background: theme.palette.common.black,
     opacity: 0.5,
-    transition: theme.transitions.create('opacity'),
+    transition: theme.transitions.create('opacity')
   },
   imageTitle: {
     position: 'relative',
-    padding: `${theme.spacing(2)}px ${theme.spacing(4)}px 14px`,
+    padding: `${theme.spacing(2)}px ${theme.spacing(4)}px 14px`
   },
   imageMarked: {
     height: 3,
@@ -79,8 +79,8 @@ const styles = theme => ({
     position: 'absolute',
     bottom: -2,
     left: 'calc(50% - 9px)',
-    transition: theme.transitions.create('opacity'),
-  },
+    transition: theme.transitions.create('opacity')
+  }
 });
 
 function CommunesPartenaires(props) {
@@ -90,56 +90,48 @@ function CommunesPartenaires(props) {
     {
       url: '/static/images/communes/andeville.jpg',
       title: 'Andeville',
-      width: '33%',
+      width: '33%'
     },
     {
-      url:
-        '/static/images/communes/baziege.jpg',
+      url: '/static/images/communes/baziege.jpg',
       title: 'Baziège',
-      width: '33%',
+      width: '33%'
     },
     {
-      url:
-        '/static/images/communes/castanet-tolosan.jpg',
+      url: '/static/images/communes/castanet-tolosan.jpg',
       title: 'Castanet-Tolosan',
-      width: '33%',
+      width: '33%'
     },
     {
-      url:
-        '/static/images/communes/la-creche.svg',
+      url: '/static/images/communes/la-creche.svg',
       title: 'La Crèche',
-      width: '33%',
+      width: '33%'
     },
     {
-      url:
-        '/static/images/communes/mours.jpg',
+      url: '/static/images/communes/mours.jpg',
       title: 'Mours',
-      width: '33%',
+      width: '33%'
     },
     {
-      url:
-        '/static/images/communes/nogent-sur-oise.jpg',
+      url: '/static/images/communes/nogent-sur-oise.jpg',
       title: 'Nogent-sur-Oise',
-      width: '33%',
+      width: '33%'
     },
     {
-      url:
-        '',
+      url: '',
       title: 'Votre commune 1',
-      width: '33%',
+      width: '33%'
     },
     {
-      url:
-        '/static/images/communes/saint-tropez.jpg',
+      url: '/static/images/communes/saint-tropez.jpg',
       title: 'Saint-Tropez',
-      width: '33%',
+      width: '33%'
     },
     {
-      url:
-        '',
+      url: '',
       title: 'Votre commune 2',
-      width: '33%',
-    },
+      width: '33%'
+    }
   ];
 
   return (
@@ -153,13 +145,13 @@ function CommunesPartenaires(props) {
             key={image.title}
             className={classes.imageWrapper}
             style={{
-              width: image.width,
+              width: image.width
             }}
           >
             <div
               className={classes.imageSrc}
               style={{
-                backgroundImage: `url(${image.url})`,
+                backgroundImage: `url(${image.url})`
               }}
             />
             <div className={classes.imageBackdrop} />
@@ -182,7 +174,7 @@ function CommunesPartenaires(props) {
 }
 
 CommunesPartenaires.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(CommunesPartenaires);

@@ -15,20 +15,20 @@ import compose from './modules/utils/compose';
 
 const styles = theme => ({
   form: {
-    marginTop: theme.spacing(6),
+    marginTop: theme.spacing(6)
   },
   button: {
     marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(2)
   },
   feedback: {
-    marginTop: theme.spacing(2),
-  },
+    marginTop: theme.spacing(2)
+  }
 });
 
 class ForgotPassword extends React.Component {
   state = {
-    sent: false,
+    sent: false
   };
 
   validate = values => {
@@ -55,11 +55,16 @@ class ForgotPassword extends React.Component {
         <AppAppBar />
         <AppForm>
           <React.Fragment>
-            <Typography variant="h3" gutterBottom marked="center" align="center">
+            <Typography
+              variant="h3"
+              gutterBottom
+              marked="center"
+              align="center"
+            >
               Mot de passe oublié ?
             </Typography>
             <Typography variant="body2" align="center">
-              {"Entrez votre email ci-dessous et vous " +
+              {'Entrez votre email ci-dessous et vous ' +
                 'recevrez un lien pour le réinitialiser.'}
             </Typography>
           </React.Fragment>
@@ -111,10 +116,10 @@ class ForgotPassword extends React.Component {
 }
 
 ForgotPassword.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default compose(
   withRoot,
-  withStyles(styles),
+  withStyles(styles)
 )(ForgotPassword);

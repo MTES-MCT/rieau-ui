@@ -5,8 +5,8 @@ import MuiAppBar from '@material-ui/core/AppBar';
 
 const styles = theme => ({
   root: {
-    color: theme.palette.common.white,
-  },
+    color: theme.palette.common.white
+  }
 });
 
 function AppBar(props) {
@@ -14,7 +14,7 @@ function AppBar(props) {
 }
 
 AppBar.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(AppBar);

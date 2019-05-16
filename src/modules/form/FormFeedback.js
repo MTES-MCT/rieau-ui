@@ -6,16 +6,16 @@ import Typography from '../components/Typography';
 
 const styles = theme => ({
   root: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(2)
   },
   error: {
     backgroundColor: theme.palette.error.xLight,
-    color: theme.palette.error.dark,
+    color: theme.palette.error.dark
   },
   success: {
     backgroundColor: theme.palette.success.xLight,
-    color: theme.palette.success.dark,
-  },
+    color: theme.palette.success.dark
+  }
 });
 
 function FormFeedback(props) {
@@ -23,8 +23,11 @@ function FormFeedback(props) {
     <div
       className={clsx(
         props.classes.root,
-        { [props.classes.error]: props.error, [props.classes.success]: props.success },
-        props.className,
+        {
+          [props.classes.error]: props.error,
+          [props.classes.success]: props.success
+        },
+        props.className
       )}
     >
       <Typography color="inherit">{props.children}</Typography>
@@ -37,7 +40,7 @@ FormFeedback.propTypes = {
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
   error: PropTypes.bool,
-  success: PropTypes.bool,
+  success: PropTypes.bool
 };
 
 export default withStyles(styles)(FormFeedback);

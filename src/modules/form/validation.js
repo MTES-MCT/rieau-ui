@@ -1,5 +1,5 @@
 function isEmail(value) {
-  return true; // TODO
+  return value.match(/(.*)[@]{1}(.*)/);
 }
 
 export function email(value) {
@@ -14,8 +14,8 @@ export function required(requiredFields, values) {
   return requiredFields.reduce(
     (fields, field) => ({
       ...fields,
-      ...(isDirty(values[field]) ? undefined : { [field]: 'Required' }),
+      ...(isDirty(values[field]) ? undefined : { [field]: 'Required' })
     }),
-    {},
+    {}
   );
 }

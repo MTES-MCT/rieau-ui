@@ -3,7 +3,7 @@ import React from 'react';
 function defer(Component) {
   class Defer extends React.Component {
     state = {
-      mounted: false,
+      mounted: false
     };
 
     componentDidMount() {

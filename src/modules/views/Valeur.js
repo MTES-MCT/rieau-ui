@@ -11,32 +11,32 @@ import Timeline from '@material-ui/icons/Timeline';
 const styles = theme => ({
   root: {
     display: 'flex',
-    overflow: 'hidden',
+    overflow: 'hidden'
   },
   container: {
     marginTop: theme.spacing(5),
     marginBottom: theme.spacing(10),
     display: 'flex',
-    position: 'relative',
+    position: 'relative'
   },
   item: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: theme.spacing(0, 5),
+    padding: theme.spacing(0, 5)
   },
   image: {
-    fontSize: 64,
+    fontSize: 64
   },
   title: {
     marginTop: theme.spacing(5),
-    marginBottom: theme.spacing(5),
+    marginBottom: theme.spacing(5)
   },
   curvyLines: {
     pointerEvents: 'none',
     position: 'absolute',
-    top: -180,
-  },
+    top: -180
+  }
 });
 
 function Valeur(props) {
@@ -48,37 +48,40 @@ function Valeur(props) {
         <Grid container spacing={1}>
           <Grid item xs={12} md={4}>
             <div className={classes.item}>
-              <EuroSymbol
-                className={classes.image} />
+              <EuroSymbol className={classes.image} />
               <Typography variant="h6" className={classes.title}>
                 Plus économique
               </Typography>
               <Typography variant="h5">
-                {'Fini les impressions papiers, les multiples exemplaires et les courriers recommandés.'}
+                {
+                  'Fini les impressions papiers, les multiples exemplaires et les courriers recommandés.'
+                }
               </Typography>
             </div>
           </Grid>
           <Grid item xs={12} md={4}>
             <div className={classes.item}>
-              <Timer
-                className={classes.image} />
+              <Timer className={classes.image} />
               <Typography variant="h6" className={classes.title}>
                 Plus rapide
               </Typography>
               <Typography variant="h5">
-                {"Fini les délais supplémentaires d'expédition et d'accusé de réception par courrier postal."}
+                {
+                  "Fini les délais supplémentaires d'expédition et d'accusé de réception par courrier postal."
+                }
               </Typography>
             </div>
           </Grid>
           <Grid item xs={12} md={4}>
             <div className={classes.item}>
-              <Timeline
-                className={classes.image} />
+              <Timeline className={classes.image} />
               <Typography variant="h6" className={classes.title}>
                 Plus clair
               </Typography>
               <Typography variant="h5">
-                {"Suivre l'état de sa demande et échanger directement avec les instructeurs."}
+                {
+                  "Suivre l'état de sa demande et échanger directement avec les instructeurs."
+                }
               </Typography>
             </div>
           </Grid>
@@ -89,7 +92,7 @@ function Valeur(props) {
 }
 
 Valeur.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(Valeur);

@@ -5,19 +5,19 @@ import Box from '@material-ui/core/Box';
 import Markdown from './modules/components/Markdown';
 import Typography from './modules/components/Typography';
 import AppAppBar from './modules/views/AppAppBar';
-import privacy from './modules/views/privacy.md';
+import faq from './modules/views/faq.md';
 import AppFooter from './modules/views/AppFooter';
 
-function Privacy() {
+function Help() {
   return (
     <React.Fragment>
       <AppAppBar />
       <Container>
         <Box mt={7} mb={12}>
           <Typography variant="h3" gutterBottom marked="center" align="center">
-            Privacy
+            Aide
           </Typography>
-          <Markdown>{privacy}</Markdown>
+          <Markdown>{faq}</Markdown>
         </Box>
       </Container>
       <AppFooter />
@@ -25,4 +25,4 @@ function Privacy() {
   );
 }
 
-export default withRoot(Privacy);
+export default withRoot(Help);

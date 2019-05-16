@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -12,7 +13,7 @@ import People from '@material-ui/icons/People';
 const styles = theme => ({
   root: {
     display: 'flex',
-    overflow: 'hidden',
+    overflow: 'hidden'
   },
   container: {
     marginTop: theme.spacing(10),
@@ -20,30 +21,30 @@ const styles = theme => ({
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   item: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: theme.spacing(0, 5),
+    padding: theme.spacing(0, 5)
   },
   title: {
-    marginBottom: theme.spacing(14),
+    marginBottom: theme.spacing(14)
   },
   number: {
     fontSize: 24,
     fontFamily: theme.typography.fontFamily,
     color: theme.palette.secondary.main,
-    fontWeight: theme.typography.fontWeightMedium,
+    fontWeight: theme.typography.fontWeightMedium
   },
   icon: {
     fontSize: 64,
-    margin: theme.spacing(4),
+    margin: theme.spacing(4)
   },
   button: {
-    marginTop: theme.spacing(8),
-  },
+    marginTop: theme.spacing(8)
+  }
 });
 
 function CommentFaire(props) {
@@ -52,7 +53,12 @@ function CommentFaire(props) {
   return (
     <section className={classes.root}>
       <Container className={classes.container}>
-        <Typography variant="h4" marked="center" className={classes.title} component="h2">
+        <Typography
+          variant="h4"
+          marked="center"
+          className={classes.title}
+          component="h2"
+        >
           Comment faire ?
         </Typography>
         <div>
@@ -60,8 +66,7 @@ function CommentFaire(props) {
             <Grid item xs={12} md={4}>
               <div className={classes.item}>
                 <div className={classes.number}>1.</div>
-                <Map alt="map"
-                  className={classes.icon}/>
+                <Map alt="map" className={classes.icon} />
                 <Typography variant="h5" align="center">
                   Localiser son projet
                 </Typography>
@@ -70,8 +75,7 @@ function CommentFaire(props) {
             <Grid item xs={12} md={4}>
               <div className={classes.item}>
                 <div className={classes.number}>2.</div>
-                <Edit alt="edit"
-                  className={classes.icon}/>
+                <Edit alt="edit" className={classes.icon} />
                 <Typography variant="h5" align="center">
                   <p>{'Préciser la nature du projet'}</p>
                   <p>{'Préciser les surfaces habitables'}</p>
@@ -82,8 +86,7 @@ function CommentFaire(props) {
             <Grid item xs={12} md={4}>
               <div className={classes.item}>
                 <div className={classes.number}>3.</div>
-                <People alt="people"
-                  className={classes.icon}/>
+                <People alt="people" className={classes.icon} />
                 <Typography variant="h5" align="center">
                   {"Suivre l'avancement de l'instruction de la demande"}
                 </Typography>
@@ -96,8 +99,8 @@ function CommentFaire(props) {
           size="large"
           variant="contained"
           className={classes.button}
-          component="a"
-          href="/connexion"
+          component={RouterLink}
+          to="/connexion"
         >
           Déposer
         </Button>
@@ -107,7 +110,7 @@ function CommentFaire(props) {
 }
 
 CommentFaire.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(CommentFaire);

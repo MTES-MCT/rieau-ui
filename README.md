@@ -49,7 +49,7 @@ npm run analyze
 Depuis la branche `master`:
 
 ```
-PUBLIC_URL="https://mtes-mct.github.io/permis-construire-facile-ui" npm run deploy
+REACT_APP_BASENAME=/permis-construire-facile-ui PUBLIC_URL="https://mtes-mct.github.io/permis-construire-facile-ui" npm run deploy
 ```
 
 Depuis le navigateur: [https://mtes-mct.github.io/permis-construire-facile-ui/](https://mtes-mct.github.io/permis-construire-facile-ui/).
@@ -59,8 +59,10 @@ Depuis le navigateur: [https://mtes-mct.github.io/permis-construire-facile-ui/](
 * Build:
 
 ```
-docker build -t permis-construire-facile-ui .
+docker build --build-arg REACT_APP_DOMAIN=http://localhost:3000 --build-arg REACT_APP_BASENAME=/pcf2 -t permis-construire-facile-ui .
 ```
+
+Spécifier `REACT_APP_DOMAIN` si le site est installé sur un autre domaine que [http://localhost:3000](http://localhost:3000) par défaut et et `REACT_APP_BASENAME` si il est dans un sous un sous-dossier.
 
 * Run:
 

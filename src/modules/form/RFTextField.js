@@ -18,9 +18,9 @@ function RFTextField(props) {
       {...other}
       InputProps={{
         inputProps: {
-          autoComplete,
+          autoComplete
         },
-        ...InputProps,
+        ...InputProps
       }}
       helperText={touched ? error || submitError : ''}
     />
@@ -33,8 +33,8 @@ RFTextField.propTypes = {
   InputProps: PropTypes.object,
   meta: PropTypes.shape({
     error: PropTypes.string,
-    touched: PropTypes.bool.isRequired,
-  }).isRequired,
+    touched: PropTypes.bool.isRequired
+  }).isRequired
 };
 
 export default RFTextField;

@@ -7,14 +7,14 @@ import Paper from '../components/Paper';
 
 const styles = theme => ({
   root: {
-    display: 'flex',
+    display: 'flex'
   },
   paper: {
     padding: theme.spacing(4, 3),
     [theme.breakpoints.up('md')]: {
-      padding: theme.spacing(8, 6),
-    },
-  },
+      padding: theme.spacing(8, 6)
+    }
+  }
 });
 
 function AppForm(props) {
@@ -33,7 +33,7 @@ function AppForm(props) {
 
 AppForm.propTypes = {
   children: PropTypes.node.isRequired,
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(AppForm);
