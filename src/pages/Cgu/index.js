@@ -5,7 +5,8 @@ import withRoot from '../../theme/withRoot';
 import Markdown from '../../components/Markdown';
 import Typography from '../../components/Typography';
 import AppBar from '../../components/AppBar';
-import cgu from './cgu.md';
+/* eslint import/no-webpack-loader-syntax: off */
+import cgu from '!raw-loader!./cgu.md';
 import AppFooter from '../../components/AppFooter';
 
 function Help() {
