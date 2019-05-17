@@ -1,12 +1,12 @@
-import withRoot from '../../withRoot';
 import React from 'react';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
+import withRoot from '../../theme/withRoot';
 import Markdown from '../../components/Markdown';
 import Typography from '../../components/Typography';
-import AppBar from '../AppBar';
+import AppBar from '../../components/AppBar';
 import faq from './faq.md';
-import AppFooter from '../AppFooter';
+import AppFooter from '../../components/AppFooter';
 
 function Help() {
   return (

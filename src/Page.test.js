@@ -3,7 +3,7 @@ import Page from './Page';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import { render, fireEvent } from 'react-testing-library';
-import Localiser from './modules/views/Localiser';
+import Localiser from './pages/Localiser';
 
 function renderWithRouter(
   ui,

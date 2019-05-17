@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '../../components/Typography';
+import Typography from '../../../components/Typography';
 import ProductHeroLayout from './Layout';
 import hero from './hero.jpg';
 import Localiser from './Localiser';

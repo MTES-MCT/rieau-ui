@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import AppTheme from './modules/components/AppTheme';
-import Home from './Home';
-import SignIn from './SignIn';
-import SignUp from './SignUp';
-import ForgotPassword from './ForgotPassword';
-import Aide from './modules/views/Aide';
-import Cgu from './modules/views/Cgu';
-import Localiser from './modules/views/Localiser';
+import AppTheme from './components/AppTheme';
+import Home from './pages/Home';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
+import ForgotPassword from './pages/ForgotPassword';
+import Aide from './pages/Aide';
+import Cgu from './pages/Cgu';
+import Localiser from './pages/Localiser';
 
 function Page() {
   return (

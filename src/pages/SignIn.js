@@ -1,17 +1,19 @@
-import withRoot from './modules/withRoot';
+import withRoot from '../theme/withRoot';
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Field, Form, FormSpy } from 'react-final-form';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from './modules/components/Typography';
-import AppFooter from './modules/views/AppFooter';
-import AppBar from './modules/views/AppBar';
-import AppForm from './modules/views/AppForm';
-import { email, required } from './modules/form/validation';
-import RFTextField from './modules/form/RFTextField';
-import FormButton from './modules/form/FormButton';
-import FormFeedback from './modules/form/FormFeedback';
-import compose from './modules/utils/compose';
+import Link from '@material-ui/core/Link';
+import Typography from '../components/Typography';
+import AppFooter from '../components/AppFooter';
+import AppBar from '../components/AppBar';
+import AppForm from '../components/AppForm';
+import { email, required } from '../components/form/validation';
+import RFTextField from '../components/form/RFTextField';
+import FormButton from '../components/form/FormButton';
+import FormFeedback from '../components/form/FormFeedback';
+import compose from '../utils/compose';
 
 const styles = theme => ({
   form: {
@@ -26,7 +28,7 @@ const styles = theme => ({
   }
 });
 
-class ForgotPassword extends React.Component {
+class SignIn extends React.Component {
   state = {
     sent: false
   };
@@ -61,11 +63,18 @@ class ForgotPassword extends React.Component {
               marked="center"
               align="center"
             >
-              Mot de passe oublié ?
+              Connexion
             </Typography>
             <Typography variant="body2" align="center">
-              {'Entrez votre email ci-dessous et vous ' +
-                'recevrez un lien pour le réinitialiser.'}
+              {'Pas encore de compte ? '}
+              <Link
+                component={RouterLink}
+                to="/inscrire"
+                align="center"
+                underline="always"
+              >
+                Inscrivez-vous
+              </Link>
             </Typography>
           </React.Fragment>
           <Form
@@ -76,8 +85,8 @@ class ForgotPassword extends React.Component {
             {({ handleSubmit, submitting }) => (
               <form onSubmit={handleSubmit} className={classes.form} noValidate>
                 <Field
-                  autoFocus
                   autoComplete="email"
+                  autoFocus
                   component={RFTextField}
                   disabled={submitting || sent}
                   fullWidth
@@ -86,6 +95,18 @@ class ForgotPassword extends React.Component {
                   name="email"
                   required
                   size="large"
+                />
+                <Field
+                  fullWidth
+                  size="large"
+                  component={RFTextField}
+                  disabled={submitting || sent}
+                  required
+                  name="password"
+                  autoComplete="current-password"
+                  label="Mot de passe"
+                  type="password"
+                  margin="normal"
                 />
                 <FormSpy subscription={{ submitError: true }}>
                   {({ submitError }) =>
@@ -103,11 +124,16 @@ class ForgotPassword extends React.Component {
                   color="secondary"
                   fullWidth
                 >
-                  {submitting || sent ? 'En cours…' : 'Réinitialiser'}
+                  {submitting || sent ? 'En cours…' : 'Connexion'}
                 </FormButton>
               </form>
             )}
           </Form>
+          <Typography align="center">
+            <Link underline="always" component={RouterLink} to="/reinitialiser">
+              Mot de passe oublié ?
+            </Link>
+          </Typography>
         </AppForm>
         <AppFooter />
       </React.Fragment>
@@ -115,11 +141,11 @@ class ForgotPassword extends React.Component {
   }
 }
 
-ForgotPassword.propTypes = {
+SignIn.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
 export default compose(
   withRoot,
   withStyles(styles)
-)(ForgotPassword);
+)(SignIn);

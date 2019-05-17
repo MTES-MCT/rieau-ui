@@ -1,19 +1,17 @@
-import withRoot from '../../withRoot';
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Field, Form, FormSpy } from 'react-final-form';
 import { withStyles } from '@material-ui/core/styles';
-import Link from '@material-ui/core/Link';
-import AppFooter from '../../views/AppFooter';
-import AppBar from '../../views/AppBar';
-import { email, required } from '../../form/validation';
-import RFTextField from '../../form/RFTextField';
-import FormButton from '../../form/FormButton';
-import FormFeedback from '../../form/FormFeedback';
-import compose from '../../utils/compose';
-import Typography from '../../components/Typography';
-import AppForm from '../AppForm';
+import withRoot from '../theme/withRoot';
+import Typography from '../components/Typography';
+import AppFooter from '../components/AppFooter';
+import AppBar from '../components/AppBar';
+import AppForm from '../components/AppForm';
+import { email, required } from '../components/form/validation';
+import RFTextField from '../components/form/RFTextField';
+import FormButton from '../components/form/FormButton';
+import FormFeedback from '../components/form/FormFeedback';
+import compose from '../utils/compose';
 
 const styles = theme => ({
   form: {
@@ -28,7 +26,7 @@ const styles = theme => ({
   }
 });
 
-class Localiser extends React.Component {
+class ForgotPassword extends React.Component {
   state = {
     sent: false
   };
@@ -63,7 +61,11 @@ class Localiser extends React.Component {
               marked="center"
               align="center"
             >
-              Localiser
+              Mot de passe oublié ?
+            </Typography>
+            <Typography variant="body2" align="center">
+              {'Entrez votre email ci-dessous et vous ' +
+                'recevrez un lien pour le réinitialiser.'}
             </Typography>
           </React.Fragment>
           <Form
@@ -74,8 +76,8 @@ class Localiser extends React.Component {
             {({ handleSubmit, submitting }) => (
               <form onSubmit={handleSubmit} className={classes.form} noValidate>
                 <Field
-                  autoComplete="email"
                   autoFocus
+                  autoComplete="email"
                   component={RFTextField}
                   disabled={submitting || sent}
                   fullWidth
@@ -84,18 +86,6 @@ class Localiser extends React.Component {
                   name="email"
                   required
                   size="large"
-                />
-                <Field
-                  fullWidth
-                  size="large"
-                  component={RFTextField}
-                  disabled={submitting || sent}
-                  required
-                  name="password"
-                  autoComplete="current-password"
-                  label="Mot de passe"
-                  type="password"
-                  margin="normal"
                 />
                 <FormSpy subscription={{ submitError: true }}>
                   {({ submitError }) =>
@@ -113,16 +103,11 @@ class Localiser extends React.Component {
                   color="secondary"
                   fullWidth
                 >
-                  {submitting || sent ? 'En cours…' : 'Connexion'}
+                  {submitting || sent ? 'En cours…' : 'Réinitialiser'}
                 </FormButton>
               </form>
             )}
           </Form>
-          <Typography align="center">
-            <Link underline="always" component={RouterLink} to="/reinitialiser">
-              Mot de passe oublié ?
-            </Link>
-          </Typography>
         </AppForm>
         <AppFooter />
       </React.Fragment>
@@ -130,11 +115,11 @@ class Localiser extends React.Component {
   }
 }
 
-Localiser.propTypes = {
+ForgotPassword.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
 export default compose(
   withRoot,
   withStyles(styles)
-)(Localiser);
+)(ForgotPassword);
