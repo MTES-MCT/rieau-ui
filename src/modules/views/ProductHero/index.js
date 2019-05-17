@@ -36,8 +36,7 @@ function ProductHero(props) {
       </Paper>
       <Paper>
         <Typography color="inherit" align="center" variant="h5">
-          {`Déposer et suivre simplement sa demande d'autorisation
-          d'urbanisme en ligne.`}
+          {`Déposez et gérez votre déclaration préalable de travaux en toute simplicité.`}
         </Typography>
       </Paper>
       <div className={classes.localiser}>
