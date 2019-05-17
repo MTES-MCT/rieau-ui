@@ -62,7 +62,7 @@ Depuis le navigateur: [https://mtes-mct.github.io/permis-construire-facile-ui/](
 docker build --build-arg REACT_APP_DOMAIN=http://localhost:3000 --build-arg REACT_APP_BASENAME=/pcf2 -t permis-construire-facile-ui .
 ```
 
-Spécifier `REACT_APP_DOMAIN` si le site est installé sur un autre domaine que [http://localhost:3000](http://localhost:3000) par défaut et et `REACT_APP_BASENAME` si il est dans un sous un sous-dossier.
+Spécifier `REACT_APP_DOMAIN` si le site est installé sur un autre domaine que [http://localhost:3000](http://localhost:3000) par défaut et et `REACT_APP_BASENAME` si il est dans un sous un sous-dossier autre que `/` (e.g. `/pcf2`).
 
 * Run:
 

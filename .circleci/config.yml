@@ -1,0 +1,102 @@
+defaults: &defaults
+  #working_directory: ./circleci
+  docker:
+    - image: circleci/node:10.15.3-browsers
+
+version: 2.1
+jobs:
+  prepare:
+    <<: *defaults
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+      - run: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - persist_to_workspace:
+          root: .
+          paths:
+            - node_modules
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: npm run build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - build
+  check-vulnerabilities:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: npm audit
+  unit-tests:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: npm run test
+  lint:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: 
+          environment:
+            NODE_ENV: production
+          command: npm run lint
+  deploy-github:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: 
+          environment:
+            REACT_APP_BASENAME: /permis-construire-facile-ui
+            PUBLIC_URL: https://mtes-mct.github.io/permis-construire-facile-ui
+          command: npm run deploy
+
+workflows:
+  version: 2.1
+  weekly-dependency-check:
+    triggers:
+      - schedule:
+          cron: "0 0 * * 0" # every sunday at midnight
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - prepare:
+          requires: []
+      - check-vulnerabilities:
+          requires:
+            - prepare
+  build_accept_deploy:
+    jobs:
+      - prepare
+      - lint:
+          requires:
+            - prepare
+      - build:
+          requires:
+            - lint
+      - unit-tests:
+          requires:
+            - build
+      - deploy-github:
+          requires:
+            - unit-tests
