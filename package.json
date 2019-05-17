@@ -61,8 +61,10 @@
     "eslint-plugin-react": "^7.13.0",
     "gh-pages": "^2.0.1",
     "husky": "^2.3.0",
+    "jest-dom": "^3.2.2",
     "lint-staged": "^8.1.7",
     "prettier": "^1.17.1",
+    "react-testing-library": "^7.0.0",
     "source-map-explorer": "^1.8.0"
   }
 }
