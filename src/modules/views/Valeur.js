@@ -7,6 +7,7 @@ import Typography from '../components/Typography';
 import EuroSymbol from '@material-ui/icons/EuroSymbol';
 import Timer from '@material-ui/icons/Timer';
 import Timeline from '@material-ui/icons/Timeline';
+import Done from '@material-ui/icons/Done';
 
 const styles = theme => ({
   root: {
@@ -46,7 +47,7 @@ function Valeur(props) {
     <section className={classes.root}>
       <Container className={classes.container}>
         <Grid container spacing={1}>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={3}>
             <div className={classes.item}>
               <EuroSymbol className={classes.image} />
               <Typography variant="h6" className={classes.title}>
@@ -54,12 +55,12 @@ function Valeur(props) {
               </Typography>
               <Typography variant="h5">
                 {
-                  'Fini les impressions papiers, les multiples exemplaires et les courriers recommandés.'
+                  'Fini les impressions papiers en plusieurs exemplaires et les courriers recommandés.'
                 }
               </Typography>
             </div>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={3}>
             <div className={classes.item}>
               <Timer className={classes.image} />
               <Typography variant="h6" className={classes.title}>
@@ -72,7 +73,7 @@ function Valeur(props) {
               </Typography>
             </div>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={3}>
             <div className={classes.item}>
               <Timeline className={classes.image} />
               <Typography variant="h6" className={classes.title}>
@@ -81,6 +82,19 @@ function Valeur(props) {
               <Typography variant="h5">
                 {
                   "Suivre l'état de sa demande et échanger directement avec les instructeurs."
+                }
+              </Typography>
+            </div>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <div className={classes.item}>
+              <Done className={classes.image} />
+              <Typography variant="h6" className={classes.title}>
+                Plus efficace
+              </Typography>
+              <Typography variant="h5">
+                {
+                  'Se focaliser sur les déclarations préalables déposées par les particuliers qui représentent 70% des demandes.'
                 }
               </Typography>
             </div>

@@ -8,6 +8,7 @@ import Button from '../components/Button';
 import Typography from '../components/Typography';
 import Map from '@material-ui/icons/Map';
 import Edit from '@material-ui/icons/Edit';
+import AttachFile from '@material-ui/icons/AttachFile';
 import People from '@material-ui/icons/People';
 
 const styles = theme => ({
@@ -63,7 +64,7 @@ function CommentFaire(props) {
         </Typography>
         <div>
           <Grid container spacing={5}>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={3}>
               <div className={classes.item}>
                 <div className={classes.number}>1.</div>
                 <Map alt="map" className={classes.icon} />
@@ -72,20 +73,27 @@ function CommentFaire(props) {
                 </Typography>
               </div>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={3}>
               <div className={classes.item}>
                 <div className={classes.number}>2.</div>
                 <Edit alt="edit" className={classes.icon} />
                 <Typography variant="h5" align="center">
-                  <p>{'Préciser la nature du projet'}</p>
-                  <p>{'Préciser les surfaces habitables'}</p>
+                  <p>{`Préciser la nature du projet dans le cadre d'une déclaration préalable.`}</p>
+                </Typography>
+              </div>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <div className={classes.item}>
+                <div className={classes.number}>3.</div>
+                <AttachFile alt="pièces jointes" className={classes.icon} />
+                <Typography variant="h5" align="center">
                   <p>{'Déposer les pièces jointes (photos, plans, notices)'}</p>
                 </Typography>
               </div>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={3}>
               <div className={classes.item}>
-                <div className={classes.number}>3.</div>
+                <div className={classes.number}>4.</div>
                 <People alt="people" className={classes.icon} />
                 <Typography variant="h5" align="center">
                   {"Suivre l'avancement de l'instruction de la demande"}
@@ -100,9 +108,9 @@ function CommentFaire(props) {
           variant="contained"
           className={classes.button}
           component={RouterLink}
-          to="/connexion"
+          to="/localiser"
         >
-          Déposer
+          Localiser
         </Button>
       </Container>
     </section>

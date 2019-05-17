@@ -8,12 +8,13 @@ import './hero.css';
 
 const styles = theme => ({
   root: {
-    color: theme.palette.common.white,
+    flexGrow: 1,
+    color: theme.palette.primary,
     position: 'relative',
     display: 'flex',
     alignItems: 'center',
     [theme.breakpoints.up('sm')]: {
-      height: '80vh',
+      height: '50vh',
       minHeight: 500,
       maxHeight: 1300
     }
@@ -46,7 +47,7 @@ const styles = theme => ({
     zIndex: -2
   },
   arrowDown: {
-    fontSize: 48,
+    fontSize: 64,
     position: 'absolute',
     bottom: theme.spacing(4)
   }

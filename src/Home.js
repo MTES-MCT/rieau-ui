@@ -4,12 +4,12 @@ import AppFooter from './modules/views/AppFooter';
 import ProductHero from './modules/views/ProductHero';
 import Valeur from './modules/views/Valeur';
 import CommentFaire from './modules/views/CommentFaire';
-import AppAppBar from './modules/views/AppAppBar';
+import AppBar from './modules/views/AppBar';
 
 function Index() {
   return (
     <React.Fragment>
-      <AppAppBar />
+      <AppBar />
       <ProductHero />
       <Valeur />
       <CommentFaire />

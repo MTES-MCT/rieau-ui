@@ -7,6 +7,7 @@ import SignUp from './SignUp';
 import ForgotPassword from './ForgotPassword';
 import Aide from './modules/views/Aide';
 import Cgu from './modules/views/Cgu';
+import Localiser from './modules/views/Localiser';
 
 function Page() {
   return (
@@ -18,6 +19,7 @@ function Page() {
         <Route exact path="/" component={Home} />
         <Route path="/connexion" component={SignIn} />
         <Route path="/inscrire" component={SignUp} />
+        <Route path="/localiser" component={Localiser} />
         <Route path="/reinitialiser" component={ForgotPassword} />
         <Route path="/aide" component={Aide} />
         <Route path="/cgu" component={Cgu} />
