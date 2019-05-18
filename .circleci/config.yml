@@ -3,12 +3,9 @@ defaults: &defaults
   docker:
     - image: circleci/node:10.15.3-browsers
 
-version: 2.1
+version: 2
 jobs:
   prepare:
-    branches:
-      ignore:
-        - gh-pages
     <<: *defaults
     steps:
       - checkout
@@ -26,9 +23,6 @@ jobs:
           paths:
             - node_modules
   build:
-    branches:
-      ignore:
-        - gh-pages
     <<: *defaults
     steps:
       - checkout
@@ -40,9 +34,6 @@ jobs:
           paths:
             - build
   check-vulnerabilities:
-    branches:
-      ignore:
-        - gh-pages
     <<: *defaults
     steps:
       - checkout
@@ -50,9 +41,6 @@ jobs:
           at: .
       - run: npm audit
   unit-tests:
-    branches:
-      ignore:
-        - gh-pages
     <<: *defaults
     steps:
       - checkout
@@ -60,9 +48,6 @@ jobs:
           at: .
       - run: npm run test
   lint:
-    branches:
-      ignore:
-        - gh-pages
     <<: *defaults
     steps:
       - checkout
@@ -73,9 +58,6 @@ jobs:
             NODE_ENV: production
           command: npm run lint
   deploy-github:
-    branches:
-      ignore:
-        - gh-pages
     <<: *defaults
     steps:
       - checkout
@@ -92,7 +74,7 @@ jobs:
             npm run deploy
 
 workflows:
-  version: 2.1
+  version: 2
   weekly-dependency-check:
     triggers:
       - schedule:
