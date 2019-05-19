@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '../../../components/Typography';
-import ProductHeroLayout from './Layout';
+import HeroLayout from './Layout';
 import hero from './hero.jpg';
-import Localiser from './Localiser';
-import { Paper } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
+import Button from '../../../components/Button';
+import { Link as RouterLink } from 'react-router-dom';
 
 const styles = theme => ({
   button: {
@@ -22,11 +23,11 @@ const styles = theme => ({
   }
 });
 
-function ProductHero(props) {
+function Hero(props) {
   const { classes } = props;
 
   return (
-    <ProductHeroLayout>
+    <HeroLayout>
       {/* Increase the network loading priority of the background image. */}
       <img style={{ display: 'none' }} src={hero} alt="hero" />
       <Paper>
@@ -40,14 +41,22 @@ function ProductHero(props) {
         </Typography>
       </Paper>
       <div className={classes.localiser}>
-        <Localiser />
+        <Button
+          color="secondary"
+          variant="contained"
+          size="large"
+          component={RouterLink}
+          to="/aide"
+        >
+          {'Commencer'}
+        </Button>
       </div>
-    </ProductHeroLayout>
+    </HeroLayout>
   );
 }
 
-ProductHero.propTypes = {
+Hero.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(ProductHero);
+export default withStyles(styles)(Hero);

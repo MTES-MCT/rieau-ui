@@ -53,7 +53,7 @@ const styles = theme => ({
   }
 });
 
-function ProductHeroLayout(props) {
+function HeroLayout(props) {
   const { children, classes } = props;
 
   return (
@@ -68,9 +68,9 @@ function ProductHeroLayout(props) {
   );
 }
 
-ProductHeroLayout.propTypes = {
+HeroLayout.propTypes = {
   children: PropTypes.node.isRequired,
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(ProductHeroLayout);
+export default withStyles(styles)(HeroLayout);

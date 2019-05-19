@@ -4,7 +4,7 @@ import Box from '@material-ui/core/Box';
 import withRoot from '../../theme/withRoot';
 import Markdown from '../../components/Markdown';
 import Typography from '../../components/Typography';
-import AppBar from '../../components/AppBar';
+import AppAppBar from '../../components/AppAppBar';
 /* eslint import/no-webpack-loader-syntax: off */
 import cgu from '!raw-loader!./cgu.md';
 import AppFooter from '../../components/AppFooter';
@@ -12,7 +12,7 @@ import AppFooter from '../../components/AppFooter';
 function Help() {
   return (
     <React.Fragment>
-      <AppBar />
+      <AppAppBar />
       <Container>
         <Box mt={7} mb={12}>
           <Typography variant="h3" gutterBottom marked="center" align="center">

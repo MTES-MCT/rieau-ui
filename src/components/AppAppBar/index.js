@@ -3,10 +3,15 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Link as RouterLink } from 'react-router-dom';
 import logo from './marianne.png';
-import Typography from '../../components/Typography';
-import { Toolbar, AppBar as MuiAppBar, IconButton } from '@material-ui/core';
-import Button from '../../components/Button';
+import Typography from '../Typography';
+import Toolbar from '@material-ui/core/Toolbar';
+import AppBar from '@material-ui/core/AppBar';
+import IconButton from '@material-ui/core/IconButton';
+import Link from '@material-ui/core/Link';
+import Button from '../Button';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
+import { Hidden } from '@material-ui/core';
+import HamburgerMenu from './HamburgerMenu';
 
 const styles = theme => ({
   root: {
@@ -18,6 +23,12 @@ const styles = theme => ({
   },
   logo: {
     width: '80%'
+  },
+  menuButton: {
+    marginRight: theme.spacing(2)
+  },
+  menu: {
+    display: 'flex'
   }
 });
 
@@ -50,12 +61,13 @@ ChangeSecondaryButtonOnScroll.propTypes = {
   children: PropTypes.node.isRequired
 };
 
-function AppBar(props) {
+function AppAppBar(props) {
   const { classes } = props;
+
   return (
     <div className={classes.root}>
       <ChangeToolbarColorOnScroll {...props}>
-        <MuiAppBar position="fixed" elevation={0}>
+        <AppBar position="fixed" elevation={0}>
           <Toolbar>
             <IconButton
               color="inherit"
@@ -66,30 +78,39 @@ function AppBar(props) {
               <img src={logo} className={classes.logo} alt="accueil" />
             </IconButton>
             <div className={classes.root} />
-            <Typography color="primary" variant="h4">
-              {`Permis de construire facile`}
-            </Typography>
-            <div className={classes.root} />
-            <ChangeSecondaryButtonOnScroll {...props}>
-              <Button
-                color="secondary"
-                variant="contained"
-                size="large"
-                component={RouterLink}
-                to="/connexion"
-              >
-                {'Connexion'}
-              </Button>
-            </ChangeSecondaryButtonOnScroll>
+            <Hidden xsDown>
+              <Typography color="primary" variant="h4">
+                {`Permis de construire facile`}
+              </Typography>
+              <div className={classes.root} />
+              <Link component={RouterLink} to="/communes">
+                {`Communes`}
+              </Link>
+              <ChangeSecondaryButtonOnScroll {...props}>
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  size="large"
+                  component={RouterLink}
+                  to="/connexion"
+                >
+                  {'Connexion'}
+                </Button>
+              </ChangeSecondaryButtonOnScroll>
+            </Hidden>
+            <Hidden smUp>
+              <div className={classes.root} />
+              <HamburgerMenu />
+            </Hidden>
           </Toolbar>
-        </MuiAppBar>
+        </AppBar>
       </ChangeToolbarColorOnScroll>
     </div>
   );
 }
 
-AppBar.propTypes = {
+AppAppBar.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(AppBar);
+export default withStyles(styles)(AppAppBar);

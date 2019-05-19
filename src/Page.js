@@ -8,6 +8,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import Aide from './pages/Aide';
 import Cgu from './pages/Cgu';
 import Localiser from './pages/Localiser';
+import Communes from './pages/Communes';
 
 function Page() {
   return (
@@ -18,6 +19,7 @@ function Page() {
       <Router basename={process.env.REACT_APP_BASENAME}>
         <Route exact path="/" component={Home} />
         <Route path="/connexion" component={SignIn} />
+        <Route path="/communes" component={Communes} />
         <Route path="/inscrire" component={SignUp} />
         <Route path="/localiser" component={Localiser} />
         <Route path="/reinitialiser" component={ForgotPassword} />

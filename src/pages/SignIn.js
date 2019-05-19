@@ -7,7 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
 import Typography from '../components/Typography';
 import AppFooter from '../components/AppFooter';
-import AppBar from '../components/AppBar';
+import AppAppBar from '../components/AppAppBar';
 import AppForm from '../components/AppForm';
 import { email, required } from '../components/form/validation';
 import RFTextField from '../components/form/RFTextField';
@@ -54,7 +54,7 @@ class SignIn extends React.Component {
 
     return (
       <React.Fragment>
-        <AppBar />
+        <AppAppBar />
         <AppForm>
           <React.Fragment>
             <Typography

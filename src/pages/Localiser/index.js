@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
 import withRoot from '../../theme/withRoot';
 import AppFooter from '../../components/AppFooter';
-import AppBar from '../../components/AppBar';
+import AppAppBar from '../../components/AppAppBar';
 import { email, required } from '../../components/form/validation';
 import RFTextField from '../../components/form/RFTextField';
 import FormButton from '../../components/form/FormButton';
@@ -54,7 +54,7 @@ class Localiser extends React.Component {
 
     return (
       <React.Fragment>
-        <AppBar />
+        <AppAppBar />
         <AppForm>
           <React.Fragment>
             <Typography
