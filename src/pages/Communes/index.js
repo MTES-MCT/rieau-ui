@@ -13,13 +13,13 @@ import IconButton from '@material-ui/core/IconButton';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
 import Typography from '../../components/Typography';
 import Button from '../../components/Button';
-import { Link as RouterLink } from 'react-router-dom';
 import AppFooter from '../../components/AppFooter';
 import AppAppBar from '../../components/AppAppBar';
 import withRoot from '../../theme/withRoot';
+import { FaGlobe } from 'react-icons/fa';
+import LazyLoad from 'react-lazyload';
 
 const styles = theme => ({
   root: {
@@ -39,12 +39,11 @@ const styles = theme => ({
     alignItems: 'center'
   },
   gridList: {
-    flexWrap: 'nowrap',
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)'
   },
   imgTitle: {
-    color: theme.palette.primary.main
+    color: theme.palette.common.white
   },
   titleBar: {
     background:
@@ -61,31 +60,38 @@ function Communes(props) {
   const tileData = [
     {
       img: andeville,
-      title: 'Andeville'
+      title: 'Andeville',
+      url: 'https://www.andeville.fr/'
     },
     {
       img: baziege,
-      title: 'Baziège'
+      title: 'Baziège',
+      url: 'https://www.ville-baziege.fr'
     },
     {
       img: castanetTolosan,
-      title: 'Castanet-Tolosan'
+      title: 'Castanet-Tolosan',
+      url: 'https://www.castanet-tolosan.fr'
     },
     {
       img: laCreche,
-      title: 'La Crèche'
+      title: 'La Crèche',
+      url: 'https://www.ville-lacreche.fr'
     },
     {
       img: mours,
-      title: 'Mours'
+      title: 'Mours',
+      url: 'http://www.ville-mours.fr/'
     },
     {
       img: nogentSurOise,
-      title: 'Nogent-sur-Oise'
+      title: 'Nogent-sur-Oise',
+      url: 'www.nogentsuroise.fr'
     },
     {
       img: saintTropez,
-      title: 'Saint-Tropez'
+      title: 'Saint-Tropez',
+      url: 'https://www.saint-tropez.fr'
     }
   ];
 
@@ -103,10 +109,12 @@ function Communes(props) {
             {`Communes partenaires`}
           </Typography>
           <div className={classes.root}>
-            <GridList className={classes.gridList} cols={2.5}>
+            <GridList className={classes.gridList} cols={3}>
               {tileData.map(tile => (
                 <GridListTile key={tile.img}>
-                  <img src={tile.img} alt={tile.title} />
+                  <LazyLoad>
+                    <img src={tile.img} alt={tile.title} />
+                  </LazyLoad>
                   <GridListTileBar
                     title={tile.title}
                     classes={{
@@ -114,8 +122,8 @@ function Communes(props) {
                       title: classes.imgTitle
                     }}
                     actionIcon={
-                      <IconButton>
-                        <StarBorderIcon className={classes.imgTitle} />
+                      <IconButton href={tile.url}>
+                        <FaGlobe className={classes.imgTitle} />
                       </IconButton>
                     }
                   />
@@ -127,10 +135,9 @@ function Communes(props) {
             color="secondary"
             size="large"
             variant="contained"
-            component={RouterLink}
-            to="/rejoindre"
+            href="mailto:ads-relations-collectivites@developpement-durable.gouv.fr?Subject=Rejoindre%20permis%20construire%20facile"
           >
-            Rejoindre
+            {`Rejoignez-nous`}
           </Button>
         </Container>
       </section>
