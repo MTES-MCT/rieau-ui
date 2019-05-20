@@ -11,7 +11,7 @@
     "@material-ui/core": "^4.0.0-beta.2",
     "@material-ui/icons": "^4.0.0-beta.0",
     "final-form": "^4.12.0",
-    "markdown-to-jsx": "^6.9.4",
+    "mdx.macro": "^0.2.8",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-final-form": "^4.1.0",
@@ -64,7 +64,6 @@
     "jest-dom": "^3.2.2",
     "lint-staged": "^8.1.7",
     "prettier": "^1.17.1",
-    "raw-loader": "^2.0.0",
     "react-testing-library": "^7.0.0",
     "source-map-explorer": "^1.8.0"
   }
