@@ -16,6 +16,7 @@
     "react-dom": "^16.8.6",
     "react-final-form": "^4.1.0",
     "react-icons": "^3.7.0",
+    "react-lazyload": "^2.5.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1"
   },

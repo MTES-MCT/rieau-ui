@@ -3,11 +3,9 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Link as RouterLink } from 'react-router-dom';
 import logo from './marianne.png';
-import Typography from '../Typography';
 import Toolbar from '@material-ui/core/Toolbar';
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
-import Link from '@material-ui/core/Link';
 import Button from '../Button';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import { Hidden } from '@material-ui/core';
@@ -48,6 +46,19 @@ ChangeToolbarColorOnScroll.propTypes = {
   children: PropTypes.node.isRequired
 };
 
+function ChangePrimaryButtonOnScroll(props) {
+  const { children } = props;
+  const trigger = useScrollTrigger();
+
+  return React.cloneElement(children, {
+    color: trigger ? 'secondary' : 'primary'
+  });
+}
+
+ChangePrimaryButtonOnScroll.propTypes = {
+  children: PropTypes.node.isRequired
+};
+
 function ChangeSecondaryButtonOnScroll(props) {
   const { children } = props;
   const trigger = useScrollTrigger();
@@ -79,18 +90,23 @@ function AppAppBar(props) {
             </IconButton>
             <div className={classes.root} />
             <Hidden xsDown>
-              <Typography color="primary" variant="h4">
-                {`Permis de construire facile`}
-              </Typography>
               <div className={classes.root} />
-              <Link component={RouterLink} to="/communes">
-                {`Communes`}
-              </Link>
+              <ChangePrimaryButtonOnScroll {...props}>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  size="medium"
+                  component={RouterLink}
+                  to="/communes"
+                >
+                  {'Communes'}
+                </Button>
+              </ChangePrimaryButtonOnScroll>
               <ChangeSecondaryButtonOnScroll {...props}>
                 <Button
                   color="secondary"
                   variant="contained"
-                  size="large"
+                  size="medium"
                   component={RouterLink}
                   to="/connexion"
                 >
