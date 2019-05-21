@@ -8,7 +8,38 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import IconButton from '@material-ui/core/IconButton';
 
+const StyledMenu = withStyles({
+  paper: {
+    border: '1px solid #d3d4d5'
+  }
+})(props => (
+  <Menu
+    elevation={0}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'center'
+    }}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'center'
+    }}
+    {...props}
+  />
+));
+
 const styles = theme => ({
+  root: {
+    '&:focus': {
+      backgroundColor: theme.palette.primary.main,
+      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+        color: theme.palette.common.white
+      }
+    }
+  },
+  paper: {
+    border: '1px solid #d3d4d5'
+  },
   menuButton: {
     marginRight: theme.spacing(2)
   },
@@ -37,7 +68,7 @@ function HamburgerMenu(props) {
   }
 
   return (
-    <div>
+    <div className={classes.root}>
       <IconButton
         edge="start"
         className={classes.menuButton}
@@ -49,7 +80,7 @@ function HamburgerMenu(props) {
       >
         <MenuIcon />
       </IconButton>
-      <Menu
+      <StyledMenu
         className={classes.menu}
         id="hamburger-menu"
         anchorEl={anchorEl}
@@ -80,7 +111,7 @@ function HamburgerMenu(props) {
             {`Connexion`}
           </ListItemLink>
         </List>
-      </Menu>
+      </StyledMenu>
     </div>
   );
 }
