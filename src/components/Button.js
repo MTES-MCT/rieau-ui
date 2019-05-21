@@ -8,8 +8,7 @@ export default withStyles(theme => ({
     fontSize: theme.typography.pxToRem(12),
     boxShadow: 'none',
     '&:hover, &:active, &:focus': {
-      boxShadow: 'none',
-      transform: 'scale(1.2)'
+      boxShadow: 'none'
     }
   },
   sizeSmall: {
