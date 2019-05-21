@@ -1,4 +1,6 @@
 # Permis construire facile UI
+[![CircleCI](https://circleci.com/gh/MTES-MCT/permis-construire-facile-ui/tree/master.svg?style=svg)](https://circleci.com/gh/MTES-MCT/permis-construire-facile-ui/tree/master)
+
 > Frontend de permis construire facile
 
 ## Développement

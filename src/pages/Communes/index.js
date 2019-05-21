@@ -15,6 +15,7 @@ import Button from '../../components/Button';
 import AppFooter from '../../components/AppFooter';
 import AppAppBar from '../../components/AppAppBar';
 import withRoot from '../../theme/withRoot';
+import compose from '../../utils/compose';
 
 const styles = theme => ({
   root: {
@@ -219,4 +220,7 @@ Communes.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(withRoot(Communes));
+export default compose(
+  withRoot,
+  withStyles(styles)
+)(Communes);
