@@ -91,36 +91,36 @@ workflows:
             - prepare
   build_accept_deploy:
     jobs:
-      - prepare
+      - prepare:
           filters:
-              branches:
-                only:
-                  - master
+            branches:
+              only:
+                - master
       - lint:
           requires:
             - prepare
           filters:
-              branches:
-                only:
-                  - master
+            branches:
+              only:
+                - master
       - build:
           requires:
             - lint
           filters:
-              branches:
-                only:
-                  - master
+            branches:
+              only:
+                - master
       - unit-tests:
           requires:
             - build
           filters:
-              branches:
-                only:
-                  - master
+            branches:
+              only:
+                - master
       - deploy-github:
           requires:
             - unit-tests
           filters:
-              branches:
-                only:
-                  - master
+            branches:
+              only:
+                - master
