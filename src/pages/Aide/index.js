@@ -18,7 +18,7 @@ function Help() {
           <Typography variant="h3" gutterBottom marked="center" align="center">
             Aide
           </Typography>
-          <Suspense fallback={<div>Chragement en cours...</div>}>
+          <Suspense fallback={<div>Chargement en cours...</div>}>
             <Faq />
           </Suspense>
         </Box>
