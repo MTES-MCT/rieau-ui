@@ -18,14 +18,14 @@ jobs:
       - run: npm ci
       - save_cache:
           paths:
-            - ~/.cache
-            - ~/.npm
+            - .cache
+            - .npm
           key: v1-dependencies-{{ checksum "package.json" }}
       - persist_to_workspace:
           root: .
           paths:
-            - ~/.cache
-            - ~/.npm
+            - .cache
+            - .npm
   build:
     <<: *defaults
     steps:
