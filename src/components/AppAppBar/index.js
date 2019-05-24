@@ -109,6 +109,7 @@ function AppAppBar(props) {
                   size="medium"
                   component={RouterLink}
                   to="/localiser"
+                  data-cy="appbar-localiser-btn"
                 >
                   {'Localiser'}
                 </Button>

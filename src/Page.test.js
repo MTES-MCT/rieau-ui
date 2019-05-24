@@ -68,6 +68,11 @@ test('rendering Communes component', () => {
   expect(queryAllByText('Communes')).toBeTruthy();
 });
 
+test('rendering Localiser component', () => {
+  const route = '/localiser';
+  const { queryAllByText } = renderWithRouter(<Localiser />, { route });
+  expect(queryAllByText('Localiser')).toBeTruthy();
+});
 test('rendering Home component', () => {
   const route = '/';
   const { queryAllByText } = renderWithRouter(<Home />, { route });

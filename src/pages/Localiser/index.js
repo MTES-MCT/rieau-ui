@@ -66,7 +66,7 @@ class Localiser extends React.Component {
     return (
       <React.Fragment>
         <AppAppBar />
-        <Container className={classes.containerMap}>
+        <Container className={classes.containerMap} data-cy="leaflet-map">
           <React.Fragment>
             <LeafletMap
               onViewportChanged={this.onViewportChanged}

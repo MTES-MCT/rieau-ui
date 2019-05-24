@@ -33,10 +33,13 @@
     "lint": "eslint src/",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test:unit": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build -m 'Deploy in Github pages [ci skip]'"
+    "deploy": "gh-pages -d build -m 'Deploy in Github pages [ci skip]'",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "test:e2e": "cypress run"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -66,6 +69,7 @@
   },
   "devDependencies": {
     "babel-loader": "^8.0.5",
+    "cypress": "^3.3.1",
     "eslint": "^5.16.0",
     "eslint-plugin-react": "^7.13.0",
     "gh-pages": "^2.0.1",

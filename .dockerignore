@@ -4,3 +4,4 @@ build/
 .gitignore
 .git/
 package-lock.json
+cypress/

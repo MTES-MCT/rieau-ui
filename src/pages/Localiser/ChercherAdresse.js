@@ -47,6 +47,7 @@ function renderInputComponent(inputProps) {
   return (
     <TextField
       fullWidth
+      data-cy="chercher-adresse-input"
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">

@@ -38,6 +38,32 @@ npm run build
 npm run analyze
 ```
 
+### Tests unitaires
+
+```
+npm run test:unit
+```
+
+### Tests end to end
+
+```
+npm run cypress:open
+```
+
+Ouvre le studio [Cypress](https://cypress.io)
+
+```
+npm run cypress:run
+```
+
+ou
+
+```
+npm run test:e2e
+```
+
+Exécute les tests et enregistre les videos et screenshots.
+
 ### Pour aller plus loin
 
 * [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).

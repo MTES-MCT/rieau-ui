@@ -77,6 +77,7 @@ function HamburgerMenu(props) {
         aria-owns={anchorEl ? 'hamburger-menu' : undefined}
         aria-haspopup="true"
         onClick={handleClick}
+        data-cy="hamburger-menu"
       >
         <MenuIcon />
       </IconButton>
@@ -100,6 +101,7 @@ function HamburgerMenu(props) {
             component={RouterLink}
             to="/localiser"
             onClick={handleClose}
+            data-cy="hamburger-menu-localiser"
           >
             {`Localiser`}
           </ListItemLink>

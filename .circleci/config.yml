@@ -46,7 +46,18 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
-      - run: npm run test
+      - run: npm run test:unit
+  e2e-tests:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: npm run test:e2e
+      - store_artifacts:
+          path: cypress/videos
+      - store_artifacts:
+          path: cypress/screenshots
   lint:
     <<: *defaults
     steps:
@@ -101,6 +112,9 @@ workflows:
       - unit-tests:
           requires:
             - build
-      - deploy-github:
+      - e2e-tests:
           requires:
             - unit-tests
+      - deploy-github:
+          requires:
+            - e2e-tests
