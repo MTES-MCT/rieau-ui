@@ -60,7 +60,6 @@ jobs:
       - checkout
       - attach_workspace:
           at: '~'
-      - run: npm start & wait-on http://localhost:3000
       - run: npm run test:e2e
       - store_artifacts:
           path: cypress/videos

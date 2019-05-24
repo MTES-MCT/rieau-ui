@@ -39,7 +39,7 @@
     "deploy": "gh-pages -d build -m 'Deploy in Github pages [ci skip]'",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "test:e2e": "cypress run"
+    "test:e2e": "start-server-and-test start http://localhost:3000 cypress:run"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -79,6 +79,6 @@
     "prettier": "^1.17.1",
     "react-testing-library": "^7.0.1",
     "source-map-explorer": "^1.8.0",
-    "wait-on": "^3.2.0"
+    "start-server-and-test": "^1.9.0"
   }
 }
