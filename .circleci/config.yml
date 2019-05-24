@@ -13,16 +13,19 @@ jobs:
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
+          # default if no checksum found
+          - v1-dependencies-
       - run: npm install
       - save_cache:
           paths:
             - node_modules
+            - .cache
           key: v1-dependencies-{{ checksum "package.json" }}
       - persist_to_workspace:
           root: .
           paths:
             - node_modules
-            - .cache/Cypress
+            - .cache
   build:
     <<: *defaults
     steps:
