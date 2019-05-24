@@ -10,12 +10,12 @@ import nogentSurOise from './nogent-sur-oise.jpg';
 import saintTropez from './saint-tropez.jpg';
 import Container from '@material-ui/core/Container';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import Typography from '../../components/Typography';
-import Button from '../../components/Button';
-import AppFooter from '../../components/AppFooter';
-import AppAppBar from '../../components/AppAppBar';
-import withRoot from '../../theme/withRoot';
-import compose from '../../utils/compose';
+import Typography from 'components/Typography';
+import Button from 'components/Button';
+import AppFooter from 'components/AppFooter';
+import AppAppBar from 'components/AppAppBar';
+import withRoot from 'theme/withRoot';
+import compose from 'utils/compose';
 
 const styles = theme => ({
   root: {

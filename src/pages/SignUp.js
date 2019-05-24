@@ -5,16 +5,16 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import { Field, Form, FormSpy } from 'react-final-form';
-import withRoot from '../theme/withRoot';
-import Typography from '../components/Typography';
-import AppFooter from '../components/AppFooter';
-import AppAppBar from '../components/AppAppBar';
-import AppForm from '../components/AppForm';
-import { email, required } from '../components/form/validation';
-import RFTextField from '../components/form/RFTextField';
-import FormButton from '../components/form/FormButton';
-import FormFeedback from '../components/form/FormFeedback';
-import compose from '../utils/compose';
+import withRoot from 'theme/withRoot';
+import Typography from 'components/Typography';
+import AppFooter from 'components/AppFooter';
+import AppAppBar from 'components/AppAppBar';
+import AppForm from 'components/AppForm';
+import { email, required } from 'components/form/validation';
+import RFTextField from 'components/form/RFTextField';
+import FormButton from 'components/form/FormButton';
+import FormFeedback from 'components/form/FormFeedback';
+import compose from 'utils/compose';
 
 const styles = theme => ({
   form: {

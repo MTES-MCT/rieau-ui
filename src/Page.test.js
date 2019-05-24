@@ -3,11 +3,11 @@ import Page from './Page';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import { render, fireEvent } from 'react-testing-library';
-import Localiser from './pages/Localiser';
-import Communes from './pages/Communes';
-import Cgu from './pages/Cgu';
-import Aide from './pages/Aide';
-import Home from './pages/Home';
+import Localiser from 'pages/Localiser';
+import Communes from 'pages/Communes';
+import Cgu from 'pages/Cgu';
+import Aide from 'pages/Aide';
+import Home from 'pages/Home';
 
 function renderWithRouter(
   ui,

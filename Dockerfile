@@ -3,6 +3,7 @@ FROM node:10.15-alpine as build-stage
 LABEL maintainer="tristan.robert.44@gmail.com"
 WORKDIR /app
 COPY package.json /app
+COPY jsconfig.json /app
 COPY src/ /app/src
 COPY public/ /app/public
 COPY manifest.json /app

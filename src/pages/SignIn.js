@@ -1,19 +1,19 @@
-import withRoot from '../theme/withRoot';
+import withRoot from 'theme/withRoot';
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Field, Form, FormSpy } from 'react-final-form';
 import { withStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
-import Typography from '../components/Typography';
-import AppFooter from '../components/AppFooter';
-import AppAppBar from '../components/AppAppBar';
-import AppForm from '../components/AppForm';
-import { email, required } from '../components/form/validation';
-import RFTextField from '../components/form/RFTextField';
-import FormButton from '../components/form/FormButton';
-import FormFeedback from '../components/form/FormFeedback';
-import compose from '../utils/compose';
+import Typography from 'components/Typography';
+import AppFooter from 'components/AppFooter';
+import AppAppBar from 'components/AppAppBar';
+import AppForm from 'components/AppForm';
+import { email, required } from 'components/form/validation';
+import RFTextField from 'components/form/RFTextField';
+import FormButton from 'components/form/FormButton';
+import FormFeedback from 'components/form/FormFeedback';
+import compose from 'utils/compose';
 
 const styles = theme => ({
   form: {

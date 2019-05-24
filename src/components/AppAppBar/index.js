@@ -6,7 +6,7 @@ import logo from './marianne.png';
 import Toolbar from '@material-ui/core/Toolbar';
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
-import Button from '../Button';
+import Button from 'components/Button';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import { Hidden } from '@material-ui/core';
 import HamburgerMenu from './HamburgerMenu';

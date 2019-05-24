@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from './Typography';
 import Button from './Button';
-import compose from '../utils/compose';
+import compose from 'utils/compose';
 import { FaGithub, FaTwitter, FaGlobe } from 'react-icons/fa';
 import { IconButton } from '@material-ui/core';
 
