@@ -60,6 +60,10 @@ class Localiser extends React.Component {
     this.setState({ viewport: { center: [lat, lng], zoom: 13 } });
   };
 
+  onClickSelectAddress = address => {
+    this.setState({ viewport: { center: address.position, zoom: 13 } });
+  };
+
   render() {
     const { classes } = this.props;
     const { viewport } = this.state;
@@ -81,7 +85,10 @@ class Localiser extends React.Component {
                 url={basemapUrl}
               />
               <Controls onClickReset={this.onClickReset} />
-              <CommunesMap onClickMarker={this.onClickMarker} />
+              <CommunesMap
+                onClickMarker={this.onClickMarker}
+                onClickSelectAddress={this.onClickSelectAddress}
+              />
             </LeafletMap>
           </React.Fragment>
         </Container>

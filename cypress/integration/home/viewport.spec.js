@@ -3,6 +3,7 @@
 context('Viewport', () => {
   beforeEach(() => {
     cy.visit('/')
+    cy.wait(500)
   })
 
   it('cy.viewport() - set the viewport size and dimension', () => {

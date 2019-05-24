@@ -53,6 +53,7 @@ npm run cypress:open
 Ouvre le studio [Cypress](https://cypress.io)
 
 ```
+npm start
 npm run cypress:run
 ```
 

@@ -19,7 +19,7 @@ const styles = theme => ({
   }
 });
 
-function ChercherParcelles(props) {
+function SelectionnerParcelles(props) {
   const { classes } = props;
   return (
     <Paper className={classes.root}>
@@ -31,8 +31,8 @@ function ChercherParcelles(props) {
   );
 }
 
-ChercherParcelles.propTypes = {
+SelectionnerParcelles.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(ChercherParcelles);
+export default withStyles(styles)(SelectionnerParcelles);

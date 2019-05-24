@@ -136,6 +136,13 @@ class ChercherAddresse extends React.Component {
     this.setState({ adresses: [] });
   };
 
+  onSuggestionSelected = (
+    event,
+    { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }
+  ) => {
+    this.props.onClickSelectAddress(suggestion.position);
+  };
+
   getSuggestionValue(suggestion) {
     return suggestion.label;
   }
@@ -172,6 +179,7 @@ class ChercherAddresse extends React.Component {
           shouldRenderSuggestions={this.shouldRenderSuggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
           onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          onSuggestionSelected={this.onSuggestionSelected}
           getSuggestionValue={this.getSuggestionValue}
           renderSuggestion={renderSuggestion}
           renderInputComponent={renderInputComponent}
@@ -190,7 +198,8 @@ class ChercherAddresse extends React.Component {
 
 ChercherAddresse.propTypes = {
   classes: PropTypes.object,
-  commune: PropTypes.object.isRequired
+  commune: PropTypes.object.isRequired,
+  onClickSelectAddress: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(ChercherAddresse);

@@ -35,7 +35,7 @@ const COMMUNES = [
 ];
 
 function CommunePopupMarker(props) {
-  const { classes, commune, onClickMarker } = props;
+  const { classes, commune, onClickMarker, onClickSelectAddress } = props;
   return (
     <Marker position={commune.position} onClick={onClickMarker}>
       <Popup maxWidth={400}>
@@ -51,7 +51,11 @@ function CommunePopupMarker(props) {
           >
             {`Chercher une adresse:`}
           </Typography>
-          <ChercherAddresse className={classes.searchInput} commune={commune} />
+          <ChercherAddresse
+            className={classes.searchInput}
+            commune={commune}
+            onClickSelectAddress={onClickSelectAddress}
+          />
         </Container>
       </Popup>
     </Marker>
@@ -60,7 +64,8 @@ function CommunePopupMarker(props) {
 CommunePopupMarker.propTypes = {
   commune: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
-  onClickMarker: PropTypes.func.isRequired
+  onClickMarker: PropTypes.func.isRequired,
+  onClickSelectAddress: PropTypes.func.isRequired
 };
 
 function CommunesMarkersList(props) {
