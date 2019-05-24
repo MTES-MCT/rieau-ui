@@ -102,6 +102,17 @@ function AppAppBar(props) {
                   {'Communes'}
                 </Button>
               </ChangePrimaryButtonOnScroll>
+              <ChangePrimaryButtonOnScroll {...props}>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  size="medium"
+                  component={RouterLink}
+                  to="/localiser"
+                >
+                  {'Localiser'}
+                </Button>
+              </ChangePrimaryButtonOnScroll>
               <ChangeSecondaryButtonOnScroll {...props}>
                 <Button
                   color="secondary"

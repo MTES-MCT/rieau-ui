@@ -98,6 +98,13 @@ function HamburgerMenu(props) {
         <List>
           <ListItemLink
             component={RouterLink}
+            to="/localiser"
+            onClick={handleClose}
+          >
+            {`Localiser`}
+          </ListItemLink>
+          <ListItemLink
+            component={RouterLink}
             to="/communes"
             onClick={handleClose}
           >
