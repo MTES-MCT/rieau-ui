@@ -50,12 +50,6 @@ it('landing on a bad page', () => {
   expect(container.innerHTML).toMatch('');
 });
 
-test('rendering Localiser component', () => {
-  const route = '/localiser';
-  const { queryAllByText } = renderWithRouter(<Localiser />, { route });
-  expect(queryAllByText('Localiser')).toBeTruthy();
-});
-
 test('rendering Aide component', () => {
   const route = '/aide';
   const { queryAllByText } = renderWithRouter(<Aide />, { route });

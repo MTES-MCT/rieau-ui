@@ -13,7 +13,6 @@ import Search from '@material-ui/icons/Search';
 
 const styles = theme => ({
   root: {
-    // height: 250,
     flexGrow: 1
   },
   container: {
