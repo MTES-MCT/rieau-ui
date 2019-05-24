@@ -15,17 +15,17 @@ jobs:
           - v1-dependencies-{{ checksum "package.json" }}
           # default if no checksum found
           - v1-dependencies-
-      - run: npm install
+      - run: npm ci
       - save_cache:
           paths:
-            - node_modules
-            - .cache
+            - ~/.cache
+            - ~/.npm
           key: v1-dependencies-{{ checksum "package.json" }}
       - persist_to_workspace:
           root: .
           paths:
-            - node_modules
-            - .cache
+            - ~/.cache
+            - ~/.npm
   build:
     <<: *defaults
     steps:
