@@ -102,7 +102,7 @@ workflows:
             - prepare
   build_accept_deploy:
     jobs:
-      - prepare:
+      - prepare
       - lint:
           requires:
             - prepare
