@@ -12,7 +12,6 @@
     "@material-ui/icons": "^4.0.0",
     "autosuggest-highlight": "^3.1.1",
     "final-form": "^4.13.0",
-    "geojson-world-map": "0.0.2",
     "leaflet": "^1.5.1",
     "lodash": "^4.17.11",
     "mdx.macro": "^0.2.8",
@@ -36,7 +35,7 @@
     "test:unit": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build -m 'Deploy in Github pages [ci skip]'",
+    "deploy": "gh-pages -d build -m 'Deploy on Github pages [ci skip]'",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "test:e2e": "start-server-and-test start http://localhost:3000 cypress:run"
@@ -74,11 +73,11 @@
     "eslint-plugin-react": "^7.13.0",
     "gh-pages": "^2.0.1",
     "husky": "^2.3.0",
-    "jest-dom": "^3.2.2",
+    "jest-dom": "^3.4.0",
     "lint-staged": "^8.1.7",
     "prettier": "^1.17.1",
     "react-testing-library": "^7.0.1",
     "source-map-explorer": "^1.8.0",
-    "start-server-and-test": "^1.9.0"
+    "start-server-and-test": "^1.9.1"
   }
 }
