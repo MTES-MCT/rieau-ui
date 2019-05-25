@@ -4,7 +4,7 @@ import AppAppBar from 'components/AppAppBar';
 import AppFooter from 'components/AppFooter';
 import withRoot from 'theme/withRoot';
 
-function NotFound({ location }) {
+function NotFound() {
   return (
     <React.Fragment>
       <AppAppBar />

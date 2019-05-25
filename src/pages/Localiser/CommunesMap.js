@@ -65,7 +65,7 @@ CommunePopupMarker.propTypes = {
   commune: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   onClickMarker: PropTypes.func.isRequired,
-  onClickSelectAddress: PropTypes.func.isRequired
+  onClickSelectAddress: PropTypes.func
 };
 
 function CommunesMarkersList(props) {
