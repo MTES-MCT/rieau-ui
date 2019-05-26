@@ -3,7 +3,7 @@
 context('Viewport', () => {
   beforeEach(() => {
     cy.visit('/')
-    cy.reload() // https://github.com/facebook/create-react-app/issues/5862
+    cy.reload() // https://github.com/facebook/create-react-app/issues/5809
   })
 
   it('cy.viewport() - set the viewport size and dimension', () => {

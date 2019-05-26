@@ -7,7 +7,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
 import Button from 'components/Button';
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import { Hidden } from '@material-ui/core';
 import HamburgerMenu from './HamburgerMenu';
 
@@ -30,109 +29,57 @@ const styles = theme => ({
   }
 });
 
-function ChangeToolbarColorOnScroll(props) {
-  const { children } = props;
-  const trigger = useScrollTrigger({
-    disableHysteresis: true,
-    threshold: 0
-  });
-
-  return React.cloneElement(children, {
-    color: trigger ? 'secondary' : 'primary'
-  });
-}
-
-ChangeToolbarColorOnScroll.propTypes = {
-  children: PropTypes.node.isRequired
-};
-
-function ChangePrimaryButtonOnScroll(props) {
-  const { children } = props;
-  const trigger = useScrollTrigger();
-
-  return React.cloneElement(children, {
-    color: trigger ? 'secondary' : 'primary'
-  });
-}
-
-ChangePrimaryButtonOnScroll.propTypes = {
-  children: PropTypes.node.isRequired
-};
-
-function ChangeSecondaryButtonOnScroll(props) {
-  const { children } = props;
-  const trigger = useScrollTrigger();
-
-  return React.cloneElement(children, {
-    color: trigger ? 'primary' : 'secondary'
-  });
-}
-
-ChangeSecondaryButtonOnScroll.propTypes = {
-  children: PropTypes.node.isRequired
-};
-
 function AppAppBar(props) {
   const { classes } = props;
 
   return (
     <div className={classes.root}>
-      <ChangeToolbarColorOnScroll {...props}>
-        <AppBar position="fixed" elevation={0}>
-          <Toolbar>
-            <IconButton
-              color="inherit"
+      <AppBar position="fixed" elevation={0} color="secondary">
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            size="small"
+            component={RouterLink}
+            to="/"
+          >
+            <img src={logo} className={classes.logo} alt="accueil" />
+          </IconButton>
+          <div className={classes.root} />
+          <Hidden xsDown>
+            <div className={classes.root} />
+            <Button
+              color="primary"
               size="small"
               component={RouterLink}
-              to="/"
+              to="/communes"
             >
-              <img src={logo} className={classes.logo} alt="accueil" />
-            </IconButton>
+              {'Communes'}
+            </Button>
+            <Button
+              color="primary"
+              size="small"
+              component={RouterLink}
+              to="/localiser"
+              data-cy="appbar-localiser-btn"
+            >
+              {'Localiser'}
+            </Button>
+            <Button
+              color="primary"
+              variant="contained"
+              size="medium"
+              component={RouterLink}
+              to="/connexion"
+            >
+              {'Connexion'}
+            </Button>
+          </Hidden>
+          <Hidden smUp>
             <div className={classes.root} />
-            <Hidden xsDown>
-              <div className={classes.root} />
-              <ChangePrimaryButtonOnScroll {...props}>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  size="medium"
-                  component={RouterLink}
-                  to="/communes"
-                >
-                  {'Communes'}
-                </Button>
-              </ChangePrimaryButtonOnScroll>
-              <ChangePrimaryButtonOnScroll {...props}>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  size="medium"
-                  component={RouterLink}
-                  to="/localiser"
-                  data-cy="appbar-localiser-btn"
-                >
-                  {'Localiser'}
-                </Button>
-              </ChangePrimaryButtonOnScroll>
-              <ChangeSecondaryButtonOnScroll {...props}>
-                <Button
-                  color="secondary"
-                  variant="contained"
-                  size="medium"
-                  component={RouterLink}
-                  to="/connexion"
-                >
-                  {'Connexion'}
-                </Button>
-              </ChangeSecondaryButtonOnScroll>
-            </Hidden>
-            <Hidden smUp>
-              <div className={classes.root} />
-              <HamburgerMenu />
-            </Hidden>
-          </Toolbar>
-        </AppBar>
-      </ChangeToolbarColorOnScroll>
+            <HamburgerMenu />
+          </Hidden>
+        </Toolbar>
+      </AppBar>
     </div>
   );
 }

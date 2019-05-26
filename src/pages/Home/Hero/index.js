@@ -11,6 +11,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import HeroImg from './hero.jpg';
 import './hero.css';
 import LazyLoad from 'react-lazyload';
+import { IconButton } from '@material-ui/core';
 
 const styles = theme => ({
   root: {
@@ -20,7 +21,7 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     [theme.breakpoints.up('sm')]: {
-      height: '50vh',
+      height: '100vh',
       minHeight: 500,
       maxHeight: 1300
     }
@@ -53,21 +54,21 @@ const styles = theme => ({
     zIndex: -2
   },
   arrowDown: {
-    fontSize: 64,
-    position: 'absolute',
-    bottom: theme.spacing(4)
+    fontSize: 48,
+    scrollBehaviour: 'smooth'
   },
   button: {
-    minWidth: 200
+    minWidth: 200,
+    bottom: theme.spacing(4)
   },
   more: {
     marginTop: theme.spacing(2)
   },
   aide: {
-    [theme.breakpoints.up('sm')]: {
-      position: 'absolute',
-      bottom: theme.spacing(20)
-    }
+    marginBottom: theme.spacing(4)
+  },
+  title: {
+    marginBottom: theme.spacing(10)
   }
 });
 
@@ -82,21 +83,23 @@ function Hero(props) {
         <LazyLoad>
           <img src={HeroImg} style={{ display: 'none' }} alt="hero" />
         </LazyLoad>
-        <Paper>
-          <Typography
-            color="inherit"
-            align="center"
-            variant="h2"
-            marked="center"
-          >
-            {`Permis de construire facile`}
-          </Typography>
-        </Paper>
-        <Paper>
-          <Typography color="inherit" align="center" variant="h5">
-            {`Déposez et gérez votre déclaration préalable de travaux en toute simplicité.`}
-          </Typography>
-        </Paper>
+        <div className={classes.title}>
+          <Paper>
+            <Typography
+              color="inherit"
+              align="center"
+              variant="h2"
+              marked="center"
+            >
+              {`Permis de construire facile`}
+            </Typography>
+          </Paper>
+          <Paper>
+            <Typography color="inherit" align="center" variant="h5">
+              {`Déposez et gérez votre déclaration préalable de travaux en toute simplicité.`}
+            </Typography>
+          </Paper>
+        </div>
         <div className={classes.aide}>
           <Button
             color="secondary"
@@ -109,7 +112,9 @@ function Hero(props) {
           </Button>
         </div>
         <Paper>
-          <ExpandMore className={classes.arrowDown} />
+          <IconButton color="secondary" aria-label="arrowDown">
+            <ExpandMore className={classes.arrowDown} />
+          </IconButton>
         </Paper>
       </Container>
     </section>
