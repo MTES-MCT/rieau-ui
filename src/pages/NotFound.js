@@ -9,7 +9,7 @@ function NotFound() {
     <React.Fragment>
       <AppAppBar />
       <Typography variant="h3" gutterBottom marked="center" align="center">
-        404 | Page non trouvée
+        {`404 | Page non trouvée`}
       </Typography>
       <AppFooter />
     </React.Fragment>

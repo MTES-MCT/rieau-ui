@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Button from 'components/Button';
 import { Hidden } from '@material-ui/core';
 import HamburgerMenu from './HamburgerMenu';
+import routes from 'routes';
 
 const styles = theme => ({
   root: {
@@ -47,32 +48,31 @@ function AppAppBar(props) {
           <div className={classes.root} />
           <Hidden xsDown>
             <div className={classes.root} />
-            <Button
-              color="primary"
-              size="small"
-              component={RouterLink}
-              to="/communes"
-            >
-              {'Communes'}
-            </Button>
-            <Button
-              color="primary"
-              size="small"
-              component={RouterLink}
-              to="/localiser"
-              data-cy="appbar-localiser-btn"
-            >
-              {'Localiser'}
-            </Button>
-            <Button
-              color="primary"
-              variant="contained"
-              size="medium"
-              component={RouterLink}
-              to="/connexion"
-            >
-              {'Connexion'}
-            </Button>
+            {routes
+              .filter(route => route.sidebar)
+              .map((route, index) => {
+                return (
+                  <Button
+                    key={index}
+                    color="primary"
+                    size={
+                      route.label.toLowerCase() === 'connexion'
+                        ? 'medium'
+                        : 'small'
+                    }
+                    component={RouterLink}
+                    variant={
+                      route.label.toLowerCase() === 'connexion'
+                        ? 'contained'
+                        : 'text'
+                    }
+                    to={route.path}
+                    data-cy={'appbar-' + route.label.toLowerCase() + '-btn'}
+                  >
+                    {route.label}
+                  </Button>
+                );
+              })}
           </Hidden>
           <Hidden smUp>
             <div className={classes.root} />
