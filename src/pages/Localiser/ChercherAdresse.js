@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import Search from '@material-ui/icons/Search';
+import SearchIcon from '@material-ui/icons/Search';
 
 const styles = theme => ({
   root: {
@@ -35,7 +35,7 @@ const styles = theme => ({
   },
   input: {
     [theme.breakpoints.down('xs')]: {
-      width: 200
+      width: 300
     },
     width: 400
   }
@@ -51,7 +51,7 @@ function renderInputComponent(inputProps) {
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">
-            <Search />
+            <SearchIcon />
           </InputAdornment>
         ),
         inputRef: node => {
@@ -102,7 +102,10 @@ class ChercherAddresse extends React.Component {
       var suggestion = {};
       suggestion.value = feature.properties.id;
       suggestion.label = feature.properties.label;
-      suggestion.position = [feature.properties.x, feature.properties.y];
+      suggestion.position = [
+        feature.geometry.coordinates[1],
+        feature.geometry.coordinates[0]
+      ];
       return suggestion;
     });
   };
@@ -140,7 +143,7 @@ class ChercherAddresse extends React.Component {
     event,
     { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }
   ) => {
-    this.props.onClickSelectAddress(suggestion.position);
+    this.props.onClickSelectAddress(suggestion);
   };
 
   getSuggestionValue(suggestion) {
@@ -199,7 +202,7 @@ class ChercherAddresse extends React.Component {
 ChercherAddresse.propTypes = {
   classes: PropTypes.object,
   commune: PropTypes.object.isRequired,
-  onClickSelectAddress: PropTypes.func.isRequired
+  onClickSelectAddress: PropTypes.func
 };
 
 export default withStyles(styles)(ChercherAddresse);

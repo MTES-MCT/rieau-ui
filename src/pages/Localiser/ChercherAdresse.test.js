@@ -8,6 +8,14 @@ test('rendering ChercherAdresse component', () => {
     position: [49.258172, 2.1673],
     code: '60012'
   };
-  const { queryAllByText } = render(<ChercherAdresse commune={andeville} />);
+  const onClickSelectAddress = suggestion => {
+    return;
+  };
+  const { queryAllByText } = render(
+    <ChercherAdresse
+      commune={andeville}
+      onClickSelectAddress={onClickSelectAddress(andeville.position)}
+    />
+  );
   expect(queryAllByText('Localiser')).toBeTruthy();
 });
