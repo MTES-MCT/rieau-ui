@@ -125,3 +125,7 @@ workflows:
       - deploy-github:
           requires:
             - e2e-tests
+          filters:
+            branches:
+              only:
+                - master
