@@ -19,7 +19,7 @@ context('Localiser', () => {
     cy.get('.leaflet-pane .leaflet-marker-pane > img').should('have.length', 7).last().click({force: true})
     cy.contains("Saint-Tropez").should('be.visible')
     cy.get('[data-cy=chercher-adresse-input]').find('input').type('chemin')
-    cy.contains('Chemin des Salins 83990 Saint-Tropez').should('be.visible')
+    cy.contains('Chemin des Salins 83990 Saint-Tropez').should('be.visible').click()
     cy.contains('Recentrer').should('be.visible').click()
   })
 })

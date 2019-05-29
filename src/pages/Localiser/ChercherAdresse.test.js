@@ -14,7 +14,7 @@ test('rendering ChercherAdresse component', () => {
   const { queryAllByText } = render(
     <ChercherAdresse
       commune={andeville}
-      onClickSelectAddress={onClickSelectAddress(andeville.position)}
+      onClickSelectAddress={onClickSelectAddress}
     />
   );
   expect(queryAllByText('Localiser')).toBeTruthy();

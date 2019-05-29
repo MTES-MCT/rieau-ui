@@ -4,6 +4,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from 'components/Typography';
 import { Marker, Popup } from 'react-leaflet';
 import Container from '@material-ui/core/Container';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import ParcellesLayer from './ParcellesLayer';
 
 const maxPopupWidth = 400;
@@ -25,13 +28,29 @@ const styles = theme => ({
 });
 
 class AdresseMarker extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      parcelles: []
+    };
+  }
+
+  addParcelle(parcelle) {
+    this.state.parcelles.add(parcelle);
+  }
+
   render() {
     const { classes, adresse, commune } = this.props;
+    const { parcelles } = this.state;
     return (
       <React.Fragment>
-        <ParcellesLayer commune={commune} />
+        <ParcellesLayer
+          commune={commune}
+          adresse={adresse}
+          addParcelle={this.addParcelle}
+        />
         <Marker position={adresse.position}>
-          <Popup maxWidth={400}>
+          <Popup maxWidth={400} closeButton={false} autoClose={false}>
             <Container className={classes.popupContainer}>
               <Typography
                 variant="h6"
@@ -39,7 +58,7 @@ class AdresseMarker extends React.Component {
                 marked="center"
                 align="center"
               >
-                {adresse.nom}
+                {adresse.label}
               </Typography>
               <Typography
                 variant="body2"
@@ -47,8 +66,18 @@ class AdresseMarker extends React.Component {
                 marked="center"
                 align="center"
               >
-                {`Sélectionner une parcelle`}
+                {`Sélectionner des parcelles contiguës`}
               </Typography>
+              <List dense={true}>
+                {parcelles.map((parcelle, key) => (
+                  <ListItem key={key}>
+                    <ListItemText
+                      primary={parcelle.prefix + parcelle.numero}
+                      secondary={parcelle.section}
+                    />
+                  </ListItem>
+                ))}
+              </List>
             </Container>
           </Popup>
         </Marker>

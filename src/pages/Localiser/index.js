@@ -56,7 +56,7 @@ class Localiser extends React.Component {
     this.setState({
       viewport: DEFAULT_VIEWPORT,
       communes: communesPartenaires,
-      adresse: null,
+      adresse: { value: '', label: '' },
       commune: null
     });
   };
@@ -81,11 +81,13 @@ class Localiser extends React.Component {
 
   onClickSelectAddress = adresse => {
     window.console.log('adresse=' + JSON.stringify(adresse));
-    this.setState({
-      communes: [],
-      viewport: { center: adresse.position, zoom: 20 },
-      adresse: adresse
-    });
+    if (adresse) {
+      this.setState({
+        communes: [],
+        viewport: { center: adresse.position, zoom: 20 },
+        adresse: adresse
+      });
+    }
   };
 
   render() {

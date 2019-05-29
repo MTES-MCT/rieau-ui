@@ -11,6 +11,8 @@ import { withStyles } from '@material-ui/core/styles';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
 
+const maxWidth = 400;
+
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -35,9 +37,9 @@ const styles = theme => ({
   },
   input: {
     [theme.breakpoints.down('xs')]: {
-      width: 300
+      width: maxWidth * 0.75
     },
-    width: 400
+    width: maxWidth
   }
 });
 
@@ -74,11 +76,8 @@ function renderSuggestion(suggestion, { query, isHighlighted }) {
   return (
     <MenuItem selected={isHighlighted} component="div">
       <div>
-        {parts.map(part => (
-          <span
-            key={part.text}
-            style={{ fontWeight: part.highlight ? 500 : 400 }}
-          >
+        {parts.map((part, key) => (
+          <span key={key} style={{ fontWeight: part.highlight ? 500 : 400 }}>
             {part.text}
           </span>
         ))}
@@ -139,10 +138,8 @@ class ChercherAddresse extends React.Component {
     this.setState({ adresses: [] });
   };
 
-  onSuggestionSelected = (
-    event,
-    { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }
-  ) => {
+  onSuggestionSelected = (event, { suggestion }) => {
+    this.setState({ adresse: suggestion });
     this.props.onClickSelectAddress(suggestion);
   };
 
@@ -160,14 +157,20 @@ class ChercherAddresse extends React.Component {
     });
   };
 
+  onBlur = (event, { highlightedSuggestion }) => {
+    this.setState({ adresse: highlightedSuggestion });
+    this.props.onClickSelectAddress(highlightedSuggestion);
+  };
+
   render() {
-    const { classes } = this.props;
+    const { classes, commune } = this.props;
     const { adresse, adresses } = this.state;
     const inputProps = {
       classes,
       placeholder: 'Ex: 1 rue des Fleurs...',
       value: adresse,
-      onChange: this.onChange
+      onChange: this.onChange,
+      onBlur: this.onBlur
     };
     const theme = {
       container: classes.container,
@@ -178,6 +181,8 @@ class ChercherAddresse extends React.Component {
     return (
       <div className={classes.root}>
         <Autosuggest
+          key={`autosuggest-${commune.code}`}
+          data-cy="chercher-adresse-input"
           suggestions={adresses}
           shouldRenderSuggestions={this.shouldRenderSuggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -202,7 +207,7 @@ class ChercherAddresse extends React.Component {
 ChercherAddresse.propTypes = {
   classes: PropTypes.object,
   commune: PropTypes.object.isRequired,
-  onClickSelectAddress: PropTypes.func
+  onClickSelectAddress: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(ChercherAddresse);
