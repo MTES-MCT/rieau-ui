@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import Typography from 'components/Typography';
 import { withStyles } from '@material-ui/core/styles';
+import geojsonvt from 'geojson-vt';
 
 const styles = theme => ({
   loading: {
@@ -87,9 +88,8 @@ class ParcellesLayer extends React.Component {
             isLoaded: true,
             parcelles: result
           });
-          this.geoJsonLayer.current.leafletElement
-            .clearLayers()
-            .addData(result);
+          if (layer)
+            layer.leafletElement.clearLayers().addData(geojsonvt(result));
         },
         error => {
           this.setState({
