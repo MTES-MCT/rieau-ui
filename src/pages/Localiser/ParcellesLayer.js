@@ -102,7 +102,7 @@ class ParcellesLayer extends React.Component {
   };
 
   render() {
-    const { classes, commune, adresse } = this.props;
+    const { classes, adresse } = this.props;
     const { error, parcelles, isLoaded } = this.state;
     if (error) {
       return (
