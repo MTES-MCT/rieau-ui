@@ -42,8 +42,8 @@ class Localiser extends React.Component {
     super(props);
     this.state = {
       viewport: DEFAULT_VIEWPORT,
-      adresse: null,
       communes: communesPartenaires,
+      adresse: null,
       commune: null
     };
     this.onViewportChanged = this.onViewportChanged.bind(this);
@@ -56,13 +56,13 @@ class Localiser extends React.Component {
     this.setState({
       viewport: DEFAULT_VIEWPORT,
       communes: communesPartenaires,
-      adresse: { value: '', label: '' },
+      adresse: null,
       commune: null
     });
   };
 
   onViewportChanged = viewport => {
-    this.setState({ viewport });
+    this.setState({ viewport: viewport });
   };
 
   findCommuneByLatLng = (lat, lng) => {
@@ -80,14 +80,11 @@ class Localiser extends React.Component {
   };
 
   onClickSelectAddress = adresse => {
-    window.console.log('adresse=' + JSON.stringify(adresse));
-    if (adresse) {
-      this.setState({
-        communes: [],
-        viewport: { center: adresse.position, zoom: 20 },
-        adresse: adresse
-      });
-    }
+    this.setState({
+      communes: [],
+      viewport: { center: adresse.position, zoom: 20 },
+      adresse: adresse
+    });
   };
 
   render() {

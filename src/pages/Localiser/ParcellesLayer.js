@@ -29,13 +29,12 @@ class ParcellesLayer extends React.Component {
       selectedParcelles: []
     };
 
-    this.geoJsonLayer = React.createRef();
-    // this.selectParcelle = this.selectParcelle.bind(this);
+    this.layer = React.createRef();
   }
 
   componentDidMount() {
     const { commune } = this.props;
-    this.rechercherParcelles(commune);
+    if (commune) this.rechercherParcelles(commune);
   }
 
   getGeoJSONStyle = (feature, layer) => {
@@ -77,6 +76,7 @@ class ParcellesLayer extends React.Component {
   // };
 
   rechercherParcelles = async commune => {
+    const layer = this.layer.current;
     const parcellesUrl =
       'https://cadastre.data.gouv.fr/bundler/cadastre-etalab/communes/';
     const parcellesUri = '/geojson/parcelles';
@@ -102,7 +102,7 @@ class ParcellesLayer extends React.Component {
   };
 
   render() {
-    const { classes, commune } = this.props;
+    const { classes, commune, adresse } = this.props;
     const { error, parcelles, isLoaded } = this.state;
     if (error) {
       return (
@@ -125,13 +125,13 @@ class ParcellesLayer extends React.Component {
     } else {
       return (
         <GeoJSON
-          key={commune.code}
+          key={`${adresse.value}`}
           data={parcelles}
           onEachFeature={this.onEachFeature}
           // filter={this.filter}
           attribution={`adresses et cadastre © <a href="https://www.etalab.gouv.fr">Etalab</a>/<a href="https://www.etalab.gouv.fr/wp-content/uploads/2017/04/ETALAB-Licence-Ouverte-v2.0.pdf">Licence-Ouverte-v2.0</a>`}
           style={this.getGeoJSONStyle}
-          ref={this.geoJsonLayer}
+          ref={this.layer}
         />
       );
     }

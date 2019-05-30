@@ -158,8 +158,10 @@ class ChercherAddresse extends React.Component {
   };
 
   onBlur = (event, { highlightedSuggestion }) => {
-    this.setState({ adresse: highlightedSuggestion });
-    this.props.onClickSelectAddress(highlightedSuggestion);
+    if (highlightedSuggestion) {
+      this.setState({ adresse: highlightedSuggestion });
+      this.props.onClickSelectAddress(highlightedSuggestion);
+    }
   };
 
   render() {
@@ -182,7 +184,7 @@ class ChercherAddresse extends React.Component {
       <div className={classes.root}>
         <Autosuggest
           key={`autosuggest-${commune.code}`}
-          data-cy="chercher-adresse-input"
+          data-cy={`chercher-adresse-input`}
           suggestions={adresses}
           shouldRenderSuggestions={this.shouldRenderSuggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
