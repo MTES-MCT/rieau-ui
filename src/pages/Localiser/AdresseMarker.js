@@ -6,8 +6,11 @@ import { Marker, Popup } from 'react-leaflet';
 import Container from '@material-ui/core/Container';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import MapIcon from '@material-ui/icons/Map';
 import ParcellesLayer from './ParcellesLayer';
+import { parcelleIsIncluded } from 'utils/parcelles';
 
 const maxPopupWidth = 400;
 
@@ -28,29 +31,47 @@ const styles = theme => ({
 });
 
 class AdresseMarker extends React.Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    adresse: PropTypes.object.isRequired,
+    commune: PropTypes.object.isRequired
+  };
   constructor(props) {
     super(props);
     this.state = {
+      error: null,
       parcelles: []
     };
   }
 
-  addParcelle(parcelle) {
-    this.state.parcelles.add(parcelle);
-  }
+  onClickSelectParcelle = parcelle => {
+    if (parcelleIsIncluded(parcelle, this.state.parcelles)) {
+      this.setState({ error: 'La parcelle est déjà incluse!' });
+      // }
+      // else if (!parcelleIsContigue(parcelle, this.state.parcelles)) {
+      //   this.setState({ error: "La parcelle n'est pas contiguë!" });
+    } else {
+      this.setState(state => {
+        return {
+          error: null,
+          parcelles: state.parcelles.concat(parcelle)
+        };
+      });
+    }
+  };
 
   render() {
     const { classes, adresse, commune } = this.props;
-    const { parcelles } = this.state;
+    const { parcelles, error } = this.state;
     return (
       <React.Fragment>
         <ParcellesLayer
           commune={commune}
           adresse={adresse}
-          addParcelle={this.addParcelle}
+          onClickSelectParcelle={this.onClickSelectParcelle}
         />
         <Marker position={adresse.position}>
-          <Popup maxWidth={400} closeButton={false} autoClose={false}>
+          <Popup maxWidth={400}>
             <Container className={classes.popupContainer}>
               <Typography
                 variant="h6"
@@ -66,14 +87,29 @@ class AdresseMarker extends React.Component {
                 marked="center"
                 align="center"
               >
-                {`Sélectionner des parcelles contiguës`}
+                {`${parcelles.length} parcelles contiguës sélectionnées`}
+              </Typography>
+              <Typography
+                variant="body2"
+                gutterBottom
+                marked="center"
+                align="center"
+              >
+                {error}
               </Typography>
               <List dense={true}>
                 {parcelles.map((parcelle, key) => (
                   <ListItem key={key}>
+                    <ListItemIcon>
+                      <MapIcon />
+                    </ListItemIcon>
                     <ListItemText
-                      primary={parcelle.prefix + parcelle.numero}
-                      secondary={parcelle.section}
+                      primary={`Parcelle: ${parcelle.properties.id}`}
+                      secondary={`Préfixe: ${
+                        parcelle.properties.prefixe
+                      } - Section: ${parcelle.properties.section} - Numéro: ${
+                        parcelle.properties.numero
+                      } - Contenance: ${parcelle.properties.contenance}`}
                     />
                   </ListItem>
                 ))}
@@ -85,11 +121,5 @@ class AdresseMarker extends React.Component {
     );
   }
 }
-
-AdresseMarker.propTypes = {
-  classes: PropTypes.object.isRequired,
-  adresse: PropTypes.object.isRequired,
-  commune: PropTypes.object.isRequired
-};
 
 export default withStyles(styles)(AdresseMarker);

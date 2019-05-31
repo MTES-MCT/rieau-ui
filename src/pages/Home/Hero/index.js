@@ -77,8 +77,7 @@ const IconButtonHashLink = props => genericHashLink(props, IconButton);
 
 class Hero extends React.Component {
   static propTypes = {
-    classes: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired
   };
 
   render() {

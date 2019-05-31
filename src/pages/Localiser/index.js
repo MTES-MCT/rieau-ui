@@ -38,13 +38,18 @@ const DEFAULT_VIEWPORT = {
 };
 
 class Localiser extends React.Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.state = {
       viewport: DEFAULT_VIEWPORT,
       communes: communesPartenaires,
       adresse: null,
-      commune: null
+      commune: null,
+      parcelles: []
     };
     this.onViewportChanged = this.onViewportChanged.bind(this);
     this.onClickReset = this.onClickReset.bind(this);
@@ -57,7 +62,8 @@ class Localiser extends React.Component {
       viewport: DEFAULT_VIEWPORT,
       communes: communesPartenaires,
       adresse: null,
-      commune: null
+      commune: null,
+      parcelles: []
     });
   };
 
@@ -124,11 +130,6 @@ class Localiser extends React.Component {
     );
   }
 }
-
-Localiser.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
 export default compose(
   withRoot,
   withStyles(styles)

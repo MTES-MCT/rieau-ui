@@ -13,23 +13,24 @@ const styles = theme => ({
   }
 });
 
-// const selectParcelle = (feature, selectedParcelles, addParcelle) => {
-//   selectedParcelles.add(feature.properties);
-//   addParcelle(selectedParcelles);
-// }
-
 class ParcellesLayer extends React.Component {
+  static propTypes = {
+    adresse: PropTypes.object.isRequired,
+    commune: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired,
+    onClickSelectParcelle: PropTypes.func.isRequired
+  };
   constructor(props, context) {
     super(props, context);
 
     this.state = {
       error: null,
       isLoaded: false,
-      parcelles: [],
-      selectedParcelles: []
+      parcelles: []
     };
 
     this.layer = React.createRef();
+    // this.onEachFeature = this.onEachFeature.bind(this);
   }
 
   componentDidMount() {
@@ -45,24 +46,20 @@ class ParcellesLayer extends React.Component {
     };
   };
 
-  // selectParcelle = (feature) => {
-  //   this.state.selectedParcelles.add(feature.properties);
-  //   this.props.handleParcelles(this.state.selectedParcelles);
-  // }
+  handleOnEachFeature = (feature, layer) => {
+    // if (feature.properties && feature.properties.numero) {
+    layer.bindPopup(
+      `<p>Numéro: ${feature.properties.numero}</p><p>Préfixe: ${
+        feature.properties.prefixe
+      }</p><p>Section: ${feature.properties.section}</p>`
+    );
+    layer.on({ click: this.clickToFeature.bind(this) });
+    // }
+  };
 
-  onEachFeature = (feature, layer) => {
-    if (feature.properties && feature.properties.numero) {
-      layer.bindPopup(
-        `<p>Numéro: ${feature.properties.numero}</p><p>Préfixe: ${
-          feature.properties.prefixe
-        }</p><p>Section: ${feature.properties.section}</p>`
-      );
-      // layer.on(
-      //   'click', function (e) {
-      //     selectParcelle(feature,this.state.selectedParcelles,this.props.addParcelle);
-      //   }
-      // );
-    }
+  clickToFeature = e => {
+    const feature = e.target.feature;
+    this.props.onClickSelectParcelle(feature);
   };
 
   // filter = (feature) => {
@@ -127,7 +124,7 @@ class ParcellesLayer extends React.Component {
         <GeoJSON
           key={`${adresse.value}`}
           data={parcelles}
-          onEachFeature={this.onEachFeature}
+          onEachFeature={this.handleOnEachFeature.bind(this)}
           // filter={this.filter}
           attribution={`adresses et cadastre © <a href="https://www.etalab.gouv.fr">Etalab</a>/<a href="https://www.etalab.gouv.fr/wp-content/uploads/2017/04/ETALAB-Licence-Ouverte-v2.0.pdf">Licence-Ouverte-v2.0</a>`}
           style={this.getGeoJSONStyle}
@@ -137,11 +134,5 @@ class ParcellesLayer extends React.Component {
     }
   }
 }
-ParcellesLayer.propTypes = {
-  adresse: PropTypes.object.isRequired,
-  commune: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired,
-  addParcelle: PropTypes.func.isRequired
-};
 
 export default withStyles(styles)(ParcellesLayer);
