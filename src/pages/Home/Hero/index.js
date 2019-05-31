@@ -4,14 +4,15 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from 'components/Typography';
 import Container from '@material-ui/core/Container';
-import ExpandMore from '@material-ui/icons/ExpandMore';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Paper from '@material-ui/core/Paper';
 import Button from 'components/Button';
 import { Link as RouterLink } from 'react-router-dom';
 import HeroImg from './hero.jpg';
 import './hero.css';
 import LazyLoad from 'react-lazyload';
-import { IconButton } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import { genericHashLink } from 'react-router-hash-link';
 
 const styles = theme => ({
   root: {
@@ -72,57 +73,67 @@ const styles = theme => ({
   }
 });
 
-function Hero(props) {
-  const { classes } = props;
+const IconButtonHashLink = props => genericHashLink(props, IconButton);
 
-  return (
-    <section className={classes.root}>
-      <Container className={classes.container}>
-        <div className={classes.backdrop} />
-        <div className={clsx(classes.background, 'hero')} />
-        <LazyLoad>
-          <img src={HeroImg} style={{ display: 'none' }} alt="hero" />
-        </LazyLoad>
-        <div className={classes.title}>
-          <Paper>
-            <Typography
-              color="inherit"
-              align="center"
-              variant="h2"
-              marked="center"
+class Hero extends React.Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
+  };
+
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <section className={classes.root}>
+        <Container className={classes.container}>
+          <div className={classes.backdrop} />
+          <div className={clsx(classes.background, 'hero')} />
+          <LazyLoad>
+            <img src={HeroImg} style={{ display: 'none' }} alt="hero" />
+          </LazyLoad>
+          <div className={classes.title}>
+            <Paper>
+              <Typography
+                color="inherit"
+                align="center"
+                variant="h2"
+                marked="center"
+              >
+                {`Permis de construire facile`}
+              </Typography>
+            </Paper>
+            <Paper>
+              <Typography color="inherit" align="center" variant="h5">
+                {`Déposez et gérez votre déclaration préalable de travaux en toute simplicité.`}
+              </Typography>
+            </Paper>
+          </div>
+          <div className={classes.aide}>
+            <Button
+              color="secondary"
+              variant="contained"
+              size="large"
+              component={RouterLink}
+              to="/aide"
             >
-              {`Permis de construire facile`}
-            </Typography>
-          </Paper>
+              {'Découvrez comment'}
+            </Button>
+          </div>
           <Paper>
-            <Typography color="inherit" align="center" variant="h5">
-              {`Déposez et gérez votre déclaration préalable de travaux en toute simplicité.`}
-            </Typography>
+            <IconButtonHashLink
+              color="secondary"
+              aria-label="arrowDown"
+              component={RouterLink}
+              to={{ pathname: '/', hash: '#localiser-btn' }}
+            >
+              <ExpandMoreIcon className={classes.arrowDown} />
+            </IconButtonHashLink>
           </Paper>
-        </div>
-        <div className={classes.aide}>
-          <Button
-            color="secondary"
-            variant="contained"
-            size="large"
-            component={RouterLink}
-            to="/aide"
-          >
-            {'Découvrez comment'}
-          </Button>
-        </div>
-        <Paper>
-          <IconButton color="secondary" aria-label="arrowDown">
-            <ExpandMore className={classes.arrowDown} />
-          </IconButton>
-        </Paper>
-      </Container>
-    </section>
-  );
+        </Container>
+      </section>
+    );
+  }
 }
-
-Hero.propTypes = {
-  classes: PropTypes.object.isRequired
-};
 
 export default withStyles(styles)(Hero);

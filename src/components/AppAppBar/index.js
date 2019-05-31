@@ -7,7 +7,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
 import Button from 'components/Button';
-import { Hidden } from '@material-ui/core';
+import Hidden from '@material-ui/core/Hidden';
 import HamburgerMenu from './HamburgerMenu';
 import routes from 'routes';
 
@@ -34,7 +34,7 @@ function AppAppBar(props) {
   const { classes } = props;
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} id="app-bar">
       <AppBar position="fixed" elevation={0} color="secondary">
         <Toolbar>
           <IconButton

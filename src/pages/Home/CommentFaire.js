@@ -10,6 +10,10 @@ import Map from '@material-ui/icons/Map';
 import Edit from '@material-ui/icons/Edit';
 import AttachFile from '@material-ui/icons/AttachFile';
 import People from '@material-ui/icons/People';
+import { genericHashLink } from 'react-router-hash-link';
+import IconButton from '@material-ui/core/IconButton';
+import Fab from '@material-ui/core/Fab';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 
 const styles = theme => ({
   root: {
@@ -45,8 +49,19 @@ const styles = theme => ({
   },
   button: {
     marginTop: theme.spacing(8)
+  },
+  remonter: {
+    marginTop: theme.spacing(8),
+    scrollBehaviour: 'smooth',
+    color: theme.palette.common.white,
+    backgroundColor: 'secondary',
+    '&:hover': {
+      backgroundColor: 'secondary'
+    }
   }
 });
+
+const IconButtonHashLink = props => genericHashLink(props, IconButton);
 
 function CommentFaire(props) {
   const { classes } = props;
@@ -103,6 +118,7 @@ function CommentFaire(props) {
           </Grid>
         </div>
         <Button
+          id="localiser-btn"
           color="secondary"
           size="large"
           variant="contained"
@@ -112,6 +128,14 @@ function CommentFaire(props) {
         >
           Localiser
         </Button>
+        <Fab aria-label="remonter" className={classes.remonter}>
+          <IconButtonHashLink
+            component={RouterLink}
+            to={{ pathname: '/', hash: '#app-bar' }}
+          >
+            <ExpandLessIcon color="secondary" />
+          </IconButtonHashLink>
+        </Fab>
       </Container>
     </section>
   );
