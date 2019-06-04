@@ -10,12 +10,16 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
+import Typography from 'components/Typography';
 
 const maxWidth = 400;
 
 const styles = theme => ({
   root: {
-    flexGrow: 1
+    position: 'absolute',
+    top: 120,
+    left: 230,
+    padding: '2px'
   },
   container: {
     position: 'relative'
@@ -48,7 +52,6 @@ function renderInputComponent(inputProps) {
 
   return (
     <TextField
-      fullWidth
       data-cy="chercher-adresse-input"
       InputProps={{
         startAdornment: (
@@ -87,12 +90,17 @@ function renderSuggestion(suggestion, { query, isHighlighted }) {
 }
 
 class ChercherAddresse extends React.Component {
+  static propTypes = {
+    classes: PropTypes.object,
+    commune: PropTypes.object,
+    onClickSelectAddress: PropTypes.func.isRequired
+  };
   constructor(props) {
     super(props);
     this.state = {
       adresse: '',
       adresses: [],
-      error: ''
+      error: null
     };
   }
 
@@ -139,7 +147,7 @@ class ChercherAddresse extends React.Component {
   };
 
   onSuggestionSelected = (event, { suggestion }) => {
-    this.setState({ adresse: suggestion });
+    this.setState({ adresse: this.getSuggestionValue(suggestion) });
     this.props.onClickSelectAddress(suggestion);
   };
 
@@ -151,7 +159,7 @@ class ChercherAddresse extends React.Component {
     return value.trim().length > 3;
   }
 
-  onChange = (event, { newValue, method }) => {
+  onChange = (event, { newValue }) => {
     this.setState({
       adresse: newValue
     });
@@ -159,7 +167,9 @@ class ChercherAddresse extends React.Component {
 
   onBlur = (event, { highlightedSuggestion }) => {
     if (highlightedSuggestion) {
-      this.setState({ adresse: highlightedSuggestion });
+      this.setState({
+        adresse: this.getSuggestionValue(highlightedSuggestion)
+      });
       this.props.onClickSelectAddress(highlightedSuggestion);
     }
   };
@@ -182,34 +192,36 @@ class ChercherAddresse extends React.Component {
     };
     return (
       <div className={classes.root}>
-        <Autosuggest
-          key={`autosuggest-${commune.code}`}
-          data-cy={`chercher-adresse-input`}
-          suggestions={adresses}
-          shouldRenderSuggestions={this.shouldRenderSuggestions}
-          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-          onSuggestionSelected={this.onSuggestionSelected}
-          getSuggestionValue={this.getSuggestionValue}
-          renderSuggestion={renderSuggestion}
-          renderInputComponent={renderInputComponent}
-          inputProps={inputProps}
-          theme={theme}
-          renderSuggestionsContainer={options => (
-            <Paper {...options.containerProps} square>
-              {options.children}
-            </Paper>
-          )}
-        />
+        {commune ? (
+          <Paper>
+            <Typography variant="h6">Chercher une adresse</Typography>
+            <Autosuggest
+              classes={classes}
+              key={`autosuggest-${commune.code}`}
+              data-cy={`chercher-adresse-input`}
+              suggestions={adresses}
+              shouldRenderSuggestions={this.shouldRenderSuggestions}
+              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+              onSuggestionSelected={this.onSuggestionSelected}
+              getSuggestionValue={this.getSuggestionValue}
+              renderSuggestion={renderSuggestion}
+              renderInputComponent={renderInputComponent}
+              inputProps={inputProps}
+              theme={theme}
+              renderSuggestionsContainer={options => (
+                <Paper {...options.containerProps} square>
+                  {options.children}
+                </Paper>
+              )}
+            />
+          </Paper>
+        ) : (
+          ''
+        )}
       </div>
     );
   }
 }
-
-ChercherAddresse.propTypes = {
-  classes: PropTypes.object,
-  commune: PropTypes.object.isRequired,
-  onClickSelectAddress: PropTypes.func.isRequired
-};
 
 export default withStyles(styles)(ChercherAddresse);

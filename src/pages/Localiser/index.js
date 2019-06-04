@@ -1,45 +1,75 @@
 import React from 'react';
-import { Map as LeafletMap, TileLayer } from 'react-leaflet';
+import ReactMapGL, {
+  NavigationControl,
+  FullscreenControl,
+  FlyToInterpolator
+} from 'react-map-gl';
+import DeckGL from '@deck.gl/react';
+import { GeoJsonLayer } from '@deck.gl/layers';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import withRoot from 'theme/withRoot';
 import AppAppBar from 'components/AppAppBar';
 import compose from 'utils/compose';
 import Container from '@material-ui/core/Container';
-import CommunesMarkers from './CommunesMarkers';
-import Controls from './MapControls';
+import ControlPanel from './ControlPanel';
 import communesPartenaires from './communesPartenaires';
-import AdresseMarker from './AdresseMarker';
+import ChercherAdresse from './ChercherAdresse';
+import CommuneMarker from './CommuneMarker';
+import { parcelleIsIncluded } from 'utils/parcelles';
+import Typography from 'components/Typography';
+import Paper from '@material-ui/core/Paper';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 const styles = theme => ({
   map: {
-    flexGrow: 1,
-    display: 'flex',
-    [theme.breakpoints.down('xs')]: {
-      width: '100%',
-      height: '90vh'
-    },
-    width: '100vw',
-    height: '90vh'
-  },
-  containerMap: {
     position: 'relative',
     flexDirection: 'column',
     display: 'flex',
     alignItems: 'center'
+  },
+  fullscreen: {
+    position: 'absolute',
+    top: 10,
+    left: 30,
+    padding: '2px'
+  },
+  nav: {
+    position: 'absolute',
+    top: 50,
+    left: 30,
+    padding: '2px'
+  },
+  adresse: {
+    position: 'absolute',
+    top: 50,
+    left: 30,
+    padding: '2px'
+  },
+  parcelles: {
+    position: 'absolute',
+    top: 30,
+    left: 90,
+    padding: '2px',
+    width: '200px',
+    height: '300px'
   }
 });
 
-const basemapUrl = 'https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png';
-
 const DEFAULT_VIEWPORT = {
-  center: [45.9167, 1.8833],
-  zoom: 6
+  latitude: 45.9167,
+  longitude: 1.8833,
+  zoom: 4,
+  pitch: 0,
+  bearing: 0
 };
 
 class Localiser extends React.Component {
   static propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    containerComponent: PropTypes.node
   };
 
   constructor(props) {
@@ -49,82 +79,144 @@ class Localiser extends React.Component {
       communes: communesPartenaires,
       adresse: null,
       commune: null,
-      parcelles: []
+      parcelles: [],
+      error: null
     };
-    this.onViewportChanged = this.onViewportChanged.bind(this);
-    this.onClickReset = this.onClickReset.bind(this);
-    this.onClickMarker = this.onClickMarker.bind(this);
-    this.onClickSelectAddress = this.onClickSelectAddress.bind(this);
   }
 
-  onClickReset = () => {
+  reset = () => {
     this.setState({
       viewport: DEFAULT_VIEWPORT,
       communes: communesPartenaires,
       adresse: null,
-      commune: null,
-      parcelles: []
+      parcelles: [],
+      commune: null
     });
   };
 
-  onViewportChanged = viewport => {
-    this.setState({ viewport: viewport });
+  onViewportChange = viewport => {
+    this.setState({ viewport: { ...this.state.viewport, ...viewport } });
   };
 
-  findCommuneByLatLng = (lat, lng) => {
-    return communesPartenaires.find(
-      commune => commune.position[0] === lat && commune.position[1] === lng
-    );
-  };
-
-  onClickMarker = event => {
-    const { lat, lng } = event.latlng;
-    this.setState({
-      viewport: { center: [lat, lng], zoom: 13 },
-      commune: this.findCommuneByLatLng(lat, lng)
+  goToCommune = ({ longitude, latitude }) => {
+    this.reset();
+    this.onViewportChange({
+      longitude,
+      latitude,
+      zoom: 11,
+      transitionInterpolator: new FlyToInterpolator(),
+      transitionDuration: 3000
     });
   };
 
   onClickSelectAddress = adresse => {
-    this.setState({
-      communes: [],
-      viewport: { center: adresse.position, zoom: 20 },
-      adresse: adresse
+    this.setState({ adresse: adresse });
+    this.onViewportChange({
+      latitude: adresse.position[0],
+      longitude: adresse.position[1],
+      zoom: 18,
+      transitionInterpolator: new FlyToInterpolator(),
+      transitionDuration: 3000
     });
   };
 
+  onSelectCommune = commune => {
+    this.setState({ commune: commune, adresse: null, parcelles: [] });
+  };
+
+  ajouterParcelle = parcelle => {
+    window.console.log('parcelle=' + JSON.stringify(parcelle));
+    if (this.state.parcelles.length > 2) {
+      this.setState({ error: 'Maximum atteint de 3 parcelles.' });
+    } else if (parcelleIsIncluded(parcelle, this.state.parcelles)) {
+      this.setState({ error: 'La parcelle est déjà incluse!' });
+      // }
+      // else if (!parcelleIsContigue(parcelle, this.state.parcelles)) {
+      //   this.setState({ error: "La parcelle n'est pas contiguë!" });
+    } else {
+      this.setState(state => {
+        return {
+          error: null,
+          parcelles: state.parcelles.concat(parcelle)
+        };
+      });
+    }
+  };
+
+  renderLayers = () => {
+    if (!this.state.commune) return [];
+    const parcellesUrl = `https://cadastre.data.gouv.fr/bundler/cadastre-etalab/communes/${
+      this.state.commune.code
+    }/geojson/parcelles`;
+    return [
+      new GeoJsonLayer({
+        id: 'parcelles-polygon-layer',
+        data: parcellesUrl,
+        filled: true,
+        pickable: true,
+        autoHighlight: true,
+        stroked: true,
+        opacity: 0.1,
+        onClick: ({ object, x, y }) => {
+          this.ajouterParcelle(object.properties);
+        }
+      })
+    ];
+  };
+
   render() {
-    const { classes } = this.props;
-    const { viewport, adresse, communes, commune } = this.state;
+    const { classes, containerComponent } = this.props;
+    const { viewport, commune, adresse, parcelles, error } = this.state;
+
     return (
       <React.Fragment>
         <AppAppBar />
-        <Container className={classes.containerMap} data-cy="leaflet-map">
-          <React.Fragment>
-            <LeafletMap
-              onViewportChanged={this.onViewportChanged}
-              viewport={viewport}
-              className={classes.map}
-              ref={m => {
-                this.leafletMap = m;
-              }}
-            >
-              <Controls onClickReset={this.onClickReset} />
-              <TileLayer
-                attribution={`carte © <a href="//osm.org/copyright">OpenStreetMap</a>/<a href="https://opendatacommons.org/licenses/odbl/">ODbL</a> - rendu <a href="//openstreetmap.fr">OSM France</a>`}
-                url={basemapUrl}
+        <Container className={classes.map} data-cy="map">
+          <ReactMapGL
+            {...viewport}
+            onViewportChange={this.onViewportChange}
+            width="100vw"
+            height="90vh"
+            maxPitch={85}
+            mapStyle="https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json"
+          >
+            <DeckGL layers={this.renderLayers()} viewState={viewport} />
+
+            <FullscreenControl className={classes.fullscreen} />
+            <NavigationControl className={classes.nav} />
+            <ControlPanel
+              communes={communesPartenaires}
+              containerComponent={containerComponent}
+              onViewportChange={this.goToCommune}
+              onSelectCommune={this.onSelectCommune}
+            />
+            <CommuneMarker commune={commune} adresse={adresse} />
+            {!adresse ? (
+              <ChercherAdresse
+                className={classes.adresse}
+                commune={commune}
+                onClickSelectAddress={this.onClickSelectAddress}
               />
-              {commune !== null && adresse !== null ? (
-                <AdresseMarker adresse={adresse} commune={commune} />
-              ) : (
-                <CommunesMarkers
-                  communes={communes}
-                  onClickMarker={this.onClickMarker}
-                  onClickSelectAddress={this.onClickSelectAddress}
-                />
-              )}
-            </LeafletMap>
-          </React.Fragment>
+            ) : (
+              ''
+            )}
+            {parcelles && parcelles.length > 0 ? (
+              <Paper className={classes.parcelles}>
+                <Typography variant="h6">
+                  {`${parcelles.length} parcelles sélectionnées:`}
+                </Typography>
+                {error ? window.alert(error) : ''}
+                {parcelles.map((parcelle, key) => (
+                  <ListItem key={key}>
+                    <ListItemText primary={`Parcelle ${parcelle.id + 1}`} />
+                  </ListItem>
+                ))}
+              </Paper>
+            ) : (
+              ''
+            )}
+            {this._renderTooltip}
+          </ReactMapGL>
         </Container>
       </React.Fragment>
     );

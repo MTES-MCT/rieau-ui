@@ -15,9 +15,7 @@ const parcelleIsContigue = (parcelle, parcelles) => {
 };
 
 const parcelleIsIncluded = (parcelle, parcelles) => {
-  return (
-    parcelles.filter(p => p.properties.id === parcelle.properties.id).length > 0
-  );
+  return parcelles.filter(p => p.id === parcelle.id).length > 0;
 };
 
 export { parcelleIsContigue };
