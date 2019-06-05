@@ -13,13 +13,21 @@ import SearchIcon from '@material-ui/icons/Search';
 import Typography from 'components/Typography';
 
 const maxWidth = 400;
+const minTop = 40;
+const minLeft = 80;
 
 const styles = theme => ({
   root: {
     position: 'absolute',
-    top: 120,
-    left: 230,
-    padding: '2px'
+    [theme.breakpoints.down('md')]: {
+      top: minTop,
+      left: minLeft
+    },
+    [theme.breakpoints.up('md')]: {
+      top: minTop * 3,
+      left: minLeft * 3
+    },
+    padding: 2
   },
   container: {
     position: 'relative'
@@ -37,13 +45,21 @@ const styles = theme => ({
   suggestionsList: {
     margin: 0,
     padding: 0,
-    listStyleType: 'none'
+    listStyleType: 'none',
+    [theme.breakpoints.down('md')]: {
+      width: maxWidth * 0.5
+    },
+    [theme.breakpoints.up('md')]: {
+      width: maxWidth
+    }
   },
   input: {
-    [theme.breakpoints.down('xs')]: {
-      width: maxWidth * 0.75
+    [theme.breakpoints.down('md')]: {
+      width: maxWidth * 0.5
     },
-    width: maxWidth
+    [theme.breakpoints.up('md')]: {
+      width: maxWidth
+    }
   }
 });
 

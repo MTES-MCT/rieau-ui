@@ -10,7 +10,6 @@ const parcelleIsContigue = (parcelle, parcelles) => {
         polygon(p.geometry.coordinates)
       ) !== null
   );
-  window.console.log('intersections=' + JSON.stringify(intersections));
   return intersections.length > 0;
 };
 

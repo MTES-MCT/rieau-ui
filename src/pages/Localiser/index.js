@@ -22,6 +22,10 @@ import Typography from 'components/Typography';
 import Paper from '@material-ui/core/Paper';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import { Link as RouterLink } from 'react-router-dom';
+import Button from 'components/Button';
+import Box from '@material-ui/core/Box';
+import AlertDialog from 'components/AlertDialog';
 
 const styles = theme => ({
   map: {
@@ -34,27 +38,32 @@ const styles = theme => ({
     position: 'absolute',
     top: 10,
     left: 30,
-    padding: '2px'
+    padding: 2
   },
   nav: {
     position: 'absolute',
     top: 50,
     left: 30,
-    padding: '2px'
-  },
-  adresse: {
-    position: 'absolute',
-    top: 50,
-    left: 30,
-    padding: '2px'
+    padding: 2
   },
   parcelles: {
     position: 'absolute',
     top: 30,
     left: 90,
-    padding: '2px',
-    width: '200px',
-    height: '300px'
+    padding: theme.spacing(2),
+    [theme.breakpoints.down('sm')]: {
+      width: 200,
+      height: 340,
+      fontSize: 10
+    },
+    [theme.breakpoints.up('sm')]: {
+      width: 220,
+      height: 340,
+      fontSize: 14
+    }
+  },
+  parcellesActions: {
+    flexGrow: 1
   }
 });
 
@@ -65,6 +74,9 @@ const DEFAULT_VIEWPORT = {
   pitch: 0,
   bearing: 0
 };
+
+const MAP_STYLE =
+  'https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json';
 
 class Localiser extends React.Component {
   static propTypes = {
@@ -125,11 +137,10 @@ class Localiser extends React.Component {
   };
 
   ajouterParcelle = parcelle => {
-    window.console.log('parcelle=' + JSON.stringify(parcelle));
     if (this.state.parcelles.length > 2) {
       this.setState({ error: 'Maximum atteint de 3 parcelles.' });
     } else if (parcelleIsIncluded(parcelle, this.state.parcelles)) {
-      this.setState({ error: 'La parcelle est déjà incluse!' });
+      this.setState({ error: 'La parcelle est déjà incluse.' });
       // }
       // else if (!parcelleIsContigue(parcelle, this.state.parcelles)) {
       //   this.setState({ error: "La parcelle n'est pas contiguë!" });
@@ -143,11 +154,15 @@ class Localiser extends React.Component {
     }
   };
 
+  parcellesUrl = commune => {
+    return `https://cadastre.data.gouv.fr/bundler/cadastre-etalab/communes/${
+      commune.code
+    }/geojson/parcelles`;
+  };
+
   renderLayers = () => {
     if (!this.state.commune) return [];
-    const parcellesUrl = `https://cadastre.data.gouv.fr/bundler/cadastre-etalab/communes/${
-      this.state.commune.code
-    }/geojson/parcelles`;
+    const parcellesUrl = this.parcellesUrl(this.state.commune);
     return [
       new GeoJsonLayer({
         id: 'parcelles-polygon-layer',
@@ -178,44 +193,65 @@ class Localiser extends React.Component {
             width="100vw"
             height="90vh"
             maxPitch={85}
-            mapStyle="https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json"
+            mapStyle={MAP_STYLE}
           >
             <DeckGL layers={this.renderLayers()} viewState={viewport} />
 
             <FullscreenControl className={classes.fullscreen} />
             <NavigationControl className={classes.nav} />
-            <ControlPanel
-              communes={communesPartenaires}
-              containerComponent={containerComponent}
-              onViewportChange={this.goToCommune}
-              onSelectCommune={this.onSelectCommune}
-            />
-            <CommuneMarker commune={commune} adresse={adresse} />
-            {!adresse ? (
-              <ChercherAdresse
-                className={classes.adresse}
-                commune={commune}
-                onClickSelectAddress={this.onClickSelectAddress}
+            {!commune ? (
+              <ControlPanel
+                communes={communesPartenaires}
+                containerComponent={containerComponent}
+                onViewportChange={this.goToCommune}
+                onSelectCommune={this.onSelectCommune}
               />
             ) : (
               ''
             )}
-            {parcelles && parcelles.length > 0 ? (
-              <Paper className={classes.parcelles}>
-                <Typography variant="h6">
-                  {`${parcelles.length} parcelles sélectionnées:`}
-                </Typography>
-                {error ? window.alert(error) : ''}
-                {parcelles.map((parcelle, key) => (
-                  <ListItem key={key}>
-                    <ListItemText primary={`Parcelle ${parcelle.id + 1}`} />
-                  </ListItem>
-                ))}
-              </Paper>
+            <CommuneMarker commune={commune} adresse={adresse} />
+            {!adresse ? (
+              <ChercherAdresse
+                commune={commune}
+                onClickSelectAddress={this.onClickSelectAddress}
+              />
             ) : (
-              ''
+              <Paper className={classes.parcelles}>
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  p={1}
+                  m={1}
+                  alignItems="center"
+                >
+                  <Box p={1}>
+                    <Typography variant="h6">
+                      {`${parcelles.length} parcelles sélectionnées:`}
+                    </Typography>
+                    {error ? (
+                      <AlertDialog content={error} initialState={true} />
+                    ) : (
+                      ''
+                    )}
+                    {parcelles.map((parcelle, key) => (
+                      <ListItem key={key}>
+                        <ListItemText primary={`${parcelle.id}`} />
+                      </ListItem>
+                    ))}
+                  </Box>
+                  <Box p={1}>
+                    <Button
+                      color="secondary"
+                      component={RouterLink}
+                      variant="contained"
+                      to="/connexion"
+                    >
+                      {`Déposer`}
+                    </Button>
+                  </Box>
+                </Box>
+              </Paper>
             )}
-            {this._renderTooltip}
           </ReactMapGL>
         </Container>
       </React.Fragment>
