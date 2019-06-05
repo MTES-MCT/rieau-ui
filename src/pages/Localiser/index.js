@@ -5,7 +5,7 @@ import ReactMapGL, {
   FlyToInterpolator
 } from 'react-map-gl';
 import DeckGL from '@deck.gl/react';
-import { GeoJsonLayer } from '@deck.gl/layers';
+import { GeoJsonLayer, TextLayer } from '@deck.gl/layers';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -26,6 +26,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import Button from 'components/Button';
 import Box from '@material-ui/core/Box';
 import AlertDialog from 'components/AlertDialog';
+import { parcelleCenter } from 'utils/parcelles';
 
 const styles = theme => ({
   map: {
@@ -92,7 +93,9 @@ class Localiser extends React.Component {
       adresse: null,
       commune: null,
       parcelles: [],
-      error: null
+      error: null,
+      parcellesTexts: [],
+      parcellesGeoJson: []
     };
   }
 
@@ -102,7 +105,9 @@ class Localiser extends React.Component {
       communes: communesPartenaires,
       adresse: null,
       parcelles: [],
-      commune: null
+      commune: null,
+      parcellesTexts: [],
+      parcellesGeoJson: []
     });
   };
 
@@ -122,7 +127,9 @@ class Localiser extends React.Component {
   };
 
   onClickSelectAddress = adresse => {
+    const { commune } = this.state;
     this.setState({ adresse: adresse });
+    this.parcellesTexts(commune);
     this.onViewportChange({
       latitude: adresse.position[0],
       longitude: adresse.position[1],
@@ -137,13 +144,19 @@ class Localiser extends React.Component {
   };
 
   ajouterParcelle = parcelle => {
-    if (this.state.parcelles.length > 2) {
-      this.setState({ error: 'Maximum atteint de 3 parcelles.' });
-    } else if (parcelleIsIncluded(parcelle, this.state.parcelles)) {
-      this.setState({ error: 'La parcelle est déjà incluse.' });
-      // }
-      // else if (!parcelleIsContigue(parcelle, this.state.parcelles)) {
-      //   this.setState({ error: "La parcelle n'est pas contiguë!" });
+    const { parcelles } = this.state;
+    const maxParcelles = 3;
+    if (parcelles.length > maxParcelles - 1) {
+      this.setState({ error: `Maximum atteint de ${maxParcelles} parcelles.` });
+    } else if (parcelleIsIncluded(parcelle, parcelles)) {
+      this.setState({
+        error: `La parcelle ${parcelle.properties.id} est déjà sélectionnée.`
+      });
+      // https://github.com/Turfjs/turf/issues/1276
+      // } else if (!parcelleIsContigue(parcelle, parcelles)) {
+      //   this.setState({
+      //     error: `La parcelle ${parcelle.properties.id} n'est pas contiguë.`
+      //   });
     } else {
       this.setState(state => {
         return {
@@ -160,21 +173,62 @@ class Localiser extends React.Component {
     }/geojson/parcelles`;
   };
 
+  showError = error => {
+    window.console.log(error);
+    this.setState({
+      error:
+        'Une erreur est survenue lors du chargement des parcelles cadastrales.'
+    });
+  };
+
+  parcellesTexts = commune => {
+    const init = {
+      method: 'GET',
+      headers: new Headers().append('Content-Type', 'application/json'),
+      mode: 'cors'
+    };
+    fetch(this.parcellesUrl(commune), init)
+      .then(data => data.json())
+      .then(data => this.buildParcellesTexts(data))
+      .catch(error => this.showError(error));
+  };
+
+  buildParcellesTexts = data => {
+    this.setState({ parcellesGeoJson: data });
+    this.setState({
+      parcellesTexts: data.features.map(feature => ({
+        text: feature.properties.numero,
+        position: parcelleCenter(feature).geometry.coordinates
+      }))
+    });
+  };
+
   renderLayers = () => {
-    if (!this.state.commune) return [];
-    const parcellesUrl = this.parcellesUrl(this.state.commune);
+    const { adresse, parcellesTexts, parcellesGeoJson } = this.state;
+    if (!adresse) return [];
     return [
       new GeoJsonLayer({
         id: 'parcelles-polygon-layer',
-        data: parcellesUrl,
+        data: parcellesGeoJson,
         filled: true,
         pickable: true,
         autoHighlight: true,
         stroked: true,
-        opacity: 0.1,
+        extruded: false,
+        opacity: 0.2,
         onClick: ({ object, x, y }) => {
-          this.ajouterParcelle(object.properties);
+          this.ajouterParcelle(object);
         }
+      }),
+      new TextLayer({
+        id: 'parcelles-text-layer',
+        data: parcellesTexts,
+        getTextAnchor: 'middle',
+        getAlignmentBaseline: 'center',
+        getColor: d => [256, 256, 256],
+        getSize: d => 20,
+        sizeScale: 1,
+        getPixelOffset: [0, 15]
       })
     ];
   };
@@ -189,6 +243,7 @@ class Localiser extends React.Component {
         <Container className={classes.map} data-cy="map">
           <ReactMapGL
             {...viewport}
+            reuseMaps
             onViewportChange={this.onViewportChange}
             width="100vw"
             height="90vh"
@@ -247,6 +302,13 @@ class Localiser extends React.Component {
                       to="/connexion"
                     >
                       {`Déposer`}
+                    </Button>
+                    <Button
+                      color="inherit"
+                      variant="outlined"
+                      onClick={this.reset}
+                    >
+                      {`Recommencer`}
                     </Button>
                   </Box>
                 </Box>
