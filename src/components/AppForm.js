@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
-import Paper from './Paper';
 
 const styles = theme => ({
   root: {
-    display: 'flex'
+    display: 'flex',
+    elevation: 4
   },
   paper: {
     padding: theme.spacing(4, 3),
@@ -23,8 +24,16 @@ function AppForm(props) {
   return (
     <div className={classes.root}>
       <Container maxWidth="sm">
-        <Box mt={7} mb={12}>
-          <Paper className={classes.paper}>{children}</Paper>
+        <Box
+          mt={7}
+          mb={12}
+          border={2}
+          borderColor="secondary.main"
+          borderRadius={5}
+        >
+          <Paper className={classes.paper} square={false}>
+            {children}
+          </Paper>
         </Box>
       </Container>
     </div>

@@ -6,11 +6,11 @@ import AideIcon from '@material-ui/icons/Help';
 import Home from 'pages/Home';
 import Localiser from 'pages/Localiser';
 import Communes from 'pages/Communes';
-import SignIn from 'pages/SignIn';
+import Connexion from 'pages/Connexion';
 import Cgu from 'pages/Cgu';
 import Aide from 'pages/Aide';
-import SignUp from 'pages/SignUp';
-import ForgotPassword from 'pages/ForgotPassword';
+import Inscription from 'pages/Inscription';
+import MotDePasseOublie from 'pages/MotDePasseOublie';
 
 const Routes = [
   {
@@ -38,7 +38,7 @@ const Routes = [
     path: '/connexion',
     label: 'Connexion',
     icon: SignInIcon,
-    component: SignIn,
+    component: Connexion,
     sidebar: true
   },
   {
@@ -59,14 +59,14 @@ const Routes = [
     path: '/inscrire',
     label: 'Inscription',
     icon: null,
-    component: SignUp,
+    component: Inscription,
     sidebar: false
   },
   {
     path: '/reinitialiser',
     label: 'Réinitiliser',
     icon: null,
-    component: ForgotPassword,
+    component: MotDePasseOublie,
     sidebar: false
   }
 ];
