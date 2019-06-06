@@ -1,5 +1,6 @@
 import intersect from '@turf/intersect';
 import centroid from '@turf/centroid';
+import area from '@turf/area';
 
 const parcelleIsContigue = (parcelle, parcelles) => {
   if (parcelles.length < 1) return true;
@@ -15,8 +16,16 @@ const parcelleCenter = parcelle => {
   return centroid(parcelle);
 };
 
+const parcellesSurfaceTotale = (parcelles, precision = 2) => {
+  var surface = 0;
+  parcelles.map(parcelle => (surface += area(parcelle)));
+  return Number.parseFloat(surface).toFixed(precision);
+};
+
 export { parcelleIsContigue };
 
 export { parcelleIsIncluded };
 
 export { parcelleCenter };
+
+export { parcellesSurfaceTotale };

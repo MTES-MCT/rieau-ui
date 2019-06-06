@@ -5,7 +5,7 @@ import ReactMapGL, {
   FlyToInterpolator
 } from 'react-map-gl';
 import DeckGL from '@deck.gl/react';
-import { GeoJsonLayer, TextLayer } from '@deck.gl/layers';
+import { GeoJsonLayer, TextLayer, PolygonLayer } from '@deck.gl/layers';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -15,18 +15,8 @@ import compose from 'utils/compose';
 import Container from '@material-ui/core/Container';
 import ControlPanel from './ControlPanel';
 import communesPartenaires from './communesPartenaires';
-import ChercherAdresse from './ChercherAdresse';
 import CommuneMarker from './CommuneMarker';
-import { parcelleIsIncluded } from 'utils/parcelles';
-import Typography from 'components/Typography';
-import Paper from '@material-ui/core/Paper';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import { Link as RouterLink } from 'react-router-dom';
-import Button from 'components/Button';
-import Box from '@material-ui/core/Box';
-import AlertDialog from 'components/AlertDialog';
-import { parcelleCenter } from 'utils/parcelles';
+import { parcelleIsIncluded, parcelleCenter } from 'utils/parcelles';
 
 const styles = theme => ({
   map: {
@@ -99,7 +89,7 @@ class Localiser extends React.Component {
     };
   }
 
-  reset = () => {
+  resetCommune = () => {
     this.setState({
       viewport: DEFAULT_VIEWPORT,
       communes: communesPartenaires,
@@ -111,12 +101,27 @@ class Localiser extends React.Component {
     });
   };
 
+  resetAdresse = () => {
+    const { commune } = this.state;
+    this.setState({
+      adresse: null,
+      parcelles: []
+    });
+    this.onViewportChange({
+      longitude: commune.longitude,
+      latitude: commune.latitude,
+      zoom: 11,
+      transitionInterpolator: new FlyToInterpolator(),
+      transitionDuration: 3000
+    });
+  };
+
   onViewportChange = viewport => {
     this.setState({ viewport: { ...this.state.viewport, ...viewport } });
   };
 
   goToCommune = ({ longitude, latitude }) => {
-    this.reset();
+    this.resetCommune();
     this.onViewportChange({
       longitude,
       latitude,
@@ -143,15 +148,24 @@ class Localiser extends React.Component {
     this.setState({ commune: commune, adresse: null, parcelles: [] });
   };
 
+  retirerParcelle = parcelle => {
+    const { parcelles } = this.state;
+    if (parcelleIsIncluded(parcelle, parcelles)) {
+      window.console.log('parcelle=' + JSON.stringify(parcelle));
+      this.setState(state => {
+        return {
+          error: null,
+          parcelles: state.parcelles.filter(p => p.id !== parcelle.id)
+        };
+      });
+    }
+  };
+
   ajouterParcelle = parcelle => {
     const { parcelles } = this.state;
-    const maxParcelles = 3;
+    const maxParcelles = 10;
     if (parcelles.length > maxParcelles - 1) {
       this.setState({ error: `Maximum atteint de ${maxParcelles} parcelles.` });
-    } else if (parcelleIsIncluded(parcelle, parcelles)) {
-      this.setState({
-        error: `La parcelle ${parcelle.properties.id} est déjà sélectionnée.`
-      });
       // https://github.com/Turfjs/turf/issues/1276
       // } else if (!parcelleIsContigue(parcelle, parcelles)) {
       //   this.setState({
@@ -204,7 +218,7 @@ class Localiser extends React.Component {
   };
 
   renderLayers = () => {
-    const { adresse, parcellesTexts, parcellesGeoJson } = this.state;
+    const { adresse, parcellesTexts, parcellesGeoJson, parcelles } = this.state;
     if (!adresse) return [];
     return [
       new GeoJsonLayer({
@@ -228,7 +242,25 @@ class Localiser extends React.Component {
         getColor: d => [256, 256, 256],
         getSize: d => 20,
         sizeScale: 1,
+        opacity: 0.6,
         getPixelOffset: [0, 15]
+      }),
+      new PolygonLayer({
+        id: 'parcelles-selectionnes-layer',
+        data: parcelles,
+        pickable: true,
+        stroked: true,
+        filled: true,
+        wireframe: true,
+        lineWidthMinPixels: 1,
+        opacity: 0.2,
+        getPolygon: d => d.geometry.coordinates,
+        getFillColor: d => [60, 93, 170],
+        getLineColor: [80, 80, 80],
+        getLineWidth: 1,
+        onClick: ({ object, x, y }) => {
+          this.retirerParcelle(object);
+        }
       })
     ];
   };
@@ -264,56 +296,15 @@ class Localiser extends React.Component {
             ) : (
               ''
             )}
-            <CommuneMarker commune={commune} adresse={adresse} />
-            {!adresse ? (
-              <ChercherAdresse
-                commune={commune}
-                onClickSelectAddress={this.onClickSelectAddress}
-              />
-            ) : (
-              <Paper className={classes.parcelles}>
-                <Box
-                  display="flex"
-                  flexDirection="column"
-                  p={1}
-                  m={1}
-                  alignItems="center"
-                >
-                  <Box p={1}>
-                    <Typography variant="h6">
-                      {`${parcelles.length} parcelles sélectionnées:`}
-                    </Typography>
-                    {error ? (
-                      <AlertDialog content={error} initialState={true} />
-                    ) : (
-                      ''
-                    )}
-                    {parcelles.map((parcelle, key) => (
-                      <ListItem key={key}>
-                        <ListItemText primary={`${parcelle.id}`} />
-                      </ListItem>
-                    ))}
-                  </Box>
-                  <Box p={1}>
-                    <Button
-                      color="secondary"
-                      component={RouterLink}
-                      variant="contained"
-                      to="/connexion"
-                    >
-                      {`Déposer`}
-                    </Button>
-                    <Button
-                      color="inherit"
-                      variant="outlined"
-                      onClick={this.reset}
-                    >
-                      {`Recommencer`}
-                    </Button>
-                  </Box>
-                </Box>
-              </Paper>
-            )}
+            <CommuneMarker
+              commune={commune}
+              adresse={adresse}
+              parcelles={parcelles}
+              error={error}
+              onClickSelectAddress={this.onClickSelectAddress}
+              resetCommune={this.resetCommune}
+              resetAdresse={this.resetAdresse}
+            />
           </ReactMapGL>
         </Container>
       </React.Fragment>

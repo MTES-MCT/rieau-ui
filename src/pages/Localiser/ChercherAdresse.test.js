@@ -11,10 +11,14 @@ test('rendering ChercherAdresse component', () => {
   const onClickSelectAddress = suggestion => {
     return;
   };
+  const resetCommune = () => {
+    return;
+  };
   const { queryAllByText } = render(
     <ChercherAdresse
       commune={andeville}
       onClickSelectAddress={onClickSelectAddress}
+      resetCommune={resetCommune}
     />
   );
   expect(queryAllByText('Localiser')).toBeTruthy();

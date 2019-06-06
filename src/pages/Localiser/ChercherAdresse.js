@@ -11,22 +11,13 @@ import { withStyles } from '@material-ui/core/styles';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
 import Typography from 'components/Typography';
+import Button from 'components/Button';
+import Box from '@material-ui/core/Box';
 
 const maxWidth = 400;
-const minTop = 40;
-const minLeft = 80;
 
 const styles = theme => ({
   root: {
-    position: 'absolute',
-    [theme.breakpoints.down('md')]: {
-      top: minTop,
-      left: minLeft
-    },
-    [theme.breakpoints.up('md')]: {
-      top: minTop * 3,
-      left: minLeft * 3
-    },
     padding: 2
   },
   container: {
@@ -109,7 +100,8 @@ class ChercherAddresse extends React.Component {
   static propTypes = {
     classes: PropTypes.object,
     commune: PropTypes.object,
-    onClickSelectAddress: PropTypes.func.isRequired
+    onClickSelectAddress: PropTypes.func.isRequired,
+    resetCommune: PropTypes.func.isRequired
   };
   constructor(props) {
     super(props);
@@ -191,7 +183,7 @@ class ChercherAddresse extends React.Component {
   };
 
   render() {
-    const { classes, commune } = this.props;
+    const { classes, commune, resetCommune } = this.props;
     const { adresse, adresses } = this.state;
     const inputProps = {
       classes,
@@ -210,27 +202,48 @@ class ChercherAddresse extends React.Component {
       <div className={classes.root}>
         {commune ? (
           <Paper>
-            <Typography variant="h6">Chercher une adresse</Typography>
-            <Autosuggest
-              classes={classes}
-              key={`autosuggest-${commune.code}`}
-              data-cy={`chercher-adresse-input`}
-              suggestions={adresses}
-              shouldRenderSuggestions={this.shouldRenderSuggestions}
-              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-              onSuggestionSelected={this.onSuggestionSelected}
-              getSuggestionValue={this.getSuggestionValue}
-              renderSuggestion={renderSuggestion}
-              renderInputComponent={renderInputComponent}
-              inputProps={inputProps}
-              theme={theme}
-              renderSuggestionsContainer={options => (
-                <Paper {...options.containerProps} square>
-                  {options.children}
-                </Paper>
-              )}
-            />
+            <Box
+              display="flex"
+              flexDirection="column"
+              p={1}
+              m={1}
+              alignItems="center"
+            >
+              <Box p={1}>
+                <Typography variant="subtitle2">{`Chercher l'adresse du projet à ${
+                  commune.nom
+                }`}</Typography>
+                <Autosuggest
+                  classes={classes}
+                  key={`autosuggest-${commune.code}`}
+                  data-cy={`chercher-adresse-input`}
+                  suggestions={adresses}
+                  shouldRenderSuggestions={this.shouldRenderSuggestions}
+                  onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                  onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                  onSuggestionSelected={this.onSuggestionSelected}
+                  getSuggestionValue={this.getSuggestionValue}
+                  renderSuggestion={renderSuggestion}
+                  renderInputComponent={renderInputComponent}
+                  inputProps={inputProps}
+                  theme={theme}
+                  renderSuggestionsContainer={options => (
+                    <Paper {...options.containerProps} square>
+                      {options.children}
+                    </Paper>
+                  )}
+                />
+              </Box>
+              <Box p={1}>
+                <Button
+                  color="inherit"
+                  variant="outlined"
+                  onClick={resetCommune}
+                >
+                  {`Changer de commune`}
+                </Button>
+              </Box>
+            </Box>
           </Paper>
         ) : (
           ''
