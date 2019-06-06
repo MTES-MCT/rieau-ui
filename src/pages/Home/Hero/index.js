@@ -99,10 +99,8 @@ class Hero extends React.Component {
                 variant="h2"
                 marked="center"
               >
-                {`Permis de construire facile`}
+                {`Déclaration préalable de travaux`}
               </Typography>
-            </Paper>
-            <Paper>
               <Typography color="inherit" align="center" variant="h5">
                 {`Déposez et gérez votre déclaration préalable de travaux en toute simplicité.`}
               </Typography>

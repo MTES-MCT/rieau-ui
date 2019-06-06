@@ -61,6 +61,14 @@ function AppFooter(props) {
         color="textSecondary"
         component="p"
       >
+        {`Réception, Informations et Échanges pour les Autorisations d'Urbanisme.`}
+      </Typography>
+      <Typography
+        variant="caption"
+        align="center"
+        color="textSecondary"
+        component="p"
+      >
         {`© 2019 Ministère de la transition écologique et solidaire`}
       </Typography>
     </footer>

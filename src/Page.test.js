@@ -22,9 +22,11 @@ function renderWithRouter(
   };
 }
 
+const nomAppli = 'Déclaration préalable de travaux';
+
 it('routes to Aide page', () => {
   const { container, getByText } = renderWithRouter(<Page />);
-  expect(container.innerHTML).toMatch('Permis de construire facile');
+  expect(container.innerHTML).toMatch(nomAppli);
   const leftClick = { button: 0 };
   fireEvent.click(getByText(/aide/i), leftClick);
   expect(container.innerHTML).toMatch('Aide');
@@ -32,15 +34,15 @@ it('routes to Aide page', () => {
 
 it('routes to CGU page', () => {
   const { container, getByText } = renderWithRouter(<Page />);
-  expect(container.innerHTML).toMatch('Permis de construire facile');
+  expect(container.innerHTML).toMatch(nomAppli);
   const leftClick = { button: 0 };
   fireEvent.click(getByText(/cgu/i), leftClick);
   expect(container.innerHTML).toMatch('CGU');
 });
 
-it('renders Permis de construire facile message', () => {
+it('renders nom appli message', () => {
   const { queryAllByText } = render(<Page />);
-  expect(queryAllByText('Permis de construire facile')).toBeTruthy();
+  expect(queryAllByText(nomAppli)).toBeTruthy();
 });
 
 it('landing on a bad page', () => {
