@@ -31,19 +31,19 @@ function AppFooter(props) {
     <footer className={classes.footer}>
       <Typography variant="h6" align="center" gutterBottom>
         <IconButton
-          href="https://github.com/MTES-MCT/permis-construire-facile-ui"
+          href="https://github.com/MTES-MCT/declaration-travaux"
           className={classes.icon}
         >
           <FaGithub />
         </IconButton>
         <IconButton
-          href="https://twitter.com/Min_Ecologie"
+          href="https://twitter.com/Min_Territoires"
           className={classes.icon}
         >
           <FaTwitter />
         </IconButton>
         <IconButton
-          href="http://www.ecologique-solidaire.gouv.fr"
+          href="http://www.cohesion-territoires.gouv.fr/"
           className={classes.icon}
         >
           <FaGlobe />
@@ -69,7 +69,7 @@ function AppFooter(props) {
         color="textSecondary"
         component="p"
       >
-        {`© 2019 Ministère de la transition écologique et solidaire`}
+        {`© 2019 Ministère de la Cohésion des territoires et des Relations avec les collectivités territoriales`}
       </Typography>
     </footer>
   );

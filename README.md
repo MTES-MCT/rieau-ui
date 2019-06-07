@@ -1,7 +1,7 @@
-# Permis construire facile UI
-[![CircleCI](https://circleci.com/gh/MTES-MCT/permis-construire-facile-ui/tree/master.svg?style=svg)](https://circleci.com/gh/MTES-MCT/permis-construire-facile-ui/tree/master)
+# Déclaration travaux UI
+[![CircleCI](https://circleci.com/gh/MTES-MCT/declaration-travaux-ui/tree/master.svg?style=svg)](https://circleci.com/gh/MTES-MCT/declaration-travaux-ui/tree/master)
 
-> Frontend de permis construire facile
+> Frontend de Déclaration préalable de travaux
 
 ## Développement
 
@@ -78,25 +78,25 @@ Exécute les tests et enregistre les videos et screenshots.
 Depuis la branche `master`:
 
 ```
-REACT_APP_BASENAME=/permis-construire-facile-ui PUBLIC_URL="https://mtes-mct.github.io/permis-construire-facile-ui" npm run deploy
+REACT_APP_BASENAME=/declaration-travaux-ui PUBLIC_URL="https://mtes-mct.github.io/declaration-travaux-ui" npm run deploy
 ```
 
-Depuis le navigateur: [https://mtes-mct.github.io/permis-construire-facile-ui/](https://mtes-mct.github.io/permis-construire-facile-ui/).
+Depuis le navigateur: [https://mtes-mct.github.io/declaration-prealable-travaux/](https://mtes-mct.github.io/declaration-prealable-travaux/).
 
 ### Docker
 
 * Build:
 
 ```
-docker build --build-arg REACT_APP_DOMAIN=http://localhost:3000 --build-arg REACT_APP_BASENAME=/pcf2 -t permis-construire-facile-ui .
+docker build --build-arg REACT_APP_DOMAIN=http://localhost:3000 --build-arg REACT_APP_BASENAME=/dpt -t declaration-travaux-ui .
 ```
 
-Spécifier `REACT_APP_DOMAIN` si le site est installé sur un autre domaine que [http://localhost:3000](http://localhost:3000) par défaut et et `REACT_APP_BASENAME` si il est dans un sous un sous-dossier autre que `/` (e.g. `/pcf2`).
+Spécifier `REACT_APP_DOMAIN` si le site est installé sur un autre domaine que [http://localhost:3000](http://localhost:3000) par défaut et et `REACT_APP_BASENAME` si il est dans un sous un sous-dossier autre que `/` (e.g. `/dpt`).
 
 * Run:
 
 ```
-docker run -p 3000:3000 permis-construire-facile-ui
+docker run -p 3000:3000 declaration-travaux-ui
 ```
 
 Depuis le navigateur: [http://localhost:3000](http://localhost:3000).
