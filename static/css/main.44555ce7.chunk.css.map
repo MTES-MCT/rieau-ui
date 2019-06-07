@@ -1,1 +1,0 @@
-{"version":3,"sources":["hero.css"],"names":[],"mappings":"AAAA,MACE,6GAAiC,CACjC,0BAA2B,CAC3B,yBACF","file":"main.44555ce7.chunk.css","sourcesContent":[".hero {\n  background-image: url(./hero.jpg);\n  background-color: '#90caf9'; /* Average color of the background image. */\n  background-position: 'center';\n}\n"]}
