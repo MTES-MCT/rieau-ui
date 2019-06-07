@@ -46,7 +46,8 @@ class CommuneMarker extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      adresses: []
+      adresses: [],
+      showPopup: true
     };
   }
 
@@ -71,73 +72,80 @@ class CommuneMarker extends Component {
       : commune
       ? commune.latitude
       : null;
+    const { showPopup } = this.state;
     return (
       <React.Fragment>
         {commune ? (
           <React.Fragment>
             <Marker longitude={longitude} latitude={latitude}>
-              <CommunePin size={20} />
+              <CommunePin
+                size={20}
+                onClick={() => this.setState({ showPopup: true })}
+              />
             </Marker>
-            <Popup
-              longitude={longitude}
-              latitude={latitude}
-              anchor="top"
-              closeOnClick={false}
-              closeButton={false}
-            >
-              {!adresse ? (
-                <ChercherAdresse
-                  commune={commune}
-                  onClickSelectAddress={onClickSelectAddress}
-                  resetCommune={resetCommune}
-                />
-              ) : (
-                <Paper className={classes.parcelles}>
-                  <Box
-                    display="flex"
-                    flexDirection="column"
-                    p={1}
-                    m={1}
-                    alignItems="center"
-                  >
-                    <Box p={1} justifyContent="center">
-                      <Typography variant="subtitle2">
-                        {`${parcelles.length} parcelles sélectionnées à ${
-                          adresse.label
-                        }`}
-                      </Typography>
-                      <Typography variant="body2">
-                        {`Pour une surface totale de ${parcellesSurfaceTotale(
-                          parcelles
-                        )} m²`}
-                      </Typography>
-                      {error ? (
-                        <AlertDialog content={error} initialState={true} />
-                      ) : (
-                        ''
-                      )}
+            {showPopup && (
+              <Popup
+                longitude={longitude}
+                latitude={latitude}
+                anchor="top"
+                closeButton={true}
+                closeOnClick={false}
+                onClose={() => this.setState({ showPopup: false })}
+              >
+                {!adresse ? (
+                  <ChercherAdresse
+                    commune={commune}
+                    onClickSelectAddress={onClickSelectAddress}
+                    resetCommune={resetCommune}
+                  />
+                ) : (
+                  <Paper className={classes.parcelles}>
+                    <Box
+                      display="flex"
+                      flexDirection="column"
+                      p={1}
+                      m={1}
+                      alignItems="center"
+                    >
+                      <Box p={1} justifyContent="center">
+                        <Typography variant="subtitle2">
+                          {`${parcelles.length} parcelles sélectionnées à ${
+                            adresse.label
+                          }`}
+                        </Typography>
+                        <Typography variant="body2">
+                          {`Pour une surface totale de ${parcellesSurfaceTotale(
+                            parcelles
+                          )} m²`}
+                        </Typography>
+                        {error ? (
+                          <AlertDialog content={error} initialState={true} />
+                        ) : (
+                          ''
+                        )}
+                      </Box>
+                      <Box p={1}>
+                        <Button
+                          color="secondary"
+                          component={RouterLink}
+                          variant="contained"
+                          to="/connexion"
+                        >
+                          {`Déposer`}
+                        </Button>
+                        <Button
+                          color="inherit"
+                          variant="outlined"
+                          onClick={resetAdresse}
+                        >
+                          {`Changer d'adresse`}
+                        </Button>
+                      </Box>
                     </Box>
-                    <Box p={1}>
-                      <Button
-                        color="secondary"
-                        component={RouterLink}
-                        variant="contained"
-                        to="/connexion"
-                      >
-                        {`Déposer`}
-                      </Button>
-                      <Button
-                        color="inherit"
-                        variant="outlined"
-                        onClick={resetAdresse}
-                      >
-                        {`Changer d'adresse`}
-                      </Button>
-                    </Box>
-                  </Box>
-                </Paper>
-              )}
-            </Popup>
+                  </Paper>
+                )}
+              </Popup>
+            )}
           </React.Fragment>
         ) : (
           ''

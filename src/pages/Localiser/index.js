@@ -226,10 +226,11 @@ class Localiser extends React.Component {
         data: parcellesGeoJson,
         filled: true,
         pickable: true,
-        autoHighlight: true,
         stroked: true,
         extruded: false,
         opacity: 0.2,
+        getFillColor: d => [60, 93, 170],
+        getLineColor: [60, 93, 170],
         onClick: ({ object, x, y }) => {
           this.ajouterParcelle(object);
         }
@@ -239,7 +240,7 @@ class Localiser extends React.Component {
         data: parcellesTexts,
         getTextAnchor: 'middle',
         getAlignmentBaseline: 'center',
-        getColor: d => [256, 256, 256],
+        getColor: d => [0, 0, 0],
         getSize: d => 20,
         sizeScale: 1,
         opacity: 0.6,
@@ -255,8 +256,8 @@ class Localiser extends React.Component {
         lineWidthMinPixels: 1,
         opacity: 0.2,
         getPolygon: d => d.geometry.coordinates,
-        getFillColor: d => [60, 93, 170],
-        getLineColor: [80, 80, 80],
+        getFillColor: d => [0, 17, 94],
+        getLineColor: [0, 17, 94],
         getLineWidth: 1,
         onClick: ({ object, x, y }) => {
           this.retirerParcelle(object);
