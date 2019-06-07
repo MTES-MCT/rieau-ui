@@ -81,7 +81,7 @@ Depuis la branche `master`:
 REACT_APP_BASENAME=/declaration-travaux-ui PUBLIC_URL="https://mtes-mct.github.io/declaration-travaux-ui" npm run deploy
 ```
 
-Depuis le navigateur: [https://mtes-mct.github.io/declaration-prealable-travaux/](https://mtes-mct.github.io/declaration-prealable-travaux/).
+Depuis le navigateur: [https://mtes-mct.github.io/declaration-travaux-ui/](https://mtes-mct.github.io/declaration-travaux-ui/).
 
 ### Docker
 
