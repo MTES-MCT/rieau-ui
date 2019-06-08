@@ -200,7 +200,7 @@ class ChercherAddresse extends React.Component {
     };
     return (
       <div className={classes.root}>
-        {commune ? (
+        {commune && (
           <Paper>
             <Box
               display="flex"
@@ -245,8 +245,6 @@ class ChercherAddresse extends React.Component {
               </Box>
             </Box>
           </Paper>
-        ) : (
-          ''
         )}
       </div>
     );

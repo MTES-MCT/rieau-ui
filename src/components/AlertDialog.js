@@ -12,7 +12,8 @@ class AlertDialog extends React.Component {
   static propTypes = {
     initialState: PropTypes.bool.isRequired,
     content: PropTypes.string.isRequired,
-    fullScreen: PropTypes.bool.isRequired
+    fullScreen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired
   };
   constructor(props) {
     super(props);
@@ -21,6 +22,8 @@ class AlertDialog extends React.Component {
     };
   }
   handleClose = () => {
+    const { onClose } = this.props;
+    onClose();
     this.setState({ open: false });
   };
   render() {

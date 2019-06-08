@@ -1,10 +1,12 @@
-import intersect from '@turf/intersect';
+import lineIntersect from '@turf/line-intersect';
 import centroid from '@turf/centroid';
 import area from '@turf/area';
 
 const parcelleIsContigue = (parcelle, parcelles) => {
   if (parcelles.length < 1) return true;
-  let intersections = parcelles.filter(p => intersect(parcelle, p) !== null);
+  let intersections = parcelles.filter(
+    p => lineIntersect(parcelle, p).features.length > 0
+  );
   return intersections.length > 0;
 };
 

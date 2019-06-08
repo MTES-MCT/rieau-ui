@@ -15,8 +15,13 @@ import compose from 'utils/compose';
 import Container from '@material-ui/core/Container';
 import ControlPanel from './ControlPanel';
 import communesPartenaires from './communesPartenaires';
+import Snackbar from 'components/Snackbar';
 import CommuneMarker from './CommuneMarker';
-import { parcelleIsIncluded, parcelleCenter } from 'utils/parcelles';
+import {
+  parcelleIsIncluded,
+  parcelleCenter,
+  parcelleIsContigue
+} from 'utils/parcelles';
 
 const styles = theme => ({
   map: {
@@ -151,7 +156,6 @@ class Localiser extends React.Component {
   retirerParcelle = parcelle => {
     const { parcelles } = this.state;
     if (parcelleIsIncluded(parcelle, parcelles)) {
-      window.console.log('parcelle=' + JSON.stringify(parcelle));
       this.setState(state => {
         return {
           error: null,
@@ -166,11 +170,10 @@ class Localiser extends React.Component {
     const maxParcelles = 10;
     if (parcelles.length > maxParcelles - 1) {
       this.setState({ error: `Maximum atteint de ${maxParcelles} parcelles.` });
-      // https://github.com/Turfjs/turf/issues/1276
-      // } else if (!parcelleIsContigue(parcelle, parcelles)) {
-      //   this.setState({
-      //     error: `La parcelle ${parcelle.properties.id} n'est pas contiguë.`
-      //   });
+    } else if (!parcelleIsContigue(parcelle, parcelles)) {
+      this.setState({
+        error: `La parcelle ${parcelle.properties.numero} n'est pas contiguë.`
+      });
     } else {
       this.setState(state => {
         return {
@@ -287,25 +290,30 @@ class Localiser extends React.Component {
 
             <FullscreenControl className={classes.fullscreen} />
             <NavigationControl className={classes.nav} />
-            {!commune ? (
+            {!commune && (
               <ControlPanel
                 communes={communesPartenaires}
                 containerComponent={containerComponent}
                 onViewportChange={this.goToCommune}
                 onSelectCommune={this.onSelectCommune}
               />
-            ) : (
-              ''
             )}
             <CommuneMarker
               commune={commune}
               adresse={adresse}
               parcelles={parcelles}
-              error={error}
               onClickSelectAddress={this.onClickSelectAddress}
               resetCommune={this.resetCommune}
               resetAdresse={this.resetAdresse}
             />
+            {error && (
+              <Snackbar
+                message={error}
+                variant="error"
+                initialState={true}
+                onClose={() => this.setState({ error: null })}
+              />
+            )}
           </ReactMapGL>
         </Container>
       </React.Fragment>

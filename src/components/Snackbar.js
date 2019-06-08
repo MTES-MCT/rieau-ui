@@ -1,88 +1,144 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import MuiSnackbar from '@material-ui/core/Snackbar';
-import Slide from '@material-ui/core/Slide';
-import CloseIcon from '@material-ui/icons/Close';
+import clsx from 'clsx';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import ErrorIcon from '@material-ui/icons/Error';
 import InfoIcon from '@material-ui/icons/Info';
+import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
+import MuiSnackbar from '@material-ui/core/Snackbar';
+import MuiSnackbarContent from '@material-ui/core/SnackbarContent';
+import WarningIcon from '@material-ui/icons/Warning';
+import { withStyles } from '@material-ui/core';
 
-const styles = theme => ({
-  content: {
-    backgroundColor: theme.palette.secondary.light,
-    color: theme.palette.text.primary,
-    flexWrap: 'inherit',
-    [theme.breakpoints.up('md')]: {
-      borderTopLeftRadius: 0,
-      borderTopRightRadius: 0,
-      borderBottomRightRadius: 4,
-      borderBottomLeftRadius: 4
-    }
+const variantIcon = {
+  success: CheckCircleIcon,
+  warning: WarningIcon,
+  error: ErrorIcon,
+  info: InfoIcon
+};
+
+// const variantColor = theme => ({
+//   success: theme.palette.success,
+//   error: theme.palette.error,
+//   info: theme.palette.info,
+//   warning: theme.palette.warning,
+// });
+
+const classes = theme => ({
+  icon: {
+    fontSize: 20
   },
-  contentMessage: {
-    fontSize: 16,
+  iconVariant: {
+    opacity: 0.9,
+    marginRight: theme.spacing(1)
+  },
+  message: {
     display: 'flex',
     alignItems: 'center'
   },
-  contentAction: {
-    paddingLeft: theme.spacing(2)
+  margin: {
+    margin: theme.spacing(1)
+  },
+  success: {
+    backgroundColor: theme.palette.success
+  },
+  root: {
+    backgroundColor: theme.palette.error
   },
   info: {
-    flexShrink: 0,
-    marginRight: theme.spacing(2)
+    backgroundColor: theme.palette.info
   },
-  close: {
-    padding: theme.spacing(1)
+  warning: {
+    backgroundColor: theme.palette.warning
   }
 });
 
-function Transition(props) {
-  return <Slide {...props} direction="down" />;
-}
+class SnackbarContent extends React.Component {
+  static propTypes = {
+    className: PropTypes.string,
+    message: PropTypes.node,
+    onClose: PropTypes.func,
+    variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired
+  };
 
-function Snackbar(props) {
-  const { classes, onClose, message, ...other } = props;
+  render() {
+    const { className, message, onClose, variant, ...other } = this.props;
+    const Icon = variantIcon[variant];
 
-  return (
-    <MuiSnackbar
-      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      autoHideDuration={6e3}
-      transition={Transition}
-      ContentProps={{
-        'aria-describedby': 'snackbar',
-        classes: {
-          root: classes.content,
-          message: classes.contentMessage,
-          action: classes.contentAction
+    return (
+      <MuiSnackbarContent
+        className={clsx(classes[variant], className)}
+        aria-describedby="client-snackbar"
+        message={
+          <span id="client-snackbar" className={classes.message}>
+            <Icon className={clsx(classes.icon, classes.iconVariant)} />
+            {message}
+          </span>
         }
-      }}
-      message={
-        <React.Fragment>
-          <InfoIcon className={classes.info} />
-          <span id="snackbar">{message}</span>
-        </React.Fragment>
-      }
-      action={[
-        <IconButton
-          key="close"
-          aria-label="Close"
-          color="inherit"
-          className={classes.close}
-          onClick={onClose}
-        >
-          <CloseIcon />
-        </IconButton>
-      ]}
-      {...other}
-    />
-  );
+        action={[
+          <IconButton
+            key="close"
+            aria-label="Fermer"
+            color="inherit"
+            onClick={onClose}
+          >
+            <CloseIcon className={classes.icon} />
+          </IconButton>
+        ]}
+        {...other}
+      />
+    );
+  }
 }
 
-Snackbar.propTypes = {
-  classes: PropTypes.object.isRequired,
-  message: PropTypes.string.isRequired,
-  onClose: PropTypes.func.isRequired,
-  SnackbarContentProps: PropTypes.object
-};
+class Snackbar extends React.Component {
+  static propTypes = {
+    initialState: PropTypes.bool.isRequired,
+    message: PropTypes.node,
+    onClose: PropTypes.func,
+    variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired
+  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: this.props.initialState
+    };
+    this.handleClose = this.handleClose.bind(this);
+  }
 
-export default withStyles(styles)(Snackbar);
+  handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    this.props.onClose();
+    this.setState({ open: false });
+  };
+
+  render() {
+    const { open } = this.state;
+    const { variant, message } = this.props;
+
+    return (
+      <MuiSnackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left'
+        }}
+        open={open}
+        className={classes.root}
+        autoHideDuration={30000000}
+        onClose={this.handleClose}
+      >
+        <SnackbarContent
+          className={classes.margin}
+          onClose={this.handleClose}
+          variant={variant}
+          message={message}
+        />
+      </MuiSnackbar>
+    );
+  }
+}
+
+export default withStyles(classes)(Snackbar);

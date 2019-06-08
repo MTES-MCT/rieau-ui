@@ -1,4 +1,7 @@
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
+import red from '@material-ui/core/colors/red';
+import green from '@material-ui/core/colors/green';
+import amber from '@material-ui/core/colors/amber';
 
 const theme = createMuiTheme({
   palette: {
@@ -7,7 +10,13 @@ const theme = createMuiTheme({
     },
     secondary: {
       main: '#4874b8'
-    }
+    },
+    info: {
+      main: '#4874b8'
+    },
+    error: red,
+    success: green[600],
+    warning: amber[700]
   },
   typography: {
     fontFamily: "'Work Sans', sans-serif",

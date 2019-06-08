@@ -11,7 +11,6 @@ import Paper from '@material-ui/core/Paper';
 import { Link as RouterLink } from 'react-router-dom';
 import Button from 'components/Button';
 import Box from '@material-ui/core/Box';
-import AlertDialog from 'components/AlertDialog';
 import { parcellesSurfaceTotale } from 'utils/parcelles';
 
 const maxPopupWidth = 400;
@@ -36,7 +35,6 @@ class CommuneMarker extends Component {
   static propTypes = {
     adresse: PropTypes.object,
     commune: PropTypes.object,
-    error: PropTypes.string,
     parcelles: PropTypes.array,
     classes: PropTypes.object.isRequired,
     onClickSelectAddress: PropTypes.func.isRequired,
@@ -59,8 +57,7 @@ class CommuneMarker extends Component {
       onClickSelectAddress,
       resetCommune,
       resetAdresse,
-      parcelles,
-      error
+      parcelles
     } = this.props;
     const longitude = adresse
       ? adresse.position[1]
@@ -75,7 +72,7 @@ class CommuneMarker extends Component {
     const { showPopup } = this.state;
     return (
       <React.Fragment>
-        {commune ? (
+        {commune && (
           <React.Fragment>
             <Marker longitude={longitude} latitude={latitude}>
               <CommunePin
@@ -118,11 +115,6 @@ class CommuneMarker extends Component {
                             parcelles
                           )} m²`}
                         </Typography>
-                        {error ? (
-                          <AlertDialog content={error} initialState={true} />
-                        ) : (
-                          ''
-                        )}
                       </Box>
                       <Box p={1}>
                         <Button
@@ -147,8 +139,6 @@ class CommuneMarker extends Component {
               </Popup>
             )}
           </React.Fragment>
-        ) : (
-          ''
         )}
       </React.Fragment>
     );
