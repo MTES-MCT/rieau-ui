@@ -127,7 +127,7 @@ class Snackbar extends React.Component {
         }}
         open={open}
         className={classes.root}
-        autoHideDuration={30000000}
+        autoHideDuration={30000}
         onClose={this.handleClose}
       >
         <SnackbarContent
