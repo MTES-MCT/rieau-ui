@@ -94,7 +94,7 @@ class SnackbarContent extends React.Component {
 
 class Snackbar extends React.Component {
   static propTypes = {
-    initialState: PropTypes.bool.isRequired,
+    initialState: PropTypes.bool,
     message: PropTypes.node,
     onClose: PropTypes.func,
     variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired
@@ -102,7 +102,7 @@ class Snackbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: this.props.initialState
+      open: this.props.initialState || true
     };
     this.handleClose = this.handleClose.bind(this);
   }

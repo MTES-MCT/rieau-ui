@@ -3,7 +3,9 @@
     "baseUrl": "src",
     "paths": {
       "pages/*": ["./pages/*"],
+      "context/*": ["./context/*"],
       "components/*": ["./components/*"],
+      "routes/*": ["./routes/*"],
       "theme/*": ["./theme/*"],
       "utils/*": ["./utils/*"]
     }

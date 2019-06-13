@@ -9,7 +9,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Button from 'components/Button';
 import Hidden from '@material-ui/core/Hidden';
 import HamburgerMenu from './HamburgerMenu';
-import routes from 'routes';
+import AccountMenu from './AccountMenu';
+import routes from 'routes/unauthenticated';
+import { useUser } from 'context/user-context';
 
 const styles = theme => ({
   root: {
@@ -32,7 +34,8 @@ const styles = theme => ({
 
 function AppAppBar(props) {
   const { classes } = props;
-
+  const { isAuthenticated } = useUser();
+  const connexion = routes.find(route => route.id === 'connexion');
   return (
     <div className={classes.root} id="app-bar">
       <AppBar position="fixed" elevation={0} color="secondary">
@@ -48,31 +51,40 @@ function AppAppBar(props) {
           <div className={classes.root} />
           <Hidden xsDown>
             <div className={classes.root} />
-            {routes
-              .filter(route => route.sidebar)
-              .map((route, index) => {
-                return (
-                  <Button
-                    key={index}
-                    color="primary"
-                    size={
-                      route.label.toLowerCase() === 'connexion'
-                        ? 'medium'
-                        : 'small'
-                    }
-                    component={RouterLink}
-                    variant={
-                      route.label.toLowerCase() === 'connexion'
-                        ? 'contained'
-                        : 'text'
-                    }
-                    to={route.path}
-                    data-cy={'appbar-' + route.label.toLowerCase() + '-btn'}
-                  >
-                    {route.label}
-                  </Button>
-                );
-              })}
+
+            {isAuthenticated ? (
+              <AccountMenu />
+            ) : (
+              <React.Fragment>
+                {routes
+                  .filter(route => route.sidebar && !route.auth)
+                  .map(route => {
+                    return (
+                      <Button
+                        key={route.id}
+                        color="primary"
+                        size={'small'}
+                        component={RouterLink}
+                        variant={'text'}
+                        to={route.path}
+                        data-cy={'appbar-' + route.id + '-btn'}
+                      >
+                        {route.label}
+                      </Button>
+                    );
+                  })}
+                <Button
+                  color="primary"
+                  size={'medium'}
+                  component={RouterLink}
+                  variant={'contained'}
+                  to={connexion.path}
+                  data-cy={'appbar-' + connexion.id + '-btn'}
+                >
+                  {connexion.label}
+                </Button>
+              </React.Fragment>
+            )}
           </Hidden>
           <Hidden smUp>
             <div className={classes.root} />
@@ -85,7 +97,10 @@ function AppAppBar(props) {
 }
 
 AppAppBar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  login: PropTypes.func,
+  logout: PropTypes.func,
+  register: PropTypes.func
 };
 
 export default withStyles(styles)(AppAppBar);

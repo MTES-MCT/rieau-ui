@@ -12,8 +12,9 @@ import Aide from 'pages/Aide';
 import Inscription from 'pages/Inscription';
 import MotDePasseOublie from 'pages/MotDePasseOublie';
 
-const Routes = [
+const routes = [
   {
+    id: 'accueil',
     path: '/',
     label: 'Accueil',
     icon: HomeIcon,
@@ -21,6 +22,7 @@ const Routes = [
     sidebar: true
   },
   {
+    id: 'localiser',
     path: '/localiser',
     label: 'Localiser',
     icon: MapIcon,
@@ -28,6 +30,7 @@ const Routes = [
     sidebar: true
   },
   {
+    id: 'communes',
     path: '/communes',
     label: 'Communes',
     icon: CityIcon,
@@ -35,13 +38,7 @@ const Routes = [
     sidebar: true
   },
   {
-    path: '/connexion',
-    label: 'Connexion',
-    icon: SignInIcon,
-    component: Connexion,
-    sidebar: true
-  },
-  {
+    id: 'aide',
     path: '/aide',
     label: 'Aide',
     icon: AideIcon,
@@ -49,6 +46,7 @@ const Routes = [
     sidebar: false
   },
   {
+    id: 'cgu',
     path: '/cgu',
     label: 'CGU',
     icon: null,
@@ -56,6 +54,7 @@ const Routes = [
     sidebar: false
   },
   {
+    id: 'inscrire',
     path: '/inscrire',
     label: 'Inscription',
     icon: null,
@@ -63,12 +62,22 @@ const Routes = [
     sidebar: false
   },
   {
+    id: 'reinitialiser',
     path: '/reinitialiser',
     label: 'Réinitiliser',
     icon: null,
     component: MotDePasseOublie,
     sidebar: false
+  },
+  {
+    id: 'connexion',
+    path: '/connexion',
+    label: 'Connexion',
+    icon: SignInIcon,
+    component: Connexion,
+    sidebar: true,
+    auth: true
   }
 ];
 
-export default Routes;
+export default routes;

@@ -1,16 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Link as RouterLink } from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuList from '@material-ui/core/List';
-import MenuItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
-import routes from 'routes';
+import routesUnauthenticated from 'routes/unauthenticated';
+import routesAuthenticated from 'routes/authenticated';
 import compose from 'utils/compose';
+import MenuItemLink from 'components/MenuItemLink';
+import { withRouter } from 'react-router-dom';
+import { useAuth } from 'context/auth-context';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import { useUser } from 'context/user-context';
 
 const drawerWidth = 240;
 
@@ -34,71 +38,62 @@ const styles = theme => ({
   }
 });
 
-class MenuItemLink extends React.Component {
-  render() {
-    const { route } = this.props;
-    return (
-      <React.Fragment>
-        <MenuItem
-          data-cy={'hamburger-menu-' + route.label.toLowerCase()}
-          button
-          component={RouterLink}
-          to={route.path}
-          {...this.props}
-        >
-          <ListItemIcon>
-            <route.icon />
-          </ListItemIcon>
-          {route.label}
-        </MenuItem>
-      </React.Fragment>
-    );
+function SideBarMenu(props) {
+  const { classes, toggleDrawer } = props;
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const { logout } = useAuth();
+  const { isAuthenticated } = useUser();
+  const moncompte = routesAuthenticated.find(route => route.id === 'moncompte');
+  const deconnexion = routesAuthenticated.find(
+    route => route.id === 'deconnexion'
+  );
+  function onClickItem(event, index) {
+    setSelectedIndex(index);
   }
-}
-MenuItemLink.propTypes = {
-  route: PropTypes.object.isRequired
-};
-
-class SideBarMenu extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedIndex: 0
-    };
-    this.onClickItem = this.onClickItem.bind(this);
-  }
-
-  onClickItem = (event, index) => {
-    this.setState({ selectedIndex: index });
-  };
-
-  render() {
-    const { classes, toggleDrawer } = this.props;
-    const { selectedIndex } = this.state;
-    return (
-      <div
-        className={classes.toolbar}
-        role="presentation"
-        onClick={event => toggleDrawer(event, false)}
-        onKeyDown={event => toggleDrawer(event, false)}
-      >
+  return (
+    <div
+      className={classes.toolbar}
+      role="presentation"
+      onClick={event => toggleDrawer(event, false)}
+      onKeyDown={event => toggleDrawer(event, false)}
+    >
+      {isAuthenticated ? (
         <MenuList>
-          {routes
-            .filter(route => route.sidebar)
-            .map((route, index) => {
+          <MenuItemLink
+            route={moncompte}
+            onClick={event => onClickItem(event, moncompte.id)}
+          />
+          <MenuItem button onClick={logout}>
+            <ListItemIcon>
+              <deconnexion.icon />
+            </ListItemIcon>
+            {deconnexion.label}
+          </MenuItem>
+        </MenuList>
+      ) : (
+        <MenuList>
+          {routesUnauthenticated
+            .filter(
+              route =>
+                route.sidebar &&
+                (route.auth
+                  ? !isAuthenticated && route.id === 'connexion'
+                  : true)
+            )
+            .map(route => {
               return (
                 <MenuItemLink
-                  key={index}
-                  selected={index === selectedIndex}
+                  key={route.id}
+                  selected={route.id === selectedIndex}
                   route={route}
-                  onClick={event => this.onClickItem(event, index)}
+                  onClick={event => onClickItem(event, route.id)}
                 />
               );
             })}
         </MenuList>
-      </div>
-    );
-  }
+      )}
+    </div>
+  );
 }
 SideBarMenu.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -154,4 +149,7 @@ class HamburgerMenu extends React.Component {
 HamburgerMenu.propTypes = {
   classes: PropTypes.object.isRequired
 };
-export default compose(withStyles(styles))(HamburgerMenu);
+export default compose(
+  withRouter,
+  withStyles(styles)
+)(HamburgerMenu);
