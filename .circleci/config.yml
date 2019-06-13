@@ -83,6 +83,8 @@ jobs:
           at: '~'
       - run: 
           environment:
+            REACT_APP_NAME: Déclaration préalable de travaux
+            REACT_APP_DESCRIPTION: Déposer en ligne votre déclaration préalable de travaux
             REACT_APP_BASENAME: /declaration-travaux-ui
             PUBLIC_URL: https://mtes-mct.github.io/declaration-travaux-ui
           command: |
