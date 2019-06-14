@@ -53,6 +53,10 @@ function loadToken() {
   return sessionStorage.load(keyToken);
 }
 
+function loadNonce() {
+  return sessionStorage.load(keyNonce);
+}
+
 function saveToken(payload) {
   sessionStorage.save(keyToken, payload);
   token.next(payload);
@@ -153,6 +157,27 @@ function changePassword(idToken, password) {
     });
 }
 
+function getFranceConnectURL() {
+  saveNonce();
+  const nonce = loadNonce();
+  return `${
+    process.env.REACT_APP_FRANCE_CONNECT_URL
+  }authorize?redirect_uri=${process.env.REACT_APP_PUBLIC_URL +
+    '/login-callback'}&scope=${'openid given_name family_name'}&client_id=${
+    process.env.REACT_APP_FRANCE_CONNECT_CLIENT_ID
+  }&state=home&nonce=${nonce}&acr_values=eidas1&response_type=code`;
+}
+
+function loginCallback(code, state) {
+  return api.auth
+    .loginCallback(code, state)
+    .then(api.handleResponse)
+    .then(data => {
+      saveToken(JSON.stringify(data));
+      return { user: data, isAuthenticated: true };
+    });
+}
+
 const auth = {
   login,
   logout,
@@ -165,7 +190,9 @@ const auth = {
   getProfile,
   getUser,
   token: token.asObservable(),
-  tokenValue
+  tokenValue,
+  getFranceConnectURL,
+  loginCallback
 };
 
 export default auth;

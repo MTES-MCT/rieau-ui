@@ -13,6 +13,7 @@ import Inscription from 'pages/Inscription';
 import MotDePasseOublie from 'pages/MotDePasseOublie';
 import ChangerMotDePasse from 'pages/ChangerMotDePasse';
 import ConfirmationEmail from 'pages/ConfirmationEmail';
+import FranceConnectCallback from 'pages/FranceConnectCallback';
 
 const routes = [
   {
@@ -86,6 +87,15 @@ const routes = [
     icon: SignInIcon,
     component: Connexion,
     sidebar: true,
+    auth: true
+  },
+  {
+    id: 'callback',
+    path: '/login-callback',
+    label: 'France Connect Callback',
+    icon: SignInIcon,
+    component: FranceConnectCallback,
+    sidebar: false,
     auth: true
   },
   {

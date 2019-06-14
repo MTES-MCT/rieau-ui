@@ -5,7 +5,8 @@ let users = [
     password: 'test1234',
     firstName: 'Test',
     lastName: 'Test',
-    profile: 'test'
+    profile: 'test',
+    franceConnect: false
   }
 ];
 let tokens = [
@@ -208,8 +209,47 @@ function changePassword(idToken, password) {
   });
 }
 
+function loginCallback(code, state) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (!code)
+        return resolve({
+          ok: false,
+          status: 400,
+          body: () =>
+            Promise.resolve(
+              JSON.stringify({
+                message: "Echec de l'authentification par France Connect"
+              })
+            )
+        });
+      const newUser = {
+        id: '3_melaine',
+        email: 'trois_melaine@mail.com	',
+        franceConnect: true,
+        firstName: 'Mélaine',
+        lastName: 'TROIS',
+        profile: 'test'
+      };
+      return resolve({
+        ok: true,
+        status: 200,
+        body: () =>
+          Promise.resolve(
+            JSON.stringify({
+              id: sessionStorage.key,
+              user: newUser,
+              expiresAt: -1
+            })
+          )
+      });
+    }, 500);
+  });
+}
+
 const auth = {
   login,
+  loginCallback,
   isAuthenticated,
   changePassword,
   logout,

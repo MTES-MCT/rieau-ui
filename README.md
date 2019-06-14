@@ -17,6 +17,12 @@ Ce projet a été construit avec [Create React App](https://github.com/facebook/
 npm start
 ```
 
+ou pour intégration avec France connect:
+
+```
+npm run start:dev
+```
+
 Depuis le navigateur: [http://localhost:3000](http://localhost:3000).
 
 ### Formatage du code
@@ -80,7 +86,14 @@ Copier le `.env.sample` en:
 * `.env.staging`
 * `.env.production`
 
-Renseigner les valeurs en fonction de l'environnement.
+Renseigner les valeurs en fonction de l'environnement, puis builder:
+
+```
+npm run build:dev # pour dev
+npm run build:test
+npm run build:staging
+npm run build:production
+```
 
 ### Github pages
 

@@ -44,9 +44,16 @@ function AuthProvider(props) {
   }
 
   const login = (email, password) => auth.login(email, password).then(reload);
+  const loginCallback = (code, state) =>
+    auth.loginCallback(code, state).then(reload);
   const logout = () => auth.logout().then(reload);
 
-  return <AuthContext.Provider value={{ data, login, logout }} {...props} />;
+  return (
+    <AuthContext.Provider
+      value={{ data, login, loginCallback, logout }}
+      {...props}
+    />
+  );
 }
 
 function useAuth() {

@@ -25,6 +25,7 @@ import * as Yup from 'yup';
 import FranceConnectImg from './FCboutons-10.png';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useAuth } from 'context/auth-context';
+import auth from 'utils/auth';
 
 const styles = theme => ({
   headers: {
@@ -71,6 +72,8 @@ function Connexion(props) {
   }
   const { classes } = props;
   const { login } = useAuth();
+
+  const franceConnectURL = auth.getFranceConnectURL();
 
   return (
     <React.Fragment>
@@ -129,12 +132,12 @@ function Connexion(props) {
               >
                 Ou
               </Typography>
-              <IconButton>
+              <Link href={franceConnectURL} component={IconButton}>
                 <img
                   src={FranceConnectImg}
                   alt="Se connecter avec France connect"
                 />
-              </IconButton>
+              </Link>
             </Grid>
           </Grid>
         </React.Fragment>
