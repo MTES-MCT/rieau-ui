@@ -11,6 +11,8 @@ import Cgu from 'pages/Cgu';
 import Aide from 'pages/Aide';
 import Inscription from 'pages/Inscription';
 import MotDePasseOublie from 'pages/MotDePasseOublie';
+import ChangerMotDePasse from 'pages/ChangerMotDePasse';
+import ConfirmationEmail from 'pages/ConfirmationEmail';
 
 const routes = [
   {
@@ -70,6 +72,14 @@ const routes = [
     sidebar: false
   },
   {
+    id: 'changermotdepasse',
+    path: '/changermotdepasse/:id',
+    label: 'Changer le mot de passe',
+    icon: null,
+    component: ChangerMotDePasse,
+    sidebar: false
+  },
+  {
     id: 'connexion',
     path: '/connexion',
     label: 'Connexion',
@@ -77,6 +87,14 @@ const routes = [
     component: Connexion,
     sidebar: true,
     auth: true
+  },
+  {
+    id: 'confirmation',
+    path: '/confirmation/:id',
+    label: 'Confirmation email',
+    icon: null,
+    component: ConfirmationEmail,
+    sidebar: false
   }
 ];
 

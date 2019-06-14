@@ -173,7 +173,7 @@ function Connexion(props) {
               <Card elevation={0} className={classes.card}>
                 <CardContent>
                   {errors.general && (
-                    <Typography variant="h6" color="secondary">
+                    <Typography variant="h6" color="error">
                       {errors.general}
                     </Typography>
                   )}

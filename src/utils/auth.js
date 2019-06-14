@@ -135,9 +135,39 @@ function logout() {
     });
 }
 
+function register(firstName, lastName, email, password) {
+  return api.auth
+    .register(firstName, lastName, email, password)
+    .then(handleResponse)
+    .then(data => {
+      return { user: data };
+    });
+}
+
+function reset(email) {
+  return api.auth
+    .reset(email)
+    .then(handleResponse)
+    .then(data => {
+      return { user: data };
+    });
+}
+
+function confirm(id) {
+  return api.auth
+    .confirm(id)
+    .then(handleResponse)
+    .then(data => {
+      return data;
+    });
+}
+
 const auth = {
   login,
   logout,
+  register,
+  reset,
+  confirm,
   isAuthenticated,
   hasTokenExpired,
   getProfile,
