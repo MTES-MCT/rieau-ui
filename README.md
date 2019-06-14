@@ -73,6 +73,15 @@ Exécute les tests et enregistre les videos et screenshots.
 
 ## Déploiements
 
+Copier le `.env.sample` en:
+
+* `.env` pour dev
+* `.env.test`
+* `.env.staging`
+* `.env.production`
+
+Renseigner les valeurs en fonction de l'environnement.
+
 ### Github pages
 
 Depuis la branche `master`:
