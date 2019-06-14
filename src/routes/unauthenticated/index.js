@@ -73,7 +73,7 @@ const routes = [
   },
   {
     id: 'changermotdepasse',
-    path: '/changermotdepasse/:id',
+    path: '/changermotdepasse/:token',
     label: 'Changer le mot de passe',
     icon: null,
     component: ChangerMotDePasse,
@@ -90,7 +90,7 @@ const routes = [
   },
   {
     id: 'confirmation',
-    path: '/confirmation/:id',
+    path: '/confirmation/:token',
     label: 'Confirmation email',
     icon: null,
     component: ConfirmationEmail,

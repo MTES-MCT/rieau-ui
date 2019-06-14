@@ -189,6 +189,7 @@ function Inscription(props) {
                     label="Prénom"
                     margin="normal"
                     name="firstName"
+                    data-cy="firstname-input"
                     required
                   />
                   <TextField
@@ -202,6 +203,7 @@ function Inscription(props) {
                     label="Nom"
                     margin="normal"
                     name="lastName"
+                    data-cy="lastname-input"
                     required
                   />
                   <TextField
@@ -215,6 +217,7 @@ function Inscription(props) {
                     label="Email"
                     margin="normal"
                     name="email"
+                    data-cy="email-input"
                     required
                     InputProps={{
                       startAdornment: (
@@ -234,6 +237,7 @@ function Inscription(props) {
                     size="large"
                     required
                     name="password"
+                    data-cy="password-input"
                     label="Mot de passe"
                     type={showPassword ? 'text' : 'password'}
                     margin="normal"
@@ -268,6 +272,7 @@ function Inscription(props) {
                     onBlur={handleBlur}
                     required
                     name="confirmPassword"
+                    data-cy="confirmpassword-input"
                     label="Confirmez votre mot de passe"
                     type={showConfirmPassword ? 'text' : 'password'}
                     margin="normal"
@@ -303,6 +308,7 @@ function Inscription(props) {
                       fullWidth
                       disabled={isSubmitting}
                       type="submit"
+                      data-cy="inscription-btn"
                     >
                       {`S'inscrire`}
                     </Button>

@@ -16,6 +16,10 @@ import Aide from 'pages/Aide';
 import Home from 'pages/Home';
 import { UserProvider } from 'context/user-context';
 import { AuthProvider } from 'context/auth-context';
+import Inscription from 'pages/Inscription';
+import MotDePasseOublie from 'pages/MotDePasseOublie';
+import ConfirmationEmail from 'pages/ConfirmationEmail';
+import ChangerMotDePasse from 'pages/ChangerMotDePasse';
 
 afterEach(cleanup);
 
@@ -111,4 +115,34 @@ test('rendering Home component', async () => {
   await waitForElement(() => queryAllByText(nomAppli));
   expect(queryAllByText(nomAppli)).toBeTruthy();
   expect(queryAllByText('Comment faire')).toBeTruthy();
+});
+test('rendering Inscription component', async () => {
+  const route = '/';
+  const { queryAllByText } = renderWithRouter(<Inscription />, { route });
+  await waitForElement(() => queryAllByText('Inscription'));
+  expect(queryAllByText('Inscription')).toBeTruthy();
+});
+test('rendering MotDePasseOublie component', async () => {
+  const route = '/';
+  const { queryAllByText } = renderWithRouter(<MotDePasseOublie />, { route });
+  await waitForElement(() => queryAllByText('Mot de passe oublié ?'));
+  expect(queryAllByText('Mot de passe oublié ?')).toBeTruthy();
+});
+test('rendering ConfirmationEmail component', async () => {
+  const route = '/confirmation';
+  const { queryAllByText } = renderWithRouter(
+    <ConfirmationEmail match={{ params: { id: '0' } }} />,
+    { route }
+  );
+  await waitForElement(() => queryAllByText('Confirmation Email'));
+  expect(queryAllByText('Confirmation Email')).toBeTruthy();
+});
+test('rendering ChangerDeMotDePasse component', async () => {
+  const route = '/changermotdepasse';
+  const { queryAllByText } = renderWithRouter(
+    <ChangerMotDePasse match={{ params: { id: '0' } }} />,
+    { route }
+  );
+  await waitForElement(() => queryAllByText('Changer de mot de passe'));
+  expect(queryAllByText('Changer de mot de passe')).toBeTruthy();
 });

@@ -47,12 +47,21 @@ function actionLink(type) {
 }
 
 function EmailLink(props) {
-  const { type } = props;
+  const { type, token } = props;
   const action = actionLink(type);
+  if (action) {
+    var path = action.path;
+    if (type === 'reset') path += '/' + token;
+  }
   return (
     <React.Fragment>
       {action && (
-        <Link to={action.path} color="secondary" component={RouterLink}>
+        <Link
+          to={path}
+          color="secondary"
+          component={RouterLink}
+          data-cy="action-link"
+        >
           {action.nom}
         </Link>
       )}
@@ -60,11 +69,12 @@ function EmailLink(props) {
   );
 }
 EmailLink.propTypes = {
-  type: PropTypes.string.isRequired
+  type: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired
 };
 
 function Message(props) {
-  const { type, message } = props;
+  const { type, message, token } = props;
   const header =
     type !== 'error' ? 'Confirmation email' : '404 | Page non trouvée';
   return (
@@ -78,14 +88,15 @@ function Message(props) {
         marked="center"
         align="center"
       >
-        {message} <EmailLink type={type} />
+        {message} <EmailLink type={type} token={token} />
       </Typography>
     </React.Fragment>
   );
 }
 Message.propTypes = {
   type: PropTypes.string.isRequired,
-  message: PropTypes.string.isRequired
+  message: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired
 };
 
 class ConfirmationEmail extends React.Component {
@@ -97,8 +108,8 @@ class ConfirmationEmail extends React.Component {
     };
   }
   componentDidMount() {
-    const { id } = this.props.match.params;
-    auth.confirm(id).then(
+    const { token } = this.props.match.params;
+    auth.confirm(token).then(
       confirmation => {
         this.setState(() => ({
           message: confirmationMessage(confirmation.type),
@@ -116,10 +127,11 @@ class ConfirmationEmail extends React.Component {
 
   render() {
     const { message, type } = this.state;
+    const { token } = this.props.match.params;
     return (
       <React.Fragment>
         <AppAppBar />
-        {type && <Message type={type} message={message} />}
+        {type && <Message type={type} message={message} token={token} />}
         <AppFooter />
       </React.Fragment>
     );

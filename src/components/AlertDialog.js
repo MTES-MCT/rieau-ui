@@ -49,6 +49,7 @@ class AlertDialog extends React.Component {
             color="secondary"
             variant="contained"
             autoFocus
+            data-cy="confirm-dialog-btn"
           >
             Ok
           </Button>

@@ -96,6 +96,7 @@ function Connexion(props) {
                   to="/inscrire"
                   align="center"
                   underline="always"
+                  data-cy="inscription-link"
                 >
                   Inscrivez-vous
                 </Link>

@@ -95,28 +95,10 @@ function isAuthenticated() {
   return authenticated;
 }
 
-function handleResponse(response) {
-  return response.body().then(body => {
-    const data = body && JSON.parse(body);
-    if (!response.ok) {
-      if ([401, 403].indexOf(response.status) !== -1) {
-        // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
-        logout();
-        window.location.reload(true);
-      }
-
-      const error = data && data.message;
-      return Promise.reject(error);
-    }
-
-    return data;
-  });
-}
-
 function login(email, password) {
   return api.auth
     .login(email, password)
-    .then(handleResponse)
+    .then(api.handleResponse)
     .then(data => {
       saveNonce();
       saveToken(JSON.stringify(data));
@@ -127,7 +109,7 @@ function login(email, password) {
 function logout() {
   return api.auth
     .logout()
-    .then(handleResponse)
+    .then(api.handleResponse)
     .then(data => {
       deleteToken();
       deleteNonce();
@@ -138,7 +120,7 @@ function logout() {
 function register(firstName, lastName, email, password) {
   return api.auth
     .register(firstName, lastName, email, password)
-    .then(handleResponse)
+    .then(api.handleResponse)
     .then(data => {
       return { user: data };
     });
@@ -147,16 +129,25 @@ function register(firstName, lastName, email, password) {
 function reset(email) {
   return api.auth
     .reset(email)
-    .then(handleResponse)
+    .then(api.handleResponse)
     .then(data => {
       return { user: data };
     });
 }
 
-function confirm(id) {
+function confirm(idToken) {
   return api.auth
-    .confirm(id)
-    .then(handleResponse)
+    .confirm(idToken)
+    .then(api.handleResponse)
+    .then(data => {
+      return data;
+    });
+}
+
+function changePassword(idToken, password) {
+  return api.auth
+    .changePassword(idToken, password)
+    .then(api.handleResponse)
     .then(data => {
       return data;
     });
@@ -168,6 +159,7 @@ const auth = {
   register,
   reset,
   confirm,
+  changePassword,
   isAuthenticated,
   hasTokenExpired,
   getProfile,

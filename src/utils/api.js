@@ -8,6 +8,18 @@ let users = [
     profile: 'test'
   }
 ];
+let tokens = [
+  {
+    id: '1',
+    userId: 'test',
+    type: 'reset'
+  },
+  {
+    id: '0',
+    userId: 'test',
+    type: 'register'
+  }
+];
 
 function register(firstName, lastName, email, password) {
   return new Promise((resolve, reject) => {
@@ -32,8 +44,6 @@ function register(firstName, lastName, email, password) {
         });
 
       users.push(newUser);
-      window.console.log('newUser=' + JSON.stringify(newUser));
-      window.console.log('users=' + JSON.stringify(users));
       return resolve({
         ok: true,
         status: 200,
@@ -68,18 +78,9 @@ function reset(email) {
 function confirm(id) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const confirmations = [
-        {
-          id: '0',
-          type: 'reset'
-        },
-        {
-          id: '1',
-          type: 'register'
-        }
-      ];
-      const confirmation = confirmations.find(c => c.id === id);
-      if (!confirmation)
+      const user = findUserByEmailToken(id);
+      const foundToken = tokens.find(c => c.id === id);
+      if (!user || !foundToken)
         return resolve({
           ok: false,
           status: 400,
@@ -93,7 +94,7 @@ function confirm(id) {
       return resolve({
         ok: true,
         status: 200,
-        body: () => Promise.resolve(JSON.stringify({ type: confirmation.type }))
+        body: () => Promise.resolve(JSON.stringify({ type: foundToken.type }))
       });
     }, 500);
   });
@@ -162,9 +163,55 @@ function loadUserDossiers(userId) {
   });
 }
 
+function handleResponse(response) {
+  return response.body().then(body => {
+    const data = body && JSON.parse(body);
+    if (!response.ok) {
+      if ([401, 403].indexOf(response.status) !== -1) {
+        // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
+        logout();
+        window.location.reload(true);
+      }
+
+      const error = data && data.message;
+      return Promise.reject(error);
+    }
+    return data;
+  });
+}
+
+function findUserByEmailToken(token) {
+  const tokenFound = tokens.find(t => t.id === token);
+  const userId = tokenFound ? tokenFound.userId : null;
+  return users.find(user => user.id === userId);
+}
+
+function changePassword(idToken, password) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const tokenFound = tokens.find(t => t.id === idToken);
+      const user = findUserByEmailToken(idToken);
+      if (!user || !tokenFound || tokenFound.type !== 'reset')
+        return resolve({
+          ok: false,
+          status: 400,
+          body: () =>
+            Promise.resolve(JSON.stringify({ message: 'Token inconnu' }))
+        });
+      user.password = password;
+      return resolve({
+        ok: true,
+        status: 200,
+        body: () => Promise.resolve(JSON.stringify({}))
+      });
+    }, 500);
+  });
+}
+
 const auth = {
   login,
   isAuthenticated,
+  changePassword,
   logout,
   reset,
   confirm,
@@ -173,7 +220,8 @@ const auth = {
 };
 
 const api = {
-  auth
+  auth,
+  handleResponse
 };
 
 export default api;
