@@ -1,3 +1,11 @@
+import axios from 'axios';
+import querystring from 'querystring';
+
+const franceConnectHTTPClient = axios.create({
+  baseURL: process.env.REACT_APP_FRANCE_CONNECT_URL,
+  timeout: 1000
+});
+
 let users = [
   {
     id: 'test',
@@ -123,6 +131,7 @@ function login(email, password) {
           Promise.resolve(
             JSON.stringify({
               id: sessionStorage.key,
+              token: user.email,
               user: user,
               expiresAt: -1
             })
@@ -212,6 +221,7 @@ function changePassword(idToken, password) {
 function loginCallback(code, state) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
+      window.console.log('code=' + JSON.stringify(code));
       if (!code)
         return resolve({
           ok: false,
@@ -223,23 +233,73 @@ function loginCallback(code, state) {
               })
             )
         });
-      const newUser = {
-        id: '3_melaine',
-        email: 'trois_melaine@mail.com	',
-        franceConnect: true,
-        firstName: 'Mélaine',
-        lastName: 'TROIS',
-        profile: 'test'
+      const params = {
+        grant_type: 'authorization_code',
+        redirect_url: `${process.env.REACT_APP_PUBLIC_URL}/login-callback`,
+        client_id: process.env.REACT_APP_FRANCE_CONNECT_CLIENT_ID,
+        client_secret: process.env.REACT_APP_FRANCE_CONNECT_CLIENT_SECRET,
+        code: code
       };
+      const reqToken = {
+        method: 'POST',
+        url: '/token',
+        headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        data: querystring.stringify(params)
+      };
+      var france_connect_token = {};
+      franceConnectHTTPClient(reqToken).then(response => {
+        if (!response.ok)
+          return resolve({
+            ok: false,
+            status: 401,
+            body: () =>
+              Promise.resolve(
+                JSON.stringify({
+                  message: "Echec de l'authentification par France Connect"
+                })
+              )
+          });
+        france_connect_token = {
+          id_token: response.body.id_token,
+          access_token: response.body.access_token,
+          exp: response.body.expires_in
+        };
+      });
+
+      const reqUserInfo = {
+        method: 'GET',
+        url: '/userInfo?schema=openid',
+        headers: {
+          Authorization: `Bearer ${france_connect_token.access_token}`
+        }
+      };
+      var user = {};
+      franceConnectHTTPClient(reqUserInfo).then(response => {
+        if (!response.ok)
+          return resolve({
+            ok: false,
+            status: 400,
+            body: () =>
+              Promise.resolve(
+                JSON.stringify({
+                  message:
+                    'Impossible de récupérer les infos utilisateurs de France Connect'
+                })
+              )
+          });
+        user = response.body;
+      });
+
       return resolve({
         ok: true,
         status: 200,
         body: () =>
           Promise.resolve(
             JSON.stringify({
-              id: sessionStorage.key,
-              user: newUser,
-              expiresAt: -1
+              id: france_connect_token.id_token,
+              token: france_connect_token.access_token,
+              user: user,
+              expiresAt: france_connect_token.exp
             })
           )
       });

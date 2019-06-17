@@ -7,11 +7,16 @@ import crypto from 'crypto';
 
 const keyToken = 'fake-jwt-token';
 const keyNonce = 'nonce';
+const keyUser = 'user';
 
 const token = new BehaviorSubject(loadToken());
+const user = new BehaviorSubject(loadUser());
 
 function tokenValue() {
   return token.value;
+}
+function userValue() {
+  return user.value;
 }
 
 function randomString(length) {
@@ -41,10 +46,6 @@ function saveNonce() {
   sessionStorage.save(keyNonce, randomString(16));
 }
 
-// function loadNonce() {
-//   return sessionStorage.load(keyNonce);
-// }
-
 function deleteNonce() {
   sessionStorage.remove(keyNonce);
 }
@@ -57,9 +58,18 @@ function loadNonce() {
   return sessionStorage.load(keyNonce);
 }
 
+function loadUser() {
+  return sessionStorage.load(keyUser);
+}
+
 function saveToken(payload) {
   sessionStorage.save(keyToken, payload);
   token.next(payload);
+}
+
+function saveUser(payload) {
+  sessionStorage.save(keyUser, payload);
+  user.next(payload);
 }
 
 function deleteToken() {
@@ -85,13 +95,15 @@ function getProfile() {
 
 function getUser() {
   var user = null;
-  if (tokenValue()) user = JSON.parse(tokenValue()).user;
+  if (userValue()) user = JSON.parse(userValue());
   return user;
 }
 
-// function getIdToken() {
-//   return keyToken;
-// }
+function getAcrFromIdToken(idToken) {
+  return JSON.parse(
+    Buffer.from(idToken.split('.')[1], 'base64').toString('utf8')
+  ).acr;
+}
 
 function isAuthenticated() {
   var authenticated = false;
@@ -105,8 +117,9 @@ function login(email, password) {
     .then(api.handleResponse)
     .then(data => {
       saveNonce();
-      saveToken(JSON.stringify(data));
-      return { user: data, isAuthenticated: true };
+      saveToken(JSON.stringify(data.token));
+      saveUser(JSON.stringify(data.user));
+      return { token: data.token, user: data.user, isAuthenticated: true };
     });
 }
 
@@ -168,13 +181,26 @@ function getFranceConnectURL() {
   }&state=home&nonce=${nonce}&acr_values=eidas1&response_type=code`;
 }
 
+function getFranceConnectLogoutURL(idToken) {
+  return (
+    `${process.env.REACT_APP_FRANCE_CONNECT_URL}logout?id_token_hint=` +
+    `${idToken}&state=customState11&post_logout_redirect_uri=${process.env
+      .REACT_APP_PUBLIC_URL + '/logout-callback'}`
+  );
+}
+
 function loginCallback(code, state) {
   return api.auth
     .loginCallback(code, state)
     .then(api.handleResponse)
     .then(data => {
-      saveToken(JSON.stringify(data));
-      return { user: data, isAuthenticated: true };
+      saveToken(JSON.stringify(data.token));
+      return {
+        id: data.id_token,
+        user: data.user,
+        acr: getAcrFromIdToken(data.id_token),
+        isAuthenticated: true
+      };
     });
 }
 
@@ -192,7 +218,8 @@ const auth = {
   token: token.asObservable(),
   tokenValue,
   getFranceConnectURL,
-  loginCallback
+  loginCallback,
+  getFranceConnectLogoutURL
 };
 
 export default auth;

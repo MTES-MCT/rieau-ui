@@ -32,37 +32,39 @@ function MonCompte(props) {
   return (
     <React.Fragment>
       <AppAppBar />
-      <Grid container spacing={1} className={classes.root}>
-        <Grid item xs={12}>
-          <Card className={classes.card}>
-            <CardHeader
-              avatar={
-                <AccountCircleIcon
-                  color="secondary"
-                  fontSize="large"
-                  aria-label="mon compte"
-                />
-              }
-              title={'Mon Compte'}
-              subheader={user.firstName + ' ' + user.lastName}
-            />
-            <CardContent>
-              <Typography variant="h6" component="h2">
-                {'Profil'}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                {user.profile}
-              </Typography>
-              <Typography variant="h6" component="h2">
-                {'Email'}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                {user.email}
-              </Typography>
-            </CardContent>
-          </Card>
+      {user && (
+        <Grid container spacing={1} className={classes.root}>
+          <Grid item xs={12}>
+            <Card className={classes.card}>
+              <CardHeader
+                avatar={
+                  <AccountCircleIcon
+                    color="secondary"
+                    fontSize="large"
+                    aria-label="mon compte"
+                  />
+                }
+                title={'Mon Compte'}
+                subheader={user.firstName + ' ' + user.lastName}
+              />
+              <CardContent>
+                <Typography variant="h6" component="h2">
+                  {'Profil'}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  {user.profile}
+                </Typography>
+                <Typography variant="h6" component="h2">
+                  {'Email'}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  {user.email}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
         </Grid>
-      </Grid>
+      )}
       <AppFooter />
     </React.Fragment>
   );

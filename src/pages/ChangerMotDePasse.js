@@ -268,7 +268,7 @@ function Form(props) {
 Form.propTypes = {
   classes: PropTypes.object.isRequired,
   token: PropTypes.string.isRequired,
-  history: PropTypes.string.isRequired
+  history: PropTypes.object.isRequired
 };
 
 class ChangerMotDePasse extends React.Component {

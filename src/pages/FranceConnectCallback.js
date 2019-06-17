@@ -7,15 +7,15 @@ import compose from 'utils/compose';
 import Typography from 'components/Typography';
 import AppFooter from 'components/AppFooter';
 import AppAppBar from 'components/AppAppBar';
+import queryString from 'query-string';
 
 function FranceConnectCallback(props) {
   const { loginCallback } = useAuth();
-  const { code, state } = props.match.params;
+  const values = queryString.parse(props.location.search);
   var error = '';
-  var user = '';
-  loginCallback(code, state).then(
-    user => {
-      return user;
+  loginCallback(values.code, values.state).then(
+    data => {
+      return data;
     },
     e => {
       error = e;
@@ -24,23 +24,27 @@ function FranceConnectCallback(props) {
   return (
     <React.Fragment>
       <AppAppBar />
-      <Typography variant="h3" marked="center" align="center">
-        {error}
-      </Typography>
-      <Typography
-        variant="subtitle1"
-        component="p"
-        marked="center"
-        align="center"
-      >
-        {user}
-      </Typography>
+      {error && (
+        <React.Fragment>
+          <Typography variant="h3" marked="center" align="center">
+            {'401 | Utilisateur non authentifié'}
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            component="p"
+            marked="center"
+            align="center"
+          >
+            {error}
+          </Typography>
+        </React.Fragment>
+      )}
       <AppFooter />
     </React.Fragment>
   );
 }
 FranceConnectCallback.propTypes = {
-  match: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired
 };
 
 export default compose(
