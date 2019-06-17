@@ -1,7 +1,7 @@
-# Déclaration travaux UI
-[![CircleCI](https://circleci.com/gh/MTES-MCT/declaration-travaux-ui/tree/master.svg?style=svg)](https://circleci.com/gh/MTES-MCT/declaration-travaux-ui/tree/master)
+# RIEAU UI
+[![CircleCI](https://circleci.com/gh/MTES-MCT/rieau-ui/tree/master.svg?style=svg)](https://circleci.com/gh/MTES-MCT/rieau-ui/tree/master)
 
-> Frontend de Déclaration préalable de travaux
+> Frontend de RIEAU
 
 ## Développement
 
@@ -100,17 +100,17 @@ npm run build:production
 Depuis la branche `master`:
 
 ```
-REACT_APP_BASENAME=/declaration-travaux-ui PUBLIC_URL="https://mtes-mct.github.io/declaration-travaux-ui" npm run deploy
+REACT_APP_BASENAME=/rieau-ui PUBLIC_URL="https://mtes-mct.github.io/rieau-ui" npm run deploy
 ```
 
-Depuis le navigateur: [https://mtes-mct.github.io/declaration-travaux-ui/](https://mtes-mct.github.io/declaration-travaux-ui/).
+Depuis le navigateur: [https://mtes-mct.github.io/rieau-ui/](https://mtes-mct.github.io/rieau-ui/).
 
 ### Docker
 
 * Build:
 
 ```
-docker build --build-arg REACT_APP_DOMAIN=http://localhost:3000 --build-arg REACT_APP_BASENAME=/dpt -t declaration-travaux-ui .
+docker build --build-arg REACT_APP_DOMAIN=http://localhost:3000 --build-arg REACT_APP_BASENAME=/dpt -t rieau-ui .
 ```
 
 Spécifier `REACT_APP_DOMAIN` si le site est installé sur un autre domaine que [http://localhost:3000](http://localhost:3000) par défaut et et `REACT_APP_BASENAME` si il est dans un sous un sous-dossier autre que `/` (e.g. `/dpt`).
@@ -118,7 +118,7 @@ Spécifier `REACT_APP_DOMAIN` si le site est installé sur un autre domaine que 
 * Run:
 
 ```
-docker run -p 3000:3000 declaration-travaux-ui
+docker run -p 3000:3000 rieau-ui
 ```
 
 Depuis le navigateur: [http://localhost:3000](http://localhost:3000).

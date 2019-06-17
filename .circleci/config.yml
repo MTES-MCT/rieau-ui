@@ -1,8 +1,7 @@
 defaults: &defaults
-  #working_directory: ./circleci
   docker:
     - image: circleci/node:10.15.3-browsers
-  working_directory: ~/project/declaration-travaux-ui
+  working_directory: ~/project/rieau-ui
 
 version: 2
 jobs:
@@ -28,7 +27,7 @@ jobs:
           paths:
             - .cache
             - .npm
-            - project/declaration-travaux-ui
+            - project/rieau-ui
   build:
     <<: *defaults
     steps:
@@ -83,10 +82,10 @@ jobs:
           at: '~'
       - run: 
           environment:
-            REACT_APP_NAME: Déclaration préalable de travaux
-            REACT_APP_DESCRIPTION: Déposer en ligne votre déclaration préalable de travaux
-            REACT_APP_BASENAME: /declaration-travaux-ui
-            PUBLIC_URL: https://mtes-mct.github.io/declaration-travaux-ui
+            REACT_APP_NAME: RIEAU
+            REACT_APP_DESCRIPTION: Réception Informations et Echanges pour les Autorisations d’Urbanisme
+            REACT_APP_BASENAME: /rieau-ui
+            PUBLIC_URL: https://mtes-mct.github.io/rieau-ui
           command: |
             git config credential.helper 'cache --timeout=120'
             git config user.email "<circleci>"
