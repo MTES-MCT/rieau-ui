@@ -15,6 +15,7 @@
 
 # misc
 .env
+.env.development
 .env.staging
 .env.test
 .env.production

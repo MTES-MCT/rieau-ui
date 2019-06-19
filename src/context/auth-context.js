@@ -10,8 +10,8 @@ function AuthProvider(props) {
   const [firstAttemptFinished, setFirstAttemptFinished] = React.useState(false);
   const {
     data = {
-      user: auth.getUser(),
-      isAuthenticated: auth.isAuthenticated(),
+      user: null,
+      isAuthenticated: false,
       dossiers: []
     },
     error,
@@ -43,17 +43,10 @@ function AuthProvider(props) {
     }
   }
 
-  const login = (email, password) => auth.login(email, password).then(reload);
-  const loginCallback = (code, state) =>
-    auth.loginCallback(code, state).then(reload);
+  const login = () => auth.login().then(reload);
   const logout = () => auth.logout().then(reload);
 
-  return (
-    <AuthContext.Provider
-      value={{ data, login, loginCallback, logout }}
-      {...props}
-    />
-  );
+  return <AuthContext.Provider value={{ data, login, logout }} {...props} />;
 }
 
 function useAuth() {

@@ -24,8 +24,6 @@ function Routes() {
             );
           })}
         <Redirect exact path="/" to="/moncompte" />
-        <Redirect path="/connexion" to="/moncompte" />
-        <Redirect path="/login-callback*" to="/moncompte" />
         <NotFound default />
       </Switch>
     </Router>

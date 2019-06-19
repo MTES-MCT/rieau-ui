@@ -12,6 +12,7 @@ import HamburgerMenu from './HamburgerMenu';
 import AccountMenu from './AccountMenu';
 import routes from 'routes/unauthenticated';
 import { useUser } from 'context/user-context';
+import { useAuth } from 'context/auth-context';
 
 const styles = theme => ({
   root: {
@@ -35,7 +36,7 @@ const styles = theme => ({
 function AppAppBar(props) {
   const { classes } = props;
   const { isAuthenticated } = useUser();
-  const connexion = routes.find(route => route.id === 'connexion');
+  const { login } = useAuth();
   return (
     <div className={classes.root} id="app-bar">
       <AppBar position="fixed" elevation={0} color="secondary">
@@ -76,12 +77,11 @@ function AppAppBar(props) {
                 <Button
                   color="primary"
                   size={'medium'}
-                  component={RouterLink}
+                  onClick={login}
                   variant={'contained'}
-                  to={connexion.path}
-                  data-cy={'appbar-' + connexion.id + '-btn'}
+                  data-cy={'appbar-connexion-btn'}
                 >
-                  {connexion.label}
+                  {`Connexion`}
                 </Button>
               </React.Fragment>
             )}

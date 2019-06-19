@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
+import SignInIcon from '@material-ui/icons/Lock';
 import MenuList from '@material-ui/core/List';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
@@ -41,7 +42,7 @@ const styles = theme => ({
 function SideBarMenu(props) {
   const { classes, toggleDrawer } = props;
   const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const { logout } = useAuth();
+  const { login, logout } = useAuth();
   const { isAuthenticated } = useUser();
   const moncompte = routesAuthenticated.find(route => route.id === 'moncompte');
   const deconnexion = routesAuthenticated.find(
@@ -73,13 +74,7 @@ function SideBarMenu(props) {
       ) : (
         <MenuList>
           {routesUnauthenticated
-            .filter(
-              route =>
-                route.sidebar &&
-                (route.auth
-                  ? !isAuthenticated && route.id === 'connexion'
-                  : true)
-            )
+            .filter(route => route.sidebar)
             .map(route => {
               return (
                 <MenuItemLink
@@ -90,6 +85,12 @@ function SideBarMenu(props) {
                 />
               );
             })}
+          <MenuItem button onClick={login}>
+            <ListItemIcon>
+              <SignInIcon />
+            </ListItemIcon>
+            {`Connexion`}
+          </MenuItem>
         </MenuList>
       )}
     </div>

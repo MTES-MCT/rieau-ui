@@ -21,6 +21,7 @@
     "env-cmd": "^9.0.3",
     "formik": "^1.5.7",
     "jwt-decode": "^2.2.0",
+    "keycloak-js": "^6.0.1",
     "lodash": "^4.17.11",
     "mdx.macro": "^0.2.8",
     "prop-types": "^15.7.2",
