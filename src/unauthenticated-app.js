@@ -24,6 +24,7 @@ function Routes() {
 }
 
 function UnauthenticatedApp() {
+  window.console.log('UnauthenticatedApp');
   return <Routes />;
 }
 

@@ -31,6 +31,7 @@ function Routes() {
 }
 
 function AuthenticatedApp() {
+  window.console.log('AuthenticatedApp');
   return <Routes />;
 }
 

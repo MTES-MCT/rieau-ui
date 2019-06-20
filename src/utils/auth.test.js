@@ -1,12 +1,13 @@
 import auth from 'utils/auth';
+import users from './users-mock';
 
 test('signin ok', async () => {
   await auth.login();
-  expect(auth.isAuthenticated()).toBe(true);
-  expect(auth.getUser()).toBe('test');
+  expect(await auth.isAuthenticated()).toBe(true);
+  expect(await auth.getUser()).toBe(users[0]);
 });
 test('signout ok', async () => {
   await auth.login();
   await auth.logout();
-  expect(auth.isAuthenticated()).toBe(false);
+  expect(await auth.isAuthenticated()).toBe(false);
 });

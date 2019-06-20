@@ -1,16 +1,6 @@
-// API de test uniquement
+import users from './users-mock';
 
-let users = [
-  {
-    id: 'test',
-    email: 'test@test.fr',
-    password: 'test1234',
-    firstName: 'Test',
-    lastName: 'Test',
-    profile: 'test',
-    franceConnect: false
-  }
-];
+// API de test uniquement
 
 let principal = null;
 
@@ -47,7 +37,7 @@ function getUser() {
         return reject(
           JSON.stringify({ message: "Pas d'utilisateur connecté" })
         );
-      return resolve(JSON.stringify(principal));
+      return resolve(principal);
     }, 500);
   });
 }

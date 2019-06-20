@@ -14,6 +14,17 @@ const keycloak = Keycloak({
   clientId: process.env.REACT_APP_SSO_APP_CLIENT_ID
 });
 
+axios.interceptors.request.use(
+  function(config) {
+    const token = keycloak.token;
+    if (token) config.headers.Authorization = `Bearer ${token}`;
+    return config;
+  },
+  function(error) {
+    return Promise.reject(error);
+  }
+);
+
 function login() {
   return new Promise((resolve, reject) => {
     return keycloak
@@ -22,7 +33,7 @@ function login() {
         return resolve(authenticated);
       })
       .error(error => {
-        return reject({ message: error.error_description });
+        return reject({ message: JSON.stringify(error) });
       });
   });
 }
@@ -35,7 +46,7 @@ function logout() {
         return resolve(authenticated);
       })
       .error(error => {
-        return reject({ message: error.error_description });
+        return reject({ message: JSON.stringify(error) });
       });
   });
 }
@@ -48,7 +59,7 @@ function isAuthenticated() {
         return resolve(authenticated);
       })
       .error(error => {
-        return reject({ message: error.error_description });
+        return reject({ message: JSON.stringify(error) });
       });
   });
 }
@@ -58,10 +69,14 @@ function getUser() {
     return keycloak
       .loadUserInfo()
       .success(userInfo => {
-        return resolve(userInfo);
+        return resolve({
+          firstName: userInfo.given_name,
+          lastName: userInfo.family_name,
+          email: userInfo.email
+        });
       })
       .error(error => {
-        return reject({ message: error.error_description });
+        return reject({ message: JSON.stringify(error) });
       });
   });
 }
