@@ -12,8 +12,15 @@ function loadUserDossiers() {
   });
 }
 
+function deposer(cerfa) {
+  return api.then(handleDossiers).then(dossiers => {
+    return dossiers.deposer(cerfa);
+  });
+}
+
 const dossiers = {
-  loadUserDossiers
+  loadUserDossiers,
+  deposer
 };
 
 export default dossiers;

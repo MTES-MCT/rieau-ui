@@ -85,6 +85,10 @@ function loadUserDossiers(userId) {
   return apiHttpClient.get(`/deposants/${userId}/dossiers`);
 }
 
+function deposer(cerfa) {
+  return apiHttpClient.post(`/deposer`);
+}
+
 const auth = {
   login,
   isAuthenticated,
@@ -92,7 +96,8 @@ const auth = {
   getUser
 };
 const dossiers = {
-  loadUserDossiers
+  loadUserDossiers,
+  deposer
 };
 
 const api = {

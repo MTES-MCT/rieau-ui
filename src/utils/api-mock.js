@@ -50,6 +50,14 @@ function loadUserDossiers(userId) {
   });
 }
 
+function deposer(cerfa) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      return resolve(cerfa);
+    }, 500);
+  });
+}
+
 const auth = {
   login,
   isAuthenticated,
@@ -57,7 +65,8 @@ const auth = {
   getUser
 };
 const dossiers = {
-  loadUserDossiers
+  loadUserDossiers,
+  deposer
 };
 
 const api = {
