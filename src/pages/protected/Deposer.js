@@ -1,21 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppAppBar from 'components/AppAppBar';
 import AppForm from 'components/AppForm';
 import AppFooter from 'components/AppFooter';
-import { Formik } from 'formik';
 import withRoot from 'theme/withRoot';
 import { withStyles } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from 'components/Button';
-import Input from '@material-ui/core/Input';
-import * as Yup from 'yup';
 import dossiers from 'utils/dossiers';
-import Typography from 'components/Typography';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import PropTypes from 'prop-types';
 import compose from 'utils/compose';
-import UploadIcon from '@material-ui/icons/SaveAlt';
+import UploadFile from 'components/UploadFile';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = theme => ({
@@ -57,113 +52,63 @@ const styles = theme => ({
 
 function Deposer(props) {
   const { classes } = props;
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  function handleSubmit(event) {
+    setIsSubmitting(true);
+  }
+  function handleReset(event) {
+    setIsSubmitting(false);
+  }
   return (
     <React.Fragment>
       <AppAppBar />
       <AppForm>
-        <Formik
-          initialValues={{ cerfa: '' }}
-          validationSchema={Yup.object().shape({
-            cerfa: Yup.string('cerfa')
-              .cerfa('Entrez un cerfa valide. ex: toto@beta.gouv.fr')
-              .required('Votre cerfa est requis')
-          })}
-          onSubmit={(values, actions) => {
-            actions.setFieldError('general', null);
-            dossiers.deposer(values.cerfa).then(
-              cerfa => {
-                return cerfa;
-              },
-              error => {
-                actions.setSubmitting(false);
-                actions.setFieldError('general', error);
-              }
-            );
-          }}
-          render={({
-            touched,
-            isSubmitting,
-            handleReset,
-            handleSubmit,
-            handleChange,
-            handleBlur,
-            values,
-            errors
-          }) => (
-            <form onSubmit={handleSubmit} className={classes.form}>
-              <Card elevation={0} className={classes.card}>
-                <CardContent>
-                  {errors.general && (
-                    <Typography variant="h6" color="error">
-                      {errors.general}
-                    </Typography>
-                  )}
-                  <Input
-                    value={values.cerfa}
-                    helperText={touched.cerfa ? errors.cerfa : ''}
-                    error={touched.cerfa && Boolean(errors.cerfa)}
-                    autoFocus
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    fullWidth
-                    label="cerfa"
-                    margin="normal"
-                    name="cerfa"
-                    data-cy="cerfa-input"
-                    required
-                    type="file"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <UploadIcon />
-                        </InputAdornment>
-                      )
-                    }}
+        <form onSubmit={handleSubmit} className={classes.form}>
+          <Card elevation={0} className={classes.card}>
+            <CardContent>
+              <UploadFile handleFile={dossiers.deposer} />
+            </CardContent>
+            <div className={classes.actions}>
+              <div className={classes.buttonWrapper}>
+                <Button
+                  variant="contained"
+                  className={classes.button}
+                  color="secondary"
+                  fullWidth
+                  disabled={isSubmitting}
+                  type="submit"
+                  data-cy="deposer-btn"
+                >
+                  {'Enregistrer'}
+                </Button>
+                {isSubmitting && (
+                  <CircularProgress
+                    size={24}
+                    className={classes.buttonProgress}
                   />
-                </CardContent>
-                <div className={classes.actions}>
-                  <div className={classes.buttonWrapper}>
-                    <Button
-                      variant="contained"
-                      className={classes.button}
-                      color="secondary"
-                      fullWidth
-                      disabled={isSubmitting}
-                      type="submit"
-                      data-cy="deposer-btn"
-                    >
-                      {'Déposer'}
-                    </Button>
-                    {isSubmitting && (
-                      <CircularProgress
-                        size={24}
-                        className={classes.buttonProgress}
-                      />
-                    )}
-                  </div>
-                  <div className={classes.buttonWrapper}>
-                    <Button
-                      variant="outlined"
-                      className={classes.button}
-                      onClick={handleReset}
-                      color="inherit"
-                      fullWidth
-                    >
-                      {'Effacer'}
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            </form>
-          )}
-        />
+                )}
+              </div>
+              <div className={classes.buttonWrapper}>
+                <Button
+                  variant="outlined"
+                  className={classes.button}
+                  onClick={handleReset}
+                  color="inherit"
+                  fullWidth
+                >
+                  {'Effacer'}
+                </Button>
+              </div>
+            </div>
+          </Card>
+        </form>
       </AppForm>
       <AppFooter />
     </React.Fragment>
   );
 }
 Deposer.propTypes = {
-  classes: PropTypes.object
+  classes: PropTypes.object.isRequired
 };
 
 export default compose(

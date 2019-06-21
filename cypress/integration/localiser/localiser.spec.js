@@ -6,6 +6,8 @@ context('Localiser', () => {
   })
 
   it('cy.click() - go to localiser page', () => {
+    cy.get('[data-cy=appbar-connexion-btn]').should('be.visible').click()
+    cy.contains("Mon Compte").should('be.visible')
     cy.get('[data-cy=appbar-localiser-btn]').should('be.visible').click()
     cy.get('[data-cy=map]').should('be.visible')
     cy.contains("La commune n'apparaît pas ?").should('be.visible')
@@ -13,6 +15,8 @@ context('Localiser', () => {
   })
 
   it('cy.click() - go to chercher adresse marker', () => {
+    cy.get('[data-cy=appbar-connexion-btn]').should('be.visible').click()
+    cy.contains("Mon Compte").should('be.visible')
     cy.get('[data-cy=appbar-localiser-btn]').should('be.visible').click()
     cy.get('[data-cy=map]').should('be.visible')
     cy.contains("Saint-Tropez").should('be.visible').click()

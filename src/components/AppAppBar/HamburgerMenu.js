@@ -60,6 +60,18 @@ function SideBarMenu(props) {
     >
       {isAuthenticated ? (
         <MenuList>
+          {routesAuthenticated
+            .filter(route => route.sidebar && !route.auth)
+            .map(route => {
+              return (
+                <MenuItemLink
+                  key={route.id}
+                  selected={route.id === selectedIndex}
+                  route={route}
+                  onClick={event => onClickItem(event, route.id)}
+                />
+              );
+            })}
           <MenuItemLink
             route={moncompte}
             onClick={event => onClickItem(event, moncompte.id)}
@@ -85,7 +97,7 @@ function SideBarMenu(props) {
                 />
               );
             })}
-          <MenuItem button onClick={login}>
+          <MenuItem button onClick={login} data-cy="menu-item-btn-connexion">
             <ListItemIcon>
               <SignInIcon />
             </ListItemIcon>

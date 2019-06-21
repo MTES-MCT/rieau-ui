@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import Page from './Page';
 import * as serviceWorker from './serviceWorker';
 import AppProviders from './context';
 import App from 'app';

@@ -8,13 +8,13 @@ context('Viewport', () => {
 
   it('cy.viewport() - set the viewport size and dimension', () => {
 
-    cy.get('[data-cy=appbar-localiser-btn]').should('be.visible')
+    cy.get('[data-cy=appbar-connexion-btn]').should('be.visible')
     cy.viewport(320, 480)
 
     // the navbar should have collapse since our screen is smaller
     cy.get('[data-cy=appbar-localiser-btn]').should('not.be.visible')
     cy.get('[data-cy=hamburger-menu]').should('be.visible').click()
-    cy.get('[data-cy=menu-item-link-localiser]').should('be.visible')
+    cy.get('[data-cy=menu-item-btn-connexion]').should('be.visible')
 
     // lets see what our app looks like on a super large screen
     cy.viewport(2999, 2999)

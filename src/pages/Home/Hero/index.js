@@ -70,6 +70,10 @@ const styles = theme => ({
   },
   title: {
     marginBottom: theme.spacing(10)
+  },
+  description: {
+    padding: theme.spacing(2),
+    margin: theme.spacing(2)
   }
 });
 
@@ -96,13 +100,14 @@ class Hero extends React.Component {
               <Typography
                 color="inherit"
                 align="center"
-                variant="h2"
+                variant="h3"
                 marked="center"
+                className={classes.description}
               >
-                {`Déclaration préalable de travaux`}
+                {process.env.REACT_APP_DESCRIPTION}
               </Typography>
               <Typography color="inherit" align="center" variant="h5">
-                {`Déposez et gérez votre déclaration préalable de travaux en toute simplicité.`}
+                {process.env.REACT_APP_VISION}
               </Typography>
             </Paper>
           </div>

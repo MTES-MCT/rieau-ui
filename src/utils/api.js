@@ -5,7 +5,7 @@ function api() {
       importApi = import('utils/api-real');
       break;
     case 'development':
-      importApi = import('utils/api-real');
+      importApi = import('utils/api-mock');
       break;
     case 'test':
       importApi = import('utils/api-mock');

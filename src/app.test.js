@@ -37,7 +37,7 @@ function renderWithRouter(
   };
 }
 
-const nomAppli = 'Déclaration préalable de travaux';
+const nomAppli = process.env.REACT_APP_NAME;
 
 it('renders nom appli message', async () => {
   const { queryAllByText } = renderWithRouter(<App />);

@@ -121,7 +121,7 @@ class CommuneMarker extends Component {
                           color="secondary"
                           component={RouterLink}
                           variant="contained"
-                          to="/connexion"
+                          to="/deposer"
                         >
                           {`Déposer`}
                         </Button>

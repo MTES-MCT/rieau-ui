@@ -6,14 +6,15 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Button from 'components/Button';
 import Typography from 'components/Typography';
-import Map from '@material-ui/icons/Map';
-import Edit from '@material-ui/icons/Edit';
-import AttachFile from '@material-ui/icons/AttachFile';
-import People from '@material-ui/icons/People';
+import EditIcon from '@material-ui/icons/Edit';
+import LockIcon from '@material-ui/icons/Lock';
+import PeopleIcon from '@material-ui/icons/People';
 import { genericHashLink } from 'react-router-hash-link';
 import IconButton from '@material-ui/core/IconButton';
+import Link from '@material-ui/core/Link';
 import Fab from '@material-ui/core/Fab';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import { useAuth } from 'context/auth-context';
 
 const styles = theme => ({
   root: {
@@ -51,13 +52,10 @@ const styles = theme => ({
     marginTop: theme.spacing(8)
   },
   remonter: {
-    marginTop: theme.spacing(8),
-    scrollBehaviour: 'smooth',
-    color: theme.palette.common.white,
-    backgroundColor: 'secondary',
-    '&:hover': {
-      backgroundColor: 'secondary'
-    }
+    margin: theme.spacing(1),
+    position: 'fixed',
+    bottom: theme.spacing(2),
+    right: theme.spacing(3)
   }
 });
 
@@ -65,6 +63,7 @@ const IconButtonHashLink = props => genericHashLink(props, IconButton);
 
 function CommentFaire(props) {
   const { classes } = props;
+  const { login } = useAuth();
 
   return (
     <section className={classes.root}>
@@ -79,39 +78,36 @@ function CommentFaire(props) {
         </Typography>
         <div>
           <Grid container spacing={5}>
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} md={4}>
               <div className={classes.item}>
                 <div className={classes.number}>1.</div>
-                <Map alt="map" className={classes.icon} />
+                <EditIcon alt="edit" className={classes.icon} />
                 <Typography variant="h5" align="center">
-                  Localiser son projet
+                  {`Préparer et déposer sa demande sur `}
                 </Typography>
+                <Link
+                  color="inherit"
+                  href="https://www.service-public.fr/particuliers/vosdroits/R52221"
+                >{`service-public.fr`}</Link>
               </div>
             </Grid>
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} md={4}>
               <div className={classes.item}>
                 <div className={classes.number}>2.</div>
-                <Edit alt="edit" className={classes.icon} />
+                <LockIcon alt="people" className={classes.icon} />
                 <Typography variant="h5" align="center">
-                  <p>{`Préciser la nature du projet dans le cadre d'une déclaration préalable.`}</p>
+                  {'Se connecter dans RIEAU'}
                 </Typography>
               </div>
             </Grid>
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} md={4}>
               <div className={classes.item}>
                 <div className={classes.number}>3.</div>
-                <AttachFile alt="pièces jointes" className={classes.icon} />
+                <PeopleIcon alt="people" className={classes.icon} />
                 <Typography variant="h5" align="center">
-                  <p>{'Déposer les pièces jointes (photos, plans, notices)'}</p>
-                </Typography>
-              </div>
-            </Grid>
-            <Grid item xs={12} md={3}>
-              <div className={classes.item}>
-                <div className={classes.number}>4.</div>
-                <People alt="people" className={classes.icon} />
-                <Typography variant="h5" align="center">
-                  {"Suivre l'avancement de l'instruction de la demande"}
+                  {
+                    "Suivre l'avancement de l'instruction de sa demande dans RIEAU"
+                  }
                 </Typography>
               </div>
             </Grid>
@@ -123,10 +119,9 @@ function CommentFaire(props) {
           size="large"
           variant="contained"
           className={classes.button}
-          component={RouterLink}
-          to="/localiser"
+          onClick={login}
         >
-          Localiser
+          Connexion
         </Button>
         <Fab aria-label="remonter" className={classes.remonter}>
           <IconButtonHashLink

@@ -4,13 +4,15 @@ import users from './users-mock';
 
 let principal = null;
 
+const waitingTime = 100;
+
 function login() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (users.length < 1)
         return reject(JSON.stringify({ message: 'Connexion impossible' }));
       return resolve((principal = users[0]));
-    }, 500);
+    }, waitingTime);
   });
 }
 
@@ -18,7 +20,7 @@ function logout() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve((principal = null));
-    }, 500);
+    }, waitingTime);
   });
 }
 
@@ -26,7 +28,7 @@ function isAuthenticated() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       return resolve(principal !== null);
-    }, 500);
+    }, waitingTime);
   });
 }
 
@@ -38,7 +40,7 @@ function getUser() {
           JSON.stringify({ message: "Pas d'utilisateur connecté" })
         );
       return resolve(principal);
-    }, 500);
+    }, waitingTime);
   });
 }
 
@@ -46,7 +48,7 @@ function loadUserDossiers(userId) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       return resolve([]);
-    }, 500);
+    }, waitingTime);
   });
 }
 
@@ -54,7 +56,7 @@ function deposer(cerfa) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       return resolve(cerfa);
-    }, 500);
+    }, waitingTime);
   });
 }
 
