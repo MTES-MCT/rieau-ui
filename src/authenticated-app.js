@@ -5,14 +5,15 @@ import {
   Switch,
   Redirect
 } from 'react-router-dom';
-import routes from 'routes/authenticated';
+import routesAuthenticated from 'routes/authenticated';
+import routesUnauthenticated from 'routes/unauthenticated';
 import NotFound from 'pages/NotFound';
 
 function Routes() {
   return (
     <Router basename={process.env.REACT_APP_BASENAME}>
       <Switch>
-        {routes
+        {routesAuthenticated
           .filter(route => route.id !== 'deconnexion')
           .map(route => {
             return (
@@ -23,7 +24,13 @@ function Routes() {
               />
             );
           })}
-        <Redirect exact path="/" to="/moncompte" />
+        <Redirect to="/moncompte">
+          {routesUnauthenticated.map((route, key) => {
+            return (
+              <Route key={key} path={route.path} component={route.component} />
+            );
+          })}
+        </Redirect>
         <NotFound default />
       </Switch>
     </Router>
@@ -31,7 +38,6 @@ function Routes() {
 }
 
 function AuthenticatedApp() {
-  window.console.log('AuthenticatedApp');
   return <Routes />;
 }
 

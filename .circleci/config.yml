@@ -34,7 +34,13 @@ jobs:
       - checkout
       - attach_workspace:
           at: '~'
-      - run: npm run build
+      - run: cp .env.sample .env
+      - run: 
+          environment: 
+            - REACT_APP_BASENAME: /rieau-ui
+            - PUBLIC_URL: https://mtes-mct.github.io/rieau-ui
+            - REACT_APP_PUBLIC_URL: https://mtes-mct.github.io/rieau-ui
+          command: npm run build:dev
       - persist_to_workspace:
           root: .
           paths:
@@ -72,7 +78,7 @@ jobs:
           at: '~'
       - run: 
           environment:
-            NODE_ENV: production
+            NODE_ENV: development
           command: npm run lint
   deploy-github:
     <<: *defaults
@@ -82,10 +88,10 @@ jobs:
           at: '~'
       - run: 
           environment:
-            REACT_APP_NAME: RIEAU
-            REACT_APP_DESCRIPTION: Réception Informations et Echanges pour les Autorisations d’Urbanisme
+            NODE_ENV: development
             REACT_APP_BASENAME: /rieau-ui
             PUBLIC_URL: https://mtes-mct.github.io/rieau-ui
+            REACT_APP_PUBLIC_URL: https://mtes-mct.github.io/rieau-ui
           command: |
             git config credential.helper 'cache --timeout=120'
             git config user.email "<circleci>"

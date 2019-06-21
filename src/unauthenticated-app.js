@@ -1,13 +1,19 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from 'react-router-dom';
 import NotFound from 'pages/NotFound';
-import routes from 'routes/unauthenticated';
+import routesUnauthenticated from 'routes/unauthenticated';
+import routesAuthenticated from 'routes/authenticated';
 
 function Routes() {
   return (
     <Router basename={process.env.REACT_APP_BASENAME}>
       <Switch>
-        {routes.map((route, key) => {
+        {routesUnauthenticated.map((route, key) => {
           return (
             <Route
               key={key}
@@ -17,6 +23,13 @@ function Routes() {
             />
           );
         })}
+        <Redirect to="/">
+          {routesAuthenticated.map((route, key) => {
+            return (
+              <Route key={key} path={route.path} component={route.component} />
+            );
+          })}
+        </Redirect>
         <NotFound default />
       </Switch>
     </Router>
@@ -24,7 +37,6 @@ function Routes() {
 }
 
 function UnauthenticatedApp() {
-  window.console.log('UnauthenticatedApp');
   return <Routes />;
 }
 
