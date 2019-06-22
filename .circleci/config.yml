@@ -58,14 +58,16 @@ jobs:
       - checkout
       - attach_workspace:
           at: '~'
-      - run: npm run test:unit
+      - run: cp .env.sample .env
+      - run: env-cmd npm run test:unit
   e2e-tests:
     <<: *defaults
     steps:
       - checkout
       - attach_workspace:
           at: '~'
-      - run: npm run test:e2e
+      - run: cp .env.sample .env
+      - run: env-cmd npm run test:e2e
       - store_artifacts:
           path: cypress/videos
       - store_artifacts:
