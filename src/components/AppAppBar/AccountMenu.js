@@ -39,7 +39,7 @@ function AccountMenu(props) {
       <div>
         <IconButton
           aria-label="Mon compte"
-          aria-controls="menu-appbar"
+          aria-controls="account-menu-appbar"
           aria-haspopup="true"
           onClick={handleMenu}
           color="inherit"
@@ -47,7 +47,7 @@ function AccountMenu(props) {
           <AccountCircle fontSize="large" />
         </IconButton>
         <Menu
-          id="menu-appbar"
+          id="account-menu-appbar"
           anchorEl={anchorEl}
           anchorOrigin={{
             vertical: 'top',

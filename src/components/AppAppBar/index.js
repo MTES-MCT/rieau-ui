@@ -106,16 +106,17 @@ function AppAppBar(props) {
                   <React.Fragment>
                     <Button
                       aria-label="Dépots"
-                      aria-controls="menu-appbar"
+                      aria-controls="depots-menu-appbar"
                       aria-haspopup="true"
                       onClick={handleMenu}
                       color="inherit"
                       variant="text"
+                      data-cy="appbar-depots-btn"
                     >
                       Dépôts
                     </Button>
                     <Menu
-                      id="menu-appbar"
+                      id="depots-menu-appbar"
                       anchorEl={anchorEl}
                       anchorOrigin={{
                         vertical: 'top',
