@@ -185,9 +185,7 @@ class Localiser extends React.Component {
   };
 
   parcellesUrl = commune => {
-    return `https://cadastre.data.gouv.fr/bundler/cadastre-etalab/communes/${
-      commune.code
-    }/geojson/parcelles`;
+    return `https://cadastre.data.gouv.fr/bundler/cadastre-etalab/communes/${commune.code}/geojson/parcelles`;
   };
 
   showError = error => {

@@ -210,9 +210,7 @@ class ChercherAddresse extends React.Component {
               alignItems="center"
             >
               <Box p={1}>
-                <Typography variant="subtitle2">{`Chercher l'adresse du projet à ${
-                  commune.nom
-                }`}</Typography>
+                <Typography variant="subtitle2">{`Chercher l'adresse du projet à ${commune.nom}`}</Typography>
                 <Autosuggest
                   classes={classes}
                   key={`autosuggest-${commune.code}`}

@@ -106,9 +106,7 @@ class CommuneMarker extends Component {
                     >
                       <Box p={1} justifyContent="center">
                         <Typography variant="subtitle2">
-                          {`${parcelles.length} parcelles sélectionnées à ${
-                            adresse.label
-                          }`}
+                          {`${parcelles.length} parcelles sélectionnées à ${adresse.label}`}
                         </Typography>
                         <Typography variant="body2">
                           {`Pour une surface totale de ${parcellesSurfaceTotale(
