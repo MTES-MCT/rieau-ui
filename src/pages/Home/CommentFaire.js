@@ -52,6 +52,10 @@ const styles = theme => ({
     marginTop: theme.spacing(8)
   },
   remonter: {
+    backgroundColor: theme.palette.secondary.main,
+    '&:hover': {
+      backgroundColor: theme.palette.secondary.main
+    },
     margin: theme.spacing(1),
     position: 'fixed',
     bottom: theme.spacing(2),
@@ -128,7 +132,7 @@ function CommentFaire(props) {
             component={RouterLink}
             to={{ pathname: '/', hash: '#app-bar' }}
           >
-            <ExpandLessIcon color="secondary" />
+            <ExpandLessIcon color="primary" />
           </IconButtonHashLink>
         </Fab>
       </Container>
