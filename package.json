@@ -59,6 +59,10 @@
     "predeploy:production": "npm run build:production",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "deploy": "gh-pages -d build -m 'Deploy on Github pages [ci skip]'",
+    "deploy:dev": "env-cmd npm run deploy",
+    "deploy:test": "env-cmd .env.test npm run deploy",
+    "deploy:staging": "env-cmd .env.staging npm run deploy",
+    "deploy:production": "env-cmd .env.production npm run deploy",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "test:e2e": "start-server-and-test start http://localhost:3000 cypress:run"

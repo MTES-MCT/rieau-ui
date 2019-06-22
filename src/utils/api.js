@@ -1,22 +1,7 @@
 function api() {
-  var importApi = import('utils/api-mock');
-  switch (process.env.NODE_ENV) {
-    case 'production':
-      window.console.log('api-real');
-      importApi = import('utils/api-real');
-      break;
-    case 'development':
-      window.console.log('api-mock');
-      importApi = import('utils/api-mock');
-      break;
-    case 'test':
-      window.console.log('api-mock');
-      importApi = import('utils/api-mock');
-      break;
-    default:
-      window.console.log('api-mock');
-      importApi = import('utils/api-mock');
-  }
+  const importApi = process.env.REACT_APP_API_MOCK
+    ? import('utils/api-mock')
+    : import('utils/api-real');
   return importApi;
 }
 
