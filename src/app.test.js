@@ -2,7 +2,7 @@ import React from 'react';
 import App from './app';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
-import { cleanup, render, waitForElement, act } from 'react-testing-library';
+import { cleanup, render, waitForElement } from 'react-testing-library';
 import Localiser from 'pages/Localiser';
 import Communes from 'pages/Communes';
 import Cgu from 'pages/Cgu';
@@ -20,24 +20,20 @@ function renderWithRouter(
     history = createMemoryHistory({ initialEntries: [route] })
   } = {}
 ) {
-  let rendered;
   // https://github.com/testing-library/react-testing-library/issues/281
-  act(() => {
-    rendered = render(
+  return {
+    ...render(
       <AuthProvider>
         <UserProvider>
           <Router history={history}>{ui}</Router>
         </UserProvider>
       </AuthProvider>
-    );
-  });
-  return {
-    ...rendered,
+    ),
     history
   };
 }
 
-const nomAppli = process.env.REACT_APP_NAME;
+const nomAppli = 'RIEAU';
 
 it('renders nom appli message', async () => {
   const { queryAllByText } = renderWithRouter(<App />);

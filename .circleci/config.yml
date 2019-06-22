@@ -40,7 +40,7 @@ jobs:
             - REACT_APP_BASENAME: /rieau-ui
             - PUBLIC_URL: https://mtes-mct.github.io/rieau-ui
             - REACT_APP_PUBLIC_URL: https://mtes-mct.github.io/rieau-ui
-          command: npm run build
+          command: npm run build:dev
       - persist_to_workspace:
           root: .
           paths:
