@@ -84,6 +84,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: '~'
+      - run: cp .env.sample .env
       - run: 
           environment:
             REACT_APP_API_MOCK: true
