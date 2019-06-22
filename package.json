@@ -51,6 +51,7 @@
     "build:test": "env-cmd .env.test npm run build",
     "build:production": "env-cmd .env.production npm run build",
     "test:unit": "react-scripts test",
+    "test:unit:dev": "env-cmd npm run test:unit",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "predeploy:dev": "npm run build:dev",
@@ -65,7 +66,8 @@
     "deploy:production": "env-cmd .env.production npm run deploy",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "test:e2e": "start-server-and-test start http://localhost:3000 cypress:run"
+    "test:e2e": "start-server-and-test start http://localhost:3000 cypress:run",
+    "test:e2e:dev": "env-cmd npm run test:e2e"
   },
   "eslintConfig": {
     "extends": "react-app"
