@@ -11,14 +11,11 @@ import Hidden from '@material-ui/core/Hidden';
 import HamburgerMenu from './HamburgerMenu';
 import AccountMenu from './AccountMenu';
 import routesUnauthenticated from 'routes/unauthenticated';
-import routesAuthenticated from 'routes/authenticated';
 import { useUser } from 'context/user-context';
 import { useAuth } from 'context/auth-context';
 import Typography from 'components/Typography';
 import Grid from '@material-ui/core/Grid';
-import Menu from '@material-ui/core/Menu';
-import MenuList from '@material-ui/core/MenuList';
-import MenuItemLink from 'components/MenuItemLink';
+import DepotsMenu from './DepotsMenu';
 
 const styles = theme => ({
   placeholder: toolbarStyles(theme).root,
@@ -44,9 +41,6 @@ const styles = theme => ({
   menu: {
     display: 'flex',
     margin: theme.spacing(2)
-  },
-  button: {
-    display: 'flex'
   }
 });
 
@@ -54,17 +48,6 @@ function AppAppBar(props) {
   const { classes } = props;
   const { isAuthenticated } = useUser();
   const { login } = useAuth();
-  const [open, setOpen] = React.useState(false);
-  const [anchorEl, setAnchorEl] = React.useState();
-  function handleMenu(event) {
-    setOpen(true);
-    setAnchorEl(event.currentTarget);
-  }
-
-  function handleClose() {
-    setOpen(false);
-    setAnchorEl(null);
-  }
   return (
     <div id="app-bar">
       <AppBar position="fixed" elevation={0} color="secondary">
@@ -104,49 +87,7 @@ function AppAppBar(props) {
               <Hidden xsDown>
                 {isAuthenticated ? (
                   <React.Fragment>
-                    <Button
-                      aria-label="Dépots"
-                      aria-controls="depots-menu-appbar"
-                      aria-haspopup="true"
-                      onClick={handleMenu}
-                      color="inherit"
-                      variant="text"
-                      data-cy="appbar-depots-btn"
-                    >
-                      Dépôts
-                    </Button>
-                    <Menu
-                      id="depots-menu-appbar"
-                      anchorEl={anchorEl}
-                      anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right'
-                      }}
-                      keepMounted
-                      transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right'
-                      }}
-                      open={open}
-                      onClose={handleClose}
-                    >
-                      <MenuList>
-                        {routesAuthenticated
-                          .filter(
-                            route =>
-                              route.sidebar &&
-                              !route.auth &&
-                              route.id !== 'accueil'
-                          )
-                          .map(route => {
-                            return (
-                              <MenuItemLink key={route.id} route={route}>
-                                {route.label}
-                              </MenuItemLink>
-                            );
-                          })}
-                      </MenuList>
-                    </Menu>
+                    <DepotsMenu />
                     <AccountMenu />
                   </React.Fragment>
                 ) : (
