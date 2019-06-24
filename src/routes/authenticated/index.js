@@ -23,7 +23,7 @@ const routes = [
   {
     id: 'localiser',
     path: '/localiser',
-    label: 'Localisation',
+    label: 'Localiser',
     icon: MapIcon,
     component: Localiser,
     sidebar: true

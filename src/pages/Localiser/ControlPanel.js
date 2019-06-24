@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -33,75 +33,82 @@ const styles = theme => ({
   }
 });
 
-class ControlPanel extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      commune: null
-    };
+function ControlPanel(props) {
+  const {
+    communes,
+    classes,
+    onViewportChange,
+    containerComponent,
+    onSelectCommune
+  } = props;
+  const ControlPanelContainer = containerComponent || DefaultContainer;
+  const [commune, setCommune] = useState();
+
+  function DefaultContainer(props) {
+    const { children } = props;
+    return <Container className={classes.root}>{children}</Container>;
   }
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    communes: PropTypes.array.isRequired,
-    containerComponent: PropTypes.node,
-    onViewportChange: PropTypes.func.isRequired,
-    onSelectCommune: PropTypes.func.isRequired
+  DefaultContainer.propTypes = {
+    children: PropTypes.node.isRequired
   };
 
-  defaultContainer = ({ children }) => (
-    <Container className={this.props.classes.root}>{children}</Container>
-  );
+  function handleCommuneChange(event) {
+    const commune = findCommuneByCode(event.target.value);
+    setCommune(commune);
+    onSelectCommune(commune);
+  }
 
-  handleCommuneChange = event => {
-    this.setState({ commune: this.findCommuneByCode(event.target.value) });
-    this.props.onSelectCommune(this.findCommuneByCode(event.target.value));
-  };
+  function handleSelectCommune(commune) {
+    setCommune(commune);
+    onSelectCommune(commune);
+    onViewportChange(commune);
+  }
 
-  findCommuneByCode = code => {
+  function findCommuneByCode(code) {
     return communesPartenaires.find(commune => commune.code === code);
-  };
-
-  render() {
-    const ControlPanelContainer =
-      this.props.containerComponent || this.defaultContainer;
-    const { communes, classes, onViewportChange } = this.props;
-    const { commune } = this.state;
-    return (
-      <ControlPanelContainer>
-        <FormControl component="fieldset">
-          <FormLabel component="legend">Communes partenaires</FormLabel>
-          <RadioGroup
-            aria-label="Communes partenaires"
-            name="commune"
-            value={commune ? commune.code : ''}
-            onChange={this.handleCommuneChange}
-          >
-            {communes.map((commune, key) => (
-              <FormControlLabel
-                key={key}
-                value={commune.code}
-                label={commune.nom}
-                control={<Radio />}
-                onClick={() => onViewportChange(commune)}
-              />
-            ))}
-          </RadioGroup>
-        </FormControl>{' '}
-        <Container className={classes.containerNotFound}>
-          <Typography variant="subtitle2">
-            {`La commune n'apparaît pas ?`}
-          </Typography>
-          <IconButton
-            color="inherit"
-            href="https://www.service-public.fr/particuliers/vosdroits/F17578"
-          >
-            <HowToVoteIcon aria-label="Déposer en mairie" />
-            <Typography variant="body2">{`Déposer en mairie`}</Typography>
-          </IconButton>
-        </Container>
-      </ControlPanelContainer>
-    );
   }
+  return (
+    <ControlPanelContainer>
+      <FormControl component="fieldset">
+        <FormLabel component="legend">Communes partenaires</FormLabel>
+        <RadioGroup
+          aria-label="Communes partenaires"
+          name="commune"
+          value={commune ? commune.code : ''}
+          onChange={handleCommuneChange}
+        >
+          {communes.map((commune, key) => (
+            <FormControlLabel
+              key={key}
+              value={commune.code}
+              label={commune.nom}
+              control={<Radio />}
+              onClick={() => handleSelectCommune(commune)}
+            />
+          ))}
+        </RadioGroup>
+      </FormControl>{' '}
+      <Container className={classes.containerNotFound}>
+        <Typography variant="subtitle2">
+          {`La commune n'apparaît pas ?`}
+        </Typography>
+        <IconButton
+          color="inherit"
+          href="https://www.service-public.fr/particuliers/vosdroits/F17578"
+        >
+          <HowToVoteIcon aria-label="Déposer en mairie" />
+          <Typography variant="body2">{`Déposer en mairie`}</Typography>
+        </IconButton>
+      </Container>
+    </ControlPanelContainer>
+  );
 }
+ControlPanel.propTypes = {
+  classes: PropTypes.object.isRequired,
+  communes: PropTypes.array.isRequired,
+  containerComponent: PropTypes.node,
+  onViewportChange: PropTypes.func.isRequired,
+  onSelectCommune: PropTypes.func.isRequired
+};
 
 export default withStyles(styles)(ControlPanel);

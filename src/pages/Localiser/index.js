@@ -110,7 +110,6 @@ function Localiser(props) {
   }
 
   function goToCommune({ longitude, latitude }) {
-    resetCommune();
     onViewportChange({
       longitude,
       latitude,
@@ -209,6 +208,7 @@ function Localiser(props) {
             onClickSelectAddress={onClickSelectAddress}
             resetCommune={resetCommune}
             resetAdresse={resetAdresse}
+            setErreur={setErreur}
           />
           {erreur && (
             <Snackbar
