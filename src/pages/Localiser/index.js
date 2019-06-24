@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactMapGL, {
   NavigationControl,
   FullscreenControl,
   FlyToInterpolator
 } from 'react-map-gl';
 import DeckGL from '@deck.gl/react';
-import { GeoJsonLayer, TextLayer, PolygonLayer } from '@deck.gl/layers';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -17,11 +16,8 @@ import ControlPanel from './ControlPanel';
 import communesPartenaires from './communesPartenaires';
 import Snackbar from 'components/Snackbar';
 import CommuneMarker from './CommuneMarker';
-import {
-  parcelleIsIncluded,
-  parcelleCenter,
-  parcelleIsContigue
-} from 'utils/parcelles';
+import { parcelleCenter } from 'utils/parcelles';
+import { renderLayers, parcellesUrl } from './parcellesLayers';
 
 const styles = theme => ({
   map: {
@@ -74,250 +70,163 @@ const DEFAULT_VIEWPORT = {
 const MAP_STYLE =
   'https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json';
 
-class Localiser extends React.Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    containerComponent: PropTypes.node
-  };
+function Localiser(props) {
+  const { classes, containerComponent } = props;
+  const [viewport, setViewport] = useState(DEFAULT_VIEWPORT);
+  const [communes, setCommunes] = useState(communesPartenaires);
+  const [adresse, setAdresse] = useState();
+  const [commune, setCommune] = useState();
+  const [parcelles, setParcelles] = useState([]);
+  const [parcellesTexts, setParcellesTexts] = useState([]);
+  const [parcellesGeoJson, setParcellesGeoJson] = useState([]);
+  const [erreur, setErreur] = useState();
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      viewport: DEFAULT_VIEWPORT,
-      communes: communesPartenaires,
-      adresse: null,
-      commune: null,
-      parcelles: [],
-      error: null,
-      parcellesTexts: [],
-      parcellesGeoJson: []
-    };
+  function resetCommune() {
+    setViewport(DEFAULT_VIEWPORT);
+    setCommunes(communesPartenaires);
+    setAdresse(null);
+    setParcelles([]);
+    setCommune(null);
+    setParcellesTexts([]);
+    setParcellesGeoJson([]);
+    setErreur(null);
   }
 
-  resetCommune = () => {
-    this.setState({
-      viewport: DEFAULT_VIEWPORT,
-      communes: communesPartenaires,
-      adresse: null,
-      parcelles: [],
-      commune: null,
-      parcellesTexts: [],
-      parcellesGeoJson: []
-    });
-  };
+  function onViewportChange(viewport) {
+    setViewport({ ...viewport });
+  }
 
-  resetAdresse = () => {
-    const { commune } = this.state;
-    this.setState({
-      adresse: null,
-      parcelles: []
-    });
-    this.onViewportChange({
+  function resetAdresse() {
+    setAdresse(null);
+    setParcelles([]);
+    setErreur(null);
+    onViewportChange({
       longitude: commune.longitude,
       latitude: commune.latitude,
       zoom: 11,
       transitionInterpolator: new FlyToInterpolator(),
       transitionDuration: 3000
     });
-  };
+  }
 
-  onViewportChange = viewport => {
-    this.setState({ viewport: { ...this.state.viewport, ...viewport } });
-  };
-
-  goToCommune = ({ longitude, latitude }) => {
-    this.resetCommune();
-    this.onViewportChange({
+  function goToCommune({ longitude, latitude }) {
+    resetCommune();
+    onViewportChange({
       longitude,
       latitude,
       zoom: 11,
       transitionInterpolator: new FlyToInterpolator(),
       transitionDuration: 3000
     });
-  };
+  }
 
-  onClickSelectAddress = adresse => {
-    const { commune } = this.state;
-    this.setState({ adresse: adresse });
-    this.parcellesTexts(commune);
-    this.onViewportChange({
+  function buildParcellesTexts(data) {
+    setParcellesGeoJson(data);
+    setParcellesTexts(
+      data.features.map(feature => ({
+        text: feature.properties.numero,
+        position: parcelleCenter(feature).geometry.coordinates
+      }))
+    );
+  }
+
+  function showGlobalError(erreur) {
+    window.console.log(erreur);
+    setErreur(
+      'Une erreur est survenue lors du chargement des parcelles cadastrales.'
+    );
+  }
+
+  function fetchParcellesTexts(commune) {
+    const init = {
+      method: 'GET',
+      headers: new Headers().append('Content-Type', 'application/json'),
+      mode: 'cors'
+    };
+    fetch(parcellesUrl(commune), init)
+      .then(data => data.json())
+      .then(data => buildParcellesTexts(data))
+      .catch(erreur => showGlobalError(erreur));
+  }
+
+  function onClickSelectAddress(adresse) {
+    setAdresse(adresse);
+    fetchParcellesTexts(commune);
+    onViewportChange({
       latitude: adresse.position[0],
       longitude: adresse.position[1],
       zoom: 18,
       transitionInterpolator: new FlyToInterpolator(),
       transitionDuration: 3000
     });
-  };
-
-  onSelectCommune = commune => {
-    this.setState({ commune: commune, adresse: null, parcelles: [] });
-  };
-
-  retirerParcelle = parcelle => {
-    const { parcelles } = this.state;
-    if (parcelleIsIncluded(parcelle, parcelles)) {
-      this.setState(state => {
-        return {
-          error: null,
-          parcelles: state.parcelles.filter(p => p.id !== parcelle.id)
-        };
-      });
-    }
-  };
-
-  ajouterParcelle = parcelle => {
-    const { parcelles } = this.state;
-    const maxParcelles = 10;
-    if (parcelles.length > maxParcelles - 1) {
-      this.setState({ error: `Maximum atteint de ${maxParcelles} parcelles.` });
-    } else if (!parcelleIsContigue(parcelle, parcelles)) {
-      this.setState({
-        error: `La parcelle ${parcelle.properties.numero} n'est pas contiguë.`
-      });
-    } else {
-      this.setState(state => {
-        return {
-          error: null,
-          parcelles: state.parcelles.concat(parcelle)
-        };
-      });
-    }
-  };
-
-  parcellesUrl = commune => {
-    return `https://cadastre.data.gouv.fr/bundler/cadastre-etalab/communes/${commune.code}/geojson/parcelles`;
-  };
-
-  showError = error => {
-    window.console.log(error);
-    this.setState({
-      error:
-        'Une erreur est survenue lors du chargement des parcelles cadastrales.'
-    });
-  };
-
-  parcellesTexts = commune => {
-    const init = {
-      method: 'GET',
-      headers: new Headers().append('Content-Type', 'application/json'),
-      mode: 'cors'
-    };
-    fetch(this.parcellesUrl(commune), init)
-      .then(data => data.json())
-      .then(data => this.buildParcellesTexts(data))
-      .catch(error => this.showError(error));
-  };
-
-  buildParcellesTexts = data => {
-    this.setState({ parcellesGeoJson: data });
-    this.setState({
-      parcellesTexts: data.features.map(feature => ({
-        text: feature.properties.numero,
-        position: parcelleCenter(feature).geometry.coordinates
-      }))
-    });
-  };
-
-  renderLayers = () => {
-    const { adresse, parcellesTexts, parcellesGeoJson, parcelles } = this.state;
-    if (!adresse) return [];
-    return [
-      new GeoJsonLayer({
-        id: 'parcelles-polygon-layer',
-        data: parcellesGeoJson,
-        filled: true,
-        pickable: true,
-        stroked: true,
-        extruded: false,
-        opacity: 0.2,
-        getFillColor: d => [60, 93, 170],
-        getLineColor: [60, 93, 170],
-        onClick: ({ object, x, y }) => {
-          this.ajouterParcelle(object);
-        }
-      }),
-      new TextLayer({
-        id: 'parcelles-text-layer',
-        data: parcellesTexts,
-        getTextAnchor: 'middle',
-        getAlignmentBaseline: 'center',
-        getColor: d => [0, 0, 0],
-        getSize: d => 20,
-        sizeScale: 1,
-        opacity: 0.6,
-        getPixelOffset: [0, 15]
-      }),
-      new PolygonLayer({
-        id: 'parcelles-selectionnes-layer',
-        data: parcelles,
-        pickable: true,
-        stroked: true,
-        filled: true,
-        wireframe: true,
-        lineWidthMinPixels: 1,
-        opacity: 0.2,
-        getPolygon: d => d.geometry.coordinates,
-        getFillColor: d => [0, 17, 94],
-        getLineColor: [0, 17, 94],
-        getLineWidth: 1,
-        onClick: ({ object, x, y }) => {
-          this.retirerParcelle(object);
-        }
-      })
-    ];
-  };
-
-  render() {
-    const { classes, containerComponent } = this.props;
-    const { viewport, commune, adresse, parcelles, error } = this.state;
-
-    return (
-      <React.Fragment>
-        <AppAppBar />
-        <Container className={classes.map} data-cy="map">
-          <ReactMapGL
-            {...viewport}
-            reuseMaps
-            onViewportChange={this.onViewportChange}
-            width="100vw"
-            height="90vh"
-            maxPitch={85}
-            mapStyle={MAP_STYLE}
-          >
-            <DeckGL layers={this.renderLayers()} viewState={viewport} />
-
-            <FullscreenControl className={classes.fullscreen} />
-            <NavigationControl className={classes.nav} />
-            {!commune && (
-              <ControlPanel
-                communes={communesPartenaires}
-                containerComponent={containerComponent}
-                onViewportChange={this.goToCommune}
-                onSelectCommune={this.onSelectCommune}
-              />
-            )}
-            <CommuneMarker
-              commune={commune}
-              adresse={adresse}
-              parcelles={parcelles}
-              onClickSelectAddress={this.onClickSelectAddress}
-              resetCommune={this.resetCommune}
-              resetAdresse={this.resetAdresse}
-            />
-            {error && (
-              <Snackbar
-                message={error}
-                variant="error"
-                initialState={true}
-                onClose={() => this.setState({ error: null })}
-              />
-            )}
-          </ReactMapGL>
-        </Container>
-      </React.Fragment>
-    );
   }
+
+  function onSelectCommune(commune) {
+    setCommune(commune);
+    setAdresse(null);
+    setParcelles([]);
+  }
+
+  return (
+    <React.Fragment>
+      <AppAppBar />
+      <Container className={classes.map} data-cy="map">
+        <ReactMapGL
+          {...viewport}
+          reuseMaps
+          onViewportChange={onViewportChange}
+          width="100vw"
+          height="90vh"
+          maxPitch={85}
+          mapStyle={MAP_STYLE}
+        >
+          <DeckGL
+            layers={renderLayers(
+              adresse,
+              parcellesTexts,
+              parcellesGeoJson,
+              parcelles,
+              setParcelles,
+              setErreur
+            )}
+            viewState={viewport}
+          />
+
+          <FullscreenControl className={classes.fullscreen} />
+          <NavigationControl className={classes.nav} />
+          {!commune && (
+            <ControlPanel
+              communes={communes}
+              containerComponent={containerComponent}
+              onViewportChange={goToCommune}
+              onSelectCommune={onSelectCommune}
+            />
+          )}
+          <CommuneMarker
+            commune={commune}
+            adresse={adresse}
+            parcelles={parcelles}
+            onClickSelectAddress={onClickSelectAddress}
+            resetCommune={resetCommune}
+            resetAdresse={resetAdresse}
+          />
+          {erreur && (
+            <Snackbar
+              message={erreur}
+              variant="error"
+              initialState={true}
+              onClose={() => setErreur(null)}
+            />
+          )}
+        </ReactMapGL>
+      </Container>
+    </React.Fragment>
+  );
 }
+Localiser.propTypes = {
+  classes: PropTypes.object.isRequired,
+  containerComponent: PropTypes.node
+};
 export default compose(
   withRoot,
   withStyles(styles)
