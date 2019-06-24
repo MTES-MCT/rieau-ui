@@ -2,15 +2,15 @@
 FROM node:10.15-alpine as build-stage
 LABEL maintainer="tristan.robert.44@gmail.com"
 WORKDIR /app
-COPY package-*.json /app
+COPY package*.json /app/
 COPY jsconfig.json /app
 COPY src/ /app/src
 COPY public/ /app/public
 COPY manifest.json /app
-RUN npm install
+RUN npm install --production
+COPY .env.sample /app/.env
 ARG REACT_APP_BASENAME=/
 ARG REACT_APP_DOMAIN=http://localhost:3000
-ARG PUBLIC_URL=${REACT_APP_DOMAIN}/${REACT_APP_BASENAME}
 RUN npm run build
 
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx

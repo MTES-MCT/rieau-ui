@@ -37,10 +37,10 @@ jobs:
       - run: cp .env.sample .env
       - run: 
           environment: 
+            - REACT_APP_API_MOCK: true
             - REACT_APP_BASENAME: /rieau-ui
-            - PUBLIC_URL: https://mtes-mct.github.io/rieau-ui
-            - REACT_APP_PUBLIC_URL: https://mtes-mct.github.io/rieau-ui
-          command: npm run build:dev
+            - REACT_APP_DOMAIN: https://mtes-mct.github.io
+          command: npm run build
       - persist_to_workspace:
           root: .
           paths:
@@ -59,7 +59,7 @@ jobs:
       - attach_workspace:
           at: '~'
       - run: cp .env.sample .env
-      - run: npm run test:unit:dev
+      - run: npm run test:unit
   e2e-tests:
     <<: *defaults
     steps:
@@ -67,7 +67,7 @@ jobs:
       - attach_workspace:
           at: '~'
       - run: cp .env.sample .env
-      - run: npm run test:e2e:dev
+      - run: npm run test:e2e
       - store_artifacts:
           path: cypress/videos
       - store_artifacts:
@@ -89,15 +89,14 @@ jobs:
       - run: cp .env.sample .env
       - run: 
           environment:
-            REACT_APP_API_MOCK: true
-            REACT_APP_BASENAME: /rieau-ui
-            PUBLIC_URL: https://mtes-mct.github.io/rieau-ui
-            REACT_APP_PUBLIC_URL: https://mtes-mct.github.io/rieau-ui
+            - REACT_APP_API_MOCK: true
+            - REACT_APP_BASENAME: /rieau-ui
+            - REACT_APP_DOMAIN: https://mtes-mct.github.io
           command: |
             git config credential.helper 'cache --timeout=120'
             git config user.email "<circleci>"
             git config user.name "CircleCi"
-            npm run deploy:dev
+            npm run deploy
 
 workflows:
   version: 2

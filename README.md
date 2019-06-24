@@ -13,14 +13,13 @@ Ce projet a été construit avec [Create React App](https://github.com/facebook/
 
 ### Local
 
+Copier le `.env.sample` en `.env`.
+
+
+Modifier dans le fichier les valeurs en fonction de l'environnement (par exemple `REACT_APP_API_MOCK=false` permet d'activer l'API), puis lancer le serveur:
+
 ```
 npm start
-```
-
-ou pour intégration avec France connect:
-
-```
-npm run start:dev
 ```
 
 Depuis le navigateur: [http://localhost:3000](http://localhost:3000).
@@ -79,20 +78,12 @@ Exécute les tests et enregistre les videos et screenshots.
 
 ## Déploiements
 
-Copier le `.env.sample` en:
+Copier le `.env.sample` en `.env`.
 
-* `.env` pour dev
-* `.env.test`
-* `.env.staging`
-* `.env.production`
-
-Renseigner les valeurs en fonction de l'environnement, puis builder:
+Surcharger dans le shell les valeurs en fonction de l'environnement, puis construire:
 
 ```
-npm run build:dev # pour dev
-npm run build:test
-npm run build:staging
-npm run build:production
+npm run build
 ```
 
 ### Github pages
@@ -100,7 +91,7 @@ npm run build:production
 Depuis la branche `master`:
 
 ```
-REACT_APP_BASENAME=/rieau-ui PUBLIC_URL="https://mtes-mct.github.io/rieau-ui" npm run deploy
+REACT_APP_BASENAME=/rieau-ui REACT_APP_DOMAIN="https://mtes-mct.github.io" npm run deploy
 ```
 
 Depuis le navigateur: [https://mtes-mct.github.io/rieau-ui/](https://mtes-mct.github.io/rieau-ui/).
@@ -113,7 +104,7 @@ Depuis le navigateur: [https://mtes-mct.github.io/rieau-ui/](https://mtes-mct.gi
 docker build --build-arg REACT_APP_DOMAIN=http://localhost:3000 --build-arg REACT_APP_BASENAME=/dpt -t rieau-ui .
 ```
 
-Spécifier `REACT_APP_DOMAIN` si le site est installé sur un autre domaine que [http://localhost:3000](http://localhost:3000) par défaut et et `REACT_APP_BASENAME` si il est dans un sous un sous-dossier autre que `/` (e.g. `/dpt`).
+Spécifier `REACT_APP_DOMAIN` si le site est installé sur un autre domaine que [http://localhost:3000](http://localhost:3000) par défaut et `REACT_APP_BASENAME` si il est dans un sous un sous-dossier autre que `/` (e.g. `/dpt`).
 
 * Run:
 

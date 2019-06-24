@@ -1,6 +1,9 @@
 node_modules/
 build/
-.eslintrc.json
+.eslintrc.js
+.editorconfig
 .gitignore
 .git/
 cypress/
+cypress.json
+.vscode/
