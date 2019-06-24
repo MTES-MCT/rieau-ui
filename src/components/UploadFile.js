@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDropzone } from 'react-dropzone';
 import { withStyles } from '@material-ui/core';
+import { formatFileSize } from 'utils/files';
 
 const styles = theme => ({
   previewsContainer: {
@@ -54,8 +55,12 @@ function UploadFile(props) {
   const previews = files.map(file => (
     <div className={classes.thumb} key={file.name}>
       <div className={classes.thumbInner}>
-        <img src={file.preview} className={classes.img} alt={file.path} />
-        {file.path} - {file.size} octets
+        {file.type.startsWith('image/') && (
+          <img src={file.preview} className={classes.img} alt={file.path} />
+        )}
+        <p>
+          {file.path} - {formatFileSize(file.size)}
+        </p>
       </div>
     </div>
   ));
