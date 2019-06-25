@@ -13,6 +13,7 @@ import { genericHashLink } from 'react-router-hash-link';
 import IconButton from '@material-ui/core/IconButton';
 import Link from '@material-ui/core/Link';
 import Fab from '@material-ui/core/Fab';
+import Grow from '@material-ui/core/Grow';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import { useAuth } from 'context/auth-context';
 
@@ -66,7 +67,7 @@ const styles = theme => ({
 const IconButtonHashLink = props => genericHashLink(props, IconButton);
 
 function CommentFaire(props) {
-  const { classes } = props;
+  const { classes, showRemonter } = props;
   const { login } = useAuth();
 
   return (
@@ -127,21 +128,24 @@ function CommentFaire(props) {
         >
           Connexion
         </Button>
-        <Fab aria-label="remonter" className={classes.remonter}>
-          <IconButtonHashLink
-            component={RouterLink}
-            to={{ pathname: '/', hash: '#app-bar' }}
-          >
-            <ExpandLessIcon color="primary" />
-          </IconButtonHashLink>
-        </Fab>
+        <Grow in={showRemonter}>
+          <Fab aria-label="remonter" className={classes.remonter}>
+            <IconButtonHashLink
+              component={RouterLink}
+              to={{ pathname: '/', hash: '#app-bar' }}
+            >
+              <ExpandLessIcon color="primary" />
+            </IconButtonHashLink>
+          </Fab>
+        </Grow>
       </Container>
     </section>
   );
 }
 
 CommentFaire.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  showRemonter: PropTypes.bool.isRequired
 };
 
 export default withStyles(styles)(CommentFaire);
