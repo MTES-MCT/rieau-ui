@@ -81,12 +81,12 @@ function getUser() {
   });
 }
 
-function loadUserDossiers(userId) {
-  return apiHttpClient.get(`/deposants/${userId}/dossiers`);
+function loadUserDossiers() {
+  return apiHttpClient.get(`/dossiers`);
 }
 
-function deposer(cerfa) {
-  return apiHttpClient.post(`/deposer`);
+function savePieceJointe(file) {
+  return apiHttpClient.post(`/ajouterpiecejointe`, file);
 }
 
 const auth = {
@@ -97,7 +97,7 @@ const auth = {
 };
 const dossiers = {
   loadUserDossiers,
-  deposer
+  savePieceJointe
 };
 
 const api = {

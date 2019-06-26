@@ -3,7 +3,7 @@ import App from './app';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import { cleanup, render, waitForElement } from '@testing-library/react';
-import Localiser from 'pages/Localiser';
+import Localiser from 'pages/protected/Localiser';
 import Communes from 'pages/Communes';
 import Cgu from 'pages/Cgu';
 import Aide from 'pages/Aide';

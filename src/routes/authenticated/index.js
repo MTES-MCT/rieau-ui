@@ -2,7 +2,7 @@ import AccountIcon from '@material-ui/icons/AccountCircle';
 import MonCompte from 'pages/protected/MonCompte';
 import SignOutIcon from '@material-ui/icons/LockOpen';
 import Deposer from 'pages/protected/Deposer';
-import Localiser from 'pages/Localiser';
+import Localiser from 'pages/protected/Localiser';
 import Communes from 'pages/Communes';
 import MapIcon from '@material-ui/icons/Map';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';

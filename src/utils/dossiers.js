@@ -12,15 +12,22 @@ function loadUserDossiers() {
   });
 }
 
-function deposer(cerfa) {
+function savePieceJointe(nom, file, binary) {
   return api.then(handleDossiers).then(dossiers => {
-    return dossiers.deposer(cerfa);
+    return dossiers.savePieceJointe(nom, file, binary);
+  });
+}
+
+function loadPieceJointe(nom) {
+  return api.then(handleDossiers).then(dossiers => {
+    return dossiers.loadPieceJointe(nom);
   });
 }
 
 const dossiers = {
   loadUserDossiers,
-  deposer
+  savePieceJointe,
+  loadPieceJointe
 };
 
 export default dossiers;

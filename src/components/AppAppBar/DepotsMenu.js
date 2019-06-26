@@ -36,7 +36,7 @@ function DepotsMenu(props) {
         variant="text"
         data-cy="appbar-depots-btn"
       >
-        Dépôts
+        {`Mes dépôts`}
       </Button>
       <Menu
         id="depots-menu-appbar"

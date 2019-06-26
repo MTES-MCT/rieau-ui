@@ -8,6 +8,7 @@ COPY src/ /app/src
 COPY public/ /app/public
 COPY manifest.json /app
 RUN npm install --production
+RUN npm run pdfjs:postinstall
 COPY .env.sample /app/.env
 ARG REACT_APP_BASENAME=/
 ARG REACT_APP_DOMAIN=http://localhost:3000

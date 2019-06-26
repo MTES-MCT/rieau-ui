@@ -33,6 +33,7 @@
     "react-icons": "^3.7.0",
     "react-lazyload": "^2.6.1",
     "react-map-gl": "^5.0.3",
+    "react-pdf": "^4.1.0",
     "react-router-dom": "^5.0.1",
     "react-router-hash-link": "^1.2.1",
     "react-scripts": "3.0.1",
@@ -50,7 +51,8 @@
     "deploy": "gh-pages -d build -m 'Deploy on Github pages [ci skip]'",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "test:e2e": "start-server-and-test start http://localhost:3000 cypress:run"
+    "test:e2e": "start-server-and-test start http://localhost:3000 cypress:run",
+    "pdfjs:postinstall": "cp node_modules/pdfjs-dist/build/pdf.worker.min.js public/pdf.worker.min.js"
   },
   "eslintConfig": {
     "extends": "react-app"

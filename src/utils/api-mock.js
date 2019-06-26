@@ -52,10 +52,28 @@ function loadUserDossiers(userId) {
   });
 }
 
-function deposer(cerfa) {
+function savePieceJointe(nom, file, binary) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      return resolve(cerfa);
+      return resolve(
+        localStorage.setItem(
+          nom,
+          JSON.stringify({
+            nom: file.name,
+            type: file.type,
+            size: file.size,
+            data: binary
+          })
+        )
+      );
+    }, waitingTime);
+  });
+}
+
+function loadPieceJointe(id) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      return resolve(JSON.parse(localStorage.getItem(id)));
     }, waitingTime);
   });
 }
@@ -68,7 +86,8 @@ const auth = {
 };
 const dossiers = {
   loadUserDossiers,
-  deposer
+  savePieceJointe,
+  loadPieceJointe
 };
 
 const api = {
