@@ -5,30 +5,26 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import UploadFile from 'components/UploadFile';
 import dossiers from 'utils/dossiers';
-import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
 import FilePreview from 'components/FilePreview';
 import Button from 'components/Button';
-import Typography from 'components/Typography';
 import { useAsync } from 'react-async';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = theme => ({
-  title: {
-    flexGrow: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: theme.spacing(1)
-  },
-  buttons: {
-    flexGrow: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: theme.spacing(1)
-  },
   card: {
-    maxWidth: 230
+    maxWidth: 400,
+    marginBottom: theme.spacing(1)
+  },
+  content: {
+    display: 'flex',
+    flexWrap: 'wrap'
+  },
+  actions: {
+    display: 'flex'
   },
   button: {
     margin: theme.spacing(1)
@@ -92,16 +88,36 @@ function PieceJointeField(props) {
       reload();
     });
   }
+  function title(text, required) {
+    var title = text;
+    if (required) text += '*';
+    return title;
+  }
   return (
-    <Grid container spacing={1} className={classes.title}>
-      <Grid item xs={12}>
-        <Typography variant="h6" component="h2">
-          {pieceJointe.description}
-        </Typography>
-      </Grid>
-      <Grid container item xs={12} className={classes.buttons}>
+    <Card className={classes.card}>
+      <CardHeader title={title(pieceJointe.titre, pieceJointe.required)} />
+      <CardContent className={classes.content}>
+        {pieceJointe.description}
+      </CardContent>
+      <CardActions disableSpacing className={classes.actions}>
+        <Button
+          className={classes.button}
+          variant="outlined"
+          aria-label="téléverser"
+          onClick={handleShowDropzone}
+        >
+          {`Téléverser`}
+          <CloudUploadIcon className={classes.rightIcon} />
+        </Button>
+        {showDropzone && (
+          <UploadFile
+            handleFile={savePieceJointe}
+            onClose={closeDropzone}
+            pieceJointe={pieceJointe}
+          />
+        )}
         {showPreview && (
-          <Grid item xs={12}>
+          <React.Fragment>
             <div className={classes.buttonWrapper}>
               <Button
                 className={classes.button}
@@ -125,26 +141,10 @@ function PieceJointeField(props) {
                 initialState={true}
               />
             )}
-          </Grid>
+          </React.Fragment>
         )}
-        <Button
-          className={classes.button}
-          variant="outlined"
-          aria-label="téléverser"
-          onClick={handleShowDropzone}
-        >
-          {`Téléverser`}
-          <CloudUploadIcon className={classes.rightIcon} />
-        </Button>
-        {showDropzone && (
-          <UploadFile
-            handleFile={savePieceJointe}
-            onClose={closeDropzone}
-            pieceJointe={pieceJointe}
-          />
-        )}
-      </Grid>
-    </Grid>
+      </CardActions>
+    </Card>
   );
 }
 PieceJointeField.propTypes = {

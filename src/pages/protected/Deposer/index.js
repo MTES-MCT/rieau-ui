@@ -4,17 +4,17 @@ import AppAppBar from 'components/AppAppBar';
 import AppFooter from 'components/AppFooter';
 import withRoot from 'theme/withRoot';
 import { withStyles } from '@material-ui/core';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+import Grid from '@material-ui/core/Grid';
 import compose from 'utils/compose';
 import Typography from 'components/Typography';
 import { listePiecesJointesDP } from './piecesJointes';
 import PieceJointeField from './PieceJointeField';
 
 const styles = theme => ({
-  card: {
+  grid: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    alignItems: 'center'
   }
 });
 
@@ -26,13 +26,13 @@ function Deposer(props) {
       <Typography variant="h3" marked="center" align="center">
         {`Mes pièces jointes`}
       </Typography>
-      <Card elevation={0} className={classes.card}>
-        <CardContent>
+      <Grid container className={classes.grid}>
+        <Grid item xs={12}>
           {listePiecesJointesDP.map(pieceJointe => (
             <PieceJointeField key={pieceJointe.nom} pieceJointe={pieceJointe} />
           ))}
-        </CardContent>
-      </Card>
+        </Grid>
+      </Grid>
       <AppFooter />
     </React.Fragment>
   );
