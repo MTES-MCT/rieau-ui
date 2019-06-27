@@ -8,18 +8,18 @@
     "url": "https://github.com/tristanrobert"
   },
   "dependencies": {
-    "@deck.gl/core": "^7.1.6",
-    "@deck.gl/layers": "^7.1.6",
-    "@deck.gl/react": "^7.1.6",
-    "@material-ui/core": "^4.1.1",
-    "@material-ui/icons": "^4.2.0",
+    "@deck.gl/core": "^7.1.7",
+    "@deck.gl/layers": "^7.1.7",
+    "@deck.gl/react": "^7.1.7",
+    "@material-ui/core": "^4.1.3",
+    "@material-ui/icons": "^4.2.1",
     "@turf/area": "^6.0.1",
     "@turf/centroid": "^6.0.2",
     "@turf/line-intersect": "^6.0.2",
     "autosuggest-highlight": "^3.1.1",
     "axios": "^0.19.0",
     "dotenv-expand": "^5.1.0",
-    "eslint-plugin-react": "^7.14.0",
+    "eslint-plugin-react": "^7.14.2",
     "formik": "^1.5.7",
     "keycloak-js": "^6.0.1",
     "lodash": "^4.17.11",
@@ -33,7 +33,6 @@
     "react-icons": "^3.7.0",
     "react-lazyload": "^2.6.1",
     "react-map-gl": "^5.0.3",
-    "react-pdf": "^4.1.0",
     "react-router-dom": "^5.0.1",
     "react-router-hash-link": "^1.2.1",
     "react-scripts": "3.0.1",
@@ -51,8 +50,7 @@
     "deploy": "gh-pages -d build -m 'Deploy on Github pages [ci skip]'",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "test:e2e": "start-server-and-test start http://localhost:3000 cypress:run",
-    "pdfjs:postinstall": "cp node_modules/pdfjs-dist/build/pdf.worker.min.js public/pdf.worker.min.js"
+    "test:e2e": "start-server-and-test start http://localhost:3000 cypress:run"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -81,7 +79,7 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/react": "^8.0.1",
+    "@testing-library/react": "^8.0.4",
     "babel-loader": "^8.0.5",
     "cypress": "^3.3.1",
     "eslint": "^5.16.0",

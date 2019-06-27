@@ -56,7 +56,7 @@ function savePieceJointe(nom, file, binary) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       return resolve(
-        localStorage.setItem(
+        sessionStorage.setItem(
           nom,
           JSON.stringify({
             nom: file.name,
@@ -73,7 +73,7 @@ function savePieceJointe(nom, file, binary) {
 function loadPieceJointe(id) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      return resolve(JSON.parse(localStorage.getItem(id)));
+      return resolve(JSON.parse(sessionStorage.getItem(id)));
     }, waitingTime);
   });
 }

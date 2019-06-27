@@ -6,7 +6,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import UploadFile from 'components/UploadFile';
 import dossiers from 'utils/dossiers';
 import Grid from '@material-ui/core/Grid';
-import PieceJointePreview from 'components/PieceJointePreview';
+import FilePreview from 'components/FilePreview';
 import Button from 'components/Button';
 import Typography from 'components/Typography';
 import { useAsync } from 'react-async';
@@ -115,7 +115,7 @@ function PieceJointeField(props) {
               <CircularProgress size={24} className={classes.buttonProgress} />
             )}
             {showPreviewDialog && (
-              <PieceJointePreview
+              <FilePreview
                 file={file}
                 onClose={closePreviewDialog}
                 initialState={true}

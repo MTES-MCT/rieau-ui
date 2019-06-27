@@ -1,6 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDropzone } from 'react-dropzone';
+import RootRef from '@material-ui/core/RootRef';
+import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -32,13 +34,7 @@ function UploadFile(props) {
         reader.onerror = () => window.console.log('file reading has failed');
         reader.readAsDataURL(file);
         reader.onload = () => {
-          var binary = null;
-          if (file.type.startsWith('image/')) {
-            binary = reader.result;
-          } else if (file.type === 'application/pdf') {
-            binary = atob(reader.result.split(',')[1]);
-          }
-          handleFile(pieceJointe.nom, file, binary);
+          handleFile(pieceJointe.nom, file, reader.result);
         };
         setShowDialog(false);
       });
@@ -47,8 +43,10 @@ function UploadFile(props) {
   );
   const { getRootProps, getInputProps, isDragReject } = useDropzone({
     accept: pieceJointe.formats,
+    maxSize: 1024 * 1024,
     onDrop: onDrop
   });
+  const { ref, ...rootProps } = getRootProps();
   function handleClose() {
     onClose();
     setShowDialog(false);
@@ -64,16 +62,18 @@ function UploadFile(props) {
     >
       <DialogTitle id="alert-dialog-title">{`Ajouter un fichier`}</DialogTitle>
       <DialogContent>
-        <div {...getRootProps()} className={classes.dropzone}>
-          <input {...getInputProps()} />
-          {isDragReject ? (
-            <p>{`Ce fichier n'est pas au bon format (pdf ou image)`}</p>
-          ) : (
-            <p>
-              {`Cliquez ici pour sélectionner un fichier ou glissez puis déposez-le ici`}
-            </p>
-          )}
-        </div>
+        <RootRef rootRef={ref}>
+          <Paper {...rootProps} className={classes.dropzone}>
+            <input {...getInputProps()} />
+            {isDragReject ? (
+              <p>{`Ce fichier n'est pas au bon format (pdf ou image)`}</p>
+            ) : (
+              <p>
+                {`Cliquez ici pour sélectionner un fichier ou glissez puis déposez-le ici`}
+              </p>
+            )}
+          </Paper>
+        </RootRef>
       </DialogContent>
       <DialogActions>
         <Button
