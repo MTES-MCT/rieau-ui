@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import UploadFile from 'components/UploadFile';
-import dossiers from 'utils/dossiers';
+import demandes from 'utils/demandes';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -46,7 +46,7 @@ const styles = theme => ({
   }
 });
 async function handleFilePreview(pieceJointe) {
-  return { file: await dossiers.loadPieceJointe(pieceJointe.code) };
+  return { file: await demandes.loadPieceJointe(pieceJointe.code) };
 }
 
 function PieceJointe(props) {
@@ -83,7 +83,7 @@ function PieceJointe(props) {
     setShowPreviewDialog(true);
   }
   function savePieceJointe(code, file, binary) {
-    dossiers.savePieceJointe(code, file, binary).then(function() {
+    demandes.savePieceJointe(code, file, binary).then(function() {
       closeDropzone();
       reload();
     });

@@ -12,7 +12,7 @@ function AuthProvider(props) {
     data = {
       user: null,
       isAuthenticated: false,
-      dossiers: []
+      demandes: []
     },
     error,
     isRejected,
@@ -43,7 +43,13 @@ function AuthProvider(props) {
     }
   }
 
-  const login = () => auth.login().then(reload);
+  const login = process.env.REACT_APP_API_MOCK
+    ? function(id) {
+        return auth.login(id).then(reload);
+      }
+    : function() {
+        return auth.login().then(reload);
+      };
   const logout = () => auth.logout().then(reload);
 
   return <AuthContext.Provider value={{ data, login, logout }} {...props} />;

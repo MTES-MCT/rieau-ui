@@ -109,15 +109,42 @@ function AppAppBar(props) {
                           </Button>
                         );
                       })}
-                    <Button
-                      color="primary"
-                      size="small"
-                      onClick={login}
-                      variant="contained"
-                      data-cy={'appbar-connexion-btn'}
-                    >
-                      {`Connexion`}
-                    </Button>
+                    {process.env.REACT_APP_API_MOCK ? (
+                      <React.Fragment>
+                        <Button
+                          color="primary"
+                          size="small"
+                          onClick={function(event) {
+                            return login('jean.martin');
+                          }}
+                          variant="contained"
+                          data-cy={'appbar-connexion-depositaire-btn'}
+                        >
+                          {`Connexion Dépositaire`}
+                        </Button>
+                        <Button
+                          color="primary"
+                          size="small"
+                          onClick={function(event) {
+                            return login('jacques.dupont');
+                          }}
+                          variant="contained"
+                          data-cy={'appbar-connexion-instructeur-btn'}
+                        >
+                          {`Connexion Instructeur`}
+                        </Button>
+                      </React.Fragment>
+                    ) : (
+                      <Button
+                        color="primary"
+                        size="small"
+                        onClick={login}
+                        variant="contained"
+                        data-cy={'appbar-connexion-btn'}
+                      >
+                        {`Connexion`}
+                      </Button>
+                    )}
                   </React.Fragment>
                 )}
               </Hidden>

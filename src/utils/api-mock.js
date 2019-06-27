@@ -6,12 +6,14 @@ let principal = null;
 
 const waitingTime = 100;
 
-function login() {
+function login(id) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      if (users.length < 1)
-        return reject(JSON.stringify({ message: 'Connexion impossible' }));
-      return resolve((principal = users[0]));
+      if (!id)
+        return reject(
+          JSON.stringify({ message: 'Connexion impossible. User id inconnu.' })
+        );
+      return resolve((principal = users.find(user => user.id === id)));
     }, waitingTime);
   });
 }
@@ -44,7 +46,7 @@ function getUser() {
   });
 }
 
-function loadUserDossiers(userId) {
+function mesDemandes() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       return resolve([]);
@@ -84,15 +86,15 @@ const auth = {
   logout,
   getUser
 };
-const dossiers = {
-  loadUserDossiers,
+const demandes = {
+  mesDemandes,
   savePieceJointe,
   loadPieceJointe
 };
 
 const api = {
   auth,
-  dossiers
+  demandes
 };
 
 export default api;

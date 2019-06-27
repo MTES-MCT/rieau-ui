@@ -6,7 +6,7 @@ context('Localiser', () => {
   })
 
   it('cy.click() - go to localiser page', () => {
-    cy.get('[data-cy=appbar-connexion-btn]').should('be.visible').click()
+    cy.get('[data-cy=appbar-connexion-depositaire-btn]').should('be.visible').click()
     cy.contains("Mon Compte").should('be.visible')
     cy.get('[data-cy=appbar-depots-btn]').should('be.visible').click()
     cy.get('[data-cy=menu-item-link-localiser]').should('be.visible').click()
@@ -16,7 +16,7 @@ context('Localiser', () => {
   })
 
   it('cy.click() - go to chercher adresse marker', () => {
-    cy.get('[data-cy=appbar-connexion-btn]').should('be.visible').click()
+    cy.get('[data-cy=appbar-connexion-depositaire-btn]').should('be.visible').click()
     cy.contains("Mon Compte").should('be.visible')
     cy.get('[data-cy=appbar-depots-btn]').should('be.visible').click()
     cy.get('[data-cy=menu-item-link-localiser]').should('be.visible').click()

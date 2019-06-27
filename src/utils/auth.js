@@ -18,11 +18,17 @@ function isAuthenticated() {
   });
 }
 
-function login() {
-  return api.then(handleAuth).then(auth => {
-    return auth.login();
-  });
-}
+const login = process.env.REACT_APP_API_MOCK
+  ? function(id) {
+      return api.then(handleAuth).then(auth => {
+        return auth.login(id);
+      });
+    }
+  : function() {
+      return api.then(handleAuth).then(auth => {
+        return auth.login();
+      });
+    };
 
 function logout() {
   return api.then(handleAuth).then(auth => {

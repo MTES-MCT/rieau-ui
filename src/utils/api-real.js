@@ -81,12 +81,12 @@ function getUser() {
   });
 }
 
-function loadUserDossiers() {
-  return apiHttpClient.get(`/dossiers`);
+function mesDemandes() {
+  return apiHttpClient.get(`/demandes`);
 }
 
-function savePieceJointe(file) {
-  return apiHttpClient.post(`/ajouterpiecejointe`, file);
+function savePieceJointe(code, file, binary) {
+  return apiHttpClient.post(`/piecesjointes`, { code, file, binary });
 }
 
 const auth = {
@@ -95,14 +95,14 @@ const auth = {
   logout,
   getUser
 };
-const dossiers = {
-  loadUserDossiers,
+const demandes = {
+  mesDemandes,
   savePieceJointe
 };
 
 const api = {
   auth,
-  dossiers
+  demandes
 };
 
 export default api;

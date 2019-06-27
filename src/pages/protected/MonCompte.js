@@ -52,7 +52,7 @@ function MonCompte(props) {
                   {'Profil'}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  {user.profile}
+                  {user.profil}
                 </Typography>
                 <Typography variant="h6" component="h2">
                   {'Email'}

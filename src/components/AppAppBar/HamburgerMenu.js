@@ -124,12 +124,41 @@ function SideBarMenu(props) {
                 />
               );
             })}
-          <MenuItem button onClick={login} data-cy="menu-item-btn-connexion">
-            <ListItemIcon>
-              <SignInIcon />
-            </ListItemIcon>
-            {`Connexion`}
-          </MenuItem>
+          {process.env.REACT_APP_API_MOCK ? (
+            <React.Fragment>
+              <MenuItem
+                button
+                onClick={function(event) {
+                  return login('jean.martin');
+                }}
+                data-cy="menu-item-btn-connexion-depositaire"
+              >
+                <ListItemIcon>
+                  <SignInIcon />
+                </ListItemIcon>
+                {`Connexion Dépositaire`}
+              </MenuItem>
+              <MenuItem
+                button
+                onClick={function(event) {
+                  return login('jacques.dupont');
+                }}
+                data-cy="menu-item-btn-connexion-instructeur"
+              >
+                <ListItemIcon>
+                  <SignInIcon />
+                </ListItemIcon>
+                {`Connexion Instructeur`}
+              </MenuItem>
+            </React.Fragment>
+          ) : (
+            <MenuItem button onClick={login} data-cy="menu-item-btn-connexion">
+              <ListItemIcon>
+                <SignInIcon />
+              </ListItemIcon>
+              {`Connexion`}
+            </MenuItem>
+          )}
         </MenuList>
       )}
     </div>
