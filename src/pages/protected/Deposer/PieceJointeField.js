@@ -18,13 +18,14 @@ const styles = theme => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(1)
   },
   buttons: {
     flexGrow: 1,
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(1)
   },
   card: {
     maxWidth: 230
@@ -86,7 +87,10 @@ function PieceJointeField(props) {
     setShowPreviewDialog(true);
   }
   function savePieceJointe(nom, file, binary) {
-    dossiers.savePieceJointe(nom, file, binary).then(reload);
+    dossiers.savePieceJointe(nom, file, binary).then(function() {
+      closeDropzone();
+      reload();
+    });
   }
   return (
     <Grid container spacing={1} className={classes.title}>
@@ -95,7 +99,7 @@ function PieceJointeField(props) {
           {pieceJointe.description}
         </Typography>
       </Grid>
-      <Grid item xs={12}>
+      <Grid container item xs={12} className={classes.buttons}>
         {showPreview && (
           <Grid item xs={12}>
             <div className={classes.buttonWrapper}>
