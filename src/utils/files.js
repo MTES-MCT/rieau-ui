@@ -1,14 +1,14 @@
 function formatFileSize(size) {
   const sizes = [
-    ' Bytes',
-    ' KB',
-    ' MB',
-    ' GB',
-    ' TB',
-    ' PB',
-    ' EB',
-    ' ZB',
-    ' YB'
+    ' Octets',
+    ' Ko',
+    ' Mo',
+    ' Go',
+    ' To',
+    ' Po',
+    ' Eo',
+    ' Zo',
+    ' Yo'
   ];
   for (var i = 1; i < sizes.length; i++) {
     if (size < Math.pow(1024, i))
