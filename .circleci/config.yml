@@ -16,7 +16,6 @@ jobs:
           # default if no checksum found
           - v1-dependencies-
       - run: npm ci
-      - run: npm run pdfjs:postinstall
       - save_cache:
           root: '~'
           paths:
