@@ -49,7 +49,7 @@ function UploadFile(props) {
         reader.onerror = () => window.console.log('file reading has failed');
         reader.readAsDataURL(file);
         reader.onload = () => {
-          handleFile(pieceJointe.nom, file, reader.result);
+          handleFile(pieceJointe.code, file, reader.result);
         };
         setShowDialog(false);
       });

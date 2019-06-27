@@ -1,7 +1,7 @@
 import AccountIcon from '@material-ui/icons/AccountCircle';
 import MonCompte from 'pages/protected/MonCompte';
 import SignOutIcon from '@material-ui/icons/LockOpen';
-import Deposer from 'pages/protected/Deposer';
+import PiecesJointes from 'pages/protected/PiecesJointes';
 import Localiser from 'pages/protected/Localiser';
 import Communes from 'pages/Communes';
 import MapIcon from '@material-ui/icons/Map';
@@ -13,11 +13,11 @@ import AideIcon from '@material-ui/icons/Help';
 
 const routes = [
   {
-    id: 'deposer',
-    path: '/deposer',
-    label: 'Pièces',
+    id: 'piecesjointes',
+    path: '/piecesjointes/:typeDemande(dp|pcmi)',
+    label: 'Pièces jointes',
     icon: SaveAltIcon,
-    component: Deposer,
+    component: PiecesJointes,
     sidebar: true
   },
   {

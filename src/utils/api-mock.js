@@ -52,12 +52,12 @@ function loadUserDossiers(userId) {
   });
 }
 
-function savePieceJointe(nom, file, binary) {
+function savePieceJointe(code, file, binary) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       return resolve(
         sessionStorage.setItem(
-          nom,
+          code,
           JSON.stringify({
             nom: file.name,
             type: file.type,
@@ -70,10 +70,10 @@ function savePieceJointe(nom, file, binary) {
   });
 }
 
-function loadPieceJointe(id) {
+function loadPieceJointe(code) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      return resolve(JSON.parse(sessionStorage.getItem(id)));
+      return resolve(JSON.parse(sessionStorage.getItem(code)));
     }, waitingTime);
   });
 }

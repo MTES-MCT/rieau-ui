@@ -46,10 +46,10 @@ const styles = theme => ({
   }
 });
 async function handleFilePreview(pieceJointe) {
-  return { file: await dossiers.loadPieceJointe(pieceJointe.nom) };
+  return { file: await dossiers.loadPieceJointe(pieceJointe.code) };
 }
 
-function PieceJointeField(props) {
+function PieceJointe(props) {
   const { classes, pieceJointe } = props;
   const [showDropzone, setShowDropzone] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
@@ -61,7 +61,7 @@ function PieceJointeField(props) {
     isSettled,
     isLoading,
     reload
-  } = useAsync({ promiseFn: handleFilePreview, nom: pieceJointe.nom });
+  } = useAsync({ promiseFn: handleFilePreview, code: pieceJointe.code });
   const { file } = data;
 
   useEffect(() => {
@@ -82,15 +82,15 @@ function PieceJointeField(props) {
   function handleShowPreviewDialog() {
     setShowPreviewDialog(true);
   }
-  function savePieceJointe(nom, file, binary) {
-    dossiers.savePieceJointe(nom, file, binary).then(function() {
+  function savePieceJointe(code, file, binary) {
+    dossiers.savePieceJointe(code, file, binary).then(function() {
       closeDropzone();
       reload();
     });
   }
   function title(text, required) {
     var title = text;
-    if (required) text += '*';
+    if (required) text += '(* obligatoire)';
     return title;
   }
   return (
@@ -147,9 +147,9 @@ function PieceJointeField(props) {
     </Card>
   );
 }
-PieceJointeField.propTypes = {
+PieceJointe.propTypes = {
   classes: PropTypes.object.isRequired,
   pieceJointe: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(PieceJointeField);
+export default withStyles(styles)(PieceJointe);

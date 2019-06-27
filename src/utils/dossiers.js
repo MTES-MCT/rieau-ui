@@ -12,15 +12,15 @@ function loadUserDossiers() {
   });
 }
 
-function savePieceJointe(nom, file, binary) {
+function savePieceJointe(code, file, binary) {
   return api.then(handleDossiers).then(dossiers => {
-    return dossiers.savePieceJointe(nom, file, binary);
+    return dossiers.savePieceJointe(code, file, binary);
   });
 }
 
-function loadPieceJointe(nom) {
+function loadPieceJointe(code) {
   return api.then(handleDossiers).then(dossiers => {
-    return dossiers.loadPieceJointe(nom);
+    return dossiers.loadPieceJointe(code);
   });
 }
 
