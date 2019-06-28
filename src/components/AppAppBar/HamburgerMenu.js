@@ -18,6 +18,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { useUser } from 'context/user-context';
 import { Link as RouterLink } from 'react-router-dom';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
+import { isApiMock } from 'utils/api';
 
 const drawerWidth = 240;
 
@@ -124,7 +125,7 @@ function SideBarMenu(props) {
                 />
               );
             })}
-          {process.env.REACT_APP_API_MOCK ? (
+          {isApiMock ? (
             <React.Fragment>
               <MenuItem
                 button

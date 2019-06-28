@@ -11,6 +11,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { Link as RouterLink } from 'react-router-dom';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import { isApiMock } from 'utils/api';
 
 const styles = theme => ({
   root: {}
@@ -73,28 +74,44 @@ function DepotsMenu(props) {
                 </MenuItemLink>
               );
             })}
-          <MenuItem
-            data-cy={'menu-item-link-piecesjointes-pcmi'}
-            button
-            component={RouterLink}
-            to={'/piecesjointes/pcmi'}
-          >
-            <ListItemIcon>
-              <SaveAltIcon />
-            </ListItemIcon>
-            {`Pièces jointes PCMI`}
-          </MenuItem>
-          <MenuItem
-            data-cy={'menu-item-link-piecesjointes-dp'}
-            button
-            component={RouterLink}
-            to={'/piecesjointes/dp'}
-          >
-            <ListItemIcon>
-              <SaveAltIcon />
-            </ListItemIcon>
-            {`Pièces jointes DP`}
-          </MenuItem>
+          {isApiMock ? (
+            <React.Fragment>
+              <MenuItem
+                data-cy={'menu-item-link-piecesjointes-pcmi'}
+                button
+                component={RouterLink}
+                to={'/piecesjointes/pcmi'}
+              >
+                <ListItemIcon>
+                  <SaveAltIcon />
+                </ListItemIcon>
+                {`Pièces jointes PCMI`}
+              </MenuItem>
+              <MenuItem
+                data-cy={'menu-item-link-piecesjointes-dp'}
+                button
+                component={RouterLink}
+                to={'/piecesjointes/dp'}
+              >
+                <ListItemIcon>
+                  <SaveAltIcon />
+                </ListItemIcon>
+                {`Pièces jointes DP`}
+              </MenuItem>
+            </React.Fragment>
+          ) : (
+            <MenuItem
+              data-cy={'menu-item-link-piecesjointes'}
+              button
+              component={RouterLink}
+              to={'/piecesjointes'}
+            >
+              <ListItemIcon>
+                <SaveAltIcon />
+              </ListItemIcon>
+              {`Pièces jointes`}
+            </MenuItem>
+          )}
         </MenuList>
       </Menu>
     </React.Fragment>

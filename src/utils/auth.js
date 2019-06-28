@@ -1,4 +1,4 @@
-import api from 'utils/api';
+import api, { isApiMock } from 'utils/api';
 
 function handleAuth() {
   return api.then(api => {
@@ -18,7 +18,19 @@ function isAuthenticated() {
   });
 }
 
-const login = process.env.REACT_APP_API_MOCK
+function isInstructeur() {
+  return api.then(handleAuth).then(auth => {
+    return auth.isInstructeur();
+  });
+}
+
+function isDepositaire() {
+  return api.then(handleAuth).then(auth => {
+    return auth.isDepositaire();
+  });
+}
+
+const login = isApiMock
   ? function(id) {
       return api.then(handleAuth).then(auth => {
         return auth.login(id);
@@ -40,7 +52,9 @@ const auth = {
   login,
   logout,
   isAuthenticated,
-  getUser
+  getUser,
+  isDepositaire,
+  isInstructeur
 };
 
 export default auth;

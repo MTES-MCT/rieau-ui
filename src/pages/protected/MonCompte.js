@@ -28,7 +28,7 @@ const styles = theme => ({
 
 function MonCompte(props) {
   const { classes } = props;
-  const { user } = useUser();
+  const { user, isDepositaire, isInstructeur } = useUser();
   return (
     <React.Fragment>
       <AppAppBar />
@@ -52,7 +52,11 @@ function MonCompte(props) {
                   {'Profil'}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  {user.profil}
+                  {isDepositaire
+                    ? 'depositaire'
+                    : isInstructeur
+                    ? 'instructeur'
+                    : ''}
                 </Typography>
                 <Typography variant="h6" component="h2">
                   {'Email'}

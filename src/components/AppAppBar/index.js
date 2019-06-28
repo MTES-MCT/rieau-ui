@@ -16,6 +16,7 @@ import { useAuth } from 'context/auth-context';
 import Typography from 'components/Typography';
 import Grid from '@material-ui/core/Grid';
 import DepotsMenu from './DepotsMenu';
+import { isApiMock } from 'utils/api';
 
 const styles = theme => ({
   placeholder: toolbarStyles(theme).root,
@@ -109,7 +110,7 @@ function AppAppBar(props) {
                           </Button>
                         );
                       })}
-                    {process.env.REACT_APP_API_MOCK ? (
+                    {isApiMock ? (
                       <React.Fragment>
                         <Button
                           color="primary"

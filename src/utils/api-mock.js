@@ -34,6 +34,22 @@ function isAuthenticated() {
   });
 }
 
+function isDepositaire() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      return resolve(principal.id === 'jean.martin');
+    }, waitingTime);
+  });
+}
+
+function isInstructeur() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      return resolve(principal.id === 'jacques.dupont');
+    }, waitingTime);
+  });
+}
+
 function getUser() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -84,7 +100,9 @@ const auth = {
   login,
   isAuthenticated,
   logout,
-  getUser
+  getUser,
+  isDepositaire,
+  isInstructeur
 };
 const demandes = {
   mesDemandes,

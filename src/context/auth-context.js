@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import auth from 'utils/auth';
 import { useAsync } from 'react-async';
-import { bootstrapAppData } from 'utils/bootstrap';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import { isApiMock } from 'utils/api';
 
 const AuthContext = React.createContext();
+
+async function handleApiAuth() {
+  const isAuthenticated = await auth.isAuthenticated();
+  if (!isAuthenticated) {
+    return { isAuthenticated };
+  }
+  return {
+    user: await auth.getUser(),
+    isAuthenticated,
+    isDepositaire: await auth.isDepositaire(),
+    isInstructeur: await auth.isInstructeur()
+  };
+}
 
 function AuthProvider(props) {
   const [firstAttemptFinished, setFirstAttemptFinished] = React.useState(false);
@@ -12,6 +25,8 @@ function AuthProvider(props) {
     data = {
       user: null,
       isAuthenticated: false,
+      isDepositaire: false,
+      isInstructeur: false,
       demandes: []
     },
     error,
@@ -20,10 +35,10 @@ function AuthProvider(props) {
     isSettled,
     reload
   } = useAsync({
-    promiseFn: bootstrapAppData
+    promiseFn: handleApiAuth
   });
 
-  React.useLayoutEffect(() => {
+  useEffect(() => {
     if (isSettled) {
       setFirstAttemptFinished(true);
     }
@@ -43,7 +58,7 @@ function AuthProvider(props) {
     }
   }
 
-  const login = process.env.REACT_APP_API_MOCK
+  const login = isApiMock
     ? function(id) {
         return auth.login(id).then(reload);
       }
@@ -51,6 +66,9 @@ function AuthProvider(props) {
         return auth.login().then(reload);
       };
   const logout = () => auth.logout().then(reload);
+  const { isAuthenticated, isDepositaire } = data;
+  window.console.log('context isAuthenticated=' + isAuthenticated);
+  window.console.log('context isDepositaire=' + isDepositaire);
 
   return <AuthContext.Provider value={{ data, login, logout }} {...props} />;
 }
