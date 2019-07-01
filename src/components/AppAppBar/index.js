@@ -12,11 +12,10 @@ import HamburgerMenu from './HamburgerMenu';
 import AccountMenu from './AccountMenu';
 import routesUnauthenticated from 'routes/unauthenticated';
 import { useUser } from 'context/user-context';
-import { useAuth } from 'context/auth-context';
 import Typography from 'components/Typography';
 import Grid from '@material-ui/core/Grid';
 import DepotsMenu from './DepotsMenu';
-import { isApiMock } from 'utils/api';
+import ConnexionButton from 'components/ConnexionButton';
 
 const styles = theme => ({
   placeholder: toolbarStyles(theme).root,
@@ -48,7 +47,6 @@ const styles = theme => ({
 function AppAppBar(props) {
   const { classes } = props;
   const { isAuthenticated } = useUser();
-  const { login } = useAuth();
   return (
     <div id="app-bar">
       <AppBar position="fixed" elevation={0} color="secondary">
@@ -110,42 +108,7 @@ function AppAppBar(props) {
                           </Button>
                         );
                       })}
-                    {isApiMock ? (
-                      <React.Fragment>
-                        <Button
-                          color="primary"
-                          size="small"
-                          onClick={function(event) {
-                            return login('jean.martin');
-                          }}
-                          variant="contained"
-                          data-cy={'appbar-connexion-depositaire-btn'}
-                        >
-                          {`Connexion Dépositaire`}
-                        </Button>
-                        <Button
-                          color="primary"
-                          size="small"
-                          onClick={function(event) {
-                            return login('jacques.dupont');
-                          }}
-                          variant="contained"
-                          data-cy={'appbar-connexion-instructeur-btn'}
-                        >
-                          {`Connexion Instructeur`}
-                        </Button>
-                      </React.Fragment>
-                    ) : (
-                      <Button
-                        color="primary"
-                        size="small"
-                        onClick={login}
-                        variant="contained"
-                        data-cy={'appbar-connexion-btn'}
-                      >
-                        {`Connexion`}
-                      </Button>
-                    )}
+                    <ConnexionButton />
                   </React.Fragment>
                 )}
               </Hidden>

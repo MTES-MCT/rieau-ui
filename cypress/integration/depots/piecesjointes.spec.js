@@ -6,7 +6,8 @@ context('Pieces jointes deposees', () => {
   })
 
   it('cy.click() - go to depots pieces jointes page', () => {
-    cy.get('[data-cy=appbar-connexion-depositaire-btn]').should('be.visible').click()
+    cy.get('[data-cy=appbar-connexion-btn]').should('be.visible').click()
+    cy.get('[data-cy=menuitem-connexion-depositaire]').should('be.visible').click()
     cy.contains("Mon Compte").should('be.visible')
     cy.get('[data-cy=appbar-depots-btn]').should('be.visible').click()
     cy.get('[data-cy=menu-item-link-piecesjointes-pcmi]').should('be.visible').click()

@@ -8,7 +8,7 @@ context('Viewport', () => {
 
   it('cy.viewport() - set the viewport size and dimension', () => {
 
-    cy.get('[data-cy=appbar-connexion-depositaire-btn]').should('be.visible')
+    cy.get('[data-cy=appbar-connexion-btn]').should('be.visible')
     cy.viewport(320, 480)
 
     // the navbar should have collapse since our screen is smaller
