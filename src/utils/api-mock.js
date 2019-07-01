@@ -62,10 +62,31 @@ function getUser() {
   });
 }
 
-function mesDemandes() {
+let depotsFixtures = [
+  {
+    id: '0',
+    type: 'dp',
+    date: '01/01/2019',
+    statut: 'instruction'
+  }
+];
+
+function mesDepots() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      return resolve([]);
+      return resolve({
+        depots: depotsFixtures,
+        page: depotsFixtures.length - 1,
+        totalCount: depotsFixtures.length
+      });
+    }, waitingTime);
+  });
+}
+
+function monDepot(id) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      return resolve(depotsFixtures.find(depot => depot.id === id));
     }, waitingTime);
   });
 }
@@ -104,15 +125,16 @@ const auth = {
   isDepositaire,
   isInstructeur
 };
-const demandes = {
-  mesDemandes,
+const depots = {
+  mesDepots,
+  monDepot,
   savePieceJointe,
   loadPieceJointe
 };
 
 const api = {
   auth,
-  demandes
+  depots
 };
 
 export default api;

@@ -15,7 +15,7 @@ async function handleApiAuth() {
       isAuthenticated,
       isDepositaire: false,
       isInstructeur: false,
-      demandes: []
+      depots: []
     };
   return {
     user: await auth.getUser(),

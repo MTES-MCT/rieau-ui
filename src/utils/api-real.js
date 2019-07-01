@@ -93,8 +93,8 @@ function getUser() {
   });
 }
 
-function mesDemandes() {
-  return apiHttpClient.get(`/demandes`);
+function mesDepots() {
+  return apiHttpClient.get(`/depots`);
 }
 
 function savePieceJointe(code, file, binary) {
@@ -109,14 +109,14 @@ const auth = {
   isDepositaire,
   isInstructeur
 };
-const demandes = {
-  mesDemandes,
+const depots = {
+  mesDepots,
   savePieceJointe
 };
 
 const api = {
   auth,
-  demandes
+  depots
 };
 
 export default api;

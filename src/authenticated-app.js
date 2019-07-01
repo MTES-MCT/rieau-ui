@@ -21,10 +21,11 @@ function Routes() {
                 key={route.id}
                 path={route.path}
                 component={route.component}
+                exact={route.exact ? route.exact : false}
               />
             );
           })}
-        <Redirect to="/moncompte">
+        <Redirect to="/depots">
           {routesUnauthenticated.map((route, key) => {
             return (
               <Route key={key} path={route.path} component={route.component} />

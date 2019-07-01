@@ -10,8 +10,27 @@ import CityIcon from '@material-ui/icons/LocationCity';
 import Cgu from 'pages/Cgu';
 import Aide from 'pages/Aide';
 import AideIcon from '@material-ui/icons/Help';
+import Depots from 'pages/protected/Depots';
+import Depot from 'pages/protected/Depot';
 
 const routes = [
+  {
+    id: 'depots',
+    path: '/depots',
+    label: 'Mes dépôts',
+    icon: SaveAltIcon,
+    component: Depots,
+    sidebar: true,
+    exact: true
+  },
+  {
+    id: 'depot',
+    path: '/depots/:id',
+    label: 'Mon dépôt',
+    icon: SaveAltIcon,
+    component: Depot,
+    sidebar: false
+  },
   {
     id: 'piecesjointes',
     path: '/piecesjointes/:typeDemande(dp|pcmi)',
