@@ -30,7 +30,6 @@ function login() {
     return keycloak
       .init({ onLoad: 'login-required' })
       .success(authenticated => {
-        window.console.log('login isAuthenticated=' + authenticated);
         return resolve(authenticated);
       })
       .error(error => {
@@ -57,7 +56,6 @@ function isAuthenticated() {
     return keycloak
       .init({ onLoad: 'check-sso' })
       .success(authenticated => {
-        window.console.log('api isAuthenticated=' + authenticated);
         return resolve(authenticated);
       })
       .error(error => {
@@ -68,27 +66,13 @@ function isAuthenticated() {
 
 function isDepositaire() {
   return new Promise((resolve, reject) => {
-    return keycloak
-      .hasRealmRole('depositaire')
-      .success(hasRole => {
-        return resolve(hasRole);
-      })
-      .error(error => {
-        return reject({ message: JSON.stringify(error) });
-      });
+    return resolve(keycloak.hasRealmRole('depositaire'));
   });
 }
 
 function isInstructeur() {
   return new Promise((resolve, reject) => {
-    return keycloak
-      .hasRealmRole('instructeur')
-      .success(hasRole => {
-        return resolve(hasRole);
-      })
-      .error(error => {
-        return reject({ message: JSON.stringify(error) });
-      });
+    return resolve(keycloak.hasRealmRole('instructeur'));
   });
 }
 
@@ -97,7 +81,6 @@ function getUser() {
     return keycloak
       .loadUserInfo()
       .success(userInfo => {
-        window.console.log('api user=' + JSON.stringify(userInfo));
         return resolve({
           firstName: userInfo.given_name,
           lastName: userInfo.family_name,
