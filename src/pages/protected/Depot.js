@@ -47,7 +47,7 @@ function Depot(props) {
       <React.Fragment>
         <AppAppBar />
         <Card className={classes.card}>
-          <CardHeader title={`Dépot n°${depot.id}`} />
+          <CardHeader title={`Dépôt n°${depot.id}`} />
           <CardContent className={classes.content}>
             En: {depot.statut} - Déposé le: {depot.date}
           </CardContent>
