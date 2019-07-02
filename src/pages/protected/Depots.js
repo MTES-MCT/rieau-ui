@@ -35,7 +35,7 @@ function Depots(props) {
             { title: 'Id', field: 'id', type: 'string' },
             { title: 'Type', field: 'type', type: 'string' },
             { title: 'Date', field: 'date', type: 'string' },
-            { title: 'Statut', field: 'statut', type: 'string' }
+            { title: 'État', field: 'etat', type: 'string' }
           ]}
           data={{ data: depots, page, totalCount }}
           actions={[

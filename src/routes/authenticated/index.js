@@ -29,15 +29,16 @@ const routes = [
     label: 'Mon dépôt',
     icon: SaveAltIcon,
     component: Depot,
-    sidebar: false
+    sidebar: false,
+    exact: true
   },
   {
     id: 'piecesjointes',
-    path: '/piecesjointes/:typeDemande(dp|pcmi)',
+    path: '/depots/:depotId/piecesjointes',
     label: 'Pièces jointes',
     icon: SaveAltIcon,
     component: PiecesJointes,
-    sidebar: true
+    sidebar: false
   },
   {
     id: 'localiser',

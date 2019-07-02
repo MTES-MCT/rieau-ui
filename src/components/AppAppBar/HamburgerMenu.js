@@ -16,8 +16,6 @@ import { useAuth } from 'context/auth-context';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { useUser } from 'context/user-context';
-import { Link as RouterLink } from 'react-router-dom';
-import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import { isApiMock } from 'utils/api';
 
 const drawerWidth = 240;
@@ -64,10 +62,7 @@ function SideBarMenu(props) {
       {isAuthenticated ? (
         <MenuList>
           {routesAuthenticated
-            .filter(
-              route =>
-                route.sidebar && !route.auth && route.id !== 'piecesjointes'
-            )
+            .filter(route => route.sidebar && !route.auth)
             .map(route => {
               return (
                 <MenuItemLink
@@ -78,28 +73,6 @@ function SideBarMenu(props) {
                 />
               );
             })}
-          <MenuItem
-            data-cy={'menu-item-link-piecesjointes-pcmi'}
-            button
-            component={RouterLink}
-            to={'/piecesjointes/pcmi'}
-          >
-            <ListItemIcon>
-              <SaveAltIcon />
-            </ListItemIcon>
-            {`Pièces jointes PCMI`}
-          </MenuItem>
-          <MenuItem
-            data-cy={'menu-item-link-piecesjointes-dp'}
-            button
-            component={RouterLink}
-            to={'/piecesjointes/dp'}
-          >
-            <ListItemIcon>
-              <SaveAltIcon />
-            </ListItemIcon>
-            {`Pièces jointes DP`}
-          </MenuItem>
           <MenuItemLink
             route={moncompte}
             onClick={event => onClickItem(event, moncompte.id)}

@@ -14,6 +14,11 @@ import depots from 'utils/depots';
 import Error from 'pages/Error';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import NotFound from 'pages/NotFound';
+import CardActions from '@material-ui/core/CardActions';
+import Button from 'components/Button';
+import { Link as RouterLink } from 'react-router-dom';
+import Typography from 'components/Typography';
+import { type } from 'utils/piecesjointes';
 
 const styles = theme => ({
   card: {
@@ -46,11 +51,25 @@ function Depot(props) {
     return (
       <React.Fragment>
         <AppAppBar />
+        <Typography variant="h3" marked="center" align="center">
+          {`Dépôt n°${depot.id}`}
+        </Typography>
         <Card className={classes.card}>
-          <CardHeader title={`Dépôt n°${depot.id}`} />
+          <CardHeader title={type(depot.type)} />
           <CardContent className={classes.content}>
-            En: {depot.statut} - Déposé le: {depot.date}
+            État: {depot.etat} - Déposé le: {depot.date}
           </CardContent>
+          <CardActions>
+            <Button
+              variant="contained"
+              color="secondary"
+              component={RouterLink}
+              to={`/depots/${depot.id}/piecesjointes`}
+              data-cy="piecesjointes-btn"
+            >
+              {`Pièces jointes`}
+            </Button>
+          </CardActions>
         </Card>
         <AppFooter />
       </React.Fragment>

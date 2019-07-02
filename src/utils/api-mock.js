@@ -67,7 +67,13 @@ let depotsFixtures = [
     id: '0',
     type: 'dp',
     date: '01/01/2019',
-    statut: 'instruction'
+    etat: 'instruction'
+  },
+  {
+    id: '1',
+    type: 'pcmi',
+    date: '01/07/2019',
+    etat: 'incomplet'
   }
 ];
 
@@ -76,8 +82,8 @@ function mesDepots() {
     setTimeout(() => {
       return resolve({
         depots: depotsFixtures,
-        page: depotsFixtures.length - 1,
-        totalCount: depotsFixtures.length
+        page: 0,
+        totalCount: 1
       });
     }, waitingTime);
   });

@@ -4,13 +4,16 @@ import PropTypes from 'prop-types';
 import AppAppBar from 'components/AppAppBar';
 import AppFooter from 'components/AppFooter';
 import withRoot from 'theme/withRoot';
-import { withStyles } from '@material-ui/core';
+import { withStyles, LinearProgress } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import compose from 'utils/compose';
 import Typography from 'components/Typography';
-import { listePiecesJointesDP } from './listePiecesJointesDP';
 import PieceJointe from './PieceJointe';
-import { listePiecesJointesPCMI } from './listePiecesJointesPCMI';
+import depots from 'utils/depots';
+import { useAsync } from 'react-async';
+import Error from 'pages/Error';
+import NotFound from 'pages/NotFound';
+import { type, liste } from 'utils/piecesjointes';
 
 const styles = theme => ({
   grid: {
@@ -20,50 +23,42 @@ const styles = theme => ({
   }
 });
 
-function listePiecesJointes(typeDemande) {
-  switch (typeDemande) {
-    case 'dp':
-      return listePiecesJointesDP;
-    case 'pcmi':
-      return listePiecesJointesPCMI;
-    default:
-      return [];
-  }
-}
-
-function type(typeDemande) {
-  switch (typeDemande) {
-    case 'dp':
-      return 'Déclaration préalable de travaux';
-    case 'pcmi':
-      return 'Demande de permis de construire pour une maison individuelle';
-    default:
-      return '';
-  }
+async function handleDepot({ id }) {
+  return { depot: await depots.monDepot(id) };
 }
 
 function PiecesJointes(props) {
   const { classes, match } = props;
-  const typeDemande = match.params.typeDemande;
-  return (
-    <React.Fragment>
-      <AppAppBar />
-      <Typography variant="h3" marked="center" align="center">
-        {`Pièces jointes`}
-      </Typography>
-      <Typography variant="subtitle1" marked="center" align="center">
-        {`${type(typeDemande)} n° 00001`}
-      </Typography>
-      <Grid container className={classes.grid}>
-        <Grid item xs={12}>
-          {listePiecesJointes(typeDemande).map(pieceJointe => (
-            <PieceJointe key={pieceJointe.code} pieceJointe={pieceJointe} />
-          ))}
+  const depotId = match.params.depotId;
+  const { data = { depot: null }, error, isLoading, isRejected } = useAsync({
+    promiseFn: handleDepot,
+    id: depotId
+  });
+  if (isRejected) return <Error error={error.message} />;
+  if (isLoading) return <LinearProgress />;
+  if (data) {
+    const { depot } = data;
+    if (!depot) return <NotFound />;
+    return (
+      <React.Fragment>
+        <AppAppBar />
+        <Typography variant="h3" marked="center" align="center">
+          {`Pièces jointes`}
+        </Typography>
+        <Typography variant="subtitle1" marked="center" align="center">
+          {`${type(depot.type)} n°${depot.id}`}
+        </Typography>
+        <Grid container className={classes.grid}>
+          <Grid item xs={12}>
+            {liste(depot.type).map(pieceJointe => (
+              <PieceJointe key={pieceJointe.code} pieceJointe={pieceJointe} />
+            ))}
+          </Grid>
         </Grid>
-      </Grid>
-      <AppFooter />
-    </React.Fragment>
-  );
+        <AppFooter />
+      </React.Fragment>
+    );
+  }
 }
 PiecesJointes.propTypes = {
   classes: PropTypes.object.isRequired,
