@@ -33,7 +33,7 @@ function renderWithRouter(
   };
 }
 
-const nomAppli = 'RIEAU';
+const nomAppli = "RIE'AU";
 
 it('renders nom appli message', async () => {
   const { queryAllByText } = renderWithRouter(<App />);

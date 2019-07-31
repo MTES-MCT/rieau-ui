@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { isApiMock } from 'utils/api';
 import Button from './Button';
 import { useAuth } from 'context/auth-context';
@@ -9,6 +10,9 @@ import LockIcon from '@material-ui/icons/Lock';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 function ConnexionButton(props) {
+  const { color, appbar, size } = props;
+  const selectedSize = size || 'small';
+  const appBarPrefix = appbar ? 'appbar-' : '';
   const { login } = useAuth();
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState();
@@ -26,29 +30,31 @@ function ConnexionButton(props) {
     <React.Fragment>
       {!isApiMock ? (
         <Button
-          aria-controls="connexion-menu-appbar"
-          color="primary"
-          size="small"
+          id={appBarPrefix + 'connexion-btn'}
+          size={selectedSize}
           onClick={login}
           variant="contained"
-          data-cy={'appbar-connexion-btn'}
+          data-cy={appBarPrefix + 'connexion-btn'}
+          color={color}
         >
           {`Connexion`}
         </Button>
       ) : (
         <React.Fragment>
           <Button
-            color="primary"
-            size="small"
+            id={appBarPrefix + 'connexion-btn'}
+            aria-controls={appBarPrefix + 'connexion-btn-menu'}
+            color={color}
+            size={selectedSize}
             aria-haspopup="true"
             onClick={handleMenu}
             variant="contained"
-            data-cy={'appbar-connexion-btn'}
+            data-cy={appBarPrefix + 'connexion-btn'}
           >
             {`Connexion`}
           </Button>
           <Menu
-            id="connexion-menu-appbar"
+            id={appBarPrefix + 'connexion-btn-menu'}
             anchorEl={anchorEl}
             anchorOrigin={{
               vertical: 'top',
@@ -68,7 +74,7 @@ function ConnexionButton(props) {
                   return login('jean.martin');
                 }}
                 button
-                data-cy={'menuitem-connexion-depositaire'}
+                data-cy={appBarPrefix + 'menuitem-connexion-depositaire'}
               >
                 <ListItemIcon>
                   <LockIcon />
@@ -80,7 +86,7 @@ function ConnexionButton(props) {
                   return login('jacques.dupont');
                 }}
                 button
-                data-cy={'menuitem-connexion-instructeur'}
+                data-cy={appBarPrefix + 'menuitem-connexion-instructeur'}
               >
                 <ListItemIcon>
                   <LockIcon />
@@ -95,4 +101,13 @@ function ConnexionButton(props) {
   );
 }
 
+ConnexionButton.propTypes = {
+  color: PropTypes.string.isRequired,
+  size: PropTypes.string.isRequired,
+  appbar: PropTypes.bool.isRequired
+};
+ConnexionButton.defaultProps = {
+  color: 'primary',
+  appbar: true
+};
 export default ConnexionButton;

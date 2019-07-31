@@ -127,7 +127,7 @@ class Hero extends React.Component {
               color="secondary"
               aria-label="arrowDown"
               component={RouterLink}
-              to={{ pathname: '/', hash: '#localiser-btn' }}
+              to={{ pathname: '/', hash: '#connexion-btn' }}
             >
               <ExpandMoreIcon className={classes.arrowDown} />
             </IconButtonHashLink>

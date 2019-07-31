@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-import Button from 'components/Button';
 import Typography from 'components/Typography';
 import EditIcon from '@material-ui/icons/Edit';
 import LockIcon from '@material-ui/icons/Lock';
@@ -15,7 +14,7 @@ import Link from '@material-ui/core/Link';
 import Fab from '@material-ui/core/Fab';
 import Grow from '@material-ui/core/Grow';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import { useAuth } from 'context/auth-context';
+import ConnexionButton from 'components/ConnexionButton';
 
 const styles = theme => ({
   root: {
@@ -68,7 +67,6 @@ const IconButtonHashLink = props => genericHashLink(props, IconButton);
 
 function CommentFaire(props) {
   const { classes, showRemonter } = props;
-  const { login } = useAuth();
 
   return (
     <section className={classes.root}>
@@ -118,16 +116,7 @@ function CommentFaire(props) {
             </Grid>
           </Grid>
         </div>
-        <Button
-          id="localiser-btn"
-          color="secondary"
-          size="large"
-          variant="contained"
-          className={classes.button}
-          onClick={login}
-        >
-          Connexion
-        </Button>
+        <ConnexionButton appbar={false} color="secondary" size="large" />
         <Grow in={showRemonter}>
           <Fab aria-label="remonter" className={classes.remonter}>
             <IconButtonHashLink
