@@ -99,10 +99,12 @@ jobs:
             git config user.name "CircleCi"
             npm run deploy            
   build-docker:
-    executor: jdk8    
+    <<: *defaults
     steps:
+      - checkout
       - attach_workspace:
           at: '~/'
+      - run: cp .env.sample .env
       - setup_remote_docker
       - run: 
           environment:
