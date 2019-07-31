@@ -80,7 +80,7 @@ jobs:
           at: '~'
       - run: 
           command: npm run lint
-  deploy-github:
+  deploy-demo:
     <<: *defaults
     steps:
       - checkout
@@ -98,7 +98,7 @@ jobs:
             git config user.email "<circleci>"
             git config user.name "CircleCi"
             npm run deploy            
-  build-docker:
+  deploy-docker:
     <<: *defaults
     steps:
       - checkout
@@ -108,9 +108,9 @@ jobs:
       - setup_remote_docker
       - run: 
           environment:
-            - REACT_APP_API_MOCK: true
-            - REACT_APP_BASENAME: /rieau-ui
-            - REACT_APP_DOMAIN: https://mtes-mct.github.io
+            - REACT_APP_API_MOCK: false
+            - REACT_APP_BASENAME: /
+            - REACT_APP_DOMAIN: http://localhost:3000
             - PUBLIC_URL: $REACT_APP_DOMAIN$REACT_APP_BASENAME
           command: |
             if [[ -z "$DOCKERHUB_USER" || -z "$DOCKERHUB_PASSWORD" ]]; then
@@ -157,14 +157,14 @@ workflows:
       - e2e-tests:
           requires:
             - unit-tests
-      - deploy-github:
+      - deploy-demo:
           requires:
             - e2e-tests
           filters:
             branches:
               only:
                 - master
-      - build-docker:
+      - deploy-docker:
           requires:
             - e2e-tests
           filters:
