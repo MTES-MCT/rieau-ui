@@ -17,10 +17,9 @@ jobs:
           - v1-dependencies-
       - run: npm ci
       - save_cache:
-          root: '~'
           paths:
-            - .cache
-            - .npm
+            - '~/.cache'
+            - '~/.npm'
           key: v1-dependencies-{{ checksum "package.json" }}
       - persist_to_workspace:
           root: '~'
@@ -98,7 +97,32 @@ jobs:
             git config credential.helper 'cache --timeout=120'
             git config user.email "<circleci>"
             git config user.name "CircleCi"
-            npm run deploy
+            npm run deploy            
+  build-docker:
+    executor: jdk8    
+    steps:
+      - attach_workspace:
+          at: '~/'
+      - setup_remote_docker
+      - run: 
+          environment:
+            - REACT_APP_API_MOCK: true
+            - REACT_APP_BASENAME: /rieau-ui
+            - REACT_APP_DOMAIN: https://mtes-mct.github.io
+            - PUBLIC_URL: $REACT_APP_DOMAIN$REACT_APP_BASENAME
+          command: |
+            if [[ -z "$DOCKERHUB_USER" || -z "$DOCKERHUB_PASSWORD" ]]; then
+              echo "Missing DOCKERHUB_USER or DOCKERHUB_PASSWORD environment variables!"
+              exit 1
+            fi
+            docker build -t tristanrobert/rieau-ui:$CIRCLE_SHA1 -f Dockerfile .
+            echo "$DOCKERHUB_PASSWORD" | docker login -u $DOCKERHUB_USER --password-stdin
+            docker push tristanrobert/rieau-ui:$CIRCLE_SHA1
+            if [[ "$CIRCLE_BRANCH" = "master" ]]; then
+              docker tag tristanrobert/rieau-ui:$CIRCLE_SHA1 tristanrobert/rieau-ui:latest
+              docker push tristanrobert/rieau-ui:latest
+            fi
+
 
 workflows:
   version: 2
@@ -132,6 +156,13 @@ workflows:
           requires:
             - unit-tests
       - deploy-github:
+          requires:
+            - e2e-tests
+          filters:
+            branches:
+              only:
+                - master
+      - build-docker:
           requires:
             - e2e-tests
           filters:
