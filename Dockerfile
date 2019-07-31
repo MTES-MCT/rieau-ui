@@ -11,6 +11,11 @@ RUN npm install --production
 COPY .env.sample /app/.env
 ARG REACT_APP_BASENAME=/
 ARG REACT_APP_DOMAIN=http://localhost:3000
+ARG REACT_APP_API_MOCK=false
+ARG REACT_APP_API_URL=http://localhost:5000
+ARG REACT_APP_SSO_APP_URL=http://localhost:8080/auth
+ARG REACT_APP_SSO_APP_REALM=rieau
+ARG REACT_APP_SSO_APP_CLIENT_ID=rieau-ui
 RUN npm run build
 
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
