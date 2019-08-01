@@ -1,6 +1,5 @@
-const isApiMock = [true, 'true', 1, '1'].includes(
-  process.env.REACT_APP_API_MOCK
-);
+import env from '@beam-australia/react-env';
+const isApiMock = [true, 'true', 1, '1'].includes(env('API_MOCK'));
 
 function api() {
   const importApi = isApiMock

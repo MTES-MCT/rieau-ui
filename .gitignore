@@ -14,6 +14,7 @@
 /build
 
 # misc
+public/env.js
 .env
 
 npm-debug.log*

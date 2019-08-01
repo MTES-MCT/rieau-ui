@@ -8,10 +8,11 @@ import {
 import NotFound from 'pages/NotFound';
 import routesUnauthenticated from 'routes/unauthenticated';
 import routesAuthenticated from 'routes/authenticated';
+import env from '@beam-australia/react-env';
 
 function Routes() {
   return (
-    <Router basename={process.env.REACT_APP_BASENAME}>
+    <Router basename={env('BASENAME')}>
       <Switch>
         {routesUnauthenticated.map((route, key) => {
           return (
