@@ -20,8 +20,19 @@ RUN npm run build
 
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
 FROM nginx:1.16-alpine
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+COPY docker/entrypoint.sh /usr/local/bin/start-app
+ARG JO_VERSION=1.2
+RUN apk add --no-cache alpine-sdk && \
+    cd /tmp && curl -s -LO https://github.com/jpmens/jo/releases/download/${JO_VERSION}/jo-${JO_VERSION}.tar.gz && \
+    tar xvzf jo-${JO_VERSION}.tar.gz && \
+    cd jo-${JO_VERSION} && \
+    ./configure && \
+    make check && \
+    make install
+RUN chmod +x /usr/local/bin/jo && \
+    chmod +x /usr/local/bin/start-app
 ARG REACT_APP_BASENAME=/
 COPY --from=build-stage /app/build/ /usr/share/nginx/html${REACT_APP_BASENAME}
-COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 3000
-CMD ["nginx","-g","daemon off;"]
+ENTRYPOINT [ "sh", "/usr/local/bin/start-app" ]
