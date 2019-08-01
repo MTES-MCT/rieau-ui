@@ -1,5 +1,4 @@
 import React from 'react';
-import env from '@beam-australia/react-env';
 import {
   BrowserRouter as Router,
   Route,
@@ -12,7 +11,7 @@ import NotFound from 'pages/NotFound';
 
 function Routes() {
   return (
-    <Router basename={env('BASENAME')}>
+    <Router basename={process.env.REACT_APP_BASENAME}>
       <Switch>
         {routesAuthenticated
           .filter(route => route.id !== 'deconnexion')

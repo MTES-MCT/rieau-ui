@@ -16,7 +16,6 @@ import { formatFileSize } from 'utils/files';
 import Typography from './Typography';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import env from '@beam-australia/react-env';
 
 const styles = theme => ({
   dropzone: {
@@ -37,7 +36,7 @@ const styles = theme => ({
   }
 });
 
-const maxSize = parseInt(env('MAX_SIZE_UPLOAD_FILE'));
+const maxSize = parseInt(process.env.REACT_APP_MAX_SIZE_UPLOAD_FILE);
 
 function UploadFile(props) {
   const { handleFile, onClose, fullScreen, classes, pieceJointe } = props;
