@@ -8,10 +8,11 @@ import {
 import NotFound from 'pages/NotFound';
 import routesUnauthenticated from 'routes/unauthenticated';
 import routesAuthenticated from 'routes/authenticated';
+import { env } from 'utils/env-helper';
 
 function Routes() {
   return (
-    <Router basename={process.env.REACT_APP_BASENAME}>
+    <Router basename={env('REACT_APP_BASENAME')}>
       <Switch>
         {routesUnauthenticated.map((route, key) => {
           return (
