@@ -34,5 +34,6 @@ RUN chmod +x /usr/local/bin/jo && \
     chmod +x /usr/local/bin/start-app
 ARG REACT_APP_BASENAME=/
 COPY --from=build-stage /app/build/ /usr/share/nginx/html${REACT_APP_BASENAME}
+WORKDIR /usr/share/nginx/html${REACT_APP_BASENAME}
 EXPOSE 3000
 ENTRYPOINT [ "sh", "/usr/local/bin/start-app" ]
