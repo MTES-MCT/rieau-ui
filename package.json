@@ -8,7 +8,6 @@
     "url": "https://github.com/tristanrobert"
   },
   "dependencies": {
-    "@beam-australia/react-env": "^2.1.1",
     "@deck.gl/core": "^7.1.10",
     "@deck.gl/layers": "^7.1.10",
     "@deck.gl/react": "^7.1.10",
@@ -84,6 +83,7 @@
     ]
   },
   "devDependencies": {
+    "@beam-australia/react-env": "^2.1.1",
     "@testing-library/react": "^8.0.7",
     "babel-loader": "^8.0.5",
     "cypress": "^3.4.1",
