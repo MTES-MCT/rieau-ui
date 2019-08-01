@@ -125,6 +125,14 @@ jobs:
               docker push tristanrobert/rieau-ui:latest
             fi
 
+  check-docker:
+    docker:
+      - image: knqyf263/trivy
+    steps:
+      - run:
+          name: Scan the image vulnerabilities
+          command: trivy --exit-code 0 --quiet --auto-refresh --clear-cache tristanrobert/rieau-ui:latest
+
 
 workflows:
   version: 2
@@ -142,6 +150,9 @@ workflows:
       - check-vulnerabilities:
           requires:
             - prepare
+      - check-docker:
+          requires: []
+
   build_accept_deploy:
     jobs:
       - prepare
@@ -171,3 +182,11 @@ workflows:
             branches:
               only:
                 - master
+      - check-docker:
+          requires:
+            - deploy-docker
+          filters:
+            branches:
+              only:
+                - master
+
