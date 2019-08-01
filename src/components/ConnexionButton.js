@@ -108,6 +108,7 @@ ConnexionButton.propTypes = {
 };
 ConnexionButton.defaultProps = {
   color: 'primary',
-  appbar: true
+  appbar: true,
+  size: 'small'
 };
 export default ConnexionButton;
