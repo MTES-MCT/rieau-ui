@@ -11,3 +11,8 @@ test('signout ok', async () => {
   await auth.logout();
   expect(await auth.isAuthenticated()).toBe(false);
 });
+test('login error', async () => {
+  expect(auth.login('does.not.exist')).rejects.toThrow(
+    'Connexion impossible. User id inconnu.'
+  );
+});

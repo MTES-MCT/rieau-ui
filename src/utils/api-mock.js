@@ -10,9 +10,7 @@ function login(id) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (!id)
-        return reject(
-          JSON.stringify({ message: 'Connexion impossible. User id inconnu.' })
-        );
+        return reject(new Error('Connexion impossible. User id inconnu.'));
       return resolve((principal = users.find(user => user.id === id)));
     }, waitingTime);
   });
@@ -53,10 +51,7 @@ function isInstructeur() {
 function getUser() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      if (!principal)
-        return reject(
-          JSON.stringify({ message: "Pas d'utilisateur connecté" })
-        );
+      if (!principal) return reject(new Error("Pas d'utilisateur connecté"));
       return resolve(principal);
     }, waitingTime);
   });

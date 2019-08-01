@@ -33,7 +33,7 @@ function login() {
         return resolve(authenticated);
       })
       .error(error => {
-        return reject({ message: JSON.stringify(error) });
+        return reject(new Error(error));
       });
   });
 }
@@ -46,7 +46,7 @@ function logout() {
         return resolve(authenticated);
       })
       .error(error => {
-        return reject({ message: JSON.stringify(error) });
+        return reject(new Error(error));
       });
   });
 }
@@ -59,7 +59,7 @@ function isAuthenticated() {
         return resolve(authenticated);
       })
       .error(error => {
-        return reject({ message: JSON.stringify(error) });
+        return reject(new Error(error));
       });
   });
 }
@@ -88,7 +88,7 @@ function getUser() {
         });
       })
       .error(error => {
-        return reject({ message: JSON.stringify(error) });
+        return reject(new Error(error));
       });
   });
 }
