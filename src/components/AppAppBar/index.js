@@ -16,6 +16,7 @@ import Typography from 'components/Typography';
 import Grid from '@material-ui/core/Grid';
 import DepotsMenu from './DepotsMenu';
 import ConnexionButton from 'components/ConnexionButton';
+import { env } from 'utils/env-helper';
 
 const styles = theme => ({
   placeholder: toolbarStyles(theme).root,
@@ -79,7 +80,7 @@ function AppAppBar(props) {
                 variant="h3"
                 className={classes.title}
               >
-                {window.env.REACT_APP_NAME}
+                {env('REACT_APP_NAME')}
               </Typography>
             </Grid>
             <Grid item container justify="flex-end" className={classes.menu}>

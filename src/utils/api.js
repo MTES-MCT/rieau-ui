@@ -1,6 +1,6 @@
-const isApiMock = [true, 'true', 1, '1'].includes(
-  window.env.REACT_APP_API_MOCK
-);
+import { env } from 'utils/env-helper';
+
+const isApiMock = [true, 'true', 1, '1'].includes(env('REACT_APP_API_MOCK'));
 
 function api() {
   const importApi = isApiMock

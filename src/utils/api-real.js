@@ -1,17 +1,18 @@
 import axios from 'axios';
 import Keycloak from 'keycloak-js';
+import { env } from 'utils/env-helper';
 
 // API réelle
 
 const apiHttpClient = axios.create({
-  baseURL: window.env.REACT_APP_API_URL,
+  baseURL: env('REACT_APP_API_URL'),
   timeout: 1000
 });
 
 const keycloak = Keycloak({
-  url: window.env.REACT_APP_SSO_APP_URL,
-  realm: window.env.REACT_APP_SSO_APP_REALM,
-  clientId: window.env.REACT_APP_SSO_APP_CLIENT_ID
+  url: env('REACT_APP_SSO_APP_URL'),
+  realm: env('REACT_APP_SSO_APP_REALM'),
+  clientId: env('REACT_APP_SSO_APP_CLIENT_ID')
 });
 
 axios.interceptors.request.use(
