@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "https://mtes-mct.github.io/rieau-ui/precache-manifest.38b2df994dfae89f9cfe4395a3203537.js"
+  "https://mtes-mct.github.io/rieau-ui/precache-manifest.b39cf1894bc6e52b14a7c30c42fb8b56.js"
 );
 
 self.addEventListener('message', (event) => {
