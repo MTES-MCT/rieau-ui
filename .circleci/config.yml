@@ -27,6 +27,14 @@ jobs:
             - .cache
             - .npm
             - project/rieau-ui
+  lint:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: '~'
+      - run: 
+          command: npm run lint
   build:
     <<: *defaults
     steps:
@@ -60,26 +68,18 @@ jobs:
           at: '~'
       - run: cp .env.sample .env
       - run: npm run test:unit
-  e2e-tests:
+  integration-tests:
     <<: *defaults
     steps:
       - checkout
       - attach_workspace:
           at: '~'
       - run: cp .env.sample .env
-      - run: npm run test:e2e
+      - run: REACT_APP_API_MOCK=true npm run test:integration
       - store_artifacts:
           path: cypress/videos
       - store_artifacts:
           path: cypress/screenshots
-  lint:
-    <<: *defaults
-    steps:
-      - checkout
-      - attach_workspace:
-          at: '~'
-      - run: 
-          command: npm run lint
   deploy-demo:
     <<: *defaults
     steps:
@@ -129,15 +129,6 @@ jobs:
               docker push tristanrobert/rieau-ui:latest
             fi
 
-  check-docker:
-    docker:
-      - image: knqyf263/trivy
-    steps:
-      - run:
-          name: Scan the image vulnerabilities
-          command: trivy --exit-code 0 --quiet --auto-refresh --clear-cache tristanrobert/rieau-ui:latest
-
-
 workflows:
   version: 2
   weekly-dependency-check:
@@ -154,8 +145,6 @@ workflows:
       - check-vulnerabilities:
           requires:
             - prepare
-      - check-docker:
-          requires: []
 
   build_accept_deploy:
     jobs:
@@ -169,26 +158,19 @@ workflows:
       - unit-tests:
           requires:
             - build
-      - e2e-tests:
+      - integration-tests:
           requires:
             - unit-tests
       - deploy-demo:
           requires:
-            - e2e-tests
+            - integration-tests
           filters:
             branches:
               only:
                 - master
       - deploy-docker:
           requires:
-            - e2e-tests
-          filters:
-            branches:
-              only:
-                - master
-      - check-docker:
-          requires:
-            - deploy-docker
+            - integration-tests
           filters:
             branches:
               only:

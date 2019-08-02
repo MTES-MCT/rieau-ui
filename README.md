@@ -49,26 +49,54 @@ npm run analyze
 npm run test:unit
 ```
 
-### Tests end to end
+### Tests intégration
 
-```
-npm run cypress:open
-```
+* Pour éditer les tests avec l'API mockée (`REACT_APP_API_MOCK=true`):
 
-Ouvre le studio [Cypress](https://cypress.io)
+On configure le fichier `.env` avec `REACT_APP_API_MOCK=true`.
+
+On lance le serveur:
 
 ```
 npm start
-npm run cypress:run
 ```
 
-ou
+Puis on ouvre le studio [Cypress](https://cypress.io):
 
 ```
-npm run test:e2e
+REACT_APP_API_MOCK=true npm run cypress:open
 ```
 
-Exécute les tests et enregistre les videos et screenshots.
+* Pour exécuter les tests et enregistrer les videos et screenshots:
+
+```
+REACT_APP_API_MOCK=true npm run test:integration
+```
+
+Si on souhaite les exécuter avec l'API réelle, on exécute au préalable la stack du backend (cf. [rieau-infra](https://github.com/MTES-MCT/rieau-infra/blob/master/README.md)).
+
+Puis on configure le fichier `.env` afin d'appeler le backend: 
+
+```
+REACT_APP_API_MOCK=false
+REACT_APP_API_URL=http://localhost:5000
+REACT_APP_SSO_APP_URL=http://localhost:8080/auth
+REACT_APP_SSO_APP_REALM=rieau
+REACT_APP_SSO_APP_CLIENT_ID=rieau-ui
+```
+
+Enfin on exécute les tests en précisant que l'API est réelle:
+
+```
+REACT_APP_API_MOCK=false npm run test:integration
+```
+
+Ou pour les éditer avec le studio: 
+
+```
+REACT_APP_API_MOCK=false npm run cypress:open
+```
+
 
 ### Pour aller plus loin
 

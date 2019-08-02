@@ -23,3 +23,8 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+
+ Cypress.Commands.add('isApiMock', () => { 
+     return [true,'true',1,'1'].includes(Cypress.env('REACT_APP_API_MOCK'))
+  })

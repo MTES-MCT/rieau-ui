@@ -54,7 +54,7 @@
     "deploy": "gh-pages -d build -m 'Deploy on Github pages [ci skip]'",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "test:e2e": "npm run build:env && start-server-and-test start http://localhost:3000 cypress:run"
+    "test:integration": "npm run build:env && start-server-and-test start http://localhost:3000 cypress:run"
   },
   "eslintConfig": {
     "extends": "react-app"
