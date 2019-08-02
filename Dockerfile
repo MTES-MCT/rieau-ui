@@ -27,8 +27,6 @@ WORKDIR /usr/share/nginx/html${REACT_APP_BASENAME}
 COPY .env.sample .env
 COPY ./env.sh /usr/local/bin/build-env
 RUN chmod +x /usr/local/bin/build-env
-COPY docker/entrypoint.sh /usr/local/bin/start-app
-RUN chmod +x /usr/local/bin/start-app
 RUN apk update && apk upgrade && apk add --no-cache bash
 EXPOSE 3000
 CMD [ "/bin/bash", "-c", "/usr/local/bin/build-env && mv env.js static/js/ && nginx -g \"daemon off;\"" ]
