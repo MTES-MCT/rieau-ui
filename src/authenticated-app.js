@@ -8,11 +8,10 @@ import {
 import routesAuthenticated from 'routes/authenticated';
 import routesUnauthenticated from 'routes/unauthenticated';
 import NotFound from 'pages/NotFound';
-import { env } from 'utils/env-helper';
 
 function Routes() {
   return (
-    <Router basename={env('REACT_APP_BASENAME')}>
+    <Router basename={window.env.REACT_APP_BASENAME}>
       <Switch>
         {routesAuthenticated
           .filter(route => route.id !== 'deconnexion')

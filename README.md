@@ -101,15 +101,19 @@ Depuis le navigateur: [https://mtes-mct.github.io/rieau-ui/](https://mtes-mct.gi
 * Build:
 
 ```
-docker build --build-arg REACT_APP_DOMAIN=http://localhost:3000 --build-arg REACT_APP_BASENAME=/dpt -t rieau-ui .
+docker build --build-arg REACT_APP_DOMAIN=http://localhost:3000 --build-arg REACT_APP_BASENAME=/dpt -t tristanrobert/rieau-ui .
 ```
 
 Spécifier `REACT_APP_DOMAIN` si le site est installé sur un autre domaine que [http://localhost:3000](http://localhost:3000) par défaut et `REACT_APP_BASENAME` si il est dans un sous un sous-dossier autre que `/` (e.g. `/dpt`).
 
 * Run:
 
+Il est possible de changer à l'exécution des variables d'environnement comme `REACT_APP_API_URL` (cf. `.env.sample`):
+
 ```
-docker run -p 3000:3000 rieau-ui
+docker run -p 3000:3000 -e REACT_APP_API_URL=http://rieau.cohesion-territoires.gouv.fr  --name rieau-ui -d -t tristanrobert/rieau-ui
 ```
+
+Seule `REACT_APP_BASENAME` n'est pas modifiable à l'exécution mais seulement au build (car utilisée par nginx comme répertoire).
 
 Depuis le navigateur: [http://localhost:3000](http://localhost:3000).

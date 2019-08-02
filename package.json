@@ -44,16 +44,17 @@
   "scripts": {
     "prettier": "prettier --single-quote --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
     "lint": "eslint src/",
-    "start": "react-scripts start",
+    "build:env": "chmod +x ./env.sh && ./env.sh && cp env.js ./public/static/js/",
+    "start": "npm run build:env && react-scripts start",
     "build": "react-scripts build",
-    "test:unit": "react-scripts test",
+    "test:unit": "npm run build:env && react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "deploy": "gh-pages -d build -m 'Deploy on Github pages [ci skip]'",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "test:e2e": "start-server-and-test start http://localhost:3000 cypress:run"
+    "test:e2e": "npm run build:env && start-server-and-test start http://localhost:3000 cypress:run"
   },
   "eslintConfig": {
     "extends": "react-app"

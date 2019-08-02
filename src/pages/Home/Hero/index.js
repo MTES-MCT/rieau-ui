@@ -13,7 +13,6 @@ import './hero.css';
 import LazyLoad from 'react-lazyload';
 import IconButton from '@material-ui/core/IconButton';
 import { genericHashLink } from 'react-router-hash-link';
-import { env } from 'utils/env-helper';
 
 const styles = theme => ({
   root: {
@@ -105,10 +104,10 @@ class Hero extends React.Component {
                 marked="center"
                 className={classes.description}
               >
-                {env('REACT_APP_DESCRIPTION')}
+                {window.env.REACT_APP_DESCRIPTION}
               </Typography>
               <Typography color="inherit" align="center" variant="h5">
-                {env('REACT_APP_VISION')}
+                {window.env.REACT_APP_VISION}
               </Typography>
             </Paper>
           </div>

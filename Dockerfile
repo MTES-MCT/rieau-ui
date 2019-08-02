@@ -1,5 +1,5 @@
 # Stage 0, "build-stage", based on Node.js, to build and compile the frontend
-FROM node:10.15-alpine as build-stage
+FROM node:10-alpine as build-stage
 LABEL maintainer="tristan.robert.44@gmail.com"
 WORKDIR /app
 COPY package*.json /app/
@@ -21,19 +21,14 @@ RUN npm run build
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
 FROM nginx:1.16-alpine
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
-COPY docker/entrypoint.sh /usr/local/bin/start-app
-ARG JO_VERSION=1.2
-RUN apk add --no-cache alpine-sdk && \
-    cd /tmp && curl -s -LO https://github.com/jpmens/jo/releases/download/${JO_VERSION}/jo-${JO_VERSION}.tar.gz && \
-    tar xvzf jo-${JO_VERSION}.tar.gz && \
-    cd jo-${JO_VERSION} && \
-    ./configure && \
-    make check && \
-    make install
-RUN chmod +x /usr/local/bin/jo && \
-    chmod +x /usr/local/bin/start-app
 ARG REACT_APP_BASENAME=/
 COPY --from=build-stage /app/build/ /usr/share/nginx/html${REACT_APP_BASENAME}
 WORKDIR /usr/share/nginx/html${REACT_APP_BASENAME}
+COPY .env.sample .env
+COPY ./env.sh /usr/local/bin/build-env
+RUN chmod +x /usr/local/bin/build-env
+COPY docker/entrypoint.sh /usr/local/bin/start-app
+RUN chmod +x /usr/local/bin/start-app
+RUN apk update && apk upgrade && apk add --no-cache bash
 EXPOSE 3000
-ENTRYPOINT [ "sh", "/usr/local/bin/start-app" ]
+CMD [ "/bin/bash", "-c", "/usr/local/bin/build-env && mv env.js static/js/ && nginx -g \"daemon off;\"" ]
