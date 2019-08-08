@@ -6,7 +6,8 @@ import { env } from 'utils/env-helper';
 
 const apiHttpClient = axios.create({
   baseURL: env('REACT_APP_API_URL'),
-  timeout: 1000
+  timeout: 1000,
+  withCredentials: true
 });
 
 const keycloak = Keycloak({
