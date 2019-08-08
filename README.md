@@ -97,7 +97,6 @@ Ou pour les éditer avec le studio:
 REACT_APP_API_MOCK=false npm run cypress:open
 ```
 
-
 ### Pour aller plus loin
 
 * [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
@@ -141,7 +140,6 @@ Par exemple, spécifier `REACT_APP_DOMAIN` si le site est installé sur un autre
 ```
 docker run -p 3000:3000 -e SERVER_PORT=3000 -e REACT_APP_API_URL=http://localhost:5000 --name rieau-ui -d -t tristanrobert/rieau-ui
 ```
-
 
 Seule `REACT_APP_BASENAME` n'est pas modifiable à l'exécution mais seulement au build (car utilisée par nginx comme répertoire).
 

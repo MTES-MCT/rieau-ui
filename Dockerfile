@@ -21,6 +21,7 @@ COPY --from=build-stage /app/build/ /usr/share/nginx/html${REACT_APP_BASENAME}
 WORKDIR /usr/share/nginx/html${REACT_APP_BASENAME}
 COPY .env.sample .env
 COPY ./docker/entrypoint.sh /usr/local/bin/start
+COPY ./env.sh env.sh
 RUN chmod +x /usr/local/bin/start
 RUN apk update && apk upgrade && apk add --no-cache bash
 EXPOSE ${SERVER_PORT}
