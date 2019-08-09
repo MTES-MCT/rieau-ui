@@ -16,6 +16,7 @@
 # misc
 .env
 /public/static/js/env.js
+/public/index.html
 env.js
 
 npm-debug.log*
