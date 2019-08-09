@@ -79,6 +79,9 @@ Puis on configure le fichier `.env` afin d'appeler le backend:
 
 ```
 REACT_APP_API_MOCK=false
+REACT_APP_DOMAIN=http://localhost:3000
+REACT_APP_BASE_NAME=/
+PUBLIC_URL=http://localhost:3000
 REACT_APP_API_URL=http://localhost:5000
 REACT_APP_SSO_APP_URL=http://localhost:8080/auth
 REACT_APP_SSO_APP_REALM=rieau
@@ -110,7 +113,6 @@ Copier le `.env.sample` en `.env`.
 Surcharger dans le shell les valeurs en fonction de l'environnement, puis construire:
 
 ```
-npm run build:env
 npm run build
 ```
 
@@ -139,7 +141,7 @@ Il est possible de changer à l'exécution des variables d'environnement comme `
 Par exemple, spécifier `REACT_APP_DOMAIN` si le site est installé sur un autre domaine que [http://localhost:3000](http://localhost:3000) par défaut et `REACT_APP_BASENAME` si il est dans un sous un sous-dossier autre que `/` (e.g. `/dpt`).
 
 ```
-docker run -p 3000:3000 -e SERVER_PORT=3000 -e REACT_APP_API_URL=http://localhost:5000 --name rieau-ui -d -t tristanrobert/rieau-ui
+docker run -p 3000:3000 -e SERVER_PORT=3000 -e PUBLIC_URL=http://rieau.docker.localhost -e REACT_APP_NAME="RIE'AU" -e REACT_APP_API_URL=http://rieau.docker.localhost/api -e REACT_APP_SSO_APP_URL=http://sso.rieau.docker.localhost:8080/auth -e REACT_APP_DOMAIN=http://rieau.docker.localhost --name rieau-ui -d -t tristanrobert/rieau-ui
 ```
 
 Seule `REACT_APP_BASENAME` n'est pas modifiable à l'exécution mais seulement au build (car utilisée par nginx comme répertoire).

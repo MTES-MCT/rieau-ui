@@ -44,17 +44,19 @@
   "scripts": {
     "prettier": "prettier --single-quote --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
     "lint": "eslint src/",
-    "build:env": "chmod +x ./env.sh && ./env.sh && cp env.js ./public/static/js/",
-    "start": "npm run build:env && react-scripts start",
-    "build": "react-scripts build",
-    "test:unit": "npm run build:env && react-scripts test",
+    "prepare:index": "rm -rf public/index.html && cp public/index.html.template public/index.html",
+    "build:env": "chmod +x ./env.sh && ./env.sh && mv env.js ./public/static/js/",
+    "index:env": "chmod +x ./index.sh && ./index.sh",
+    "start": "npm run prepare:index && npm run build:env && npm run index:env && react-scripts start",
+    "build": "npm run prepare:index && npm run build:env && react-scripts build",
+    "test:unit": "npm run prepare:index && npm run build:env && npm run index:env && react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "deploy": "gh-pages -d build -m 'Deploy on Github pages [ci skip]'",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "test:integration": "npm run build:env && start-server-and-test start http://localhost:3000 cypress:run"
+    "test:integration": "npm run prepare:index && npm run build:env && npm run index:env && start-server-and-test start http://localhost:3000 cypress:run"
   },
   "eslintConfig": {
     "extends": "react-app"

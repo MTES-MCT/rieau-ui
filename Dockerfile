@@ -9,6 +9,8 @@ COPY public/ /app/public
 COPY manifest.json /app
 RUN npm install --production
 COPY .env.sample /app/.env
+COPY env.sh /app
+RUN apk update && apk upgrade && apk add --no-cache bash
 RUN npm run build
 
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
@@ -19,9 +21,11 @@ ENV SERVER_PORT=3000
 ENV REACT_APP_API_URL=http://localhost:5000
 COPY --from=build-stage /app/build/ /usr/share/nginx/html${REACT_APP_BASENAME}
 WORKDIR /usr/share/nginx/html${REACT_APP_BASENAME}
+COPY public/index.html.template public/index.html.template
 COPY .env.sample .env
 COPY ./docker/entrypoint.sh /usr/local/bin/start
 COPY ./env.sh env.sh
+COPY ./index.sh index.sh
 RUN chmod +x /usr/local/bin/start
 RUN apk update && apk upgrade && apk add --no-cache bash
 EXPOSE ${SERVER_PORT}
