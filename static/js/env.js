@@ -1,0 +1,14 @@
+window.env = {
+  REACT_APP_NAME: "RIE'AU",
+  REACT_APP_DESCRIPTION: "Réception, Informations et Échanges pour les Autorisations d’Urbanisme",
+  REACT_APP_VISION: "Suivre l'avancement de ses demandes d'autorisation d'urbanisme",
+  REACT_APP_API_MOCK: "true",
+  REACT_APP_BASENAME: "/rieau-ui",
+  REACT_APP_DOMAIN: "https://mtes-mct.github.io",
+  PUBLIC_URL: "https://mtes-mct.github.io/rieau-ui",
+  REACT_APP_API_URL: "http://localhost:5000",
+  REACT_APP_SSO_APP_URL: "http://localhost:8080/auth",
+  REACT_APP_SSO_APP_REALM: "rieau",
+  REACT_APP_SSO_APP_CLIENT_ID: "rieau-ui",
+  REACT_APP_MAX_SIZE_UPLOAD_FILE: "1048576",
+}
