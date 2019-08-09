@@ -16,7 +16,13 @@ Ce projet a été construit avec [Create React App](https://github.com/facebook/
 Copier le `.env.sample` en `.env`.
 
 
-Modifier dans le fichier les valeurs en fonction de l'environnement (par exemple `REACT_APP_API_MOCK=false` permet d'activer l'API), puis lancer le serveur:
+Modifier dans le fichier les valeurs en fonction de l'environnement (par exemple `REACT_APP_API_MOCK=true` permet de désactiver l'API), puis lancer le serveur:
+
+```
+REACT_APP_API_MOCK=true
+REACT_APP_DOMAIN=http://localhost:3000
+PUBLIC_URL=http://localhost:3000
+```
 
 ```
 npm start
@@ -80,7 +86,6 @@ Puis on configure le fichier `.env` afin d'appeler le backend:
 ```
 REACT_APP_API_MOCK=false
 REACT_APP_DOMAIN=http://localhost:3000
-REACT_APP_BASE_NAME=/
 PUBLIC_URL=http://localhost:3000
 REACT_APP_API_URL=http://localhost:5000
 REACT_APP_SSO_APP_URL=http://localhost:8080/auth
@@ -121,7 +126,7 @@ npm run build
 Depuis la branche `master`:
 
 ```
-REACT_APP_API_MOCK=true REACT_APP_BASENAME=/rieau-ui REACT_APP_DOMAIN="https://mtes-mct.github.io" PUBLIC_URL=$REACT_APP_DOMAIN$REACT_APP_BASENAME npm run deploy
+REACT_APP_API_MOCK=true PUBLIC_URL="https://mtes-mct.github.io/rieau-ui" npm run deploy
 ```
 
 Depuis le navigateur: [https://mtes-mct.github.io/rieau-ui/](https://mtes-mct.github.io/rieau-ui/).
@@ -129,6 +134,16 @@ Depuis le navigateur: [https://mtes-mct.github.io/rieau-ui/](https://mtes-mct.gi
 ### Docker
 
 * Build:
+
+Pour une image configurable au runtime, modifier le `.env`:
+
+```
+PUBLIC_URL=___PUBLIC_URL___
+```
+
+Seul le path est modifiable au build en ajoutant: `--build-arg REACT_APP_BASENAME=/path`.
+
+Ensuite construiser l'image:
 
 ```
 docker build -t tristanrobert/rieau-ui .
@@ -138,10 +153,10 @@ docker build -t tristanrobert/rieau-ui .
 
 Il est possible de changer à l'exécution des variables d'environnement comme `SERVER_PORT`, le port d'écoute HTTP de NGINX par défaut à 3000, ou celles de l'application REACT comme `REACT_APP_API_URL` (cf. `.env.sample`).
 
-Par exemple, spécifier `REACT_APP_DOMAIN` si le site est installé sur un autre domaine que [http://localhost:3000](http://localhost:3000) par défaut et `REACT_APP_BASENAME` si il est dans un sous un sous-dossier autre que `/` (e.g. `/dpt`).
+Par exemple, spécifier `PUBLIC_URL` si le site est installé sur un autre domaine.
 
 ```
-docker run -p 3000:3000 -e SERVER_PORT=3000 -e PUBLIC_URL=http://rieau.docker.localhost -e REACT_APP_NAME="RIE'AU" -e REACT_APP_API_URL=http://rieau.docker.localhost/api -e REACT_APP_SSO_APP_URL=http://sso.rieau.docker.localhost:8080/auth -e REACT_APP_DOMAIN=http://rieau.docker.localhost --name rieau-ui -d -t tristanrobert/rieau-ui
+docker run -p 3000:3000 -e SERVER_PORT=3000 -e PUBLIC_URL=http://rieau.docker.localhost -e REACT_APP_API_URL=http://rieau.docker.localhost/api -e REACT_APP_SSO_APP_URL=http://sso.rieau.docker.localhost:8080/auth --name rieau-ui -d -t tristanrobert/rieau-ui
 ```
 
 Seule `REACT_APP_BASENAME` n'est pas modifiable à l'exécution mais seulement au build (car utilisée par nginx comme répertoire).

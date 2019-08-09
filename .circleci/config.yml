@@ -45,9 +45,7 @@ jobs:
       - run: 
           environment: 
             - REACT_APP_API_MOCK: true
-            - REACT_APP_BASENAME: /rieau-ui
-            - REACT_APP_DOMAIN: https://mtes-mct.github.io
-            - PUBLIC_URL: $REACT_APP_DOMAIN$REACT_APP_BASENAME
+            - PUBLIC_URL: __PUBLIC_URL___
           command: npm run build
       - persist_to_workspace:
           root: .
@@ -75,7 +73,12 @@ jobs:
       - attach_workspace:
           at: '~'
       - run: cp .env.sample .env
-      - run: REACT_APP_API_MOCK=true npm run test:integration
+      - run: 
+          environment: 
+            - REACT_APP_API_MOCK: true
+            - PUBLIC_URL: http://localhost:3000
+          command: |
+            npm run test:integration
       - store_artifacts:
           path: cypress/videos
       - store_artifacts:
@@ -90,9 +93,8 @@ jobs:
       - run: 
           environment:
             - REACT_APP_API_MOCK: true
-            - REACT_APP_BASENAME: /rieau-ui
-            - REACT_APP_DOMAIN: https://mtes-mct.github.io
-            - PUBLIC_URL: $REACT_APP_DOMAIN$REACT_APP_BASENAME
+            - PUBLIC_URL: https://mtes-mct.github.io/rieau-ui
+            - REACT_APP_NAME: "RIE'AU"
           command: |
             npm run build:env
             git config credential.helper 'cache --timeout=120'
@@ -108,6 +110,10 @@ jobs:
       - run: cp .env.sample .env
       - setup_remote_docker
       - run: 
+          environment: 
+            - REACT_APP_API_MOCK: true
+            - PUBLIC_URL: __PUBLIC_URL___
+            - REACT_APP_NAME: "RIE'AU"
           command: |
             if [[ -z "$DOCKERHUB_USER" || -z "$DOCKERHUB_PASSWORD" ]]; then
               echo "Missing DOCKERHUB_USER or DOCKERHUB_PASSWORD environment variables!"

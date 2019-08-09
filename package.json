@@ -7,6 +7,7 @@
     "name": "Tristan Robert",
     "url": "https://github.com/tristanrobert"
   },
+  "homepage": ".",
   "dependencies": {
     "@deck.gl/core": "^7.1.10",
     "@deck.gl/layers": "^7.1.10",
@@ -47,16 +48,17 @@
     "prepare:index": "rm -rf public/index.html && cp public/index.html.template public/index.html",
     "build:env": "chmod +x ./env.sh && ./env.sh && mv env.js ./public/static/js/",
     "index:env": "chmod +x ./index.sh && ./index.sh",
-    "start": "npm run prepare:index && npm run build:env && npm run index:env && react-scripts start",
+    "index:html": "sed -i -e 's,___PUBLIC_URL___,http://localhost:3000,g' public/index.html && sed -i -e 's,___REACT_APP_NAME___,RIEAU,g' public/index.html",
+    "start": "npm run prepare:index && npm run build:env && npm run index:html && react-scripts start",
     "build": "npm run prepare:index && npm run build:env && react-scripts build",
-    "test:unit": "npm run prepare:index && npm run build:env && npm run index:env && react-scripts test",
+    "test:unit": "npm run prepare:index && npm run build:env && react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "deploy": "gh-pages -d build -m 'Deploy on Github pages [ci skip]'",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "test:integration": "npm run prepare:index && npm run build:env && npm run index:env && start-server-and-test start http://localhost:3000 cypress:run"
+    "test:integration": "npm run prepare:index && npm run build:env && npm run index:html && start-server-and-test start http://localhost:3000 cypress:run"
   },
   "eslintConfig": {
     "extends": "react-app"
