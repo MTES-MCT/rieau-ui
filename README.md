@@ -118,7 +118,7 @@ npm run build
 Depuis la branche `master`:
 
 ```
-REACT_APP_BASENAME=/rieau-ui REACT_APP_DOMAIN="https://mtes-mct.github.io" npm run deploy
+REACT_APP_API_MOCK=true REACT_APP_BASENAME=/rieau-ui REACT_APP_DOMAIN="https://mtes-mct.github.io" PUBLIC_URL=$REACT_APP_DOMAIN$REACT_APP_BASENAME npm run deploy
 ```
 
 Depuis le navigateur: [https://mtes-mct.github.io/rieau-ui/](https://mtes-mct.github.io/rieau-ui/).
