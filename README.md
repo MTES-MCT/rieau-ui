@@ -110,6 +110,7 @@ Copier le `.env.sample` en `.env`.
 Surcharger dans le shell les valeurs en fonction de l'environnement, puis construire:
 
 ```
+npm run build:env
 npm run build
 ```
 
