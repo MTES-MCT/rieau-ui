@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "6017fdadc70d5180b8da6da465e0e316",
+    "revision": "43e229c618134de83c077619302a84df",
     "url": "https://mtes-mct.github.io/rieau-ui/index.html"
   },
   {
