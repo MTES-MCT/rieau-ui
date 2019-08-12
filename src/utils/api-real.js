@@ -1,31 +1,17 @@
-import axios from 'axios';
-import Keycloak from 'keycloak-js';
+import AxiosKeycloak from 'axios-keycloak';
 import { env } from 'utils/env-helper';
 
 // API réelle
 
-const apiHttpClient = axios.create({
-  baseURL: env('REACT_APP_API_URL'),
-  timeout: 1000,
-  withCredentials: true
-});
-
-const keycloak = Keycloak({
+const keycloak = new AxiosKeycloak({
   url: env('REACT_APP_SSO_APP_URL'),
   realm: env('REACT_APP_SSO_APP_REALM'),
   clientId: env('REACT_APP_SSO_APP_CLIENT_ID')
 });
 
-axios.interceptors.request.use(
-  function(config) {
-    const token = keycloak.token;
-    if (token) config.headers.Authorization = `Bearer ${token}`;
-    return config;
-  },
-  function(error) {
-    return Promise.reject(error);
-  }
-);
+const apiHttpClient = keycloak.createAxiosInstance({
+  baseURL: env('REACT_APP_API_URL')
+});
 
 function login() {
   return new Promise((resolve, reject) => {
@@ -96,11 +82,31 @@ function getUser() {
 }
 
 function mesDepots() {
-  return apiHttpClient.get(`/depots`);
+  return new Promise((resolve, reject) => {
+    return keycloak
+      .init({ onLoad: 'check-sso' })
+      .success(authenticated => {
+        return resolve(apiHttpClient.get(`/depots`));
+      })
+      .error(error => {
+        return reject(new Error(error));
+      });
+  });
 }
 
 function savePieceJointe(code, file, binary) {
-  return apiHttpClient.post(`/piecesjointes`, { code, file, binary });
+  return new Promise((resolve, reject) => {
+    return keycloak
+      .init({ onLoad: 'check-sso' })
+      .success(authenticated => {
+        return resolve(
+          apiHttpClient.post(`/piecesjointes`, { code, file, binary })
+        );
+      })
+      .error(error => {
+        return reject(new Error(error));
+      });
+  });
 }
 
 const auth = {

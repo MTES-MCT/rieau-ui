@@ -37,7 +37,7 @@ function Depots(props) {
             { title: 'Date', field: 'date', type: 'string' },
             { title: 'État', field: 'etat', type: 'string' }
           ]}
-          data={{ data: depots, page, totalCount }}
+          data={{ data: depots || [], page, totalCount }}
           actions={[
             {
               icon: () => <VisibilityIcon />,

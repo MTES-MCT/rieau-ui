@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
@@ -17,13 +17,6 @@ const variantIcon = {
   error: ErrorIcon,
   info: InfoIcon
 };
-
-// const variantColor = theme => ({
-//   success: theme.palette.success,
-//   error: theme.palette.error,
-//   info: theme.palette.info,
-//   warning: theme.palette.warning,
-// });
 
 const classes = theme => ({
   icon: {
@@ -54,91 +47,78 @@ const classes = theme => ({
   }
 });
 
-class SnackbarContent extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-    message: PropTypes.node,
-    onClose: PropTypes.func,
-    variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired
-  };
+function SnackbarContent(props) {
+  const { className, message, onClose, variant, ...other } = props;
+  const Icon = variantIcon[variant];
 
-  render() {
-    const { className, message, onClose, variant, ...other } = this.props;
-    const Icon = variantIcon[variant];
-
-    return (
-      <MuiSnackbarContent
-        className={clsx(classes[variant], className)}
-        aria-describedby="client-snackbar"
-        message={
-          <span id="client-snackbar" className={classes.message}>
-            <Icon className={clsx(classes.icon, classes.iconVariant)} />
-            {message}
-          </span>
-        }
-        action={[
-          <IconButton
-            key="close"
-            aria-label="Fermer"
-            color="inherit"
-            onClick={onClose}
-          >
-            <CloseIcon className={classes.icon} />
-          </IconButton>
-        ]}
-        {...other}
-      />
-    );
-  }
+  return (
+    <MuiSnackbarContent
+      className={clsx(classes[variant], className)}
+      aria-describedby="client-snackbar"
+      message={
+        <span id="client-snackbar" className={classes.message}>
+          <Icon className={clsx(classes.icon, classes.iconVariant)} />
+          {message}
+        </span>
+      }
+      action={[
+        <IconButton
+          key="close"
+          aria-label="Fermer"
+          color="inherit"
+          onClick={onClose}
+        >
+          <CloseIcon className={classes.icon} />
+        </IconButton>
+      ]}
+      {...other}
+    />
+  );
 }
+SnackbarContent.propTypes = {
+  className: PropTypes.string,
+  message: PropTypes.node,
+  onClose: PropTypes.func,
+  variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired
+};
 
-class Snackbar extends React.Component {
-  static propTypes = {
-    initialState: PropTypes.bool,
-    message: PropTypes.node,
-    onClose: PropTypes.func,
-    variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired
-  };
-  constructor(props) {
-    super(props);
-    this.state = {
-      open: this.props.initialState || true
-    };
-    this.handleClose = this.handleClose.bind(this);
-  }
+function Snackbar(props) {
+  const [open, setOpen] = useState(true);
+  const { variant, message, onClose } = props;
 
-  handleClose = (event, reason) => {
+  function handleClose(event, reason) {
     if (reason === 'clickaway') {
       return;
     }
-    this.props.onClose();
-    this.setState({ open: false });
-  };
-
-  render() {
-    const { open } = this.state;
-    const { variant, message } = this.props;
-
-    return (
-      <MuiSnackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left'
-        }}
-        open={open}
-        className={classes.root}
-        autoHideDuration={30000}
-        onClose={this.handleClose}
-      >
-        <SnackbarContent
-          className={classes.margin}
-          onClose={this.handleClose}
-          variant={variant}
-          message={message}
-        />
-      </MuiSnackbar>
-    );
+    if (onClose) onClose();
+    setOpen(false);
   }
+
+  return (
+    <MuiSnackbar
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left'
+      }}
+      open={open}
+      className={classes.root}
+      autoHideDuration={30000}
+      onClose={handleClose}
+    >
+      <SnackbarContent
+        className={classes.margin}
+        onClose={handleClose}
+        variant={variant}
+        message={message}
+      />
+    </MuiSnackbar>
+  );
 }
+Snackbar.propTypes = {
+  initialState: PropTypes.bool,
+  message: PropTypes.node,
+  onClose: PropTypes.func,
+  variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired
+};
 
 export default withStyles(classes)(Snackbar);
