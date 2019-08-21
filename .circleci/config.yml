@@ -45,7 +45,7 @@ jobs:
       - run: 
           environment: 
             - REACT_APP_API_MOCK: true
-            - PUBLIC_URL: __PUBLIC_URL___
+            - PUBLIC_URL: ___PUBLIC_URL___
           command: npm run build
       - persist_to_workspace:
           root: .
@@ -113,7 +113,7 @@ jobs:
       - run: 
           environment: 
             - REACT_APP_API_MOCK: true
-            - PUBLIC_URL: __PUBLIC_URL___
+            - PUBLIC_URL: ___PUBLIC_URL___
             - REACT_APP_NAME: "RIE'AU"
           command: |
             if [[ -z "$DOCKERHUB_USER" || -z "$DOCKERHUB_PASSWORD" ]]; then
