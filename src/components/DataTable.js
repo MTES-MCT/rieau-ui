@@ -1,79 +1,48 @@
-/* eslint-disable react/display-name */
-import React, { forwardRef } from 'react';
-import MaterialTable from 'material-table';
+import React from 'react';
 import PropTypes from 'prop-types';
-import AddBox from '@material-ui/icons/AddBox';
-import ArrowUpward from '@material-ui/icons/ArrowUpward';
-import Check from '@material-ui/icons/Check';
-import ChevronLeft from '@material-ui/icons/ChevronLeft';
-import ChevronRight from '@material-ui/icons/ChevronRight';
-import Clear from '@material-ui/icons/Clear';
-import DeleteOutline from '@material-ui/icons/DeleteOutline';
-import Edit from '@material-ui/icons/Edit';
-import FilterList from '@material-ui/icons/FilterList';
-import FirstPage from '@material-ui/icons/FirstPage';
-import LastPage from '@material-ui/icons/LastPage';
-import Remove from '@material-ui/icons/Remove';
-import SaveAlt from '@material-ui/icons/SaveAlt';
-import Search from '@material-ui/icons/Search';
-import ViewColumn from '@material-ui/icons/ViewColumn';
 import withRoot from 'theme/withRoot';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
-import { withStyles } from '@material-ui/core';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import compose from 'utils/compose';
-import Typography from './Typography';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
+import Toolbar from '@material-ui/core/Toolbar';
+import Paper from '@material-ui/core/Paper';
+import clsx from 'clsx';
+import Typography from 'components/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 
-const tableIcons = {
-  Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
-  Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
-  Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-  Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
-  DetailPanel: forwardRef((props, ref) => (
-    <ChevronRight {...props} ref={ref} />
-  )),
-  Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
-  Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
-  Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
-  FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
-  LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
-  NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
-  PreviousPage: forwardRef((props, ref) => (
-    <ChevronLeft {...props} ref={ref} />
-  )),
-  ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-  Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
-  SortArrow: forwardRef((props, ref) => <ArrowUpward {...props} ref={ref} />),
-  ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
-  ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
-};
-
-const localization = {
-  pagination: {
-    labelDisplayedRows: '{from}-{to} sur {count}',
-    labelRowsSelect: 'lignes',
-    lastAriaLabel: 'Dernière page',
-    lastTooltip: 'Dernière page',
-    nextAriaLabel: 'Page suivante',
-    nextTooltip: 'Page suivante',
-    firstAriaLabel: 'Première page',
-    firstTooltip: 'Première page',
-    previousAriaLabel: 'Page précédente',
-    previousTooltip: 'Page précédente'
-  },
-  toolbar: {
-    nRowsSelected: '{0} ligne(s) sélectionnée(s)',
-    searchPlaceholder: 'Rechercher...',
-    searchTooltip: 'Rechercher'
-  },
-  body: {
-    emptyDataSourceMessage: 'Aucune donnée',
-    filterRow: {
-      filterTooltip: 'Filtrer'
-    }
+function desc(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
   }
-};
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+function stableSort(array, cmp) {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
+    const order = cmp(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
+  return stabilizedThis.map(el => el[0]);
+}
+
+function getSorting(order, orderBy) {
+  return order === 'desc'
+    ? (a, b) => desc(a, b, orderBy)
+    : (a, b) => -desc(a, b, orderBy);
+}
+
 const styles = theme => ({
   card: {
     display: 'flex',
@@ -82,52 +51,231 @@ const styles = theme => ({
   },
   content: {
     display: 'flex'
+  },
+  root: {
+    width: '100%',
+    marginTop: theme.spacing(3)
+  },
+  paper: {
+    width: '100%',
+    marginBottom: theme.spacing(2)
+  },
+  table: {
+    minWidth: 750
+  },
+  tableWrapper: {
+    overflowX: 'auto'
+  },
+  visuallyHidden: {
+    border: 0,
+    clip: 'rect(0 0 0 0)',
+    height: 1,
+    margin: -1,
+    overflow: 'hidden',
+    padding: 0,
+    position: 'absolute',
+    top: 20,
+    width: 1
   }
 });
 
-function DataTable(props) {
-  const { classes, data, columns, title, actions, options } = props;
+function EnhancedTableHead(props) {
+  const { classes, columns, order, orderBy, onRequestSort } = props;
+  const createSortHandler = property => event => {
+    onRequestSort(event, property);
+  };
+
   return (
-    <Card className={classes.card}>
-      <CardHeader disableTypography>
-        <Typography
-          color="secondary"
-          variant="h3"
-          marked="center"
-          align="center"
-        >
+    <TableHead>
+      <TableRow>
+        <TableCell padding="checkbox">{''}</TableCell>
+        {columns.map(column => (
+          <TableCell
+            key={column.id}
+            align={column.numeric ? 'left' : 'right'}
+            padding={column.disablePadding ? 'none' : 'default'}
+            sortDirection={orderBy === column.id ? order : false}
+          >
+            <TableSortLabel
+              active={orderBy === column.id}
+              direction={order}
+              onClick={createSortHandler(column.id)}
+            >
+              {column.label}
+              {orderBy === column.id && (
+                <span className={classes.visuallyHidden}>
+                  {order === 'desc' ? 'tri descendant' : 'tri ascendant'}
+                </span>
+              )}
+            </TableSortLabel>
+          </TableCell>
+        ))}
+      </TableRow>
+    </TableHead>
+  );
+}
+
+EnhancedTableHead.propTypes = {
+  classes: PropTypes.object.isRequired,
+  onRequestSort: PropTypes.func.isRequired,
+  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
+  orderBy: PropTypes.string.isRequired,
+  rowCount: PropTypes.number.isRequired,
+  columns: PropTypes.array.isRequired
+};
+
+const useToolbarStyles = makeStyles(theme => ({
+  root: {
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(1)
+  },
+  spacer: {
+    flex: '1 1 100%'
+  },
+  title: {
+    flex: '0 0 auto'
+  }
+}));
+
+function EnhancedTableToolbar(props) {
+  const classes = useToolbarStyles();
+  const { title, addComponent } = props;
+  const hasAddComponent = addComponent !== undefined;
+
+  return (
+    <Toolbar className={clsx(classes.root, [classes.highlight])}>
+      <div className={classes.title}>
+        <Typography variant="h6" id="tableTitle">
           {title}
         </Typography>
-      </CardHeader>
-      <CardContent className={classes.content}>
-        <MaterialTable
-          style={{ width: '100%' }}
-          icons={tableIcons}
+      </div>
+      <div className={classes.spacer} />
+      <div>{hasAddComponent && addComponent}</div>
+    </Toolbar>
+  );
+}
+
+EnhancedTableToolbar.propTypes = {
+  title: PropTypes.string.isRequired,
+  addComponent: PropTypes.object
+};
+
+function DataTable(props) {
+  const { classes, rows, columns, title, onRowClick, addComponent } = props;
+  const [order, setOrder] = React.useState('asc');
+  const [orderBy, setOrderBy] = React.useState('id');
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const hasAddComponent = addComponent !== undefined;
+
+  function handleRequestSort(event, property) {
+    const isDesc = orderBy === property && order === 'desc';
+    setOrder(isDesc ? 'asc' : 'desc');
+    setOrderBy(property);
+  }
+
+  function handleChangePage(event, newPage) {
+    setPage(newPage);
+  }
+
+  function handleChangeRowsPerPage(event) {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  }
+
+  const emptyRows =
+    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+
+  return (
+    <div className={classes.root}>
+      <Paper className={classes.paper}>
+        <EnhancedTableToolbar
           title={title}
-          localization={localization}
-          columns={columns}
-          actions={actions}
-          options={options}
-          data={query =>
-            new Promise((resolve, reject) => {
-              return resolve({
-                data: data.data,
-                page: data.page,
-                totalCount: data.totalCount
-              });
-            })
-          }
+          addComponent={hasAddComponent ? addComponent : undefined}
         />
-      </CardContent>
-    </Card>
+        <div className={classes.tableWrapper}>
+          <Table
+            className={classes.table}
+            aria-labelledby="tableTitle"
+            size="small"
+          >
+            <EnhancedTableHead
+              classes={classes}
+              order={order}
+              orderBy={orderBy}
+              onRequestSort={handleRequestSort}
+              rowCount={rows.length}
+              columns={columns}
+            />
+            <TableBody>
+              {stableSort(rows, getSorting(order, orderBy))
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, index) => {
+                  return (
+                    <TableRow
+                      hover
+                      onClick={event => onRowClick.onClick(event, row.id)}
+                      tabIndex={-1}
+                      key={row.id}
+                    >
+                      <TableCell>
+                        <Tooltip title={onRowClick.tooltip}>
+                          <IconButton
+                            onClick={event => onRowClick.onClick(event, row.id)}
+                            aria-label={onRowClick.tooltip}
+                          >
+                            <onRowClick.icon />
+                          </IconButton>
+                        </Tooltip>
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        {row.id}
+                      </TableCell>
+                      {columns
+                        .filter(column => column.id !== 'id')
+                        .map(column => (
+                          <TableCell key={column.id} align="right">
+                            {row[column.id]}
+                          </TableCell>
+                        ))}
+                    </TableRow>
+                  );
+                })}
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 49 * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+        <TablePagination
+          labelRowsPerPage="Lignes par page"
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          backIconButtonProps={{
+            'aria-label': 'page précédente'
+          }}
+          nextIconButtonProps={{
+            'aria-label': 'page suivante'
+          }}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
+      </Paper>
+    </div>
   );
 }
 DataTable.propTypes = {
   classes: PropTypes.object.isRequired,
+  onRowClick: PropTypes.object,
+  addComponent: PropTypes.object,
   title: PropTypes.string.isRequired,
-  data: PropTypes.object.isRequired,
+  rows: PropTypes.array.isRequired,
   actions: PropTypes.array,
-  options: PropTypes.object,
   columns: PropTypes.array.isRequired
 };
 
