@@ -18,6 +18,12 @@ function monDepot(id) {
   });
 }
 
+function ajouterDepot() {
+  return api.then(handleDepots).then(depots => {
+    return depots.ajouterDepot();
+  });
+}
+
 function savePieceJointe(code, file, binary) {
   return api.then(handleDepots).then(depots => {
     return depots.savePieceJointe(code, file, binary);
@@ -33,6 +39,7 @@ function loadPieceJointe(code) {
 const depots = {
   mesDepots,
   monDepot,
+  ajouterDepot,
   savePieceJointe,
   loadPieceJointe
 };

@@ -9,13 +9,18 @@ import routesAuthenticated from 'routes/authenticated';
 import routesUnauthenticated from 'routes/unauthenticated';
 import NotFound from 'pages/NotFound';
 import { env } from 'utils/env-helper';
+import { useUser } from 'context/user-context';
 
 function Routes() {
+  const { isBeta } = useUser();
   return (
     <Router basename={env('REACT_APP_BASENAME')}>
       <Switch>
         {routesAuthenticated
-          .filter(route => route.id !== 'deconnexion')
+          .filter(
+            route =>
+              route.id !== 'deconnexion' && (!isBeta ? !route.beta : true)
+          )
           .map(route => {
             return (
               <Route

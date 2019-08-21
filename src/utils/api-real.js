@@ -64,6 +64,12 @@ function isInstructeur() {
   });
 }
 
+function isBeta() {
+  return new Promise((resolve, reject) => {
+    return resolve(keycloak.hasRealmRole('beat'));
+  });
+}
+
 function getUser() {
   return new Promise((resolve, reject) => {
     return keycloak
@@ -94,6 +100,19 @@ function mesDepots() {
   });
 }
 
+function ajouterDepot(file, binary) {
+  return new Promise((resolve, reject) => {
+    return keycloak
+      .init({ onLoad: 'check-sso' })
+      .success(authenticated => {
+        return resolve(apiHttpClient.post(`/depots`, { file, binary }));
+      })
+      .error(error => {
+        return reject(new Error(error));
+      });
+  });
+}
+
 function savePieceJointe(code, file, binary) {
   return new Promise((resolve, reject) => {
     return keycloak
@@ -115,10 +134,12 @@ const auth = {
   logout,
   getUser,
   isDepositaire,
-  isInstructeur
+  isInstructeur,
+  isBeta
 };
 const depots = {
   mesDepots,
+  ajouterDepot,
   savePieceJointe
 };
 

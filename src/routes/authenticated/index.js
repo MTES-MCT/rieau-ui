@@ -11,13 +11,13 @@ import Cgu from 'pages/Cgu';
 import Aide from 'pages/Aide';
 import AideIcon from '@material-ui/icons/Help';
 import Depots from 'pages/protected/Depots';
-import Depot from 'pages/protected/Depot';
+import Depot from 'pages/protected/Depots/Depot';
 
 const routes = [
   {
     id: 'depots',
     path: '/depots',
-    label: 'Mes dépôts',
+    label: 'Lister',
     icon: SaveAltIcon,
     component: Depots,
     sidebar: true,
@@ -26,7 +26,7 @@ const routes = [
   {
     id: 'depot',
     path: '/depots/:id',
-    label: 'Mon dépôt',
+    label: 'Dépôt',
     icon: SaveAltIcon,
     component: Depot,
     sidebar: false,
@@ -46,7 +46,8 @@ const routes = [
     label: 'Localiser',
     icon: MapIcon,
     component: Localiser,
-    sidebar: true
+    sidebar: true,
+    beta: true
   },
   {
     id: 'communes',
@@ -54,7 +55,8 @@ const routes = [
     label: 'Communes',
     icon: CityIcon,
     component: Communes,
-    sidebar: true
+    sidebar: true,
+    beta: true
   },
   {
     id: 'moncompte',

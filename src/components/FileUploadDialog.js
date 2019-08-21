@@ -39,7 +39,7 @@ const styles = theme => ({
 
 const maxSize = parseInt(env('REACT_APP_MAX_SIZE_UPLOAD_FILE'));
 
-function UploadFile(props) {
+function FileUploadDialog(props) {
   const { handleFile, onClose, fullScreen, classes, pieceJointe } = props;
   const [showDialog, setShowDialog] = useState(true);
   const onDrop = useCallback(
@@ -104,7 +104,11 @@ function UploadFile(props) {
       </AppBar>
       <DialogContent>
         <RootRef rootRef={ref}>
-          <Paper {...rootProps} className={classes.dropzone}>
+          <Paper
+            {...rootProps}
+            className={classes.dropzone}
+            data-cy="file-upload-dropzone"
+          >
             <input {...getInputProps()} />
             {isDragReject ? (
               <p>{`Ce fichier n'est pas acceptable`}</p>
@@ -121,9 +125,9 @@ function UploadFile(props) {
                 )}
               </React.Fragment>
             )}
-            <em>{`(Seuls les fichiers image et pdf de moins de ${formatFileSize(
-              maxSize
-            )} sont acceptés)`}</em>
+            <em>{`(Seuls les fichiers aux formats ${
+              pieceJointe.formats
+            } de moins de ${formatFileSize(maxSize)} sont acceptés)`}</em>
           </Paper>
         </RootRef>
       </DialogContent>
@@ -141,7 +145,7 @@ function UploadFile(props) {
     </Dialog>
   );
 }
-UploadFile.propTypes = {
+FileUploadDialog.propTypes = {
   classes: PropTypes.object.isRequired,
   handleFile: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
@@ -152,4 +156,4 @@ UploadFile.propTypes = {
 export default compose(
   withStyles(styles),
   withMobileDialog()
-)(UploadFile);
+)(FileUploadDialog);

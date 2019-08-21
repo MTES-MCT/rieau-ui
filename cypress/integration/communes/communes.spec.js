@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-context('Localiser allowed', () => {
+context('Communes allowed', () => {
   beforeEach(() => {
     cy.visit('/')
     cy.get('[data-cy=appbar-connexion-btn]').should('be.visible').click()
@@ -14,29 +14,16 @@ context('Localiser allowed', () => {
     }
   })
 
-  it('cy.click() - go to localiser page', () => {
+  it('cy.click() - go to communes page', () => {
     cy.contains("Dépôts").should('be.visible')
     cy.get('[data-cy=appbar-depots-btn]').should('be.visible').click()
     cy.get('[data-cy=menu-item-link-depots]').should('be.visible')
-    cy.get('[data-cy=menu-item-link-localiser]').should('be.visible').click()
-    cy.get('[data-cy=map]').should('be.visible')
-    cy.contains("La commune n'apparaît pas ?").should('be.visible')
-    cy.contains('Déposer').should('be.visible')
-  })
-
-  it('cy.click() - go to chercher adresse marker', () => {
-    cy.contains("Dépôts").should('be.visible')
-    cy.get('[data-cy=appbar-depots-btn]').should('be.visible').click()
-    cy.get('[data-cy=menu-item-link-depots]').should('be.visible')
-    cy.get('[data-cy=menu-item-link-localiser]').should('be.visible').click()
-    cy.get('[data-cy=map]').should('be.visible')
-    cy.contains("Saint-Tropez").should('be.visible').click()
-    cy.get('[data-cy=chercher-adresse-input]').find('input').type('chemin')
-    cy.contains('Chemin des Salins 83990 Saint-Tropez').should('be.visible').click()
+    cy.get('[data-cy=menu-item-link-communes]').should('be.visible').click()
+    cy.contains("Communes partenaires").should('be.visible')
   })
 })
 
-context('Localiser forbidden', () => {
+context('Communes forbidden', () => {
   beforeEach(() => {
     cy.visit('/')
     cy.get('[data-cy=appbar-connexion-btn]').should('be.visible').click()
@@ -50,11 +37,11 @@ context('Localiser forbidden', () => {
     }
   })
 
-  it('cy.click() - go to localiser page', () => {
+  it('cy.click() - go to communes page', () => {
     cy.contains("Dépôts").should('be.visible')
     cy.get('[data-cy=appbar-depots-btn]').should('be.visible').click()
     cy.get('[data-cy=menu-item-link-depots]').should('be.visible')
-    cy.get('[data-cy=menu-item-link-localiser]').should('not.be.visible')
+    cy.get('[data-cy=menu-item-link-communes]').should('not.be.visible')
   })
 })
 

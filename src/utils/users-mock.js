@@ -4,14 +4,14 @@ const users = [
     email: 'jean.martin@monfai.fr',
     firstName: 'Jean',
     lastName: 'Martin',
-    profil: 'depositaire'
+    profils: ['depositaire', 'beta']
   },
   {
     id: 'jacques.dupont',
     email: 'jacques.dupont@monfai.fr',
     firstName: 'Jacques',
     lastName: 'Dupont',
-    profil: 'instructeur'
+    profils: ['instructeur']
   }
 ];
 

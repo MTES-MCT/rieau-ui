@@ -44,7 +44,7 @@ function SideBarMenu(props) {
   const { classes, toggleDrawer } = props;
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const { login, logout } = useAuth();
-  const { isAuthenticated } = useUser();
+  const { isAuthenticated, isBeta } = useUser();
   const moncompte = routesAuthenticated.find(route => route.id === 'moncompte');
   const deconnexion = routesAuthenticated.find(
     route => route.id === 'deconnexion'
@@ -62,7 +62,12 @@ function SideBarMenu(props) {
       {isAuthenticated ? (
         <MenuList>
           {routesAuthenticated
-            .filter(route => route.sidebar && !route.auth)
+            .filter(
+              route =>
+                route.sidebar &&
+                (route.id !== 'depots' ? route.beta === isBeta : true) &&
+                !route.auth
+            )
             .map(route => {
               return (
                 <MenuItemLink

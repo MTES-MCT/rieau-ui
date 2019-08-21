@@ -30,6 +30,12 @@ function isDepositaire() {
   });
 }
 
+function isBeta() {
+  return api.then(handleAuth).then(auth => {
+    return auth.isBeta();
+  });
+}
+
 const login = isApiMock
   ? function(id) {
       return api.then(handleAuth).then(auth => {
@@ -54,7 +60,8 @@ const auth = {
   isAuthenticated,
   getUser,
   isDepositaire,
-  isInstructeur
+  isInstructeur,
+  isBeta
 };
 
 export default auth;

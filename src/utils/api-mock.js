@@ -35,7 +35,7 @@ function isAuthenticated() {
 function isDepositaire() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      return resolve(principal.id === 'jean.martin');
+      return resolve(principal.profils.includes('depositaire'));
     }, waitingTime);
   });
 }
@@ -43,7 +43,15 @@ function isDepositaire() {
 function isInstructeur() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      return resolve(principal.id === 'jacques.dupont');
+      return resolve(principal.profils.includes('instructeur'));
+    }, waitingTime);
+  });
+}
+
+function isBeta() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      return resolve(principal.profils.includes('beta'));
     }, waitingTime);
   });
 }
@@ -62,13 +70,15 @@ let depotsFixtures = [
     id: '0',
     type: 'dp',
     date: '01/01/2019',
-    etat: 'instruction'
+    etat: 'instruction',
+    userId: 'jean.martin'
   },
   {
     id: '1',
     type: 'pcmi',
     date: '01/07/2019',
-    etat: 'incomplet'
+    etat: 'incomplet',
+    userId: 'jean.martin'
   }
 ];
 
@@ -88,6 +98,21 @@ function monDepot(id) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       return resolve(depotsFixtures.find(depot => depot.id === id));
+    }, waitingTime);
+  });
+}
+
+function ajouterDepot() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      return resolve(
+        depotsFixtures.push({
+          id: depotsFixtures.length.toString(),
+          type: 'pcmi',
+          date: new Date().toLocaleDateString(),
+          etat: 'instruction'
+        })
+      );
     }, waitingTime);
   });
 }
@@ -124,11 +149,13 @@ const auth = {
   logout,
   getUser,
   isDepositaire,
-  isInstructeur
+  isInstructeur,
+  isBeta
 };
 const depots = {
   mesDepots,
   monDepot,
+  ajouterDepot,
   savePieceJointe,
   loadPieceJointe
 };

@@ -7,6 +7,7 @@ import MenuItemLink from 'components/MenuItemLink';
 import MenuList from '@material-ui/core/MenuList';
 import compose from 'utils/compose';
 import routesAuthenticated from 'routes/authenticated';
+import { useUser } from 'context/user-context';
 
 const styles = theme => ({
   root: {}
@@ -15,6 +16,7 @@ const styles = theme => ({
 function DepotsMenu(props) {
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState();
+  const { isBeta } = useUser();
 
   function handleMenu(event) {
     setOpen(true);
@@ -36,7 +38,7 @@ function DepotsMenu(props) {
         variant="text"
         data-cy="appbar-depots-btn"
       >
-        {`Mes dépôts`}
+        {`Dépôts`}
       </Button>
       <Menu
         id="depots-menu-appbar"
@@ -56,7 +58,11 @@ function DepotsMenu(props) {
         <MenuList>
           {routesAuthenticated
             .filter(
-              route => route.sidebar && !route.auth && route.id !== 'accueil'
+              route =>
+                route.sidebar &&
+                (route.id !== 'depots' ? route.beta === isBeta : true) &&
+                !route.auth &&
+                route.id !== 'accueil'
             )
             .map(route => {
               return (

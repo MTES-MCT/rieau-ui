@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import UploadFile from 'components/UploadFile';
 import depots from 'utils/depots';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -13,6 +11,7 @@ import FilePreview from 'components/FilePreview';
 import Button from 'components/Button';
 import { useAsync } from 'react-async';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import FileUploadButton from 'components/FileUploadButton';
 
 const styles = theme => ({
   card: {
@@ -51,7 +50,6 @@ async function handleFilePreview(pieceJointe) {
 
 function PieceJointe(props) {
   const { classes, pieceJointe } = props;
-  const [showDropzone, setShowDropzone] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [showPreviewDialog, setShowPreviewDialog] = useState(false);
   const {
@@ -70,23 +68,11 @@ function PieceJointe(props) {
     }
   }, [isSettled, file]);
 
-  function closeDropzone() {
-    setShowDropzone(false);
-  }
-  function handleShowDropzone() {
-    setShowDropzone(true);
-  }
   function closePreviewDialog() {
     setShowPreviewDialog(false);
   }
   function handleShowPreviewDialog() {
     setShowPreviewDialog(true);
-  }
-  function savePieceJointe(code, file, binary) {
-    depots.savePieceJointe(code, file, binary).then(function() {
-      closeDropzone();
-      reload();
-    });
   }
   function title(text, required) {
     var title = text;
@@ -100,22 +86,15 @@ function PieceJointe(props) {
         {pieceJointe.description}
       </CardContent>
       <CardActions disableSpacing className={classes.actions}>
-        <Button
-          className={classes.button}
+        <FileUploadButton
+          iconName="cloud_upload"
+          label="Téléverser"
           variant="outlined"
-          aria-label="téléverser"
-          onClick={handleShowDropzone}
-        >
-          {`Téléverser`}
-          <CloudUploadIcon className={classes.rightIcon} />
-        </Button>
-        {showDropzone && (
-          <UploadFile
-            handleFile={savePieceJointe}
-            onClose={closeDropzone}
-            pieceJointe={pieceJointe}
-          />
-        )}
+          color="inherit"
+          onUploadFile={depots.savePieceJointe}
+          reload={reload}
+          pieceJointe={pieceJointe}
+        />
         {showPreview && (
           <React.Fragment>
             <div className={classes.buttonWrapper}>
@@ -126,6 +105,7 @@ function PieceJointe(props) {
                 aria-label="prévisualiser"
                 onClick={handleShowPreviewDialog}
                 disabled={isLoading}
+                data-cy="piecejointe-preview-btn"
               >
                 {`Prévisualiser`}
                 <VisibilityIcon className={classes.rightIcon} />

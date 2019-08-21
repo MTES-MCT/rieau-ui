@@ -15,13 +15,15 @@ async function handleApiAuth() {
       isAuthenticated,
       isDepositaire: false,
       isInstructeur: false,
+      isBeta: false,
       depots: []
     };
   return {
     user: await auth.getUser(),
     isAuthenticated,
     isDepositaire: await auth.isDepositaire(),
-    isInstructeur: await auth.isInstructeur()
+    isInstructeur: await auth.isInstructeur(),
+    isBeta: await auth.isBeta()
   };
 }
 

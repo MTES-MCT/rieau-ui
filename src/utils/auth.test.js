@@ -5,6 +5,9 @@ test('signin ok', async () => {
   await auth.login('jean.martin');
   expect(await auth.isAuthenticated()).toBe(true);
   expect(await auth.getUser()).toBe(users[0]);
+  expect(await auth.isBeta()).toBe(true);
+  expect(await auth.isDepositaire()).toBe(true);
+  expect(await auth.isInstructeur()).toBe(false);
 });
 test('signout ok', async () => {
   await auth.login('jean.martin');
