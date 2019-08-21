@@ -11,7 +11,9 @@ RUN npm install --production
 COPY .env.sample /app/.env
 COPY env.sh /app
 ENV PUBLIC_URL=___PUBLIC_URL___
-RUN apk update && apk upgrade && apk add --no-cache bash
+RUN apk update 
+RUN apk upgrade 
+RUN apk add --no-cache bash
 RUN npm run build
 
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
@@ -29,6 +31,7 @@ COPY ./docker/entrypoint.sh /usr/local/bin/start
 COPY ./env.sh env.sh
 COPY ./index.sh index.sh
 RUN chmod +x /usr/local/bin/start
-RUN apk update && apk upgrade && apk add --no-cache bash
+RUN apk update && apk upgrade 
+RUN apk add --no-cache bash
 EXPOSE ${SERVER_PORT}
 ENTRYPOINT [ "/bin/bash", "-c", "/usr/local/bin/start" ]
