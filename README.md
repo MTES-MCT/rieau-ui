@@ -20,7 +20,6 @@ Modifier dans le fichier les valeurs en fonction de l'environnement (par exemple
 
 ```shell
 REACT_APP_API_MOCK=true
-REACT_APP_DOMAIN=http://localhost:3000
 PUBLIC_URL=http://localhost:3000
 ```
 
@@ -47,6 +46,20 @@ npm run lint
 ```shell
 npm run build
 npm run analyze
+```
+
+### Gestion des versions
+
+Avec l'outil [npm-version](https://docs.npmjs.com/cli/version), par exemple pour l'ajout d'une fonctionnalité:
+
+```shell
+npm version minor -m "New feature..."
+```
+
+Oui bump de version
+
+```shell
+npm version 0.2.0 -m "Bump v0.2.0"
 ```
 
 ### Tests unitaires
@@ -81,11 +94,10 @@ REACT_APP_API_MOCK=true npm run test:integration
 
 Si on souhaite les exécuter avec l'API réelle, on exécute au préalable la stack du backend (cf. [rieau-infra](https://github.com/MTES-MCT/rieau-infra/blob/master/README.md)).
 
-Puis on configure le fichier `.env` afin d'appeler le backend: 
+Puis on configure le fichier `.env` afin d'appeler le backend:
 
 ```shell
 REACT_APP_API_MOCK=false
-REACT_APP_DOMAIN=http://localhost:3000
 PUBLIC_URL=http://localhost:3000
 REACT_APP_API_URL=http://localhost:5000
 REACT_APP_SSO_APP_URL=http://localhost:8080/auth
@@ -162,3 +174,12 @@ docker run -p 3000:3000 -e SERVER_PORT=3000 -e PUBLIC_URL=http://rieau.docker.lo
 Seule `REACT_APP_BASENAME` n'est pas modifiable à l'exécution mais seulement au build (car utilisée par nginx comme répertoire).
 
 Depuis le navigateur: [http://localhost:3000](http://localhost:3000).
+
+* Publier:
+
+Tagger une version semver et pousser la sur le registry:
+
+```shell
+docker tag tristanrobert/rieau-ui:[digestid] tristanrobert/rieau-ui:[semver]
+docker push tristanrobert/rieau-ui:[semver]
+```
