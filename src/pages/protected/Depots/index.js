@@ -66,7 +66,7 @@ function Depots(props) {
             },
             { label: 'État', id: 'etat', numeric: false, disablePadding: false }
           ]}
-          rows={depots}
+          rows={depots || []}
           onRowClick={{
             icon: () => <VisibilityIcon />,
             tooltip: 'Voir le dépôt',

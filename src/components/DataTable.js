@@ -76,6 +76,14 @@ const styles = theme => ({
     position: 'absolute',
     top: 20,
     width: 1
+  },
+  nodata: {
+    [theme.breakpoints.up('md')]: {
+      textAlign: 'center'
+    },
+    [theme.breakpoints.down('sm')]: {
+      textAlign: 'left'
+    }
   }
 });
 
@@ -208,42 +216,56 @@ function DataTable(props) {
               columns={columns}
             />
             <TableBody>
-              {stableSort(rows, getSorting(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  return (
-                    <TableRow
-                      hover
-                      onClick={event => onRowClick.onClick(event, row.id)}
-                      tabIndex={-1}
-                      key={row.id}
-                    >
-                      <TableCell>
-                        <Tooltip title={onRowClick.tooltip}>
-                          <IconButton
-                            onClick={event => onRowClick.onClick(event, row.id)}
-                            aria-label={onRowClick.tooltip}
-                          >
-                            <onRowClick.icon />
-                          </IconButton>
-                        </Tooltip>
-                      </TableCell>
-                      <TableCell component="th" scope="row">
-                        {row.id}
-                      </TableCell>
-                      {columns
-                        .filter(column => column.id !== 'id')
-                        .map(column => (
-                          <TableCell key={column.id} align="right">
-                            {row[column.id]}
-                          </TableCell>
-                        ))}
-                    </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
+              {rows &&
+                rows.length > 0 &&
+                stableSort(rows, getSorting(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row, index) => {
+                    return (
+                      <TableRow
+                        hover
+                        onClick={event => onRowClick.onClick(event, row.id)}
+                        tabIndex={-1}
+                        key={row.id}
+                      >
+                        <TableCell>
+                          <Tooltip title={onRowClick.tooltip}>
+                            <IconButton
+                              onClick={event =>
+                                onRowClick.onClick(event, row.id)
+                              }
+                              aria-label={onRowClick.tooltip}
+                            >
+                              <onRowClick.icon />
+                            </IconButton>
+                          </Tooltip>
+                        </TableCell>
+                        <TableCell component="th" scope="row">
+                          {row.id}
+                        </TableCell>
+                        {columns
+                          .filter(column => column.id !== 'id')
+                          .map(column => (
+                            <TableCell key={column.id} align="right">
+                              {row[column.id]}
+                            </TableCell>
+                          ))}
+                      </TableRow>
+                    );
+                  })}
+              {rows && rows.length < 1 && (
                 <TableRow style={{ height: 49 * emptyRows }}>
-                  <TableCell colSpan={6} />
+                  <TableCell
+                    colSpan={columns.length + 1}
+                    className={classes.nodata}
+                  >
+                    {'Aucune donnée'}
+                  </TableCell>
+                </TableRow>
+              )}
+              {rows && rows.length > 0 && emptyRows > 0 && (
+                <TableRow style={{ height: 49 * emptyRows }}>
+                  <TableCell colSpan={columns.length + 1} />
                 </TableRow>
               )}
             </TableBody>
