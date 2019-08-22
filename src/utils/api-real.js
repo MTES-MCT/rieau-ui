@@ -1,4 +1,4 @@
-import AxiosKeycloak from 'axios-keycloak';
+import AxiosKeycloak from 'utils/axios-keycloak';
 import { env } from 'utils/env-helper';
 
 // API réelle
@@ -66,7 +66,7 @@ function isInstructeur() {
 
 function isBeta() {
   return new Promise((resolve, reject) => {
-    return resolve(keycloak.hasRealmRole('beat'));
+    return resolve(keycloak.hasRealmRole('beta'));
   });
 }
 
