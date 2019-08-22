@@ -28,7 +28,11 @@ const styles = theme => ({
 
 function MonCompte(props) {
   const { classes } = props;
-  const { user, isDepositaire, isInstructeur } = useUser();
+  const { user, isDepositaire, isInstructeur, isBeta } = useUser();
+  const profils = [];
+  isDepositaire && profils.push('depositaire');
+  isInstructeur && profils.push('instructeur');
+  isBeta && profils.push('beta');
   return (
     <React.Fragment>
       <AppAppBar />
@@ -49,14 +53,10 @@ function MonCompte(props) {
               />
               <CardContent>
                 <Typography variant="h6" component="h2">
-                  {'Profil'}
+                  {'Profils'}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  {isDepositaire
-                    ? 'depositaire'
-                    : isInstructeur
-                    ? 'instructeur'
-                    : ''}
+                  {profils.toString()}
                 </Typography>
                 <Typography variant="h6" component="h2">
                   {'Email'}
