@@ -4,7 +4,6 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import { cleanup, render, waitForElement } from '@testing-library/react';
 import Localiser from 'pages/protected/Localiser';
-import Communes from 'pages/Communes';
 import Cgu from 'pages/Cgu';
 import Aide from 'pages/Aide';
 import Home from 'pages/Home';
@@ -61,13 +60,6 @@ test('rendering CGU component', async () => {
   const { queryAllByText } = renderWithRouter(<Cgu />, { route });
   await waitForElement(() => queryAllByText('Aide'));
   expect(queryAllByText('Cgu')).toBeTruthy();
-});
-
-test('rendering Communes component', async () => {
-  const route = '/communes';
-  const { queryAllByText } = renderWithRouter(<Communes />, { route });
-  await waitForElement(() => queryAllByText('Communes'));
-  expect(queryAllByText('Communes')).toBeTruthy();
 });
 
 test('rendering Localiser component', async () => {

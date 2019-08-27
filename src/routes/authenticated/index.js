@@ -3,10 +3,8 @@ import MonCompte from 'pages/protected/MonCompte';
 import SignOutIcon from '@material-ui/icons/LockOpen';
 import PiecesJointes from 'pages/protected/PiecesJointes';
 import Localiser from 'pages/protected/Localiser';
-import Communes from 'pages/Communes';
 import MapIcon from '@material-ui/icons/Map';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
-import CityIcon from '@material-ui/icons/LocationCity';
 import Cgu from 'pages/Cgu';
 import Aide from 'pages/Aide';
 import AideIcon from '@material-ui/icons/Help';
@@ -46,15 +44,6 @@ const routes = [
     label: 'Localiser',
     icon: MapIcon,
     component: Localiser,
-    sidebar: true,
-    beta: true
-  },
-  {
-    id: 'communes',
-    path: '/communes',
-    label: 'Communes',
-    icon: CityIcon,
-    component: Communes,
     sidebar: true,
     beta: true
   },
