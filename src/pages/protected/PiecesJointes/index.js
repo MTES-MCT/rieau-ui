@@ -30,7 +30,13 @@ async function handleDepot({ id }) {
 function PiecesJointes(props) {
   const { classes, match } = props;
   const depotId = match.params.depotId;
-  const { data = { depot: null }, error, isLoading, isRejected } = useAsync({
+  const {
+    data = { depot: null },
+    error,
+    setError,
+    isLoading,
+    isRejected
+  } = useAsync({
     promiseFn: handleDepot,
     id: depotId
   });
@@ -51,7 +57,11 @@ function PiecesJointes(props) {
         <Grid container className={classes.grid}>
           <Grid item xs={12}>
             {liste(depot.type).map(pieceJointe => (
-              <PieceJointe key={pieceJointe.code} pieceJointe={pieceJointe} />
+              <PieceJointe
+                key={pieceJointe.code}
+                pieceJointe={pieceJointe}
+                setError={setError}
+              />
             ))}
           </Grid>
         </Grid>

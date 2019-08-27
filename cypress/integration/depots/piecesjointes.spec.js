@@ -23,7 +23,7 @@ context('Pieces jointes deposees', () => {
     cy.get('[data-cy=file-upload-btn]').first().should('be.visible').click()
     cy.contains("Téléverser un fichier").should('be.visible')
     cy.get('[data-cy=file-upload-dropzone]').first().should('be.visible').then(() => {
-      cy.dropFixtureInDropZone('sample.pdf', 'application/pdf', '[data-cy=file-upload-dropzone]')
+      cy.dropFixtureInDropZone('cerfa_13703_PCMI.pdf', 'application/pdf', '[data-cy=file-upload-dropzone]')
       cy.get('[data-cy=piecejointe-preview-btn]').first().should('be.visible').click()
       cy.contains("Aperçu").should('be.visible')
     })
@@ -54,7 +54,7 @@ context('Pieces jointes deposees', () => {
     cy.get('[data-cy=file-upload-btn]').first().should('be.visible').click()
     cy.contains("Téléverser un fichier").should('be.visible')
     cy.get('[data-cy=file-upload-dropzone]').first().should('be.visible').then(() => {
-      cy.dropFixtureInDropZone('sample.pdf', 'application/pdf', '[data-cy=file-upload-dropzone]')
+      cy.dropFixtureInDropZone('cerfa_13703_PCMI.pdf', 'application/pdf', '[data-cy=file-upload-dropzone]')
       cy.get('[data-cy=piecejointe-preview-btn]').first().should('be.visible').click()
     })
   })

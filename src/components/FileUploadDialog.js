@@ -40,7 +40,7 @@ const styles = theme => ({
 const maxSize = parseInt(env('REACT_APP_MAX_SIZE_UPLOAD_FILE'));
 
 function FileUploadDialog(props) {
-  const { handleFile, onClose, fullScreen, classes, pieceJointe } = props;
+  const { handleFile, onClose, fullScreen, classes, acceptedFormats } = props;
   const [showDialog, setShowDialog] = useState(true);
   const onDrop = useCallback(
     acceptedFiles => {
@@ -50,12 +50,12 @@ function FileUploadDialog(props) {
         reader.onerror = () => window.console.log('file reading has failed');
         reader.readAsDataURL(file);
         reader.onload = () => {
-          handleFile(pieceJointe.code, file, reader.result);
+          handleFile(file, reader.result);
         };
         setShowDialog(false);
       });
     },
-    [handleFile, pieceJointe]
+    [handleFile]
   );
   const {
     getRootProps,
@@ -63,7 +63,7 @@ function FileUploadDialog(props) {
     isDragReject,
     rejectedFiles
   } = useDropzone({
-    accept: pieceJointe.formats,
+    accept: acceptedFormats,
     maxSize: maxSize,
     onDrop: onDrop
   });
@@ -125,9 +125,9 @@ function FileUploadDialog(props) {
                 )}
               </React.Fragment>
             )}
-            <em>{`(Seuls les fichiers aux formats ${
-              pieceJointe.formats
-            } de moins de ${formatFileSize(maxSize)} sont acceptés)`}</em>
+            <em>{`(Seuls les fichiers aux formats ${acceptedFormats} de moins de ${formatFileSize(
+              maxSize
+            )} sont acceptés)`}</em>
           </Paper>
         </RootRef>
       </DialogContent>
@@ -150,7 +150,7 @@ FileUploadDialog.propTypes = {
   handleFile: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   fullScreen: PropTypes.bool.isRequired,
-  pieceJointe: PropTypes.object.isRequired
+  acceptedFormats: PropTypes.string.isRequired
 };
 
 export default compose(

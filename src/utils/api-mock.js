@@ -1,5 +1,4 @@
 import users from './users-mock';
-
 // API de test uniquement
 
 let principal = null;
@@ -102,24 +101,47 @@ function monDepot(id) {
   });
 }
 
-function ajouterDepot() {
+function typeFromCerfa(fileName) {
+  let type = '';
+  if (fileName && fileName.length > 0) {
+    if (fileName.toUpperCase().includes('13406_PCMI')) type = 'pcmi';
+    if (fileName.toUpperCase().includes('13703_DPMI')) type = 'dp';
+  }
+  return type;
+}
+
+function cerfaError(file) {
+  return `Fichier CERFA ${file.name} non reconnu. Seuls les fichiers nommés cerfa_13406_PCMI.pdf ou cerfa_13703_DPMI.pdf sont reconnus.`;
+}
+
+function ajouterDepot(file, binary) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      return resolve(
-        depotsFixtures.push({
-          id: depotsFixtures.length.toString(),
-          type: 'pcmi',
-          date: new Date().toLocaleDateString(),
-          etat: 'instruction'
-        })
-      );
+      const type = typeFromCerfa(file.name);
+      if (type === '') return reject(new Error(cerfaError(file)));
+      const depot = {
+        id: depotsFixtures.length.toString(),
+        type: type,
+        date: new Date().toLocaleDateString(),
+        etat: 'instruction',
+        userId: principal.id
+      };
+      depotsFixtures.push(depot);
+      return resolve(depot);
     }, waitingTime);
   });
+}
+
+function checkCode(code, file) {
+  if (!file.name) return true; // hack because cypress dropzone command have undefined file.name
+  const type = typeFromCerfa(file.name);
+  return code.includes('cerfa') ? code === type + 'cerfa' : true;
 }
 
 function savePieceJointe(code, file, binary) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
+      if (!checkCode(code, file)) return reject(new Error(cerfaError(file)));
       return resolve(
         sessionStorage.setItem(
           code,

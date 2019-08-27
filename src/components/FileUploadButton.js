@@ -19,13 +19,14 @@ const styles = theme => ({
 function FileUploadButton(props) {
   const {
     classes,
-    pieceJointe,
+    acceptedFormats,
     iconName,
     label,
     variant,
     color,
     onUploadFile,
-    reload
+    reload,
+    setError
   } = props;
   const [showDropzone, setShowDropzone] = useState(false);
   function closeDropzone() {
@@ -35,10 +36,12 @@ function FileUploadButton(props) {
     setShowDropzone(true);
   }
   function handleFile(code, file, binary) {
-    onUploadFile(code, file, binary).then(function() {
-      closeDropzone();
-      reload();
-    });
+    onUploadFile(code, file, binary)
+      .then(function() {
+        closeDropzone();
+        reload();
+      })
+      .catch(error => setError(error));
   }
   return (
     <React.Fragment>
@@ -57,7 +60,7 @@ function FileUploadButton(props) {
         <FileUploadDialog
           handleFile={handleFile}
           onClose={closeDropzone}
-          pieceJointe={pieceJointe}
+          acceptedFormats={acceptedFormats}
         />
       )}
     </React.Fragment>
@@ -65,13 +68,14 @@ function FileUploadButton(props) {
 }
 FileUploadButton.propTypes = {
   classes: PropTypes.object.isRequired,
-  pieceJointe: PropTypes.object.isRequired,
+  acceptedFormats: PropTypes.string.isRequired,
   variant: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   iconName: PropTypes.string.isRequired,
   onUploadFile: PropTypes.func.isRequired,
-  reload: PropTypes.func
+  reload: PropTypes.func.isRequired,
+  setError: PropTypes.func.isRequired
 };
 
 export default compose(

@@ -38,7 +38,6 @@ Cypress.Commands.add(
           items: files.map(file => ({
             kind: "file",
             type: file.type,
-            name: fixturePath,
             getAsFile: () => file
           })),
           types: ["Files"]

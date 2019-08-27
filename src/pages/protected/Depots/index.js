@@ -25,6 +25,7 @@ function Depots(props) {
       depots: []
     },
     error,
+    setError,
     isRejected,
     isLoading,
     isFulfilled,
@@ -34,17 +35,15 @@ function Depots(props) {
   });
   const { history } = props;
   const { isBeta } = useUser();
+  async function handleAjouterDepot(file, binary) {
+    const depot = await depotsApi.ajouterDepot(file, binary);
+    const code = depot.type + 'cerfa';
+    await depotsApi.savePieceJointe(code, file, binary);
+  }
   if (isRejected) return <Error error={error.message} />;
   if (isLoading) return <LinearProgress />;
   if (isFulfilled) {
     const { depots } = data;
-    const pieceJointe = {
-      code: 'depot',
-      titre: 'Dépôt',
-      description: 'Nouveau dépôt issu de ADAU',
-      formats: 'application/zip',
-      required: true
-    };
     return (
       <React.Fragment>
         <AppAppBar />
@@ -79,9 +78,10 @@ function Depots(props) {
                 color="secondary"
                 label="Ajouter"
                 variant="contained"
-                onUploadFile={depotsApi.ajouterDepot}
+                onUploadFile={handleAjouterDepot}
                 reload={reload}
-                pieceJointe={pieceJointe}
+                setError={setError}
+                acceptedFormats="application/pdf"
               />
             ) : (
               undefined

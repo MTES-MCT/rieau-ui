@@ -18,9 +18,9 @@ function monDepot(id) {
   });
 }
 
-function ajouterDepot() {
+function ajouterDepot(file, binary) {
   return api.then(handleDepots).then(depots => {
-    return depots.ajouterDepot();
+    return depots.ajouterDepot(file, binary);
   });
 }
 

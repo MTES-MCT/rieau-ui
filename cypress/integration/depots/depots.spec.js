@@ -24,12 +24,12 @@ context('Dépôts', () => {
     cy.get('[data-cy=file-upload-btn]').should('be.visible').click()
     cy.contains("Téléverser un fichier").should('be.visible')
     cy.get('[data-cy=file-upload-dropzone]').first().should('be.visible').then(function() {
-      cy.dropFixtureInDropZone('sample.pdf', 'application/pdf', '[data-cy=file-upload-dropzone]')
+      cy.dropFixtureInDropZone('sample.pdf.zip', 'application/zip', '[data-cy=file-upload-dropzone]')
       cy.contains("Fichier rejeté").should('be.visible')
-      cy.contains("application/zip").should('be.visible')
+      cy.contains("application/pdf").should('be.visible')
     })
     cy.get('[data-cy=file-upload-dropzone]').first().should('be.visible').then(function() {
-      cy.dropFixtureInDropZone('sample.pdf.zip', 'application/zip', '[data-cy=file-upload-dropzone]')
+      cy.dropFixtureInDropZone('cerfa_13703_PCMI.pdf', 'application/pdf', '[data-cy=file-upload-dropzone]')
       cy.contains("Dépôts").should('be.visible')
     })
   })

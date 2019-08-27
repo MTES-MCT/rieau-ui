@@ -97,8 +97,8 @@ function Snackbar(props) {
   return (
     <MuiSnackbar
       anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'left'
+        vertical: 'up',
+        horizontal: 'center'
       }}
       open={open}
       className={classes.root}

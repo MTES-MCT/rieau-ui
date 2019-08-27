@@ -12,6 +12,7 @@ import Button from 'components/Button';
 import { useAsync } from 'react-async';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FileUploadButton from 'components/FileUploadButton';
+import Error from 'pages/Error';
 
 const styles = theme => ({
   card: {
@@ -49,7 +50,7 @@ async function handleFilePreview(pieceJointe) {
 }
 
 function PieceJointe(props) {
-  const { classes, pieceJointe } = props;
+  const { classes, pieceJointe, setError } = props;
   const [showPreview, setShowPreview] = useState(false);
   const [showPreviewDialog, setShowPreviewDialog] = useState(false);
   const {
@@ -58,6 +59,8 @@ function PieceJointe(props) {
     },
     isSettled,
     isLoading,
+    isRejected,
+    error,
     reload
   } = useAsync({ promiseFn: handleFilePreview, code: pieceJointe.code });
   const { file } = data;
@@ -74,11 +77,16 @@ function PieceJointe(props) {
   function handleShowPreviewDialog() {
     setShowPreviewDialog(true);
   }
+  async function handleSavePieceJointe(file, binary) {
+    await depots.savePieceJointe(pieceJointe.code, file, binary);
+  }
   function title(text, required) {
     var title = text;
     if (required) text += '(* obligatoire)';
     return title;
   }
+
+  if (isRejected) return <Error error={error.message} />;
   return (
     <Card className={classes.card}>
       <CardHeader title={title(pieceJointe.titre, pieceJointe.required)} />
@@ -91,9 +99,10 @@ function PieceJointe(props) {
           label="Téléverser"
           variant="outlined"
           color="inherit"
-          onUploadFile={depots.savePieceJointe}
+          onUploadFile={handleSavePieceJointe}
           reload={reload}
-          pieceJointe={pieceJointe}
+          setError={setError}
+          acceptedFormats={pieceJointe.formats}
         />
         {showPreview && (
           <React.Fragment>
@@ -129,7 +138,8 @@ function PieceJointe(props) {
 }
 PieceJointe.propTypes = {
   classes: PropTypes.object.isRequired,
-  pieceJointe: PropTypes.object.isRequired
+  pieceJointe: PropTypes.object.isRequired,
+  setError: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(PieceJointe);
