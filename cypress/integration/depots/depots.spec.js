@@ -27,11 +27,10 @@ context('Dépôts', () => {
       cy.dropFixtureInDropZone('sample.pdf.zip', 'application/zip', '[data-cy=file-upload-dropzone]')
       cy.contains("Fichier rejeté").should('be.visible')
       cy.contains("application/pdf").should('be.visible')
-    })
-    cy.get('[data-cy=file-upload-dropzone]').first().should('be.visible').then(function() {
       cy.dropFixtureInDropZone('cerfa_13703_PCMI.pdf', 'application/pdf', '[data-cy=file-upload-dropzone]')
-      cy.contains("Dépôts").should('be.visible')
     })
+    cy.contains("Dépôts").should('be.visible')
+    
   })
 })
 
