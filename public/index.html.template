@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta name="robots" content="none,noarchive,nocache" />
     <link rel="shortcut icon" href="___PUBLIC_URL___/favicon.ico" />
     <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no" />
     <meta name="theme-color" content="#000000" />
