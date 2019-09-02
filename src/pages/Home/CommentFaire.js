@@ -77,7 +77,7 @@ function CommentFaire(props) {
           className={classes.title}
           component="h2"
         >
-          Comment faire ?
+          Comment cela se ferait ?
         </Typography>
         <div>
           <Grid container spacing={5}>
@@ -99,7 +99,12 @@ function CommentFaire(props) {
                 <div className={classes.number}>2.</div>
                 <LockIcon alt="people" className={classes.icon} />
                 <Typography variant="h5" align="center">
-                  {'Se connecter dans RIEAU'}
+                  {'Se connecter dans RIEAU.'}
+                </Typography>
+                <Typography variant="body2" align="center">
+                  {
+                    'Seules les personnes habilitées peuvent accèder aux fonctionnalités à tester. Les dépôts ne sont pas encore possible sur cette version.'
+                  }
                 </Typography>
               </div>
             </Grid>
