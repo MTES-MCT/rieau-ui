@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta name="robots" content="none,noarchive,nocache" />
     <link rel="shortcut icon" href="https://mtes-mct.github.io/rieau-ui/favicon.ico" />
     <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no" />
     <meta name="theme-color" content="#000000" />
@@ -11,7 +12,7 @@
     integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
     crossorigin=""/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />  
-   <title>RIE'AU</title>
+   <title>RIE'AU (BETA)</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

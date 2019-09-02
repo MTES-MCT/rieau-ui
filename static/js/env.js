@@ -1,7 +1,7 @@
 window.env = {
-  REACT_APP_NAME: "RIE'AU",
+  REACT_APP_NAME: "RIE'AU (BETA)",
   REACT_APP_DESCRIPTION: "Réception, Informations et Échanges pour les Autorisations d’Urbanisme",
-  REACT_APP_VISION: "Suivre l'avancement de ses demandes d'autorisation d'urbanisme",
+  REACT_APP_VISION: "Version de test uniquement qui permettra à terme de suivre l'avancement de ses demandes d'autorisation d'urbanisme.",
   REACT_APP_API_MOCK: "1",
   REACT_APP_BASENAME: "/",
   PUBLIC_URL: "https://mtes-mct.github.io/rieau-ui",
