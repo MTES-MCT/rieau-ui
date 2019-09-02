@@ -94,7 +94,7 @@ jobs:
           environment:
             - REACT_APP_API_MOCK: true
             - PUBLIC_URL: https://mtes-mct.github.io/rieau-ui
-            - REACT_APP_NAME: "RIE'AU"
+            - REACT_APP_NAME: "RIE'AU (BETA)"
           command: |
             npm run build:env
             npm run index:env
@@ -114,7 +114,7 @@ jobs:
           environment: 
             - REACT_APP_API_MOCK: true
             - PUBLIC_URL: ___PUBLIC_URL___
-            - REACT_APP_NAME: "RIE'AU"
+            - REACT_APP_NAME: "RIE'AU (BETA)"
           command: |
             if [[ -z "$DOCKERHUB_USER" || -z "$DOCKERHUB_PASSWORD" ]]; then
               echo "Missing DOCKERHUB_USER or DOCKERHUB_PASSWORD environment variables!"

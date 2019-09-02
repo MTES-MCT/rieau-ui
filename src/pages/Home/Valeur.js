@@ -46,6 +46,18 @@ function Valeur(props) {
     <section className={classes.root}>
       <Container className={classes.container}>
         <Grid container spacing={1}>
+          <Grid item xs={12} md={12}>
+            <div className={classes.item}>
+              <Typography
+                variant="h4"
+                marked="center"
+                className={classes.title}
+                component="h2"
+              >
+                Les objectifs visés
+              </Typography>
+            </div>
+          </Grid>
           <Grid item xs={12} md={4}>
             <div className={classes.item}>
               <EuroSymbol className={classes.image} />

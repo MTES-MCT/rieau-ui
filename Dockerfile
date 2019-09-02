@@ -20,7 +20,7 @@ RUN npm run build
 FROM nginx:1.17-alpine
 COPY docker/nginx.conf.template /etc/nginx/conf.d/default.conf.template
 ARG REACT_APP_BASENAME=/
-ENV REACT_APP_NAME="RIE'AU"
+ENV REACT_APP_NAME="RIE'AU (BETA)"
 ENV SERVER_PORT=3000
 ENV REACT_APP_API_URL=http://localhost:5000
 COPY --from=build-stage /app/build/ /usr/share/nginx/html${REACT_APP_BASENAME}
