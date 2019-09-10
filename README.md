@@ -56,7 +56,7 @@ Avec l'outil [npm-version](https://docs.npmjs.com/cli/version), par exemple pour
 npm version minor -m "New feature..."
 ```
 
-Oui bump de version
+Bump de version
 
 ```shell
 npm version 0.2.0 -m "Bump v0.2.0"
