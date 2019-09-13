@@ -66,7 +66,7 @@ function Valeur(props) {
               </Typography>
               <Typography variant="h5">
                 {
-                  'Fini les impressions papiers en plusieurs exemplaires et les courriers recommandés.'
+                  'En finir avec les impressions papier en plusieurs exemplaires et les courriers recommandés.'
                 }
               </Typography>
             </div>
@@ -79,7 +79,7 @@ function Valeur(props) {
               </Typography>
               <Typography variant="h5">
                 {
-                  "Fini les délais supplémentaires d'expédition et d'accusé de réception par courrier postal."
+                  'En finir avec les délais de transmission par voie postale et les temps de déplacements en mairire.'
                 }
               </Typography>
             </div>
@@ -92,7 +92,7 @@ function Valeur(props) {
               </Typography>
               <Typography variant="h5">
                 {
-                  "Suivre l'état de sa demande et échanger directement avec les instructeurs."
+                  "Suivre l'état d'avancement de sa demande et échanger directement avec les instructeurs."
                 }
               </Typography>
             </div>
