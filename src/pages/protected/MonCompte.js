@@ -28,9 +28,9 @@ const styles = theme => ({
 
 function MonCompte(props) {
   const { classes } = props;
-  const { user, isDepositaire, isInstructeur, isBeta } = useUser();
+  const { user, isDeposant, isInstructeur, isBeta } = useUser();
   const profils = [];
-  isDepositaire && profils.push('depositaire');
+  isDeposant && profils.push('deposant');
   isInstructeur && profils.push('instructeur');
   isBeta && profils.push('beta');
   return (

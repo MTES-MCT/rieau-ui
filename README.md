@@ -111,7 +111,7 @@ Enfin on exécute les tests en précisant que l'API est réelle:
 REACT_APP_API_MOCK=false npm run test:integration
 ```
 
-Ou pour les éditer avec le studio: 
+Ou pour les éditer avec le studio:
 
 ```shell
 REACT_APP_API_MOCK=false npm run cypress:open

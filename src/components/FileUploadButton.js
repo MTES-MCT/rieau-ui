@@ -35,8 +35,8 @@ function FileUploadButton(props) {
   function handleShowDropzone() {
     setShowDropzone(true);
   }
-  function handleFile(code, file, binary) {
-    onUploadFile(code, file, binary)
+  function handleFile(dossierId, numero, formData) {
+    onUploadFile(dossierId, numero, formData)
       .then(function() {
         closeDropzone();
         reload();

@@ -15,7 +15,7 @@ context('Viewport', () => {
     cy.get('[data-cy=appbar-connexion-btn]').should('not.be.visible')
     cy.get('[data-cy=hamburger-menu]').should('be.visible').click()    
     if (cy.isApiMock()) {
-      cy.get('[data-cy=menu-item-btn-connexion-depositaire]').should('be.visible')
+      cy.get('[data-cy=menu-item-btn-connexion-deposant]').should('be.visible')
     } else {
       cy.get('[data-cy=menu-item-btn-connexion]').should('be.visible')
     }

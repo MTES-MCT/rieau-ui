@@ -18,15 +18,15 @@ function monDepot(id) {
   });
 }
 
-function ajouterDepot(file, binary) {
+function ajouterDepot(formData) {
   return api.then(handleDepots).then(depots => {
-    return depots.ajouterDepot(file, binary);
+    return depots.ajouterDepot(formData);
   });
 }
 
-function savePieceJointe(code, file, binary) {
+function savePieceJointe(dossierId, code, formData) {
   return api.then(handleDepots).then(depots => {
-    return depots.savePieceJointe(code, file, binary);
+    return depots.savePieceJointe(dossierId, code, formData);
   });
 }
 

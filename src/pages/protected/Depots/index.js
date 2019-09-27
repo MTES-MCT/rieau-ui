@@ -35,10 +35,10 @@ function Depots(props) {
   });
   const { history } = props;
   const { isBeta } = useUser();
-  async function handleAjouterDepot(file, binary) {
-    const depot = await depotsApi.ajouterDepot(file, binary);
+  async function handleAjouterDepot(dossierId, numero, formData) {
+    const depot = await depotsApi.ajouterDepot(formData);
     const code = depot.type + 'cerfa';
-    await depotsApi.savePieceJointe(code, file, binary);
+    await depotsApi.savePieceJointe(dossierId, code, formData);
   }
   if (isRejected) return <Error error={error.message} />;
   if (isLoading) return <LinearProgress />;

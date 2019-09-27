@@ -110,12 +110,12 @@ function SideBarMenu(props) {
                 onClick={function(event) {
                   return login('jean.martin');
                 }}
-                data-cy="menu-item-btn-connexion-depositaire"
+                data-cy="menu-item-btn-connexion-deposant"
               >
                 <ListItemIcon>
                   <SignInIcon />
                 </ListItemIcon>
-                {`Connexion Dépositaire`}
+                {`Connexion Déposant`}
               </MenuItem>
               <MenuItem
                 button

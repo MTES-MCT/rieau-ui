@@ -8,20 +8,22 @@ import Error from 'pages/Error';
 const AuthContext = React.createContext();
 
 async function handleApiAuth() {
+  console.log('handleApiAuth');
   const isAuthenticated = await auth.isAuthenticated();
+  console.log('isAuthenticated=' + isAuthenticated);
   if (!isAuthenticated)
     return {
       user: null,
       isAuthenticated,
-      isDepositaire: false,
+      isDeposant: false,
       isInstructeur: false,
       isBeta: false,
-      depots: []
+      dossiers: []
     };
   return {
     user: await auth.getUser(),
     isAuthenticated,
-    isDepositaire: await auth.isDepositaire(),
+    isDeposant: await auth.isDeposant(),
     isInstructeur: await auth.isInstructeur(),
     isBeta: await auth.isBeta()
   };

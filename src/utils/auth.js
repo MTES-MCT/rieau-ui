@@ -24,9 +24,9 @@ function isInstructeur() {
   });
 }
 
-function isDepositaire() {
+function isDeposant() {
   return api.then(handleAuth).then(auth => {
-    return auth.isDepositaire();
+    return auth.isDeposant();
   });
 }
 
@@ -59,7 +59,7 @@ const auth = {
   logout,
   isAuthenticated,
   getUser,
-  isDepositaire,
+  isDeposant,
   isInstructeur,
   isBeta
 };

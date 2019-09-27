@@ -31,10 +31,10 @@ function isAuthenticated() {
   });
 }
 
-function isDepositaire() {
+function isDeposant() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      return resolve(principal.profils.includes('depositaire'));
+      return resolve(principal.profils.includes('DEPOSANT'));
     }, waitingTime);
   });
 }
@@ -42,7 +42,7 @@ function isDepositaire() {
 function isInstructeur() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      return resolve(principal.profils.includes('instructeur'));
+      return resolve(principal.profils.includes('INSTRUCTEUR'));
     }, waitingTime);
   });
 }
@@ -50,7 +50,7 @@ function isInstructeur() {
 function isBeta() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      return resolve(principal.profils.includes('beta'));
+      return resolve(principal.profils.includes('BETA'));
     }, waitingTime);
   });
 }
@@ -114,11 +114,11 @@ function cerfaError(file) {
   return `Fichier CERFA ${file.name} non reconnu. Seuls les fichiers nommés cerfa_13406_PCMI.pdf ou cerfa_13703_DPMI.pdf sont reconnus.`;
 }
 
-function ajouterDepot(file, binary) {
+function ajouterDepot(formData) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const type = typeFromCerfa(file.name);
-      if (type === '') return reject(new Error(cerfaError(file)));
+      const type = typeFromCerfa(formData.name);
+      if (type === '') return reject(new Error(cerfaError(formData)));
       const depot = {
         id: depotsFixtures.length.toString(),
         type: type,
@@ -138,18 +138,19 @@ function checkCode(code, file) {
   return code.includes('cerfa') ? code === type + 'cerfa' : true;
 }
 
-function savePieceJointe(code, file, binary) {
+function savePieceJointe(dossierId, numero, formData) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      if (!checkCode(code, file)) return reject(new Error(cerfaError(file)));
+      if (!checkCode(numero, formData))
+        return reject(new Error(cerfaError(formData)));
       return resolve(
         sessionStorage.setItem(
-          code,
+          numero,
           JSON.stringify({
-            nom: file.name,
-            type: file.type,
-            size: file.size,
-            data: binary
+            nom: formData.name,
+            type: formData.type,
+            size: formData.size,
+            data: formData
           })
         )
       );
@@ -170,7 +171,7 @@ const auth = {
   isAuthenticated,
   logout,
   getUser,
-  isDepositaire,
+  isDeposant: isDeposant,
   isInstructeur,
   isBeta
 };

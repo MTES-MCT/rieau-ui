@@ -74,7 +74,7 @@ function ConnexionButton(props) {
                   return login('jean.martin');
                 }}
                 button
-                data-cy={appBarPrefix + 'menuitem-connexion-depositaire'}
+                data-cy={appBarPrefix + 'menuitem-connexion-deposant'}
               >
                 <ListItemIcon>
                   <LockIcon />

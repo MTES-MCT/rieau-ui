@@ -15,6 +15,7 @@ const apiHttpClient = keycloak.createAxiosInstance({
 
 function login() {
   return new Promise((resolve, reject) => {
+    console.log('login');
     return keycloak
       .init({ onLoad: 'login-required' })
       .success(authenticated => {
@@ -40,6 +41,7 @@ function logout() {
 }
 
 function isAuthenticated() {
+  console.log('isAuthenticated');
   return new Promise((resolve, reject) => {
     return keycloak
       .init({ onLoad: 'check-sso' })
@@ -52,25 +54,26 @@ function isAuthenticated() {
   });
 }
 
-function isDepositaire() {
+function isDeposant() {
   return new Promise((resolve, reject) => {
-    return resolve(keycloak.hasRealmRole('depositaire'));
+    return resolve(keycloak.hasRealmRole('DEPOSANT'));
   });
 }
 
 function isInstructeur() {
   return new Promise((resolve, reject) => {
-    return resolve(keycloak.hasRealmRole('instructeur'));
+    return resolve(keycloak.hasRealmRole('INSTRUCTEUR'));
   });
 }
 
 function isBeta() {
   return new Promise((resolve, reject) => {
-    return resolve(keycloak.hasRealmRole('beta'));
+    return resolve(keycloak.hasRealmRole('BETA'));
   });
 }
 
 function getUser() {
+  console.log('getUser');
   return new Promise((resolve, reject) => {
     return keycloak
       .loadUserInfo()
@@ -92,7 +95,7 @@ function mesDepots() {
     return keycloak
       .init({ onLoad: 'check-sso' })
       .success(authenticated => {
-        return resolve(apiHttpClient.get(`/depots`));
+        return resolve(apiHttpClient.get(`/dossiers`));
       })
       .error(error => {
         return reject(new Error(error));
@@ -100,26 +103,42 @@ function mesDepots() {
   });
 }
 
-function ajouterDepot(file, binary) {
-  return new Promise((resolve, reject) => {
-    return keycloak
-      .init({ onLoad: 'check-sso' })
-      .success(authenticated => {
-        return resolve(apiHttpClient.post(`/depots`, { file, binary }));
-      })
-      .error(error => {
-        return reject(new Error(error));
-      });
-  });
-}
-
-function savePieceJointe(code, file, binary) {
+function ajouterDepot(formData) {
   return new Promise((resolve, reject) => {
     return keycloak
       .init({ onLoad: 'check-sso' })
       .success(authenticated => {
         return resolve(
-          apiHttpClient.post(`/piecesjointes`, { code, file, binary })
+          apiHttpClient.post(`/dossiers`, formData, {
+            headers: {
+              'content-type':
+                'multipart/form-data;boundary=gc0p4Jq0M2Yt08jU534c0p'
+            }
+          })
+        );
+      })
+      .error(error => {
+        return reject(new Error(error));
+      });
+  });
+}
+
+function savePieceJointe(dossierId, numero, formData) {
+  return new Promise((resolve, reject) => {
+    return keycloak
+      .init({ onLoad: 'check-sso' })
+      .success(authenticated => {
+        return resolve(
+          apiHttpClient.post(
+            `/dossiers/${dossierId}/piecesjointes/${numero}`,
+            formData,
+            {
+              headers: {
+                'content-type':
+                  'multipart/form-data;boundary=gc0p4Jq0M2Yt08jU534c0p'
+              }
+            }
+          )
         );
       })
       .error(error => {
@@ -133,7 +152,7 @@ const auth = {
   isAuthenticated,
   logout,
   getUser,
-  isDepositaire,
+  isDeposant,
   isInstructeur,
   isBeta
 };

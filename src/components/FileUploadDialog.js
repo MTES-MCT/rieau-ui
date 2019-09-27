@@ -50,7 +50,9 @@ function FileUploadDialog(props) {
         reader.onerror = () => window.console.log('file reading has failed');
         reader.readAsDataURL(file);
         reader.onload = () => {
-          handleFile(file, reader.result);
+          const formData = new FormData();
+          formData.append('file', file, file.name);
+          handleFile('', '', formData);
         };
         setShowDialog(false);
       });
