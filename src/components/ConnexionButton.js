@@ -79,7 +79,7 @@ function ConnexionButton(props) {
                 <ListItemIcon>
                   <LockIcon />
                 </ListItemIcon>
-                {`Connexion Dépositaire`}
+                {`Connexion Déposant`}
               </MenuItem>
               <MenuItem
                 onClick={function(event) {

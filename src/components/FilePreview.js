@@ -71,8 +71,8 @@ function FilePreview(props) {
       </AppBar>
       <DialogContent>
         {file.type === 'application/pdf' && (
-          <object
-            data={file.data}
+          <embed
+            src={file.data}
             type={file.type}
             aria-label={file.nom}
             className={classes.pdfContent}

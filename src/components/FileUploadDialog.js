@@ -51,8 +51,8 @@ function FileUploadDialog(props) {
         reader.readAsDataURL(file);
         reader.onload = () => {
           const formData = new FormData();
-          formData.append('file', file, file.name);
-          handleFile('', '', formData);
+          formData.append('file', file);
+          handleFile(formData);
         };
         setShowDialog(false);
       });

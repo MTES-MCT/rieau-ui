@@ -18,7 +18,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from 'components/Button';
 import { Link as RouterLink } from 'react-router-dom';
 import Typography from 'components/Typography';
-import { type } from 'utils/piecesjointes';
+import { typeLibelle } from 'utils/piecesjointes';
 
 const styles = theme => ({
   card: {
@@ -52,12 +52,13 @@ function Depot(props) {
       <React.Fragment>
         <AppAppBar />
         <Typography variant="h3" marked="center" align="center">
-          {`Dépôt n°${depot.id}`}
+          {`Dépôt`}
         </Typography>
         <Card className={classes.card}>
-          <CardHeader title={type(depot.type)} />
+          <CardHeader title={typeLibelle(depot.type)} />
           <CardContent className={classes.content}>
-            État: {depot.etat} - Déposé le: {depot.date}
+            Statut: {depots.statutLibelle(depot.statut)} - Déposé le:{' '}
+            {depot.date}
           </CardContent>
           <CardActions>
             <Button

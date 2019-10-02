@@ -13,6 +13,7 @@ import { useAsync } from 'react-async';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FileUploadButton from 'components/FileUploadButton';
 import Error from 'pages/Error';
+import { isCerfa } from 'utils/piecesjointes';
 
 const styles = theme => ({
   card: {
@@ -45,13 +46,24 @@ const styles = theme => ({
     marginLeft: theme.spacing(1)
   }
 });
-async function handleFilePreview(pieceJointe) {
-  return { file: await depots.loadPieceJointe(pieceJointe.code) };
+
+async function handleFilePreview(fichierId) {
+  let fichier = null;
+  if (
+    fichierId &&
+    fichierId !== null &&
+    fichierId.fichierId &&
+    fichierId.fichierId !== null
+  )
+    fichier = await depots.lireFichier(fichierId.fichierId);
+  return { file: fichier };
 }
 
 function PieceJointe(props) {
-  const { classes, pieceJointe, setError } = props;
-  const [showPreview, setShowPreview] = useState(false);
+  const { classes, pieceJointe, setError, reload } = props;
+  const [showPreview, setShowPreview] = useState(
+    pieceJointe.fichierId !== null
+  );
   const [showPreviewDialog, setShowPreviewDialog] = useState(false);
   const {
     data = {
@@ -60,14 +72,16 @@ function PieceJointe(props) {
     isSettled,
     isLoading,
     isRejected,
-    error,
-    reload
-  } = useAsync({ promiseFn: handleFilePreview, code: pieceJointe.code });
+    error
+  } = useAsync({
+    promiseFn: handleFilePreview,
+    fichierId: pieceJointe.fichierId
+  });
   const { file } = data;
 
   useEffect(() => {
     if (isSettled) {
-      if (file) setShowPreview(true);
+      if (file && file !== null) setShowPreview(true);
     }
   }, [isSettled, file]);
 
@@ -77,8 +91,9 @@ function PieceJointe(props) {
   function handleShowPreviewDialog() {
     setShowPreviewDialog(true);
   }
-  async function handleSavePieceJointe(file, binary) {
-    await depots.savePieceJointe(pieceJointe.code, file, binary);
+  async function handleSavePieceJointe(file) {
+    await depots.savePieceJointe(pieceJointe.depotId, pieceJointe.numero, file);
+    reload();
   }
   function title(text, required) {
     var title = text;
@@ -94,16 +109,18 @@ function PieceJointe(props) {
         {pieceJointe.description}
       </CardContent>
       <CardActions disableSpacing className={classes.actions}>
-        <FileUploadButton
-          iconName="cloud_upload"
-          label="Téléverser"
-          variant="outlined"
-          color="inherit"
-          onUploadFile={handleSavePieceJointe}
-          reload={reload}
-          setError={setError}
-          acceptedFormats={pieceJointe.formats}
-        />
+        {!isCerfa(pieceJointe) && (
+          <FileUploadButton
+            iconName="cloud_upload"
+            label="Téléverser"
+            variant="outlined"
+            color="inherit"
+            onUploadFile={handleSavePieceJointe}
+            reload={reload}
+            setError={setError}
+            acceptedFormats={pieceJointe.formats}
+          />
+        )}
         {showPreview && (
           <React.Fragment>
             <div className={classes.buttonWrapper}>
@@ -139,7 +156,8 @@ function PieceJointe(props) {
 PieceJointe.propTypes = {
   classes: PropTypes.object.isRequired,
   pieceJointe: PropTypes.object.isRequired,
-  setError: PropTypes.func.isRequired
+  setError: PropTypes.func.isRequired,
+  reload: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(PieceJointe);

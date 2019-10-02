@@ -12,12 +12,17 @@ context('Pieces jointes deposees', () => {
       cy.get('#password').type('jean.martin')
       cy.get('#kc-login').click()
     }
+    cy.contains("Dépôts").should('be.visible')
+    cy.get('[data-cy=file-upload-btn]').should('be.visible').click()
+    cy.contains("Téléverser un fichier").should('be.visible')
+    cy.get('[data-cy=file-upload-dropzone]').first().should('be.visible').then(function() {
+      cy.dropFixtureInDropZone('cerfa_13703_PCMI.pdf', 'application/pdf', '[data-cy=file-upload-dropzone]')
+    })
+    cy.get('[title="Voir le dépôt"]').should('be.visible').first().click()    
   })
 
-  it('cy.click() - go to depots pieces jointes DP page format ok', () => {
-    cy.contains("Dépôts").should('be.visible')
-    cy.get('[title="Voir le dépôt"]').should('be.visible').first().click()
-    cy.contains("Dépôt n°0").should('be.visible')
+  it('cy.click() - go to depots pieces jointes PCMI page format ok', () => {  
+    cy.contains("Dépôt").should('be.visible')
     cy.get("[data-cy=piecesjointes-btn]").should('be.visible').click()
     cy.contains('CERFA 13703-06').should('be.visible')
     cy.get('[data-cy=file-upload-btn]').first().should('be.visible').click()
@@ -29,10 +34,8 @@ context('Pieces jointes deposees', () => {
     })
   })
 
-  it('cy.click() - go to depots pieces jointes DP page format ko', () => {
-    cy.contains("Dépôts").should('be.visible')
-    cy.get('[title="Voir le dépôt"]').should('be.visible').first().click()
-    cy.contains("Dépôt n°0").should('be.visible')
+  it('cy.click() - go to depots pieces jointes PCMI page format ko', () => {
+    cy.contains("Dépôt").should('be.visible')
     cy.get("[data-cy=piecesjointes-btn]").should('be.visible').click()
     cy.contains('CERFA 13703-06').should('be.visible')
     cy.get('[data-cy=file-upload-btn]').first().should('be.visible').click()
@@ -46,9 +49,7 @@ context('Pieces jointes deposees', () => {
   })
 
   it('cy.click() - go to depots pieces jointes PCMI page', () => {
-    cy.contains("Dépôts").should('be.visible')
-    cy.get('[title="Voir le dépôt"]').should('be.visible').last().click()
-    cy.contains("Dépôt n°1").should('be.visible')
+    cy.contains("Dépôt").should('be.visible')
     cy.get("[data-cy=piecesjointes-btn]").should('be.visible').click()
     cy.contains('CERFA 13406-06').should('be.visible')
     cy.get('[data-cy=file-upload-btn]').first().should('be.visible').click()

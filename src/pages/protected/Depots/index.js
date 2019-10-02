@@ -21,9 +21,7 @@ async function handleDepots() {
 
 function Depots(props) {
   const {
-    data = {
-      depots: []
-    },
+    data,
     error,
     setError,
     isRejected,
@@ -35,15 +33,12 @@ function Depots(props) {
   });
   const { history } = props;
   const { isBeta } = useUser();
-  async function handleAjouterDepot(dossierId, numero, formData) {
-    const depot = await depotsApi.ajouterDepot(formData);
-    const code = depot.type + 'cerfa';
-    await depotsApi.savePieceJointe(dossierId, code, formData);
+  async function handleAjouterDepot(formData) {
+    await depotsApi.ajouterDepot(formData);
   }
   if (isRejected) return <Error error={error.message} />;
   if (isLoading) return <LinearProgress />;
-  if (isFulfilled) {
-    const { depots } = data;
+  if (data && isFulfilled) {
     return (
       <React.Fragment>
         <AppAppBar />
@@ -63,9 +58,14 @@ function Depots(props) {
               numeric: false,
               disablePadding: false
             },
-            { label: 'État', id: 'etat', numeric: false, disablePadding: false }
+            {
+              label: 'Statut',
+              id: 'statut',
+              numeric: false,
+              disablePadding: false
+            }
           ]}
-          rows={depots || []}
+          rows={data}
           onRowClick={{
             icon: () => <VisibilityIcon />,
             tooltip: 'Voir le dépôt',

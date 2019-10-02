@@ -88,7 +88,7 @@ const styles = theme => ({
 });
 
 function EnhancedTableHead(props) {
-  const { classes, columns, order, orderBy, onRequestSort } = props;
+  const { classes, columns, order, orderBy, onRequestSort, onDelete } = props;
   const createSortHandler = property => event => {
     onRequestSort(event, property);
   };
@@ -118,6 +118,7 @@ function EnhancedTableHead(props) {
             </TableSortLabel>
           </TableCell>
         ))}
+        {onDelete && <TableCell padding="checkbox">{''}</TableCell>}
       </TableRow>
     </TableHead>
   );
@@ -129,7 +130,8 @@ EnhancedTableHead.propTypes = {
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
-  columns: PropTypes.array.isRequired
+  columns: PropTypes.array.isRequired,
+  onDelete: PropTypes.bool.isRequired
 };
 
 const useToolbarStyles = makeStyles(theme => ({
@@ -169,12 +171,21 @@ EnhancedTableToolbar.propTypes = {
 };
 
 function DataTable(props) {
-  const { classes, rows, columns, title, onRowClick, addComponent } = props;
+  const {
+    classes,
+    rows,
+    columns,
+    title,
+    onRowClick,
+    addComponent,
+    onDeleteClick
+  } = props;
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('id');
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const hasAddComponent = addComponent !== undefined;
+  const onDelete = onDeleteClick !== undefined;
 
   function handleRequestSort(event, property) {
     const isDesc = orderBy === property && order === 'desc';
@@ -214,6 +225,7 @@ function DataTable(props) {
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
               columns={columns}
+              onDelete={onDelete}
             />
             <TableBody>
               {rows &&
@@ -250,6 +262,20 @@ function DataTable(props) {
                               {row[column.id]}
                             </TableCell>
                           ))}
+                        {onDelete && (
+                          <TableCell>
+                            <Tooltip title={onDeleteClick.tooltip}>
+                              <IconButton
+                                onClick={event =>
+                                  onDeleteClick.onClick(event, row.id)
+                                }
+                                aria-label={onDeleteClick.tooltip}
+                              >
+                                <onDeleteClick.icon />
+                              </IconButton>
+                            </Tooltip>
+                          </TableCell>
+                        )}
                       </TableRow>
                     );
                   })}
@@ -294,6 +320,7 @@ function DataTable(props) {
 DataTable.propTypes = {
   classes: PropTypes.object.isRequired,
   onRowClick: PropTypes.object,
+  onDeleteClick: PropTypes.object,
   addComponent: PropTypes.object,
   title: PropTypes.string.isRequired,
   rows: PropTypes.array.isRequired,

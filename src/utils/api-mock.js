@@ -65,30 +65,32 @@ function getUser() {
 }
 
 let depotsFixtures = [
-  {
-    id: '0',
-    type: 'dp',
-    date: '01/01/2019',
-    etat: 'instruction',
-    userId: 'jean.martin'
-  },
-  {
-    id: '1',
-    type: 'pcmi',
-    date: '01/07/2019',
-    etat: 'incomplet',
-    userId: 'jean.martin'
-  }
+  // {
+  //   id: "0",
+  //   type: "dp",
+  //   date: "01/01/2019",
+  //   statut: "DEPOSE",
+  //   userId: "jean.martin",
+  //   piecesAJoindre: ["1"],
+  //   cerfa: { type: "dp", numero: "0", fichierId: "dp0", depotId: "0" },
+  //   piecesJointes: []
+  // },
+  // {
+  //   id: "1",
+  //   type: "pcmi",
+  //   date: "01/07/2019",
+  //   statut: "DEPOSE",
+  //   userId: "jean.martin",
+  //   piecesAJoindre: ["1", "2"],
+  //   cerfa: { type: "pcmi", numero: "0", fichierId: "pcmi0", depotId: "1" },
+  //   piecesJointes: []
+  // }
 ];
 
 function mesDepots() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      return resolve({
-        depots: depotsFixtures,
-        page: 0,
-        totalCount: 1
-      });
+      return resolve(depotsFixtures);
     }, waitingTime);
   });
 }
@@ -114,20 +116,48 @@ function cerfaError(file) {
   return `Fichier CERFA ${file.name} non reconnu. Seuls les fichiers nommés cerfa_13406_PCMI.pdf ou cerfa_13703_DPMI.pdf sont reconnus.`;
 }
 
+function saveInSessionStorage(depot, numero, file) {
+  const reader = new FileReader();
+  reader.onload = () => {
+    const binaryStr = reader.result;
+    sessionStorage.setItem(
+      depot.type + numero,
+      JSON.stringify({
+        nom: file.name,
+        type: file.type,
+        size: file.size,
+        data: URL.createObjectURL(new Blob([binaryStr], { type: file.type }))
+      })
+    );
+  };
+  reader.readAsBinaryString(file);
+}
+
 function ajouterDepot(formData) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const type = typeFromCerfa(formData.name);
-      if (type === '') return reject(new Error(cerfaError(formData)));
+      let file = formData.get('file');
+      const type = typeFromCerfa(file.name);
+      if (type === '') return reject(new Error(cerfaError(file)));
       const depot = {
         id: depotsFixtures.length.toString(),
         type: type,
         date: new Date().toLocaleDateString(),
-        etat: 'instruction',
-        userId: principal.id
+        statut: 'DEPOSE',
+        userId: principal.id,
+        cerfa: {
+          type: type,
+          numero: '0',
+          fichierId: type + '0',
+          depotId: depotsFixtures.length.toString()
+        },
+        piecesAJoindre: ['1'],
+        piecesJointes: []
       };
+      console.log('depot=', JSON.stringify(depot));
+      saveInSessionStorage(depot, '0', file);
       depotsFixtures.push(depot);
-      return resolve(depot);
+      return resolve();
     }, waitingTime);
   });
 }
@@ -135,33 +165,31 @@ function ajouterDepot(formData) {
 function checkCode(code, file) {
   if (!file.name) return true; // hack because cypress dropzone command have undefined file.name
   const type = typeFromCerfa(file.name);
-  return code.includes('cerfa') ? code === type + 'cerfa' : true;
+  return code.includes('cerfa') ? code === type + '0' : true;
 }
 
 function savePieceJointe(dossierId, numero, formData) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      if (!checkCode(numero, formData))
-        return reject(new Error(cerfaError(formData)));
-      return resolve(
-        sessionStorage.setItem(
-          numero,
-          JSON.stringify({
-            nom: formData.name,
-            type: formData.type,
-            size: formData.size,
-            data: formData
-          })
-        )
-      );
+      let file = formData.get('file');
+      if (!checkCode(numero, file)) return reject(new Error(cerfaError(file)));
+      let depot = depotsFixtures.find(depot => depot.id === dossierId);
+      saveInSessionStorage(depot, numero, file);
+      depot.piecesJointes.push({
+        type: depot.type,
+        numero: numero,
+        fichierId: depot.type + numero,
+        depotId: dossierId
+      });
+      return resolve();
     }, waitingTime);
   });
 }
 
-function loadPieceJointe(code) {
+function lireFichier(id) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      return resolve(JSON.parse(sessionStorage.getItem(code)));
+      return resolve(JSON.parse(sessionStorage.getItem(id)));
     }, waitingTime);
   });
 }
@@ -180,7 +208,7 @@ const depots = {
   monDepot,
   ajouterDepot,
   savePieceJointe,
-  loadPieceJointe
+  lireFichier
 };
 
 const api = {

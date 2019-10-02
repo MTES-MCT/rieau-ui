@@ -2,7 +2,8 @@ import { listePiecesJointesDP } from 'utils/listePiecesJointesDP';
 import { listePiecesJointesPCMI } from 'utils/listePiecesJointesPCMI';
 
 function liste(typeDemande) {
-  switch (typeDemande) {
+  let lowtypeDemande = typeDemande ? typeDemande.toLowerCase() : '';
+  switch (lowtypeDemande) {
     case 'dp':
       return listePiecesJointesDP;
     case 'pcmi':
@@ -12,8 +13,37 @@ function liste(typeDemande) {
   }
 }
 
-function type(typeDemande) {
-  switch (typeDemande) {
+function addDepotIdAndFichierId(pj, depot, numero) {
+  if (pj) {
+    pj.depotId = depot.id;
+    if (numero === depot.cerfa.numero) {
+      pj.fichierId = depot.cerfa.fichierId;
+    } else {
+      let pieceJointe = depot.piecesJointes.find(pj => pj.numero === numero);
+      pj.fichierId = pieceJointe ? pieceJointe.fichierId : null;
+    }
+  }
+  return pj;
+}
+
+function pieceJointe(depot, numero) {
+  let typeDepot = depot.type ? depot.type.toLowerCase() : '';
+  let pj = {};
+  switch (typeDepot) {
+    case 'dp':
+      pj = listePiecesJointesDP.find(pj => pj.numero === numero);
+      return addDepotIdAndFichierId(pj, depot, numero);
+    case 'pcmi':
+      pj = listePiecesJointesPCMI.find(pj => pj.numero === numero);
+      return addDepotIdAndFichierId(pj, depot, numero);
+    default:
+      return [];
+  }
+}
+
+function typeLibelle(typeDemande) {
+  let lowtypeDemande = typeDemande ? typeDemande.toLowerCase() : '';
+  switch (lowtypeDemande) {
     case 'dp':
       return 'Déclaration préalable de travaux';
     case 'pcmi':
@@ -23,5 +53,11 @@ function type(typeDemande) {
   }
 }
 
+function isCerfa(pieceJointe) {
+  return pieceJointe.numero === '0';
+}
+
 export { liste };
-export { type };
+export { typeLibelle };
+export { pieceJointe };
+export { isCerfa };

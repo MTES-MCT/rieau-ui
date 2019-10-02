@@ -13,7 +13,7 @@ import depots from 'utils/depots';
 import { useAsync } from 'react-async';
 import Error from 'pages/Error';
 import NotFound from 'pages/NotFound';
-import { type, liste } from 'utils/piecesjointes';
+import { typeLibelle, pieceJointe } from 'utils/piecesjointes';
 
 const styles = theme => ({
   grid: {
@@ -35,7 +35,8 @@ function PiecesJointes(props) {
     error,
     setError,
     isLoading,
-    isRejected
+    isRejected,
+    reload
   } = useAsync({
     promiseFn: handleDepot,
     id: depotId
@@ -49,18 +50,25 @@ function PiecesJointes(props) {
       <React.Fragment>
         <AppAppBar />
         <Typography variant="h3" marked="center" align="center">
-          {`Pièces jointes`}
+          {`CERFA initial et pièces jointes`}
         </Typography>
         <Typography variant="subtitle1" marked="center" align="center">
-          {`${type(depot.type)} n°${depot.id}`}
+          {`${typeLibelle(depot.type)}`}
         </Typography>
         <Grid container className={classes.grid}>
           <Grid item xs={12}>
-            {liste(depot.type).map(pieceJointe => (
+            <PieceJointe
+              key={depot.cerfa.numero}
+              pieceJointe={pieceJointe(depot, depot.cerfa.numero)}
+              setError={setError}
+              reload={reload}
+            />
+            {depot.piecesAJoindre.map(pieceAJoindre => (
               <PieceJointe
-                key={pieceJointe.code}
-                pieceJointe={pieceJointe}
+                key={pieceAJoindre}
+                pieceJointe={pieceJointe(depot, pieceAJoindre)}
                 setError={setError}
+                reload={reload}
               />
             ))}
           </Grid>

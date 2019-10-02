@@ -16,10 +16,20 @@ context('Dépôts', () => {
 
   it('cy.click() - go to depot page', () => {
     cy.contains("Dépôts").should('be.visible')
-    cy.get('[title="Voir le dépôt"]').should('be.visible').first().click()
-    cy.contains("Dépôt n°0").should('be.visible')
+    cy.get('[data-cy=file-upload-btn]').should('be.visible').click()
   })
-  it('cy.click() - ajouter depot', () => {
+  
+  it('cy.click() - ajouter depot ok', () => {
+    cy.contains("Dépôts").should('be.visible')
+    cy.get('[data-cy=file-upload-btn]').should('be.visible').click()
+    cy.contains("Téléverser un fichier").should('be.visible')
+    cy.get('[data-cy=file-upload-dropzone]').first().should('be.visible').then(function() {
+      cy.dropFixtureInDropZone('cerfa_13703_PCMI.pdf', 'application/pdf', '[data-cy=file-upload-dropzone]')
+    })
+    cy.contains("Dépôts").should('be.visible')
+    
+  })
+  it('cy.click() - ajouter depot ko', () => {
     cy.contains("Dépôts").should('be.visible')
     cy.get('[data-cy=file-upload-btn]').should('be.visible').click()
     cy.contains("Téléverser un fichier").should('be.visible')
@@ -27,9 +37,7 @@ context('Dépôts', () => {
       cy.dropFixtureInDropZone('sample.pdf.zip', 'application/zip', '[data-cy=file-upload-dropzone]')
       cy.contains("Fichier rejeté").should('be.visible')
       cy.contains("application/pdf").should('be.visible')
-      cy.dropFixtureInDropZone('cerfa_13703_PCMI.pdf', 'application/pdf', '[data-cy=file-upload-dropzone]')
     })
-    cy.contains("Dépôts").should('be.visible')
     
   })
 })

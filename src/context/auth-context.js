@@ -8,9 +8,7 @@ import Error from 'pages/Error';
 const AuthContext = React.createContext();
 
 async function handleApiAuth() {
-  console.log('handleApiAuth');
   const isAuthenticated = await auth.isAuthenticated();
-  console.log('isAuthenticated=' + isAuthenticated);
   if (!isAuthenticated)
     return {
       user: null,

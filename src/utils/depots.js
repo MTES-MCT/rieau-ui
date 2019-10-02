@@ -24,24 +24,41 @@ function ajouterDepot(formData) {
   });
 }
 
-function savePieceJointe(dossierId, code, formData) {
+function supprimerDepot(id) {
   return api.then(handleDepots).then(depots => {
-    return depots.savePieceJointe(dossierId, code, formData);
+    return depots.supprimerDepot(id);
   });
 }
 
-function loadPieceJointe(code) {
+function savePieceJointe(dossierId, numero, formData) {
   return api.then(handleDepots).then(depots => {
-    return depots.loadPieceJointe(code);
+    return depots.savePieceJointe(dossierId, numero, formData);
   });
+}
+
+function lireFichier(id) {
+  return api.then(handleDepots).then(depots => {
+    return depots.lireFichier(id);
+  });
+}
+
+function statutLibelle(statut) {
+  switch (statut) {
+    case 'DEPOSE':
+      return 'déposé';
+    default:
+      return '';
+  }
 }
 
 const depots = {
   mesDepots,
   monDepot,
   ajouterDepot,
+  supprimerDepot,
   savePieceJointe,
-  loadPieceJointe
+  lireFichier,
+  statutLibelle
 };
 
 export default depots;

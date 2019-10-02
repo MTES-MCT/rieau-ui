@@ -1,5 +1,5 @@
 import auth from 'utils/auth';
-import users from './users-mock';
+import users from 'utils/users-mock';
 
 test('signin ok', async () => {
   await auth.login('jean.martin');

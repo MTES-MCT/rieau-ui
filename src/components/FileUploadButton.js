@@ -37,11 +37,10 @@ function FileUploadButton(props) {
   }
   function handleFile(dossierId, numero, formData) {
     onUploadFile(dossierId, numero, formData)
-      .then(function() {
-        closeDropzone();
-        reload();
-      })
+      .then()
       .catch(error => setError(error));
+    closeDropzone();
+    reload();
   }
   return (
     <React.Fragment>

@@ -10,7 +10,11 @@ const keycloak = new AxiosKeycloak({
 });
 
 const apiHttpClient = keycloak.createAxiosInstance({
-  baseURL: env('REACT_APP_API_URL')
+  baseURL: env('REACT_APP_API_URL'),
+  responseType: 'json',
+  responseEncoding: 'utf8',
+  headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+  withCredentials: true
 });
 
 function login() {
@@ -41,7 +45,6 @@ function logout() {
 }
 
 function isAuthenticated() {
-  console.log('isAuthenticated');
   return new Promise((resolve, reject) => {
     return keycloak
       .init({ onLoad: 'check-sso' })
@@ -73,7 +76,6 @@ function isBeta() {
 }
 
 function getUser() {
-  console.log('getUser');
   return new Promise((resolve, reject) => {
     return keycloak
       .loadUserInfo()
@@ -95,7 +97,37 @@ function mesDepots() {
     return keycloak
       .init({ onLoad: 'check-sso' })
       .success(authenticated => {
-        return resolve(apiHttpClient.get(`/dossiers`));
+        return resolve(apiHttpClient.get(`/dossiers`).then(res => res.data));
+      })
+      .error(error => {
+        return reject(new Error(error));
+      });
+  });
+}
+
+function monDepot(id) {
+  return new Promise((resolve, reject) => {
+    return keycloak
+      .init({ onLoad: 'check-sso' })
+      .success(authenticated => {
+        return resolve(
+          apiHttpClient.get(`/dossiers/${id}`).then(res => res.data)
+        );
+      })
+      .error(error => {
+        return reject(new Error(error));
+      });
+  });
+}
+
+function supprimerDepot(id) {
+  return new Promise((resolve, reject) => {
+    return keycloak
+      .init({ onLoad: 'check-sso' })
+      .success(authenticated => {
+        return resolve(
+          apiHttpClient.delete(`/dossiers/${id}`).then(res => res.data)
+        );
       })
       .error(error => {
         return reject(new Error(error));
@@ -147,6 +179,37 @@ function savePieceJointe(dossierId, numero, formData) {
   });
 }
 
+function extractFileInfo(response) {
+  let regex_filename = /^attachment;filename=([\w]+[.]{1}[\w]+)$/i;
+  let content_disposition = response.headers['content-disposition'];
+  let content_type = response.headers['content-type'];
+  let matches = regex_filename.exec(content_disposition);
+  return {
+    data: URL.createObjectURL(
+      new Blob([response.data], { type: content_type })
+    ),
+    nom: matches[1],
+    type: content_type
+  };
+}
+
+function lireFichier(fichierId) {
+  return new Promise((resolve, reject) => {
+    return keycloak
+      .init({ onLoad: 'check-sso' })
+      .success(authenticated => {
+        return resolve(
+          apiHttpClient
+            .get(`/fichiers/${fichierId}`, { responseType: 'blob' })
+            .then(response => extractFileInfo(response))
+        );
+      })
+      .error(error => {
+        return reject(new Error(error));
+      });
+  });
+}
+
 const auth = {
   login,
   isAuthenticated,
@@ -158,8 +221,11 @@ const auth = {
 };
 const depots = {
   mesDepots,
+  monDepot,
   ajouterDepot,
-  savePieceJointe
+  supprimerDepot,
+  savePieceJointe,
+  lireFichier
 };
 
 const api = {
