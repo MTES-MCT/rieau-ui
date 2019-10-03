@@ -243,6 +243,7 @@ function DataTable(props) {
                         <TableCell>
                           <Tooltip title={onRowClick.tooltip}>
                             <IconButton
+                              data-cy="piecejointe-preview-btn"
                               onClick={event =>
                                 onRowClick.onClick(event, row.id)
                               }

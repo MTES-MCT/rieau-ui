@@ -75,8 +75,8 @@ function FileUploadDialog(props) {
     setShowDialog(false);
   }
 
-  const rejectedFilesItems = rejectedFiles.map(file => (
-    <li key={file.path}>
+  const rejectedFilesItems = rejectedFiles.map((key, file) => (
+    <li key={key}>
       {file.path} - {formatFileSize(file.size)}
     </li>
   ));

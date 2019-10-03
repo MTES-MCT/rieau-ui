@@ -24,37 +24,9 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
+import 'cypress-file-upload';
+
 Cypress.Commands.add("isApiMock", () => {
   return [true, "true", 1, "1"].includes(Cypress.env("REACT_APP_API_MOCK"));
 });
 
-Cypress.Commands.add(
-  "dropFixtureInDropZone",
-  (fixturePath, fixtureMime, dropZoneSelector) => {
-    function createDtWithFiles(files = []) {
-      return {
-        dataTransfer: {
-          files,
-          items: files.map(file => ({
-            kind: "file",
-            type: file.type,
-            getAsFile: () => file
-          })),
-          types: ["Files"]
-        }
-      };
-    }
-    const dropEvent = new Event("drop", { bubbles: true });
-    cy.fixture(fixturePath, "base64").then(fixture => {
-      return Cypress.Blob.base64StringToBlob(fixture, fixtureMime).then(
-        blob => {
-          Object.assign(dropEvent, createDtWithFiles([blob]));
-        }
-      );
-    });
-
-    cy.get(dropZoneSelector)
-      .first()
-      .trigger("drop", dropEvent);
-  }
-);
