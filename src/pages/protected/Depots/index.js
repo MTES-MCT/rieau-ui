@@ -29,13 +29,19 @@ function Depots(props) {
     isFulfilled,
     reload
   } = useAsync({
-    promiseFn: handleDepots
+    promiseFn: handleDepots,
+    onReject: handleReject
   });
   const { history } = props;
   const { isBeta } = useUser();
+
   async function handleAjouterDepot(formData) {
     await depotsApi.ajouterDepot(formData);
   }
+  async function handleReject(err) {
+    setError(err);
+  }
+
   if (isRejected) return <Error error={error.message} />;
   if (isLoading) return <LinearProgress />;
   if (data && isFulfilled) {

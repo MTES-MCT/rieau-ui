@@ -14,11 +14,11 @@ class ErrorBoundary extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { hasError: false };
+    this.state = { hasError: false, message: 'Oops! Une erreur est survenue.' };
   }
 
   static getDerivedStateFromError(error) {
-    return { hasError: true };
+    return { hasError: true, message: JSON.stringify(error) };
   }
 
   componentDidCatch(error, info) {
@@ -27,12 +27,7 @@ class ErrorBoundary extends React.Component {
 
   render() {
     if (this.state.hasError) {
-      return (
-        <Snackbar
-          variant="error"
-          message="Une erreur applicative est survenue"
-        />
-      );
+      return <Snackbar variant="error" message={this.state.message} />;
     }
 
     return this.props.children;

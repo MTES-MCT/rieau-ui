@@ -140,14 +140,20 @@ function ajouterDepot(formData) {
     return keycloak
       .init({ onLoad: 'check-sso' })
       .success(authenticated => {
-        return resolve(
-          apiHttpClient.post(`/dossiers`, formData, {
+        apiHttpClient
+          .post(`/dossiers`, formData, {
             headers: {
               'content-type':
                 'multipart/form-data;boundary=gc0p4Jq0M2Yt08jU534c0p'
             }
           })
-        );
+          .then(function(response) {
+            return resolve(response);
+          })
+          .catch(function(error) {
+            console.log('error=', JSON.stringify(error));
+            return reject(error);
+          });
       })
       .error(error => {
         return reject(new Error(error));

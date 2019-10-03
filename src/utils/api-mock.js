@@ -89,9 +89,15 @@ let depotsFixtures = [
 
 function mesDepots() {
   return new Promise((resolve, reject) => {
-    setTimeout(function() {
-      return resolve(depotsFixtures);
-    }, waitingTime);
+    setTimeout(
+      function() {
+        return resolve(depotsFixtures);
+      },
+      function(error) {
+        return reject(error);
+      },
+      waitingTime
+    );
   });
 }
 
@@ -138,7 +144,7 @@ function ajouterDepot(formData) {
     setTimeout(function() {
       let file = formData.get('file');
       const type = typeFromCerfa(file.name);
-      if (type === '') throw new Error(cerfaError(file));
+      if (type === '') return reject(new Error(cerfaError(file)));
       const depot = {
         id: depotsFixtures.length.toString(),
         type: type,
@@ -154,7 +160,6 @@ function ajouterDepot(formData) {
         piecesAJoindre: ['1'],
         piecesJointes: []
       };
-      console.log('depot=', JSON.stringify(depot));
       saveInSessionStorage(depot, '0', file);
       depotsFixtures.push(depot);
       return resolve();
