@@ -9,5 +9,5 @@ window.env = {
   REACT_APP_SSO_APP_URL: "http://localhost:8080/auth",
   REACT_APP_SSO_APP_REALM: "rieau",
   REACT_APP_SSO_APP_CLIENT_ID: "rieau-ui",
-  REACT_APP_MAX_SIZE_UPLOAD_FILE: "2097152",
+  REACT_APP_MAX_SIZE_UPLOAD_FILE: "20971520",
 }
