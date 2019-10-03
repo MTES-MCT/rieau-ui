@@ -7,7 +7,7 @@ const waitingTime = 100;
 
 function login(id) {
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
+    setTimeout(function() {
       if (!id)
         return reject(new Error('Connexion impossible. User id inconnu.'));
       return resolve((principal = users.find(user => user.id === id)));
@@ -17,7 +17,7 @@ function login(id) {
 
 function logout() {
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
+    setTimeout(function() {
       resolve((principal = null));
     }, waitingTime);
   });
@@ -25,7 +25,7 @@ function logout() {
 
 function isAuthenticated() {
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
+    setTimeout(function() {
       return resolve(principal !== null);
     }, waitingTime);
   });
@@ -33,7 +33,7 @@ function isAuthenticated() {
 
 function isDeposant() {
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
+    setTimeout(function() {
       return resolve(principal.profils.includes('DEPOSANT'));
     }, waitingTime);
   });
@@ -41,7 +41,7 @@ function isDeposant() {
 
 function isInstructeur() {
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
+    setTimeout(function() {
       return resolve(principal.profils.includes('INSTRUCTEUR'));
     }, waitingTime);
   });
@@ -49,7 +49,7 @@ function isInstructeur() {
 
 function isBeta() {
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
+    setTimeout(function() {
       return resolve(principal.profils.includes('BETA'));
     }, waitingTime);
   });
@@ -57,7 +57,7 @@ function isBeta() {
 
 function getUser() {
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
+    setTimeout(function() {
       if (!principal) return reject(new Error("Pas d'utilisateur connecté"));
       return resolve(principal);
     }, waitingTime);
@@ -89,7 +89,7 @@ let depotsFixtures = [
 
 function mesDepots() {
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
+    setTimeout(function() {
       return resolve(depotsFixtures);
     }, waitingTime);
   });
@@ -97,7 +97,7 @@ function mesDepots() {
 
 function monDepot(id) {
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
+    setTimeout(function() {
       return resolve(depotsFixtures.find(depot => depot.id === id));
     }, waitingTime);
   });
@@ -118,7 +118,7 @@ function cerfaError(file) {
 
 function saveInSessionStorage(depot, numero, file) {
   const reader = new FileReader();
-  reader.onload = () => {
+  reader.onload = function() {
     const binaryStr = reader.result;
     sessionStorage.setItem(
       depot.type + numero,
@@ -135,10 +135,10 @@ function saveInSessionStorage(depot, numero, file) {
 
 function ajouterDepot(formData) {
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
+    setTimeout(function() {
       let file = formData.get('file');
       const type = typeFromCerfa(file.name);
-      if (type === '') return reject(new Error(cerfaError(file)));
+      if (type === '') throw new Error(cerfaError(file));
       const depot = {
         id: depotsFixtures.length.toString(),
         type: type,
@@ -170,9 +170,9 @@ function checkCode(code, file) {
 
 function savePieceJointe(dossierId, numero, formData) {
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
+    setTimeout(function() {
       let file = formData.get('file');
-      if (!checkCode(numero, file)) return reject(new Error(cerfaError(file)));
+      if (!checkCode(numero, file)) throw new Error(cerfaError(file));
       let depot = depotsFixtures.find(depot => depot.id === dossierId);
       saveInSessionStorage(depot, numero, file);
       depot.piecesJointes.push({
@@ -188,7 +188,7 @@ function savePieceJointe(dossierId, numero, formData) {
 
 function lireFichier(id) {
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
+    setTimeout(function() {
       return resolve(JSON.parse(sessionStorage.getItem(id)));
     }, waitingTime);
   });
