@@ -18,6 +18,24 @@ export default class AxiosKeycloak extends Keycloak {
             })
         )
     );
+    instance.interceptors.response.use(
+      function(response) {
+        return response;
+      },
+      function(error) {
+        if (error.response) {
+          if (error.response.data.cause) {
+            return Promise.reject(error.response.data.cause);
+          } else {
+            return Promise.reject(error.response.data);
+          }
+        } else if (error.request) {
+          return Promise.reject(error.request);
+        } else {
+          return Promise.reject(error);
+        }
+      }
+    );
 
     return instance;
   }

@@ -167,16 +167,17 @@ function savePieceJointe(dossierId, numero, formData) {
       .init({ onLoad: 'check-sso' })
       .success(authenticated => {
         return resolve(
-          apiHttpClient.post(
-            `/dossiers/${dossierId}/piecesjointes/${numero}`,
-            formData,
-            {
+          apiHttpClient
+            .post(`/dossiers/${dossierId}/piecesjointes/${numero}`, formData, {
               headers: {
                 'content-type':
                   'multipart/form-data;boundary=gc0p4Jq0M2Yt08jU534c0p'
               }
-            }
-          )
+            })
+            .catch(function(error) {
+              console.log('error=', JSON.stringify(error));
+              return reject(error);
+            })
         );
       })
       .error(error => {
@@ -186,20 +187,23 @@ function savePieceJointe(dossierId, numero, formData) {
 }
 
 function extractFileInfo(response) {
-  let regex_filename = /^attachment;filename=([\w]+[.]{1}[\w]+)$/i;
+  let regex_filename = /^attachment;filename=([\w- éèëàù€êôïî]+[.]{1}[\w]+)$/i;
   let content_disposition = response.headers['content-disposition'];
   let content_type = response.headers['content-type'];
   let matches = regex_filename.exec(content_disposition);
-  return {
+  let fileInfo = {
     data: URL.createObjectURL(
       new Blob([response.data], { type: content_type })
     ),
     nom: matches[1],
     type: content_type
   };
+  console.log('fileInfo=', fileInfo);
+  return fileInfo;
 }
 
 function lireFichier(fichierId) {
+  console.log('fichierId=', fichierId);
   return new Promise((resolve, reject) => {
     return keycloak
       .init({ onLoad: 'check-sso' })
@@ -208,6 +212,10 @@ function lireFichier(fichierId) {
           apiHttpClient
             .get(`/fichiers/${fichierId}`, { responseType: 'blob' })
             .then(response => extractFileInfo(response))
+            .catch(function(error) {
+              console.log('error=', JSON.stringify(error));
+              return reject(error);
+            })
         );
       })
       .error(error => {

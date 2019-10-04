@@ -10,17 +10,17 @@ function Error(props) {
     <React.Fragment>
       <AppAppBar />
       <Typography variant="h3" marked="center" align="center">
-        {`500 | Erreur`}
+        {`Erreur`}
       </Typography>
       <Typography variant="body1" marked="center" align="center">
-        {error}
+        {error.message}
       </Typography>
       <AppFooter />
     </React.Fragment>
   );
 }
 Error.propTypes = {
-  error: PropTypes.string.isRequired
+  error: PropTypes.object.isRequired
 };
 
 export default Error;

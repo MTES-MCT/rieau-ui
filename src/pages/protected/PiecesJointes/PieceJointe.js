@@ -61,6 +61,8 @@ async function handleFilePreview(fichierId) {
 
 function PieceJointe(props) {
   const { classes, pieceJointe, setError, reload } = props;
+
+  console.log('pieceJointe.fichierId=', pieceJointe.fichierId);
   const [showPreview, setShowPreview] = useState(
     pieceJointe.fichierId !== null
   );
@@ -101,7 +103,7 @@ function PieceJointe(props) {
     return title;
   }
 
-  if (isRejected) return <Error error={error.message} />;
+  if (isRejected) return <Error error={error} />;
   return (
     <Card className={classes.card}>
       <CardHeader title={title(pieceJointe.titre, pieceJointe.required)} />
@@ -116,12 +118,11 @@ function PieceJointe(props) {
             variant="outlined"
             color="inherit"
             onUploadFile={handleSavePieceJointe}
-            reload={reload}
             setError={setError}
             acceptedFormats={pieceJointe.formats}
           />
         )}
-        {showPreview && (
+        {showPreview && isSettled && file && (
           <React.Fragment>
             <div className={classes.buttonWrapper}>
               <Button

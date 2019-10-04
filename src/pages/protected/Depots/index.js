@@ -37,12 +37,13 @@ function Depots(props) {
 
   async function handleAjouterDepot(formData) {
     await depotsApi.ajouterDepot(formData);
+    reload();
   }
   async function handleReject(err) {
     setError(err);
   }
 
-  if (isRejected) return <Error error={error.message} />;
+  if (isRejected) return <Error error={error} />;
   if (isLoading) return <LinearProgress />;
   if (data && isFulfilled) {
     return (
@@ -85,7 +86,7 @@ function Depots(props) {
                 label="Ajouter"
                 variant="contained"
                 onUploadFile={handleAjouterDepot}
-                reload={reload}
+                // reload={reload}
                 setError={setError}
                 acceptedFormats="application/pdf"
               />

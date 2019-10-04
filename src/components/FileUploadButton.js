@@ -25,7 +25,6 @@ function FileUploadButton(props) {
     variant,
     color,
     onUploadFile,
-    reload,
     setError
   } = props;
   const [showDropzone, setShowDropzone] = useState(false);
@@ -40,7 +39,6 @@ function FileUploadButton(props) {
       .then()
       .catch(error => setError(error));
     closeDropzone();
-    reload();
   }
   return (
     <React.Fragment>
@@ -73,7 +71,6 @@ FileUploadButton.propTypes = {
   label: PropTypes.string.isRequired,
   iconName: PropTypes.string.isRequired,
   onUploadFile: PropTypes.func.isRequired,
-  reload: PropTypes.func.isRequired,
   setError: PropTypes.func.isRequired
 };
 
