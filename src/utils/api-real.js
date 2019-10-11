@@ -62,6 +62,11 @@ function isDeposant() {
     return resolve(keycloak.hasRealmRole('DEPOSANT'));
   });
 }
+function isMairie() {
+  return new Promise((resolve, reject) => {
+    return resolve(keycloak.hasRealmRole('MAIRIE'));
+  });
+}
 
 function isInstructeur() {
   return new Promise((resolve, reject) => {
@@ -127,6 +132,22 @@ function supprimerDepot(id) {
       .success(authenticated => {
         return resolve(
           apiHttpClient.delete(`/dossiers/${id}`).then(res => res.data)
+        );
+      })
+      .error(error => {
+        return reject(new Error(error));
+      });
+  });
+}
+
+function qualifier(id) {
+  return new Promise((resolve, reject) => {
+    return keycloak
+      .init({ onLoad: 'check-sso' })
+      .success(authenticated => {
+        console.log('id=', JSON.stringify(id));
+        return resolve(
+          apiHttpClient.post(`/dossiers/${id}/qualifier`).then(res => res.data)
         );
       })
       .error(error => {
@@ -230,6 +251,7 @@ const auth = {
   logout,
   getUser,
   isDeposant,
+  isMairie,
   isInstructeur,
   isBeta
 };
@@ -239,7 +261,8 @@ const depots = {
   ajouterDepot,
   supprimerDepot,
   savePieceJointe,
-  lireFichier
+  lireFichier,
+  qualifier
 };
 
 const api = {

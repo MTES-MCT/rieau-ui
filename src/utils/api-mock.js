@@ -39,6 +39,14 @@ function isDeposant() {
   });
 }
 
+function isMairie() {
+  return new Promise((resolve, reject) => {
+    setTimeout(function() {
+      return resolve(principal.profils.includes('MAIRIE'));
+    }, waitingTime);
+  });
+}
+
 function isInstructeur() {
   return new Promise((resolve, reject) => {
     setTimeout(function() {
@@ -64,28 +72,7 @@ function getUser() {
   });
 }
 
-let depotsFixtures = [
-  // {
-  //   id: "0",
-  //   type: "dp",
-  //   date: "01/01/2019",
-  //   statut: "DEPOSE",
-  //   userId: "jean.martin",
-  //   piecesAJoindre: ["1"],
-  //   cerfa: { type: "dp", numero: "0", fichierId: "dp0", depotId: "0" },
-  //   piecesJointes: []
-  // },
-  // {
-  //   id: "1",
-  //   type: "pcmi",
-  //   date: "01/07/2019",
-  //   statut: "DEPOSE",
-  //   userId: "jean.martin",
-  //   piecesAJoindre: ["1", "2"],
-  //   cerfa: { type: "pcmi", numero: "0", fichierId: "pcmi0", depotId: "1" },
-  //   piecesJointes: []
-  // }
-];
+let depotsFixtures = [];
 
 function mesDepots() {
   return new Promise((resolve, reject) => {
@@ -105,6 +92,18 @@ function monDepot(id) {
   return new Promise((resolve, reject) => {
     setTimeout(function() {
       return resolve(depotsFixtures.find(depot => depot.id === id));
+    }, waitingTime);
+  });
+}
+
+function qualifier(id) {
+  return new Promise((resolve, reject) => {
+    setTimeout(function() {
+      return resolve(function() {
+        const depot = depotsFixtures.find(depot => depot.id === id);
+        depot.statut = 'QUALIFIE';
+        return depot;
+      });
     }, waitingTime);
   });
 }
@@ -204,7 +203,8 @@ const auth = {
   isAuthenticated,
   logout,
   getUser,
-  isDeposant: isDeposant,
+  isDeposant,
+  isMairie,
   isInstructeur,
   isBeta
 };
@@ -213,7 +213,8 @@ const depots = {
   monDepot,
   ajouterDepot,
   savePieceJointe,
-  lireFichier
+  lireFichier,
+  qualifier
 };
 
 const api = {

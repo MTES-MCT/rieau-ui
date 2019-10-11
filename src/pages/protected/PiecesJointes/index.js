@@ -14,6 +14,8 @@ import { useAsync } from 'react-async';
 import Error from 'pages/Error';
 import NotFound from 'pages/NotFound';
 import { typeLibelle, pieceJointe } from 'utils/piecesjointes';
+import Button from 'components/Button';
+import BackIcon from '@material-ui/icons/ArrowBack';
 
 const styles = theme => ({
   grid: {
@@ -28,7 +30,7 @@ async function handleDepot({ id }) {
 }
 
 function PiecesJointes(props) {
-  const { classes, match } = props;
+  const { classes, match, history } = props;
   const depotId = match.params.depotId;
   const {
     data = { depot: null },
@@ -49,12 +51,29 @@ function PiecesJointes(props) {
     return (
       <React.Fragment>
         <AppAppBar />
-        <Typography variant="h3" marked="center" align="center">
-          {`CERFA initial et pièces jointes`}
-        </Typography>
-        <Typography variant="subtitle1" marked="center" align="center">
-          {`${typeLibelle(depot.type)}`}
-        </Typography>
+        <Grid container className={classes.grid}>
+          <Grid item xs={12}>
+            <Typography variant="h3" marked="center" align="center">
+              {`CERFA initial et pièces jointes`}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="subtitle1" marked="center" align="center">
+              {`${typeLibelle(depot.type)}`}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              variant="contained"
+              color="secondary"
+              aria-label="Dépot"
+              onClick={event => history.push(`/depots/${depotId}`)}
+            >
+              <BackIcon />
+              {`Dépôt`}
+            </Button>
+          </Grid>
+        </Grid>
         <Grid container className={classes.grid}>
           <Grid item xs={12}>
             <PieceJointe

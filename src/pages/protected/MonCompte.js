@@ -28,11 +28,12 @@ const styles = theme => ({
 
 function MonCompte(props) {
   const { classes } = props;
-  const { user, isDeposant, isInstructeur, isBeta } = useUser();
+  const { user, isDeposant, isInstructeur, isMairie, isBeta } = useUser();
   const profils = [];
-  isDeposant && profils.push('deposant');
-  isInstructeur && profils.push('instructeur');
-  isBeta && profils.push('beta');
+  isDeposant && profils.push('DEPOSANT');
+  isMairie && profils.push('MAIRIE');
+  isInstructeur && profils.push('INSTRUCTEUR');
+  isBeta && profils.push('BETA');
   return (
     <React.Fragment>
       <AppAppBar />

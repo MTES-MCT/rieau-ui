@@ -30,6 +30,12 @@ function isDeposant() {
   });
 }
 
+function isMairie() {
+  return api.then(handleAuth).then(auth => {
+    return auth.isMairie();
+  });
+}
+
 function isBeta() {
   return api.then(handleAuth).then(auth => {
     return auth.isBeta();
@@ -60,6 +66,7 @@ const auth = {
   isAuthenticated,
   getUser,
   isDeposant,
+  isMairie,
   isInstructeur,
   isBeta
 };

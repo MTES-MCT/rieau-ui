@@ -14,6 +14,7 @@ async function handleApiAuth() {
       user: null,
       isAuthenticated,
       isDeposant: false,
+      isMairie: false,
       isInstructeur: false,
       isBeta: false,
       dossiers: []
@@ -22,6 +23,7 @@ async function handleApiAuth() {
     user: await auth.getUser(),
     isAuthenticated,
     isDeposant: await auth.isDeposant(),
+    isMairie: await auth.isMairie(),
     isInstructeur: await auth.isInstructeur(),
     isBeta: await auth.isBeta()
   };

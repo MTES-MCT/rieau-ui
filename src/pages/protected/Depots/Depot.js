@@ -19,6 +19,10 @@ import Button from 'components/Button';
 import { Link as RouterLink } from 'react-router-dom';
 import Typography from 'components/Typography';
 import { typeLibelle } from 'utils/piecesjointes';
+import statuts from 'utils/statutsDepot';
+import { Grid } from '@material-ui/core';
+import EtapesStepper from 'components/EtapesStepper';
+import { useUser } from 'context/user-context';
 
 const styles = theme => ({
   card: {
@@ -29,20 +33,39 @@ const styles = theme => ({
   content: {
     display: 'flex',
     flexWrap: 'wrap'
+  },
+  grid: {
+    display: 'flex',
+    alignItems: 'center'
   }
 });
 
 async function handleDepot({ id }) {
   return { depot: await depots.monDepot(id) };
 }
+async function handleQualifierDepot(id) {
+  return { depot: await depots.qualifier(id) };
+}
 
 function Depot(props) {
   const { classes, match } = props;
   const id = match.params.id;
-  const { data = { depot: null }, error, isLoading, isRejected } = useAsync({
+  const { isMairie } = useUser();
+  const {
+    data = { depot: null },
+    error,
+    isLoading,
+    isRejected,
+    reload
+  } = useAsync({
     promiseFn: handleDepot,
     id: id
   });
+
+  function handleQualifier() {
+    data.depot = handleQualifierDepot(id);
+    reload();
+  }
   if (isRejected) return <Error error={error.message} />;
   if (isLoading) return <LinearProgress />;
   if (data) {
@@ -51,14 +74,27 @@ function Depot(props) {
     return (
       <React.Fragment>
         <AppAppBar />
-        <Typography variant="h3" marked="center" align="center">
+        <Typography variant="h2" marked="center" align="center">
           {`Dépôt`}
         </Typography>
         <Card className={classes.card}>
           <CardHeader title={typeLibelle(depot.type)} />
           <CardContent className={classes.content}>
-            Statut: {depots.statutLibelle(depot.statut)} - Déposé le:{' '}
-            {depot.date}
+            <Grid container className={classes.grid}>
+              <Grid item xs={12}>
+                <Typography variant="h3" marked="center" align="center">
+                  {`Étapes: `}
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <EtapesStepper steps={statuts} activeStepId={depot.statut} />
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant="body2" marked="center" align="center">
+                  {`Déposé le: ${depot.date}`}
+                </Typography>
+              </Grid>
+            </Grid>
           </CardContent>
           <CardActions>
             <Button
@@ -70,6 +106,16 @@ function Depot(props) {
             >
               {`Pièces jointes`}
             </Button>
+            {isMairie && depot.statut === 'DEPOSE' && (
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleQualifier}
+                data-cy="qualifier-btn"
+              >
+                {`Qualifier`}
+              </Button>
+            )}
           </CardActions>
         </Card>
         <AppFooter />

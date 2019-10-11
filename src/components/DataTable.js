@@ -16,6 +16,7 @@ import clsx from 'clsx';
 import Typography from 'components/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
+import VariantChip from 'components/VariantChip';
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -260,7 +261,14 @@ function DataTable(props) {
                           .filter(column => column.id !== 'id')
                           .map(column => (
                             <TableCell key={column.id} align="right">
-                              {row[column.id]}
+                              {column.variantChip ? (
+                                <VariantChip
+                                  variantId={row[column.id]}
+                                  variants={column.variants}
+                                />
+                              ) : (
+                                row[column.id]
+                              )}
                             </TableCell>
                           ))}
                         {onDelete && (

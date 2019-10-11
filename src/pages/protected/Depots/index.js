@@ -14,6 +14,7 @@ import { withRouter } from 'react-router';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { useUser } from 'context/user-context';
 import FileUploadButton from 'components/FileUploadButton';
+import statuts from 'utils/statutsDepot';
 
 async function handleDepots() {
   return await depotsApi.mesDepots();
@@ -33,7 +34,7 @@ function Depots(props) {
     onReject: handleReject
   });
   const { history } = props;
-  const { isBeta } = useUser();
+  const { isBeta, isDeposant } = useUser();
 
   async function handleAjouterDepot(formData) {
     await depotsApi.ajouterDepot(formData);
@@ -52,7 +53,7 @@ function Depots(props) {
         <DataTable
           title="Dépôts"
           columns={[
-            { label: 'Id', id: 'id', numeric: true, disablePadding: false },
+            { label: 'Id', id: 'id', numeric: false, disablePadding: false },
             {
               label: 'Type',
               id: 'type',
@@ -69,7 +70,9 @@ function Depots(props) {
               label: 'Statut',
               id: 'statut',
               numeric: false,
-              disablePadding: false
+              disablePadding: false,
+              variantChip: true,
+              variants: statuts
             }
           ]}
           rows={data}
@@ -79,14 +82,13 @@ function Depots(props) {
             onClick: (event, rowId) => history.push(`/depots/${rowId}`)
           }}
           addComponent={
-            isBeta ? (
+            isBeta && isDeposant ? (
               <FileUploadButton
                 iconName="add"
                 color="secondary"
                 label="Ajouter"
                 variant="contained"
                 onUploadFile={handleAjouterDepot}
-                // reload={reload}
                 setError={setError}
                 acceptedFormats="application/pdf"
               />

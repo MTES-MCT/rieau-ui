@@ -18,6 +18,12 @@ function monDepot(id) {
   });
 }
 
+function qualifier(id) {
+  return api.then(handleDepots).then(depots => {
+    return depots.qualifier(id);
+  });
+}
+
 function ajouterDepot(formData) {
   return api.then(handleDepots).then(depots => {
     return depots.ajouterDepot(formData);
@@ -42,15 +48,6 @@ function lireFichier(id) {
   });
 }
 
-function statutLibelle(statut) {
-  switch (statut) {
-    case 'DEPOSE':
-      return 'déposé';
-    default:
-      return '';
-  }
-}
-
 const depots = {
   mesDepots,
   monDepot,
@@ -58,7 +55,7 @@ const depots = {
   supprimerDepot,
   savePieceJointe,
   lireFichier,
-  statutLibelle
+  qualifier
 };
 
 export default depots;
