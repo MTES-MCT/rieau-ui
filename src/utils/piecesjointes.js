@@ -27,7 +27,7 @@ function addDossierIdAndFichierId(pj, dossier, numero) {
 }
 
 function pieceJointe(dossier, numero) {
-  let typeDossier = dossier.type ? dossier.type.toLowerCase() : '';
+  let typeDossier = dossier.type.id ? dossier.type.id.toLowerCase() : '';
   let pj = {};
   switch (typeDossier) {
     case 'dp':
@@ -42,7 +42,7 @@ function pieceJointe(dossier, numero) {
 }
 
 function typeLibelle(typeDemande) {
-  let lowtypeDemande = typeDemande ? typeDemande.toLowerCase() : '';
+  let lowtypeDemande = typeDemande.id ? typeDemande.id.toLowerCase() : '';
   switch (lowtypeDemande) {
     case 'dp':
       return 'Déclaration préalable de travaux';

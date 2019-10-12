@@ -266,6 +266,8 @@ function DataTable(props) {
                                   variantId={row[column.id]}
                                   variants={column.variants}
                                 />
+                              ) : row[column.id].label ? (
+                                row[column.id].label
                               ) : (
                                 row[column.id]
                               )}

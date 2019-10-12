@@ -96,7 +96,7 @@ function consulterDossier(id) {
   });
 }
 
-function qualifier(id) {
+function qualifierDossier(id) {
   return new Promise((resolve, reject) => {
     setTimeout(function() {
       const dossier = DossiersFixtures.find(dossier => dossier.id === id);
@@ -109,8 +109,13 @@ function qualifier(id) {
 function typeFromCerfa(fileName) {
   let type = '';
   if (fileName && fileName.length > 0) {
-    if (fileName.toUpperCase().includes('13406_PCMI')) type = 'pcmi';
-    if (fileName.toUpperCase().includes('13703_DPMI')) type = 'dp';
+    if (fileName.toUpperCase().includes('13406_PCMI'))
+      type = {
+        id: 'pcmi',
+        label: 'Permis de construire de maison individuelle'
+      };
+    if (fileName.toUpperCase().includes('13703_DPMI'))
+      type = { id: 'dp', label: 'Déclaration préalable' };
   }
   return type;
 }
@@ -212,7 +217,7 @@ const dossiers = {
   ajouterDossier,
   savePieceJointe,
   lireFichier,
-  qualifier
+  qualifierDossier
 };
 
 const api = {
