@@ -4,10 +4,8 @@ import { isApiMock } from 'utils/api';
 import Button from './Button';
 import { useAuth } from 'context/auth-context';
 import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
-import LockIcon from '@material-ui/icons/Lock';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+import MockUsersConnectionMenuItems from './MockUsersConnectionMenuItems';
 
 function ConnexionButton(props) {
   const { color, appbar, size } = props;
@@ -69,42 +67,7 @@ function ConnexionButton(props) {
             onClose={handleClose}
           >
             <MenuList>
-              <MenuItem
-                onClick={function(event) {
-                  return login('jean.martin');
-                }}
-                button
-                data-cy={appBarPrefix + 'menuitem-connexion-deposant'}
-              >
-                <ListItemIcon>
-                  <LockIcon />
-                </ListItemIcon>
-                {`Connexion Déposant`}
-              </MenuItem>
-              <MenuItem
-                onClick={function(event) {
-                  return login('jacques.dupont');
-                }}
-                button
-                data-cy={appBarPrefix + 'menuitem-connexion-instructeur'}
-              >
-                <ListItemIcon>
-                  <LockIcon />
-                </ListItemIcon>
-                {`Connexion Instructeur`}
-              </MenuItem>
-              <MenuItem
-                onClick={function(event) {
-                  return login('madame.le-maire');
-                }}
-                button
-                data-cy={appBarPrefix + 'menuitem-connexion-mairie'}
-              >
-                <ListItemIcon>
-                  <LockIcon />
-                </ListItemIcon>
-                {`Connexion Mairie`}
-              </MenuItem>
+              <MockUsersConnectionMenuItems />
             </MenuList>
           </Menu>
         </React.Fragment>
