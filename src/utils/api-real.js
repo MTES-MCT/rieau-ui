@@ -97,7 +97,7 @@ function getUser() {
   });
 }
 
-function mesDepots() {
+function listerDossiers() {
   return new Promise((resolve, reject) => {
     return keycloak
       .init({ onLoad: 'check-sso' })
@@ -110,7 +110,7 @@ function mesDepots() {
   });
 }
 
-function monDepot(id) {
+function consulterDossier(id) {
   return new Promise((resolve, reject) => {
     return keycloak
       .init({ onLoad: 'check-sso' })
@@ -125,7 +125,7 @@ function monDepot(id) {
   });
 }
 
-function supprimerDepot(id) {
+function supprimerDossier(id) {
   return new Promise((resolve, reject) => {
     return keycloak
       .init({ onLoad: 'check-sso' })
@@ -140,7 +140,7 @@ function supprimerDepot(id) {
   });
 }
 
-function qualifier(id) {
+function qualifierDossier(id) {
   return new Promise((resolve, reject) => {
     return keycloak
       .init({ onLoad: 'check-sso' })
@@ -156,7 +156,7 @@ function qualifier(id) {
   });
 }
 
-function ajouterDepot(formData) {
+function ajouterDossier(formData) {
   return new Promise((resolve, reject) => {
     return keycloak
       .init({ onLoad: 'check-sso' })
@@ -255,19 +255,19 @@ const auth = {
   isInstructeur,
   isBeta
 };
-const depots = {
-  mesDepots,
-  monDepot,
-  ajouterDepot,
-  supprimerDepot,
+const dossiers = {
+  listerDossiers,
+  consulterDossier,
+  ajouterDossier,
+  supprimerDossier,
   savePieceJointe,
   lireFichier,
-  qualifier
+  qualifierDossier
 };
 
 const api = {
   auth,
-  depots
+  dossiers
 };
 
 export default api;

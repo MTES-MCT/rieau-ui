@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import compose from 'utils/compose';
 import Typography from 'components/Typography';
 import PieceJointe from './PieceJointe';
-import depots from 'utils/depots';
+import api from 'utils/dossiers';
 import { useAsync } from 'react-async';
 import Error from 'pages/Error';
 import NotFound from 'pages/NotFound';
@@ -25,29 +25,29 @@ const styles = theme => ({
   }
 });
 
-async function handleDepot({ id }) {
-  return { depot: await depots.monDepot(id) };
+async function handleDossier({ id }) {
+  return { dossier: await api.consulterDossier(id) };
 }
 
 function PiecesJointes(props) {
   const { classes, match, history } = props;
-  const depotId = match.params.depotId;
+  const dossierId = match.params.dossierId;
   const {
-    data = { depot: null },
+    data = { dossier: null },
     error,
     setError,
     isLoading,
     isRejected,
     reload
   } = useAsync({
-    promiseFn: handleDepot,
-    id: depotId
+    promiseFn: handleDossier,
+    id: dossierId
   });
   if (isRejected) return <Error error={error.message} />;
   if (isLoading) return <LinearProgress />;
   if (data) {
-    const { depot } = data;
-    if (!depot) return <NotFound />;
+    const { dossier } = data;
+    if (!dossier) return <NotFound />;
     return (
       <React.Fragment>
         <AppAppBar />
@@ -59,33 +59,33 @@ function PiecesJointes(props) {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="subtitle1" marked="center" align="center">
-              {`${typeLibelle(depot.type)}`}
+              {`${typeLibelle(dossier.type)}`}
             </Typography>
           </Grid>
           <Grid item xs={12}>
             <Button
               variant="contained"
               color="secondary"
-              aria-label="Dépot"
-              onClick={event => history.push(`/depots/${depotId}`)}
+              aria-label="Dossier"
+              onClick={event => history.push(`/dossiers/${dossierId}`)}
             >
               <BackIcon />
-              {`Dépôt`}
+              {`Dossier`}
             </Button>
           </Grid>
         </Grid>
         <Grid container className={classes.grid}>
           <Grid item xs={12}>
             <PieceJointe
-              key={depot.cerfa.numero}
-              pieceJointe={pieceJointe(depot, depot.cerfa.numero)}
+              key={dossier.cerfa.numero}
+              pieceJointe={pieceJointe(dossier, dossier.cerfa.numero)}
               setError={setError}
               reload={reload}
             />
-            {depot.piecesAJoindre.map(pieceAJoindre => (
+            {dossier.piecesAJoindre.map(pieceAJoindre => (
               <PieceJointe
                 key={pieceAJoindre}
-                pieceJointe={pieceJointe(depot, pieceAJoindre)}
+                pieceJointe={pieceJointe(dossier, pieceAJoindre)}
                 setError={setError}
                 reload={reload}
               />

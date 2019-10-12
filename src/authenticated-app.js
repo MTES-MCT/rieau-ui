@@ -31,7 +31,7 @@ function Routes() {
               />
             );
           })}
-        <Redirect to="/depots">
+        <Redirect to="/dossiers">
           {routesUnauthenticated.map((route, key) => {
             return (
               <Route key={key} path={route.path} component={route.component} />

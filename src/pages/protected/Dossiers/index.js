@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import AppAppBar from 'components/AppAppBar';
 import AppFooter from 'components/AppFooter';
 import withRoot from 'theme/withRoot';
-import depotsApi from 'utils/depots';
+import api from 'utils/dossiers';
 import { useAsync } from 'react-async';
 import Error from 'pages/Error';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -14,13 +14,13 @@ import { withRouter } from 'react-router';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { useUser } from 'context/user-context';
 import FileUploadButton from 'components/FileUploadButton';
-import statuts from 'utils/statutsDepot';
+import statuts from 'utils/statutsDossier';
 
-async function handleDepots() {
-  return await depotsApi.mesDepots();
+async function handleDossiers() {
+  return await api.listerDossiers();
 }
 
-function Depots(props) {
+function Dossiers(props) {
   const {
     data,
     error,
@@ -30,14 +30,14 @@ function Depots(props) {
     isFulfilled,
     reload
   } = useAsync({
-    promiseFn: handleDepots,
+    promiseFn: handleDossiers,
     onReject: handleReject
   });
   const { history } = props;
   const { isBeta, isDeposant } = useUser();
 
-  async function handleAjouterDepot(formData) {
-    await depotsApi.ajouterDepot(formData);
+  async function handleAjouterDossier(formData) {
+    await api.ajouterDossier(formData);
     reload();
   }
   async function handleReject(err) {
@@ -51,9 +51,17 @@ function Depots(props) {
       <React.Fragment>
         <AppAppBar />
         <DataTable
-          title="Dépôts"
+          title="Dossiers"
           columns={[
             { label: 'Id', id: 'id', numeric: false, disablePadding: false },
+            {
+              label: 'Statut',
+              id: 'statut',
+              numeric: false,
+              disablePadding: false,
+              variantChip: true,
+              variants: statuts
+            },
             {
               label: 'Type',
               id: 'type',
@@ -65,21 +73,13 @@ function Depots(props) {
               id: 'date',
               numeric: false,
               disablePadding: false
-            },
-            {
-              label: 'Statut',
-              id: 'statut',
-              numeric: false,
-              disablePadding: false,
-              variantChip: true,
-              variants: statuts
             }
           ]}
           rows={data}
           onRowClick={{
             icon: () => <VisibilityIcon />,
-            tooltip: 'Voir le dépôt',
-            onClick: (event, rowId) => history.push(`/depots/${rowId}`)
+            tooltip: 'Voir le dossier',
+            onClick: (event, rowId) => history.push(`/dossiers/${rowId}`)
           }}
           addComponent={
             isBeta && isDeposant ? (
@@ -88,7 +88,7 @@ function Depots(props) {
                 color="secondary"
                 label="Ajouter"
                 variant="contained"
-                onUploadFile={handleAjouterDepot}
+                onUploadFile={handleAjouterDossier}
                 setError={setError}
                 acceptedFormats="application/pdf"
               />
@@ -102,11 +102,11 @@ function Depots(props) {
     );
   }
 }
-Depots.propTypes = {
+Dossiers.propTypes = {
   history: PropTypes.object.isRequired
 };
 
 export default compose(
   withRouter,
   withRoot
-)(Depots);
+)(Dossiers);

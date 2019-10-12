@@ -66,7 +66,7 @@ function SideBarMenu(props) {
             .filter(
               route =>
                 route.sidebar &&
-                (route.id !== 'depots' ? route.beta === isBeta : true) &&
+                (route.id !== 'dossiers' ? route.beta === isBeta : true) &&
                 !route.auth
             )
             .map(route => {

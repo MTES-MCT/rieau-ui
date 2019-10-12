@@ -14,7 +14,7 @@ import routesUnauthenticated from 'routes/unauthenticated';
 import { useUser } from 'context/user-context';
 import Typography from 'components/Typography';
 import Grid from '@material-ui/core/Grid';
-import DepotsMenu from './DepotsMenu';
+import DossiersMenu from './DossiersMenu';
 import ConnexionButton from 'components/ConnexionButton';
 import { env } from 'utils/env-helper';
 
@@ -87,7 +87,7 @@ function AppAppBar(props) {
               <Hidden xsDown>
                 {isAuthenticated ? (
                   <React.Fragment>
-                    <DepotsMenu />
+                    <DossiersMenu />
                     <AccountMenu />
                   </React.Fragment>
                 ) : (

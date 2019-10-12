@@ -15,9 +15,9 @@ context('Localiser avec un compte instructeur non beta testeur', () => {
     })
   
     it('cy.click() - go to localiser page impossible', () => {
-      cy.contains("Dépôts").should('be.visible')
-      cy.get('[data-cy=appbar-depots-btn]').should('be.visible').click()
-      cy.get('[data-cy=menu-item-link-depots]').should('be.visible')
+      cy.contains("Dossiers").should('be.visible')
+      cy.get('[data-cy=appbar-dossiers-btn]').should('be.visible').click()
+      cy.get('[data-cy=menu-item-link-dossiers]').should('be.visible')
       cy.get('[data-cy=menu-item-link-localiser]').should('not.be.visible')
     })
   })

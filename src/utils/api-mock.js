@@ -72,13 +72,13 @@ function getUser() {
   });
 }
 
-let depotsFixtures = [];
+let DossiersFixtures = [];
 
-function mesDepots() {
+function listerDossiers() {
   return new Promise((resolve, reject) => {
     setTimeout(
       function() {
-        return resolve(depotsFixtures);
+        return resolve(DossiersFixtures);
       },
       function(error) {
         return reject(error);
@@ -88,10 +88,10 @@ function mesDepots() {
   });
 }
 
-function monDepot(id) {
+function consulterDossier(id) {
   return new Promise((resolve, reject) => {
     setTimeout(function() {
-      return resolve(depotsFixtures.find(depot => depot.id === id));
+      return resolve(DossiersFixtures.find(dossier => dossier.id === id));
     }, waitingTime);
   });
 }
@@ -99,9 +99,9 @@ function monDepot(id) {
 function qualifier(id) {
   return new Promise((resolve, reject) => {
     setTimeout(function() {
-      const depot = depotsFixtures.find(depot => depot.id === id);
-      depot.statut = 'QUALIFIE';
-      return resolve(depot);
+      const dossier = DossiersFixtures.find(dossier => dossier.id === id);
+      dossier.statut = 'QUALIFIE';
+      return resolve(dossier);
     }, waitingTime);
   });
 }
@@ -119,12 +119,12 @@ function cerfaError(file) {
   return `Fichier CERFA ${file.name} non reconnu. Seuls les fichiers nommés cerfa_13406_PCMI.pdf ou cerfa_13703_DPMI.pdf sont reconnus.`;
 }
 
-function saveInSessionStorage(depot, numero, file) {
+function saveInSessionStorage(dossier, numero, file) {
   const reader = new FileReader();
   reader.onload = function() {
     const binaryStr = reader.result;
     sessionStorage.setItem(
-      depot.type + numero,
+      dossier.type + numero,
       JSON.stringify({
         nom: file.name,
         type: file.type,
@@ -136,14 +136,14 @@ function saveInSessionStorage(depot, numero, file) {
   reader.readAsBinaryString(file);
 }
 
-function ajouterDepot(formData) {
+function ajouterDossier(formData) {
   return new Promise((resolve, reject) => {
     setTimeout(function() {
       let file = formData.get('file');
       const type = typeFromCerfa(file.name);
       if (type === '') return reject(new Error(cerfaError(file)));
-      const depot = {
-        id: depotsFixtures.length.toString(),
+      const dossier = {
+        id: DossiersFixtures.length.toString(),
         type: type,
         date: new Date().toLocaleDateString(),
         statut: 'DEPOSE',
@@ -152,13 +152,13 @@ function ajouterDepot(formData) {
           type: type,
           numero: '0',
           fichierId: type + '0',
-          depotId: depotsFixtures.length.toString()
+          DossierId: DossiersFixtures.length.toString()
         },
         piecesAJoindre: ['1'],
         piecesJointes: []
       };
-      saveInSessionStorage(depot, '0', file);
-      depotsFixtures.push(depot);
+      saveInSessionStorage(dossier, '0', file);
+      DossiersFixtures.push(dossier);
       return resolve();
     }, waitingTime);
   });
@@ -175,13 +175,13 @@ function savePieceJointe(dossierId, numero, formData) {
     setTimeout(function() {
       let file = formData.get('file');
       if (!checkCode(numero, file)) throw new Error(cerfaError(file));
-      let depot = depotsFixtures.find(depot => depot.id === dossierId);
-      saveInSessionStorage(depot, numero, file);
-      depot.piecesJointes.push({
-        type: depot.type,
+      let dossier = DossiersFixtures.find(dossier => dossier.id === dossierId);
+      saveInSessionStorage(dossier, numero, file);
+      dossier.piecesJointes.push({
+        type: dossier.type,
         numero: numero,
-        fichierId: depot.type + numero,
-        depotId: dossierId
+        fichierId: dossier.type + numero,
+        DossierId: dossierId
       });
       return resolve();
     }, waitingTime);
@@ -206,10 +206,10 @@ const auth = {
   isInstructeur,
   isBeta
 };
-const depots = {
-  mesDepots,
-  monDepot,
-  ajouterDepot,
+const dossiers = {
+  listerDossiers,
+  consulterDossier,
+  ajouterDossier,
   savePieceJointe,
   lireFichier,
   qualifier
@@ -217,7 +217,7 @@ const depots = {
 
 const api = {
   auth,
-  depots
+  dossiers
 };
 
 export default api;

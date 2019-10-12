@@ -13,29 +13,29 @@ function liste(typeDemande) {
   }
 }
 
-function addDepotIdAndFichierId(pj, depot, numero) {
+function addDossierIdAndFichierId(pj, dossier, numero) {
   if (pj) {
-    pj.depotId = depot.id;
-    if (numero === depot.cerfa.numero) {
-      pj.fichierId = depot.cerfa.fichierId;
+    pj.DossierId = dossier.id;
+    if (numero === dossier.cerfa.numero) {
+      pj.fichierId = dossier.cerfa.fichierId;
     } else {
-      let pieceJointe = depot.piecesJointes.find(pj => pj.numero === numero);
+      let pieceJointe = dossier.piecesJointes.find(pj => pj.numero === numero);
       pj.fichierId = pieceJointe ? pieceJointe.fichierId : null;
     }
   }
   return pj;
 }
 
-function pieceJointe(depot, numero) {
-  let typeDepot = depot.type ? depot.type.toLowerCase() : '';
+function pieceJointe(dossier, numero) {
+  let typeDossier = dossier.type ? dossier.type.toLowerCase() : '';
   let pj = {};
-  switch (typeDepot) {
+  switch (typeDossier) {
     case 'dp':
       pj = listePiecesJointesDP.find(pj => pj.numero === numero);
-      return addDepotIdAndFichierId(pj, depot, numero);
+      return addDossierIdAndFichierId(pj, dossier, numero);
     case 'pcmi':
       pj = listePiecesJointesPCMI.find(pj => pj.numero === numero);
-      return addDepotIdAndFichierId(pj, depot, numero);
+      return addDossierIdAndFichierId(pj, dossier, numero);
     default:
       return [];
   }

@@ -8,31 +8,31 @@ import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import Cgu from 'pages/Cgu';
 import Aide from 'pages/Aide';
 import AideIcon from '@material-ui/icons/Help';
-import Depots from 'pages/protected/Depots';
-import Depot from 'pages/protected/Depots/Depot';
+import Dossiers from 'pages/protected/Dossiers';
+import Dossier from 'pages/protected/Dossiers/Dossier';
 
 const routes = [
   {
-    id: 'depots',
-    path: '/depots',
+    id: 'dossiers',
+    path: '/dossiers',
     label: 'Lister',
     icon: SaveAltIcon,
-    component: Depots,
+    component: Dossiers,
     sidebar: true,
     exact: true
   },
   {
-    id: 'depot',
-    path: '/depots/:id',
-    label: 'Dépôt',
+    id: 'dossier',
+    path: '/dossiers/:id',
+    label: 'Dossier',
     icon: SaveAltIcon,
-    component: Depot,
+    component: Dossier,
     sidebar: false,
     exact: true
   },
   {
     id: 'piecesjointes',
-    path: '/depots/:depotId/piecesjointes',
+    path: '/dossiers/:dossierId/piecesjointes',
     label: 'Pièces jointes',
     icon: SaveAltIcon,
     component: PiecesJointes,

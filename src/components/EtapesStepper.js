@@ -23,13 +23,15 @@ const styles = theme => ({
 function EtapesStepper(props) {
   const { classes, activeStepId, steps } = props;
   const activeStep = steps.find(step => step.id === activeStepId);
+  const stepProps = {};
+  const labelProps = {};
 
   return (
     <div className={classes.root}>
       <Stepper activeStep={activeStep.order} alternativeLabel color="secondary">
         {steps.map((step, index) => (
-          <Step key={step.order}>
-            <StepLabel>{step.label}</StepLabel>
+          <Step key={step.order} {...stepProps}>
+            <StepLabel {...labelProps}>{step.label}</StepLabel>
           </Step>
         ))}
       </Stepper>

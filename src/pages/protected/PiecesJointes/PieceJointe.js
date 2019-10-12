@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import depots from 'utils/depots';
+import api from 'utils/dossiers';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -55,7 +55,7 @@ async function handleFilePreview(fichierId) {
     fichierId.fichierId &&
     fichierId.fichierId !== null
   )
-    fichier = await depots.lireFichier(fichierId.fichierId);
+    fichier = await api.lireFichier(fichierId.fichierId);
   return { file: fichier };
 }
 
@@ -94,7 +94,7 @@ function PieceJointe(props) {
     setShowPreviewDialog(true);
   }
   async function handleSavePieceJointe(file) {
-    await depots.savePieceJointe(pieceJointe.depotId, pieceJointe.numero, file);
+    await api.savePieceJointe(pieceJointe.DossierId, pieceJointe.numero, file);
     reload();
   }
   function title(text, required) {

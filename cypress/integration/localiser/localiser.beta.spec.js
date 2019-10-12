@@ -15,9 +15,9 @@ context('Localiser avec un compte deposant beta testeur', () => {
   })
 
   it('cy.click() - go to localiser page', () => {
-    cy.contains("Dépôts").should('be.visible')
-    cy.get('[data-cy=appbar-depots-btn]').should('be.visible').click()
-    cy.get('[data-cy=menu-item-link-depots]').should('be.visible')
+    cy.contains("Dossiers").should('be.visible')
+    cy.get('[data-cy=appbar-dossiers-btn]').should('be.visible').click()
+    cy.get('[data-cy=menu-item-link-dossiers]').should('be.visible')
     cy.get('[data-cy=menu-item-link-localiser]').should('be.visible').click()
     cy.get('[data-cy=map]').should('be.visible')
     cy.contains("La commune n'apparaît pas ?").should('be.visible')
@@ -25,9 +25,9 @@ context('Localiser avec un compte deposant beta testeur', () => {
   })
 
   it('cy.click() - go to chercher adresse marker', () => {
-    cy.contains("Dépôts").should('be.visible')
-    cy.get('[data-cy=appbar-depots-btn]').should('be.visible').click()
-    cy.get('[data-cy=menu-item-link-depots]').should('be.visible')
+    cy.contains("Dossiers").should('be.visible')
+    cy.get('[data-cy=appbar-dossiers-btn]').should('be.visible').click()
+    cy.get('[data-cy=menu-item-link-dossiers]').should('be.visible')
     cy.get('[data-cy=menu-item-link-localiser]').should('be.visible').click()
     cy.get('[data-cy=map]').should('be.visible')
     cy.contains("Saint-Tropez").should('be.visible').click()

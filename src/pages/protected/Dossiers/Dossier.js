@@ -10,7 +10,7 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import { useAsync } from 'react-async';
-import depots from 'utils/depots';
+import dossiers from 'utils/dossiers';
 import Error from 'pages/Error';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import NotFound from 'pages/NotFound';
@@ -19,7 +19,7 @@ import Button from 'components/Button';
 import { Link as RouterLink } from 'react-router-dom';
 import Typography from 'components/Typography';
 import { typeLibelle } from 'utils/piecesjointes';
-import statuts from 'utils/statutsDepot';
+import statuts from 'utils/statutsDossier';
 import { Grid } from '@material-ui/core';
 import EtapesStepper from 'components/EtapesStepper';
 import { useUser } from 'context/user-context';
@@ -40,45 +40,45 @@ const styles = theme => ({
   }
 });
 
-async function handleDepot({ id }) {
-  return { depot: await depots.monDepot(id) };
+async function handleDossier({ id }) {
+  return { dossier: await dossiers.consulterDossier(id) };
 }
-async function handleQualifierDepot(id) {
-  return { depot: await depots.qualifier(id) };
+async function handleQualifierDossier(id) {
+  return { dossier: await dossiers.qualifierDossier(id) };
 }
 
-function Depot(props) {
+function Dossier(props) {
   const { classes, match } = props;
   const id = match.params.id;
   const { isMairie } = useUser();
   const {
-    data = { depot: null },
+    data = { dossier: null },
     error,
     isLoading,
     isRejected,
     reload
   } = useAsync({
-    promiseFn: handleDepot,
+    promiseFn: handleDossier,
     id: id
   });
 
   function handleQualifier() {
-    data.depot = handleQualifierDepot(id);
+    handleQualifierDossier(id);
     reload();
   }
   if (isRejected) return <Error error={error.message} />;
   if (isLoading) return <LinearProgress />;
   if (data) {
-    const { depot } = data;
-    if (!depot) return <NotFound />;
+    const { dossier } = data;
+    if (!dossier) return <NotFound />;
     return (
       <React.Fragment>
         <AppAppBar />
         <Typography variant="h2" marked="center" align="center">
-          {`Dépôt`}
+          {`Dossier`}
         </Typography>
         <Card className={classes.card}>
-          <CardHeader title={typeLibelle(depot.type)} />
+          <CardHeader title={typeLibelle(dossier.type)} />
           <CardContent className={classes.content}>
             <Grid container className={classes.grid}>
               <Grid item xs={12}>
@@ -87,11 +87,11 @@ function Depot(props) {
                 </Typography>
               </Grid>
               <Grid item xs={12}>
-                <EtapesStepper steps={statuts} activeStepId={depot.statut} />
+                <EtapesStepper steps={statuts} activeStepId={dossier.statut} />
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="body2" marked="center" align="center">
-                  {`Déposé le: ${depot.date}`}
+                  {`Déposé le: ${dossier.date}`}
                 </Typography>
               </Grid>
             </Grid>
@@ -101,12 +101,12 @@ function Depot(props) {
               variant="contained"
               color="secondary"
               component={RouterLink}
-              to={`/depots/${depot.id}/piecesjointes`}
+              to={`/dossiers/${dossier.id}/piecesjointes`}
               data-cy="piecesjointes-btn"
             >
               {`Pièces jointes`}
             </Button>
-            {isMairie && depot.statut === 'DEPOSE' && (
+            {isMairie && dossier.statut === 'DEPOSE' && (
               <Button
                 variant="contained"
                 color="secondary"
@@ -123,7 +123,7 @@ function Depot(props) {
     );
   }
 }
-Depot.propTypes = {
+Dossier.propTypes = {
   classes: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired
 };
@@ -132,4 +132,4 @@ export default compose(
   withStyles(styles),
   withRoot,
   withRouter
-)(Depot);
+)(Dossier);

@@ -13,7 +13,7 @@ const styles = theme => ({
   root: {}
 });
 
-function DepotsMenu(props) {
+function DossiersMenu(props) {
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState();
   const { isBeta } = useUser();
@@ -30,18 +30,18 @@ function DepotsMenu(props) {
   return (
     <React.Fragment>
       <Button
-        aria-label="Dépots"
-        aria-controls="depots-menu-appbar"
+        aria-label="Dossiers"
+        aria-controls="dossiers-menu-appbar"
         aria-haspopup="true"
         onClick={handleMenu}
         color="inherit"
         variant="text"
-        data-cy="appbar-depots-btn"
+        data-cy="appbar-dossiers-btn"
       >
-        {`Dépôts`}
+        {`Dossiers`}
       </Button>
       <Menu
-        id="depots-menu-appbar"
+        id="dossiers-menu-appbar"
         anchorEl={anchorEl}
         anchorOrigin={{
           vertical: 'top',
@@ -60,7 +60,7 @@ function DepotsMenu(props) {
             .filter(
               route =>
                 route.sidebar &&
-                (route.id !== 'depots' ? route.beta === isBeta : true) &&
+                (route.id !== 'dossiers' ? route.beta === isBeta : true) &&
                 !route.auth &&
                 route.id !== 'accueil'
             )
@@ -80,4 +80,4 @@ function DepotsMenu(props) {
 export default compose(
   withRouter,
   withStyles(styles)
-)(DepotsMenu);
+)(DossiersMenu);

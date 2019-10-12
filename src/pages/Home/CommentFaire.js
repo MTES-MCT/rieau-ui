@@ -103,7 +103,7 @@ function CommentFaire(props) {
                 </Typography>
                 <Typography variant="body2" align="center">
                   {
-                    'Seules les personnes habilitées peuvent accèder aux fonctionnalités à tester. Les dépôts ne sont pas encore possible sur cette version.'
+                    'Seules les personnes habilitées peuvent accèder aux fonctionnalités à tester. Les Dossiers ne sont pas encore possible sur cette version.'
                   }
                 </Typography>
               </div>

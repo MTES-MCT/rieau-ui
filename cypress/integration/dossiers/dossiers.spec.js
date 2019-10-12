@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-context('Dépôts', () => {
+context('Dossiers', () => {
   beforeEach(() => {
     cy.visit('/')
     cy.get('[data-cy=appbar-connexion-btn]').should('be.visible').click()
@@ -14,13 +14,13 @@ context('Dépôts', () => {
     }
   })
 
-  it('cy.click() - go to depot page', () => {
-    cy.contains("Dépôts").should('be.visible')
+  it('cy.click() - go to dossier page', () => {
+    cy.contains("Dossiers").should('be.visible')
     cy.get('[data-cy=file-upload-btn]').should('be.visible').click()
   })
   
-  it('cy.click() - ajouter depot ok', () => {
-    cy.contains("Dépôts").should('be.visible')
+  it('cy.click() - ajouter dossier ok', () => {
+    cy.contains("Dossiers").should('be.visible')
     cy.get('[data-cy=file-upload-btn]').should('be.visible').click()
     cy.contains("Téléverser un fichier").should('be.visible')
     cy.get('[data-cy=file-upload-dropzone]').first().should('be.visible').then(function() {
@@ -28,12 +28,12 @@ context('Dépôts', () => {
         cy.get('[data-cy=file-upload-dropzone]').upload({ fileContent, fileName: 'cerfa_13703_DPMI.pdf', mimeType: 'application/pdf', encoding: 'base64' },
         { subjectType: 'drag-n-drop', force: true });
       });
-      cy.contains("Dépôts").should('be.visible')
+      cy.contains("Dossiers").should('be.visible')
       cy.get('[data-cy=piecejointe-preview-btn]').first().should('be.visible')
     })    
   })
-  it('cy.click() - ajouter depot ko', () => {
-    cy.contains("Dépôts").should('be.visible')
+  it('cy.click() - ajouter dossier ko', () => {
+    cy.contains("Dossiers").should('be.visible')
     cy.get('[data-cy=file-upload-btn]').should('be.visible').click()
     cy.contains("Téléverser un fichier").should('be.visible')
     cy.get('[data-cy=file-upload-dropzone]').first().should('be.visible').then(function() {
@@ -48,7 +48,7 @@ context('Dépôts', () => {
   })
 })
 
-context('Ajouter dépôt forbidden', () => {
+context('Ajouter dossier forbidden', () => {
   beforeEach(() => {
     cy.visit('/')
     cy.get('[data-cy=appbar-connexion-btn]').should('be.visible').click()
@@ -62,8 +62,8 @@ context('Ajouter dépôt forbidden', () => {
     }
   })
 
-  it('cy.click() - ajouter dépôt', () => {
-    cy.contains("Dépôts").should('be.visible')
+  it('cy.click() - ajouter dossier', () => {
+    cy.contains("Dossiers").should('be.visible')
     cy.get('[data-cy=file-upload-btn]').should('not.be.visible')
   })
 })

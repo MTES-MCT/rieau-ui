@@ -17,14 +17,14 @@ context('Pieces jointes deposees', () => {
         cy.get('[data-cy=file-upload-dropzone]').upload({ fileContent, fileName: 'cerfa_13703_DPMI.pdf', mimeType: 'application/pdf', encoding: 'base64' },
         { subjectType: 'drag-n-drop' });
       });
-      cy.contains("Dépôts").should('be.visible')
+      cy.contains("Dossiers").should('be.visible')
       cy.get('[data-cy=piecejointe-preview-btn]').first().should('be.visible').click()
-      cy.contains("Dépôt").should('be.visible')
+      cy.contains("Dossier").should('be.visible')
     })
   })
 
-  it('cy.click() - go to depots pieces jointes DP page format ok', () => {  
-    cy.contains("Dépôt").should('be.visible')
+  it('cy.click() - go to dossiers pieces jointes DP page format ok', () => {  
+    cy.contains("Dossier").should('be.visible')
     cy.get("[data-cy=piecesjointes-btn]").should('be.visible').click()
     cy.contains("CERFA initial et pièces jointes").should('be.visible')
     cy.contains('CERFA 13703-06').should('be.visible')
@@ -43,8 +43,8 @@ context('Pieces jointes deposees', () => {
     cy.contains("Aperçu").should('be.visible')
   })
 
-  it('cy.click() - go to depots pieces jointes DP page format ko', () => {
-    cy.contains("Dépôt").should('be.visible')
+  it('cy.click() - go to dossiers pieces jointes DP page format ko', () => {
+    cy.contains("Dossier").should('be.visible')
     cy.get("[data-cy=piecesjointes-btn]").should('be.visible').click()
     cy.contains("CERFA initial et pièces jointes").should('be.visible')
     cy.contains('CERFA 13703-06').should('be.visible')
