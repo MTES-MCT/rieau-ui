@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-context('Pieces jointes deposees', () => {
+describe('Pieces jointes deposees', () => {
   beforeEach(() => {
     cy.visit('/')
     cy.get('[data-cy=appbar-connexion-btn]').should('be.visible').click()

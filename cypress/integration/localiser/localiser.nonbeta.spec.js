@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-context('Localiser avec un compte instructeur non beta testeur', () => {
+describe('Localiser avec un compte instructeur non beta testeur', () => {
     beforeEach(() => {
       cy.visit('/')
       cy.get('[data-cy=appbar-connexion-btn]').should('be.visible').click()

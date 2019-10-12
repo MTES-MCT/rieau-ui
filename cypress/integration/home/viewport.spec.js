@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-context('Viewport', () => {
+describe('Viewport', () => {
   beforeEach(() => {
     cy.visit('/')
     cy.reload() // https://github.com/facebook/create-react-app/issues/5809

@@ -1,6 +1,6 @@
-/// <reference types="Cypress" />
+/// <reference types="cypress" />
 
-context('Dossiers', () => {
+describe('Dossiers', () => {
   beforeEach(() => {
     cy.visit('/')
     cy.get('[data-cy=appbar-connexion-btn]').should('be.visible').click()
@@ -48,7 +48,7 @@ context('Dossiers', () => {
   })
 })
 
-context('Ajouter dossier forbidden', () => {
+describe('Ajouter dossier forbidden', () => {
   beforeEach(() => {
     cy.visit('/')
     cy.get('[data-cy=appbar-connexion-btn]').should('be.visible').click()
