@@ -129,6 +129,18 @@ function SideBarMenu(props) {
                 </ListItemIcon>
                 {`Connexion Instructeur`}
               </MenuItem>
+              <MenuItem
+                button
+                onClick={function(event) {
+                  return login('madame.le-maire');
+                }}
+                data-cy="menu-item-btn-connexion-mairie"
+              >
+                <ListItemIcon>
+                  <SignInIcon />
+                </ListItemIcon>
+                {`Connexion Mairie`}
+              </MenuItem>
             </React.Fragment>
           ) : (
             <MenuItem button onClick={login} data-cy="menu-item-btn-connexion">

@@ -99,11 +99,9 @@ function monDepot(id) {
 function qualifier(id) {
   return new Promise((resolve, reject) => {
     setTimeout(function() {
-      return resolve(function() {
-        const depot = depotsFixtures.find(depot => depot.id === id);
-        depot.statut = 'QUALIFIE';
-        return depot;
-      });
+      const depot = depotsFixtures.find(depot => depot.id === id);
+      depot.statut = 'QUALIFIE';
+      return resolve(depot);
     }, waitingTime);
   });
 }

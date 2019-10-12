@@ -93,6 +93,18 @@ function ConnexionButton(props) {
                 </ListItemIcon>
                 {`Connexion Instructeur`}
               </MenuItem>
+              <MenuItem
+                onClick={function(event) {
+                  return login('madame.le-maire');
+                }}
+                button
+                data-cy={appBarPrefix + 'menuitem-connexion-mairie'}
+              >
+                <ListItemIcon>
+                  <LockIcon />
+                </ListItemIcon>
+                {`Connexion Mairie`}
+              </MenuItem>
             </MenuList>
           </Menu>
         </React.Fragment>

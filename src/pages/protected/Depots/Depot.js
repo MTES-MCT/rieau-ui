@@ -110,7 +110,7 @@ function Depot(props) {
               <Button
                 variant="contained"
                 color="secondary"
-                onClick={handleQualifier}
+                onClick={event => handleQualifier()}
                 data-cy="qualifier-btn"
               >
                 {`Qualifier`}

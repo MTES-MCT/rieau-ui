@@ -18,7 +18,7 @@ const users = [
     email: 'madame.le-maire@monfai.fr',
     firstName: 'Madame',
     lastName: 'Le Maire',
-    profils: ['MAIRIE'],
+    profils: ['MAIRIE', 'BETA'],
     codePostal: ['44100']
   }
 ];
