@@ -129,7 +129,7 @@ function saveInSessionStorage(dossier, numero, file) {
   reader.onload = function() {
     const binaryStr = reader.result;
     sessionStorage.setItem(
-      dossier.type + numero,
+      dossier.type.id + numero,
       JSON.stringify({
         nom: file.name,
         type: file.type,
@@ -172,7 +172,7 @@ function ajouterDossier(formData) {
 function checkCode(code, file) {
   if (!file.name) return true; // hack because cypress dropzone command have undefined file.name
   const type = typeFromCerfa(file.name);
-  return code.includes('cerfa') ? code === type + '0' : true;
+  return code.includes('cerfa') ? code === type.id + '0' : true;
 }
 
 function savePieceJointe(dossierId, numero, formData) {
@@ -185,7 +185,7 @@ function savePieceJointe(dossierId, numero, formData) {
       dossier.piecesJointes.push({
         type: dossier.type,
         numero: numero,
-        fichierId: dossier.type + numero,
+        fichierId: dossier.type.id + numero,
         DossierId: dossierId
       });
       return resolve();

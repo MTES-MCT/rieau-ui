@@ -18,9 +18,9 @@ function consulterDossier(id) {
   });
 }
 
-function qualifier(id) {
+function qualifierDossier(id) {
   return api.then(handleDossiers).then(dossiers => {
-    return dossiers.qualifier(id);
+    return dossiers.qualifierDossier(id);
   });
 }
 
@@ -55,7 +55,7 @@ const dossiers = {
   supprimerDossier,
   savePieceJointe,
   lireFichier,
-  qualifier
+  qualifierDossier
 };
 
 export default dossiers;
