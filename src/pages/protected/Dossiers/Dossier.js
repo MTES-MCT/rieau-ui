@@ -21,7 +21,7 @@ import Typography from 'components/Typography';
 import { typeLibelle } from 'utils/piecesjointes';
 import statuts from 'utils/statutsDossier';
 import { Grid } from '@material-ui/core';
-import EtapesStepper from 'components/EtapesStepper';
+import EtapesStepper from 'pages/protected/Dossiers/EtapesStepper';
 import { useUser } from 'context/user-context';
 
 const styles = theme => ({

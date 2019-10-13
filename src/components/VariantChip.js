@@ -2,18 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { Chip } from '@material-ui/core';
-import WarningIcon from '@material-ui/icons/Warning';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import ErrorIcon from '@material-ui/icons/Error';
-import InfoIcon from '@material-ui/icons/Info';
 import { withStyles } from '@material-ui/core';
-
-const variantIcon = {
-  success: CheckCircleIcon,
-  warning: WarningIcon,
-  error: ErrorIcon,
-  info: InfoIcon
-};
 
 const classes = theme => ({
   icon: {
@@ -40,12 +29,11 @@ const classes = theme => ({
 function VariantChip(props) {
   const { className, variantId, variants } = props;
   const variant = variants.find(v => v.id === variantId);
-  const Icon = variantIcon[variant.variant];
   return (
     <Chip
       className={clsx(classes[variant.variant], className)}
       color="secondary"
-      icon={<Icon className={clsx(classes.icon, classes.iconVariant)} />}
+      icon={variant.icon}
       label={variant.label}
     />
   );
