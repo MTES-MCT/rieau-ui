@@ -7,7 +7,9 @@ import PropTypes from 'prop-types';
 function MockUsersConnectionMenuItems(props) {
   const { appbar } = props;
   const { login } = useAuth();
-  const prefixDataCy = `${appbar && 'appbar-'}menu-item-btn-connexion`;
+  const prefixDataCy = `${
+    appbar ? 'appbar' : 'hamburger'
+  }-menu-item-btn-connexion`;
   return (
     <React.Fragment>
       <MenuItem

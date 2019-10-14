@@ -105,7 +105,7 @@ function SideBarMenu(props) {
               );
             })}
           {isApiMock ? (
-            <MockUsersConnectionMenuItems />
+            <MockUsersConnectionMenuItems appbar={false} />
           ) : (
             <MenuItem button onClick={login} data-cy="menu-item-btn-connexion">
               <ListItemIcon>
