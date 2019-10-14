@@ -82,11 +82,6 @@ function Dossier(props) {
           <CardContent className={classes.content}>
             <Grid container className={classes.grid}>
               <Grid item xs={12}>
-                <Typography variant="h3" marked="center" align="center">
-                  {`Étapes: `}
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
                 <EtapesStepper steps={statuts} activeStepId={dossier.statut} />
               </Grid>
               <Grid item xs={12}>

@@ -56,7 +56,7 @@ function ColorlibStepIcon(props) {
         [classes.completed]: completed
       })}
     >
-      {icons[String(icon)]}
+      {icons[String(icon - 1)]}
     </div>
   );
 }
