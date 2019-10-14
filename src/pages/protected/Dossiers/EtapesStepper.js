@@ -76,8 +76,17 @@ function EtapesStepper(props) {
     <div className={classes.root}>
       <Stepper activeStep={activeStep.order} alternativeLabel>
         {steps.map(step => (
-          <Step key={step.order} {...stepProps}>
-            <StepLabel StepIconComponent={ColorlibStepIcon} {...labelProps}>
+          <Step
+            key={step.order}
+            data-cy={`step-${step.id}`}
+            {...stepProps}
+            error={step.error ? step.error.toString() : ''}
+          >
+            <StepLabel
+              StepIconComponent={ColorlibStepIcon}
+              {...labelProps}
+              error={step.error ? step.error : false}
+            >
               {step.label}
             </StepLabel>
           </Step>

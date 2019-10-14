@@ -2,9 +2,12 @@ import React from 'react';
 import { useAuth } from 'context/auth-context';
 import { MenuItem, ListItemIcon } from '@material-ui/core';
 import SignInIcon from '@material-ui/icons/Lock';
+import PropTypes from 'prop-types';
 
-function MockUsersConnectionMenuItems() {
+function MockUsersConnectionMenuItems(props) {
+  const { appbar } = props;
   const { login } = useAuth();
+  const prefixDataCy = `${appbar && 'appbar-'}menu-item-btn-connexion`;
   return (
     <React.Fragment>
       <MenuItem
@@ -12,7 +15,7 @@ function MockUsersConnectionMenuItems() {
         onClick={function(event) {
           return login('jean.martin');
         }}
-        data-cy="menu-item-btn-connexion-deposant"
+        data-cy={`${prefixDataCy}-deposant`}
       >
         <ListItemIcon>
           <SignInIcon />
@@ -24,7 +27,7 @@ function MockUsersConnectionMenuItems() {
         onClick={function(event) {
           return login('jacques.dupont');
         }}
-        data-cy="menu-item-btn-connexion-instructeur"
+        data-cy={`${prefixDataCy}-instructeur`}
       >
         <ListItemIcon>
           <SignInIcon />
@@ -36,7 +39,7 @@ function MockUsersConnectionMenuItems() {
         onClick={function(event) {
           return login('madame.le-maire');
         }}
-        data-cy="menu-item-btn-connexion-mairie"
+        data-cy={`${prefixDataCy}-mairie`}
       >
         <ListItemIcon>
           <SignInIcon />
@@ -46,5 +49,8 @@ function MockUsersConnectionMenuItems() {
     </React.Fragment>
   );
 }
+MockUsersConnectionMenuItems.propTypes = {
+  appbar: PropTypes.bool
+};
 
 export default MockUsersConnectionMenuItems;

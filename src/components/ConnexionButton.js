@@ -67,7 +67,7 @@ function ConnexionButton(props) {
             onClose={handleClose}
           >
             <MenuList>
-              <MockUsersConnectionMenuItems />
+              <MockUsersConnectionMenuItems appbar={appbar} />
             </MenuList>
           </Menu>
         </React.Fragment>

@@ -25,7 +25,8 @@ const statuts = [
     order: 2,
     label: 'incomplet',
     variant: 'error',
-    icon: <IncompletIcon />
+    icon: <IncompletIcon />,
+    error: true
   },
   {
     id: 'INSTRUCTION',

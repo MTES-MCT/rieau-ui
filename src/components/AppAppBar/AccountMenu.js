@@ -43,6 +43,7 @@ function AccountMenu(props) {
           aria-haspopup="true"
           onClick={handleMenu}
           color="inherit"
+          data-cy="account-menu-appbar"
         >
           <AccountCircle fontSize="large" />
         </IconButton>
@@ -64,7 +65,11 @@ function AccountMenu(props) {
           {isAuthenticated && (
             <MenuList>
               <MenuItemLink route={moncompte}>Profil</MenuItemLink>
-              <MenuItem button onClick={logout}>
+              <MenuItem
+                button
+                onClick={logout}
+                data-cy="acount-menu-item-deconnexion"
+              >
                 <ListItemIcon>
                   <deconnexion.icon />
                 </ListItemIcon>
