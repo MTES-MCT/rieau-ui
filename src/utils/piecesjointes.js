@@ -28,16 +28,20 @@ function addDossierIdAndFichierId(pj, dossier, numero) {
 
 function pieceJointe(dossier, numero) {
   let typeDossier = dossier.type.id ? dossier.type.id.toLowerCase() : '';
+  if (typeDossier === '')
+    typeDossier = dossier.type ? dossier.type.toLowerCase() : '';
   let pj = {};
   switch (typeDossier) {
     case 'dp':
       pj = listePiecesJointesDP.find(pj => pj.numero === numero);
+      console.log('pj=', JSON.stringify(pj));
       return addDossierIdAndFichierId(pj, dossier, numero);
     case 'pcmi':
       pj = listePiecesJointesPCMI.find(pj => pj.numero === numero);
+      console.log('pj=', JSON.stringify(pj));
       return addDossierIdAndFichierId(pj, dossier, numero);
     default:
-      return [];
+      return pj;
   }
 }
 

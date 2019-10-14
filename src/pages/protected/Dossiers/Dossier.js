@@ -10,7 +10,7 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import { useAsync } from 'react-async';
-import dossiers from 'utils/dossiers';
+import api from 'utils/dossiers';
 import Error from 'pages/Error';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import NotFound from 'pages/NotFound';
@@ -41,10 +41,7 @@ const styles = theme => ({
 });
 
 async function handleDossier({ id }) {
-  return { dossier: await dossiers.consulterDossier(id) };
-}
-async function handleQualifierDossier(id) {
-  return { dossier: await dossiers.qualifierDossier(id) };
+  return { dossier: await api.consulterDossier(id) };
 }
 
 function Dossier(props) {
@@ -62,8 +59,8 @@ function Dossier(props) {
     id: id
   });
 
-  function handleQualifier() {
-    handleQualifierDossier(id);
+  async function handleQualifier() {
+    await api.qualifierDossier(id);
     reload();
   }
   if (isRejected) return <Error error={error.message} />;
