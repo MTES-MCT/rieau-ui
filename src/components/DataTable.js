@@ -93,6 +93,8 @@ function EnhancedTableHead(props) {
   const createSortHandler = property => event => {
     onRequestSort(event, property);
   };
+  console.log('columns=', JSON.stringify(columns));
+  console.log('order=', JSON.stringify(order));
 
   return (
     <TableHead>
@@ -187,6 +189,7 @@ function DataTable(props) {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const hasAddComponent = addComponent !== undefined;
   const onDelete = onDeleteClick !== undefined;
+  console.log('rows=', JSON.stringify(rows));
 
   function handleRequestSort(event, property) {
     const isDesc = orderBy === property && order === 'desc';
@@ -234,6 +237,7 @@ function DataTable(props) {
                 stableSort(rows, getSorting(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
+                    console.log('row=', JSON.stringify(row));
                     return (
                       <TableRow
                         hover
@@ -263,11 +267,11 @@ function DataTable(props) {
                             <TableCell key={column.id} align="right">
                               {column.variantChip ? (
                                 <VariantChip
-                                  variantId={row[column.id]}
+                                  variantId={row[column.id].id}
                                   variants={column.variants}
                                 />
-                              ) : row[column.id].label ? (
-                                row[column.id].label
+                              ) : row[column.id] && row[column.id].libelle ? (
+                                row[column.id].libelle
                               ) : (
                                 row[column.id]
                               )}

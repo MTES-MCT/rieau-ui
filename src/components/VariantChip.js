@@ -34,7 +34,7 @@ function VariantChip(props) {
       className={clsx(classes[variant.variant], className)}
       color="secondary"
       icon={variant.icon}
-      label={variant.label}
+      label={variant.libelle}
     />
   );
 }

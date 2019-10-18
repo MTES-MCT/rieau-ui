@@ -71,13 +71,15 @@ function EtapesStepper(props) {
   const activeStep = steps.find(step => step.id === activeStepId);
   const stepProps = {};
   const labelProps = {};
+  console.log('steps=', JSON.stringify(steps));
+  console.log('activeStep=', JSON.stringify(activeStep));
 
   return (
     <div className={classes.root}>
-      <Stepper activeStep={activeStep.order} alternativeLabel>
+      <Stepper activeStep={activeStep.ordre} alternativeLabel>
         {steps.map(step => (
           <Step
-            key={step.order}
+            key={step.id}
             data-cy={`step-${step.id}`}
             {...stepProps}
             error={step.error ? step.error.toString() : ''}
@@ -87,7 +89,9 @@ function EtapesStepper(props) {
               {...labelProps}
               error={step.error ? step.error : false}
             >
-              {step.label}
+              {`${step.libelle} ${
+                step.dateDebut ? 'le ' + step.dateDebut : ''
+              }`}
             </StepLabel>
           </Step>
         ))}

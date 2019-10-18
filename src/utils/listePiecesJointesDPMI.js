@@ -1,4 +1,4 @@
-const listePiecesJointesDP = [
+const listePiecesJointesDPMI = [
   {
     numero: '0',
     titre: 'CERFA 13703-06',
@@ -161,4 +161,4 @@ const listePiecesJointesDP = [
   }
 ];
 
-export { listePiecesJointesDP };
+export { listePiecesJointesDPMI };

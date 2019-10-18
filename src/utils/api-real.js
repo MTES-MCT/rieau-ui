@@ -156,6 +156,41 @@ function qualifierDossier(id) {
   });
 }
 
+function instruireDossier(id) {
+  return new Promise((resolve, reject) => {
+    return keycloak
+      .init({ onLoad: 'check-sso' })
+      .success(authenticated => {
+        console.log('id=', JSON.stringify(id));
+        return resolve(
+          apiHttpClient.post(`/dossiers/${id}/instruire`).then(res => res.data)
+        );
+      })
+      .error(error => {
+        return reject(new Error(error));
+      });
+  });
+}
+
+function declarerIncompletDossier(id, message) {
+  return new Promise((resolve, reject) => {
+    return keycloak
+      .init({ onLoad: 'check-sso' })
+      .success(authenticated => {
+        console.log('id=', JSON.stringify(id));
+        console.log('message=', JSON.stringify(message));
+        return resolve(
+          apiHttpClient
+            .post(`/dossiers/${id}/declarer-incomplet`, { message: message })
+            .then(res => res.data)
+        );
+      })
+      .error(error => {
+        return reject(new Error(error));
+      });
+  });
+}
+
 function ajouterDossier(formData) {
   return new Promise((resolve, reject) => {
     return keycloak
@@ -262,7 +297,9 @@ const dossiers = {
   supprimerDossier,
   savePieceJointe,
   lireFichier,
-  qualifierDossier
+  qualifierDossier,
+  instruireDossier,
+  declarerIncompletDossier
 };
 
 const api = {

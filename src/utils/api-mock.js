@@ -1,4 +1,5 @@
 import users from './users-mock';
+import statuts from 'utils/statutsDossier';
 // API de test uniquement
 
 let principal = null;
@@ -72,13 +73,13 @@ function getUser() {
   });
 }
 
-let DossiersFixtures = [];
+let dossiersFixtures = [];
 
 function listerDossiers() {
   return new Promise((resolve, reject) => {
     setTimeout(
       function() {
-        return resolve(DossiersFixtures);
+        return resolve(dossiersFixtures);
       },
       function(error) {
         return reject(error);
@@ -91,16 +92,62 @@ function listerDossiers() {
 function consulterDossier(id) {
   return new Promise((resolve, reject) => {
     setTimeout(function() {
-      return resolve(DossiersFixtures.find(dossier => dossier.id === id));
+      return resolve(dossiersFixtures.find(dossier => dossier.id === id));
     }, waitingTime);
   });
+}
+
+function now() {
+  const options = {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: false
+  };
+  return new Intl.DateTimeFormat('fr-FR', options).format(new Date());
+}
+
+function addStatut(dossier, statutId) {
+  dossier.statutActuel = statuts.find(s => s.id === statutId);
+  dossier.statutActuel.dateDebut = now();
+  dossier.historiqueStatuts.push(dossier.statutActuel);
 }
 
 function qualifierDossier(id) {
   return new Promise((resolve, reject) => {
     setTimeout(function() {
-      const dossier = DossiersFixtures.find(dossier => dossier.id === id);
-      dossier.statut = 'QUALIFIE';
+      const dossier = dossiersFixtures.find(dossier => dossier.id === id);
+      addStatut(dossier, 'QUALIFIE');
+      return resolve(dossier);
+    }, waitingTime);
+  });
+}
+
+function instruireDossier(id) {
+  return new Promise((resolve, reject) => {
+    setTimeout(function() {
+      const dossier = dossiersFixtures.find(dossier => dossier.id === id);
+      addStatut(dossier, 'INSTRUCTION');
+      return resolve(dossier);
+    }, waitingTime);
+  });
+}
+
+function declarerIncompletDossier(id, message) {
+  return new Promise((resolve, reject) => {
+    setTimeout(function() {
+      const dossier = dossiersFixtures.find(dossier => dossier.id === id);
+      addStatut(dossier, 'INCOMPLET');
+      dossier.messages = [
+        {
+          contenu: message,
+          auteur: principal,
+          date: now()
+        }
+      ];
       return resolve(dossier);
     }, waitingTime);
   });
@@ -111,11 +158,11 @@ function typeFromCerfa(fileName) {
   if (fileName && fileName.length > 0) {
     if (fileName.toUpperCase().includes('13406_PCMI'))
       type = {
-        id: 'pcmi',
-        label: 'Permis de construire de maison individuelle'
+        id: 'PCMI',
+        libelle: 'Permis de construire de maison individuelle'
       };
     if (fileName.toUpperCase().includes('13703_DPMI'))
-      type = { id: 'dp', label: 'Déclaration préalable' };
+      type = { id: 'DPMI', libelle: 'Déclaration préalable' };
   }
   return type;
 }
@@ -148,22 +195,23 @@ function ajouterDossier(formData) {
       const type = typeFromCerfa(file.name);
       if (type === '') return reject(new Error(cerfaError(file)));
       const dossier = {
-        id: DossiersFixtures.length.toString(),
+        id: dossiersFixtures.length.toString(),
         type: type,
-        date: new Date().toLocaleDateString(),
-        statut: 'DEPOSE',
         userId: principal.id,
         cerfa: {
           type: type,
           numero: '0',
-          fichierId: type + '0',
-          DossierId: DossiersFixtures.length.toString()
+          fichierId: type.id + '0',
+          dossierId: dossiersFixtures.length.toString()
         },
         piecesAJoindre: ['1'],
-        piecesJointes: []
+        piecesJointes: [],
+        historiqueStatuts: [],
+        messages: []
       };
+      addStatut(dossier, 'DEPOSE');
       saveInSessionStorage(dossier, '0', file);
-      DossiersFixtures.push(dossier);
+      dossiersFixtures.push(dossier);
       return resolve();
     }, waitingTime);
   });
@@ -180,7 +228,7 @@ function savePieceJointe(dossierId, numero, formData) {
     setTimeout(function() {
       let file = formData.get('file');
       if (!checkCode(numero, file)) throw new Error(cerfaError(file));
-      let dossier = DossiersFixtures.find(dossier => dossier.id === dossierId);
+      let dossier = dossiersFixtures.find(dossier => dossier.id === dossierId);
       saveInSessionStorage(dossier, numero, file);
       dossier.piecesJointes.push({
         type: dossier.type,
@@ -217,7 +265,9 @@ const dossiers = {
   ajouterDossier,
   savePieceJointe,
   lireFichier,
-  qualifierDossier
+  qualifierDossier,
+  instruireDossier,
+  declarerIncompletDossier
 };
 
 const api = {

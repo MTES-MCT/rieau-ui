@@ -24,6 +24,18 @@ function qualifierDossier(id) {
   });
 }
 
+function instruireDossier(id) {
+  return api.then(handleDossiers).then(dossiers => {
+    return dossiers.instruireDossier(id);
+  });
+}
+
+function declarerIncompletDossier(id, message) {
+  return api.then(handleDossiers).then(dossiers => {
+    return dossiers.declarerIncompletDossier(id, message);
+  });
+}
+
 function ajouterDossier(formData) {
   return api.then(handleDossiers).then(dossiers => {
     return dossiers.ajouterDossier(formData);
@@ -55,7 +67,9 @@ const dossiers = {
   supprimerDossier,
   savePieceJointe,
   lireFichier,
-  qualifierDossier
+  qualifierDossier,
+  instruireDossier,
+  declarerIncompletDossier
 };
 
 export default dossiers;

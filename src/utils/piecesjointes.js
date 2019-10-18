@@ -1,12 +1,12 @@
-import { listePiecesJointesDP } from 'utils/listePiecesJointesDP';
+import { listePiecesJointesDPMI } from 'utils/listePiecesJointesDPMI';
 import { listePiecesJointesPCMI } from 'utils/listePiecesJointesPCMI';
 
 function liste(typeDemande) {
   let lowtypeDemande = typeDemande ? typeDemande.toLowerCase() : '';
   switch (lowtypeDemande) {
-    case 'dp':
-      return listePiecesJointesDP;
-    case 'pcmi':
+    case 'DPMI':
+      return listePiecesJointesDPMI;
+    case 'PCMI':
       return listePiecesJointesPCMI;
     default:
       return [];
@@ -32,11 +32,11 @@ function pieceJointe(dossier, numero) {
     typeDossier = dossier.type ? dossier.type.toLowerCase() : '';
   let pj = {};
   switch (typeDossier) {
-    case 'dp':
-      pj = listePiecesJointesDP.find(pj => pj.numero === numero);
+    case 'DPMI':
+      pj = listePiecesJointesDPMI.find(pj => pj.numero === numero);
       console.log('pj=', JSON.stringify(pj));
       return addDossierIdAndFichierId(pj, dossier, numero);
-    case 'pcmi':
+    case 'PCMI':
       pj = listePiecesJointesPCMI.find(pj => pj.numero === numero);
       console.log('pj=', JSON.stringify(pj));
       return addDossierIdAndFichierId(pj, dossier, numero);
@@ -45,23 +45,10 @@ function pieceJointe(dossier, numero) {
   }
 }
 
-function typeLibelle(typeDemande) {
-  let lowtypeDemande = typeDemande.id ? typeDemande.id.toLowerCase() : '';
-  switch (lowtypeDemande) {
-    case 'dp':
-      return 'Déclaration préalable de travaux';
-    case 'pcmi':
-      return 'Demande de permis de construire pour une maison individuelle';
-    default:
-      return '';
-  }
-}
-
 function isCerfa(pieceJointe) {
   return pieceJointe.numero === '0';
 }
 
 export { liste };
-export { typeLibelle };
 export { pieceJointe };
 export { isCerfa };

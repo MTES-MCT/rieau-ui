@@ -53,15 +53,7 @@ function Dossiers(props) {
         <DataTable
           title="Dossiers"
           columns={[
-            { label: 'Id', id: 'id', numeric: false, disablePadding: false },
-            {
-              label: 'Statut',
-              id: 'statut',
-              numeric: false,
-              disablePadding: false,
-              variantChip: true,
-              variants: statuts
-            },
+            { label: 'Id', id: 'id', numeric: true, disablePadding: false },
             {
               label: 'Type',
               id: 'type',
@@ -69,10 +61,12 @@ function Dossiers(props) {
               disablePadding: false
             },
             {
-              label: 'Date',
-              id: 'date',
+              label: 'Statut',
+              id: 'statutActuel',
               numeric: false,
-              disablePadding: false
+              disablePadding: false,
+              variantChip: true,
+              variants: statuts
             }
           ]}
           rows={data}

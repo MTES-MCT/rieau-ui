@@ -18,9 +18,8 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from 'components/Button';
 import { Link as RouterLink } from 'react-router-dom';
 import Typography from 'components/Typography';
-import { typeLibelle } from 'utils/piecesjointes';
-import statuts from 'utils/statutsDossier';
-import { Grid } from '@material-ui/core';
+import { mergeStatuts } from 'utils/statutsDossier';
+import { Grid, TextareaAutosize } from '@material-ui/core';
 import EtapesStepper from 'pages/protected/Dossiers/EtapesStepper';
 import { useUser } from 'context/user-context';
 
@@ -47,7 +46,7 @@ async function handleDossier({ id }) {
 function Dossier(props) {
   const { classes, match } = props;
   const id = match.params.id;
-  const { isMairie } = useUser();
+  const { isMairie, isInstructeur } = useUser();
   const {
     data = { dossier: null },
     error,
@@ -63,6 +62,14 @@ function Dossier(props) {
     await api.qualifierDossier(id);
     reload();
   }
+  async function handleInstruire() {
+    await api.instruireDossier(id);
+    reload();
+  }
+  async function handleDeclarerIncomplet(message) {
+    await api.declarerIncompletDossier(id, message);
+    reload();
+  }
   if (isRejected) return <Error error={error.message} />;
   if (isLoading) return <LinearProgress />;
   if (data) {
@@ -75,16 +82,14 @@ function Dossier(props) {
           {`Dossier`}
         </Typography>
         <Card className={classes.card}>
-          <CardHeader title={typeLibelle(dossier.type)} />
+          <CardHeader title={dossier.type.libelle} />
           <CardContent className={classes.content}>
             <Grid container className={classes.grid}>
               <Grid item xs={12}>
-                <EtapesStepper steps={statuts} activeStepId={dossier.statut} />
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="body2" marked="center" align="center">
-                  {`Déposé le: ${dossier.date}`}
-                </Typography>
+                <EtapesStepper
+                  steps={mergeStatuts(dossier)}
+                  activeStepId={dossier.statutActuel.id}
+                />
               </Grid>
             </Grid>
           </CardContent>
@@ -98,7 +103,7 @@ function Dossier(props) {
             >
               {`Pièces jointes`}
             </Button>
-            {isMairie && dossier.statut === 'DEPOSE' && (
+            {isMairie && dossier.statutActuel.id === 'DEPOSE' && (
               <Button
                 variant="contained"
                 color="secondary"
@@ -107,6 +112,33 @@ function Dossier(props) {
               >
                 {`Qualifier`}
               </Button>
+            )}
+            {isInstructeur && dossier.statutActuel.id === 'QUALIFIE' && (
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={event => handleInstruire()}
+                data-cy="instruire-btn"
+              >
+                {`Instruire`}
+              </Button>
+            )}
+            {isInstructeur && dossier.statutActuel.id === 'INSTRUCTION' && (
+              <React.Fragment>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={event => handleDeclarerIncomplet()}
+                  data-cy="declarer-incomplet-btn"
+                >
+                  {`Déclarer incomplet`}
+                </Button>
+                <TextareaAutosize
+                  aria-label="message"
+                  rows={3}
+                  placeholder="Exposez ici les raisons de votre déclaration qui seront communiquées au déposant."
+                />
+              </React.Fragment>
             )}
           </CardActions>
         </Card>

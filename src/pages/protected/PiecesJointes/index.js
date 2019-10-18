@@ -13,7 +13,7 @@ import api from 'utils/dossiers';
 import { useAsync } from 'react-async';
 import Error from 'pages/Error';
 import NotFound from 'pages/NotFound';
-import { typeLibelle, pieceJointe } from 'utils/piecesjointes';
+import { pieceJointe } from 'utils/piecesjointes';
 import Button from 'components/Button';
 import BackIcon from '@material-ui/icons/ArrowBack';
 
@@ -59,7 +59,7 @@ function PiecesJointes(props) {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="subtitle1" marked="center" align="center">
-              {`${typeLibelle(dossier.type)}`}
+              {`${dossier.type.libelle}`}
             </Typography>
           </Grid>
           <Grid item xs={12}>

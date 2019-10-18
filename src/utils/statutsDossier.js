@@ -8,40 +8,62 @@ import CompletIcon from '@material-ui/icons/AssignmentTurnedIn';
 const statuts = [
   {
     id: 'DEPOSE',
-    order: 0,
-    label: 'déposé',
+    ordre: 0,
+    libelle: 'déposé',
     variant: 'info',
     icon: <DeposeIcon />
   },
   {
     id: 'QUALIFIE',
-    order: 1,
-    label: 'qualifié',
+    ordre: 1,
+    libelle: 'qualifié',
     variant: 'warning',
     icon: <QualifieIcon />
   },
   {
     id: 'INCOMPLET',
-    order: 2,
-    label: 'incomplet',
+    ordre: 2,
+    libelle: 'incomplet',
     variant: 'error',
-    icon: <IncompletIcon />,
-    error: true
+    icon: <IncompletIcon />
   },
   {
     id: 'INSTRUCTION',
-    order: 3,
-    label: 'instruction',
+    ordre: 2,
+    libelle: 'instruit',
     variant: 'info',
     icon: <InstructionIcon />
   },
   {
     id: 'COMPLET',
-    order: 4,
-    label: 'complété',
+    ordre: 3,
+    libelle: 'complet',
+    variant: 'success',
+    icon: <CompletIcon />
+  },
+  {
+    id: 'CONSULTATIONS',
+    ordre: 4,
+    libelle: 'consulté',
+    variant: 'info',
+    icon: <InstructionIcon />
+  },
+  {
+    id: 'DECISION',
+    ordre: 5,
+    libelle: 'décidé',
     variant: 'success',
     icon: <CompletIcon />
   }
 ];
+
+function mergeStatuts(dossier) {
+  const initStatuts = statuts.filter(statut => statut.id !== 'INCOMPLET');
+  const concat_array = [...initStatuts, ...dossier.historiqueStatuts];
+  const union = [...new Set(concat_array)];
+  return union;
+}
+
+export { mergeStatuts };
 
 export default statuts;
