@@ -69,14 +69,16 @@ ColorlibStepIcon.propTypes = {
 function EtapesStepper(props) {
   const { classes, activeStepId, steps } = props;
   const activeStep = steps.find(step => step.id === activeStepId);
+  const activeStepIndex = steps.indexOf(activeStep);
   const stepProps = {};
   const labelProps = {};
   console.log('steps=', JSON.stringify(steps));
   console.log('activeStep=', JSON.stringify(activeStep));
+  console.log('activeStepIndex=', JSON.stringify(activeStepIndex));
 
   return (
     <div className={classes.root}>
-      <Stepper activeStep={activeStep.ordre} alternativeLabel>
+      <Stepper activeStep={activeStepIndex} alternativeLabel>
         {steps.map(step => (
           <Step
             key={step.id}

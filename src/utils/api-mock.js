@@ -153,6 +153,16 @@ function declarerIncompletDossier(id, message) {
   });
 }
 
+function declarerCompletDossier(id) {
+  return new Promise((resolve, reject) => {
+    setTimeout(function() {
+      const dossier = dossiersFixtures.find(dossier => dossier.id === id);
+      addStatut(dossier, 'COMPLET');
+      return resolve(dossier);
+    }, waitingTime);
+  });
+}
+
 function typeFromCerfa(fileName) {
   let type = '';
   if (fileName && fileName.length > 0) {
@@ -267,7 +277,8 @@ const dossiers = {
   lireFichier,
   qualifierDossier,
   instruireDossier,
-  declarerIncompletDossier
+  declarerIncompletDossier,
+  declarerCompletDossier
 };
 
 const api = {

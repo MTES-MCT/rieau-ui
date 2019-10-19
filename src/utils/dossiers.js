@@ -36,6 +36,12 @@ function declarerIncompletDossier(id, message) {
   });
 }
 
+function declarerCompletDossier(id) {
+  return api.then(handleDossiers).then(dossiers => {
+    return dossiers.declarerCompletDossier(id);
+  });
+}
+
 function ajouterDossier(formData) {
   return api.then(handleDossiers).then(dossiers => {
     return dossiers.ajouterDossier(formData);
@@ -69,7 +75,8 @@ const dossiers = {
   lireFichier,
   qualifierDossier,
   instruireDossier,
-  declarerIncompletDossier
+  declarerIncompletDossier,
+  declarerCompletDossier
 };
 
 export default dossiers;

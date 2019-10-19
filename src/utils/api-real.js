@@ -191,6 +191,24 @@ function declarerIncompletDossier(id, message) {
   });
 }
 
+function declarerCompletDossier(id) {
+  return new Promise((resolve, reject) => {
+    return keycloak
+      .init({ onLoad: 'check-sso' })
+      .success(authenticated => {
+        console.log('id=', JSON.stringify(id));
+        return resolve(
+          apiHttpClient
+            .post(`/dossiers/${id}/declarer-complet`)
+            .then(res => res.data)
+        );
+      })
+      .error(error => {
+        return reject(new Error(error));
+      });
+  });
+}
+
 function ajouterDossier(formData) {
   return new Promise((resolve, reject) => {
     return keycloak
@@ -299,7 +317,8 @@ const dossiers = {
   lireFichier,
   qualifierDossier,
   instruireDossier,
-  declarerIncompletDossier
+  declarerIncompletDossier,
+  declarerCompletDossier
 };
 
 const api = {

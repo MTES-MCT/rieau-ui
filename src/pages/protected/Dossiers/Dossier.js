@@ -18,7 +18,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from 'components/Button';
 import { Link as RouterLink } from 'react-router-dom';
 import Typography from 'components/Typography';
-import { mergeStatuts } from 'utils/statutsDossier';
+import { dossierWorkflow } from 'utils/statutsDossier';
 import { Grid, TextareaAutosize } from '@material-ui/core';
 import EtapesStepper from 'pages/protected/Dossiers/EtapesStepper';
 import { useUser } from 'context/user-context';
@@ -70,6 +70,10 @@ function Dossier(props) {
     await api.declarerIncompletDossier(id, message);
     reload();
   }
+  async function handleDeclarerComplet() {
+    await api.declarerCompletDossier(id);
+    reload();
+  }
   if (isRejected) return <Error error={error.message} />;
   if (isLoading) return <LinearProgress />;
   if (data) {
@@ -79,7 +83,7 @@ function Dossier(props) {
       <React.Fragment>
         <AppAppBar />
         <Typography variant="h2" marked="center" align="center">
-          {`Dossier`}
+          {`Dossier n°${dossier.id}`}
         </Typography>
         <Card className={classes.card}>
           <CardHeader title={dossier.type.libelle} />
@@ -87,7 +91,7 @@ function Dossier(props) {
             <Grid container className={classes.grid}>
               <Grid item xs={12}>
                 <EtapesStepper
-                  steps={mergeStatuts(dossier)}
+                  steps={dossierWorkflow(dossier)}
                   activeStepId={dossier.statutActuel.id}
                 />
               </Grid>
@@ -113,18 +117,27 @@ function Dossier(props) {
                 {`Qualifier`}
               </Button>
             )}
-            {isInstructeur && dossier.statutActuel.id === 'QUALIFIE' && (
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={event => handleInstruire()}
-                data-cy="instruire-btn"
-              >
-                {`Instruire`}
-              </Button>
-            )}
+            {isInstructeur &&
+              ['QUALIFIE', 'INCOMPLET'].includes(dossier.statutActuel.id) && (
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={event => handleInstruire()}
+                  data-cy="instruire-btn"
+                >
+                  {`Instruire`}
+                </Button>
+              )}
             {isInstructeur && dossier.statutActuel.id === 'INSTRUCTION' && (
               <React.Fragment>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={event => handleDeclarerComplet()}
+                  data-cy="declarer-complet-btn"
+                >
+                  {`Déclarer complet`}
+                </Button>
                 <Button
                   variant="contained"
                   color="secondary"

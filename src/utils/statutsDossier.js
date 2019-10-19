@@ -23,7 +23,7 @@ const statuts = [
   {
     id: 'INCOMPLET',
     ordre: 2,
-    libelle: 'incomplet',
+    libelle: 'déclaré incomplet',
     variant: 'error',
     icon: <IncompletIcon />
   },
@@ -37,7 +37,7 @@ const statuts = [
   {
     id: 'COMPLET',
     ordre: 3,
-    libelle: 'complet',
+    libelle: 'déclaré complet',
     variant: 'success',
     icon: <CompletIcon />
   },
@@ -51,19 +51,35 @@ const statuts = [
   {
     id: 'DECISION',
     ordre: 5,
-    libelle: 'décidé',
+    libelle: 'décision prise',
     variant: 'success',
     icon: <CompletIcon />
   }
 ];
 
-function mergeStatuts(dossier) {
-  const initStatuts = statuts.filter(statut => statut.id !== 'INCOMPLET');
-  const concat_array = [...initStatuts, ...dossier.historiqueStatuts];
-  const union = [...new Set(concat_array)];
-  return union;
+function dossierWorkflow(dossier) {
+  console.log('dossier.statutActuel=', JSON.stringify(dossier.statutActuel));
+  console.log(
+    'dossier.historiqueStatuts=',
+    JSON.stringify(dossier.historiqueStatuts)
+  );
+  const statutsSuivants = emptyWorkflow().filter(
+    s => s.ordre > dossier.statutActuel.ordre
+  );
+  const instruit = emptyWorkflow().find(s => s.id === 'INSTRUCTION');
+  if (dossier.statutActuel.id === 'INCOMPLET')
+    statutsSuivants.splice(0, 0, instruit);
+  console.log('statutsSuivants=', JSON.stringify(statutsSuivants));
+  const concat_array = [...dossier.historiqueStatuts, ...statutsSuivants];
+  return concat_array;
+}
+function emptyWorkflow() {
+  const emptyWorkflow = statuts.filter(statut => statut.id !== 'INCOMPLET');
+  console.log('emptyWorkflow=', JSON.stringify(emptyWorkflow));
+  return emptyWorkflow;
 }
 
-export { mergeStatuts };
+export { dossierWorkflow };
+export { emptyWorkflow };
 
 export default statuts;
