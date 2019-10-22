@@ -19,6 +19,6 @@ test('compute workflow statuts', () => {
   expect(dossier0Workflow.length).toBe(emptyWorkflow().length);
   const dossier1Workflow = dossierWorkflow(dossier1);
   console.log('dossierWorkflow(dossier1)=', JSON.stringify(dossier1Workflow));
-  expect(dossier1Workflow.length).toBe(emptyWorkflow().length + 1);
+  expect(dossier1Workflow.length).toBe(emptyWorkflow().length + 2);
   expect(dossier1Workflow.indexOf(incomplet)).toBe(3);
 });
