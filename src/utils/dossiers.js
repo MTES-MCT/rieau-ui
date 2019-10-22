@@ -60,6 +60,12 @@ function savePieceJointe(dossierId, numero, formData) {
   });
 }
 
+function saveMessage(dossierId, message) {
+  return api.then(handleDossiers).then(dossiers => {
+    return dossiers.saveMessage(dossierId, message);
+  });
+}
+
 function lireFichier(id) {
   return api.then(handleDossiers).then(dossiers => {
     return dossiers.lireFichier(id);
@@ -72,6 +78,7 @@ const dossiers = {
   ajouterDossier,
   supprimerDossier,
   savePieceJointe,
+  saveMessage,
   lireFichier,
   qualifierDossier,
   instruireDossier,

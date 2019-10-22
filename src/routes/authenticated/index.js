@@ -5,11 +5,13 @@ import PiecesJointes from 'pages/protected/PiecesJointes';
 import Localiser from 'pages/protected/Localiser';
 import MapIcon from '@material-ui/icons/Map';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
+import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import Cgu from 'pages/Cgu';
 import Aide from 'pages/Aide';
 import AideIcon from '@material-ui/icons/Help';
 import Dossiers from 'pages/protected/Dossiers';
 import Dossier from 'pages/protected/Dossiers/Dossier';
+import Messages from 'pages/protected/Messages';
 
 const routes = [
   {
@@ -36,6 +38,14 @@ const routes = [
     label: 'Pièces jointes',
     icon: SaveAltIcon,
     component: PiecesJointes,
+    sidebar: false
+  },
+  {
+    id: 'messages',
+    path: '/dossiers/:dossierId/messages',
+    label: 'Messages',
+    icon: QuestionAnswerIcon,
+    component: Messages,
     sidebar: false
   },
   {

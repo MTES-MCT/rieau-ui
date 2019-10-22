@@ -84,7 +84,7 @@ function Dossiers(props) {
                 variant="contained"
                 onUploadFile={handleAjouterDossier}
                 setError={setError}
-                acceptedFormats="application/pdf"
+                acceptedFormats={['application/pdf']}
               />
             ) : (
               undefined

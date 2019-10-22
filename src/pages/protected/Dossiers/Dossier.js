@@ -19,9 +19,10 @@ import Button from 'components/Button';
 import { Link as RouterLink } from 'react-router-dom';
 import Typography from 'components/Typography';
 import { dossierWorkflow } from 'utils/statutsDossier';
-import { Grid, TextareaAutosize } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 import EtapesStepper from 'pages/protected/Dossiers/EtapesStepper';
 import { useUser } from 'context/user-context';
+import AddMessageButton from 'pages/protected/Messages/AddMessageButton';
 
 const styles = theme => ({
   card: {
@@ -66,14 +67,15 @@ function Dossier(props) {
     await api.instruireDossier(id);
     reload();
   }
-  async function handleDeclarerIncomplet(message) {
-    await api.declarerIncompletDossier(id, message);
+  async function handleDeclarerIncomplet(contenu) {
+    await api.declarerIncompletDossier(id, contenu);
     reload();
   }
   async function handleDeclarerComplet() {
     await api.declarerCompletDossier(id);
     reload();
   }
+
   if (isRejected) return <Error error={error.message} />;
   if (isLoading) return <LinearProgress />;
   if (data) {
@@ -107,6 +109,15 @@ function Dossier(props) {
             >
               {`Pièces jointes`}
             </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              component={RouterLink}
+              to={`/dossiers/${dossier.id}/messages`}
+              data-cy="messages-btn"
+            >
+              {`Messages`}
+            </Button>
             {isMairie && dossier.statutActuel.id === 'DEPOSE' && (
               <Button
                 variant="contained"
@@ -138,18 +149,12 @@ function Dossier(props) {
                 >
                   {`Déclarer complet`}
                 </Button>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={event => handleDeclarerIncomplet()}
-                  data-cy="declarer-incomplet-btn"
-                >
-                  {`Déclarer incomplet`}
-                </Button>
-                <TextareaAutosize
-                  aria-label="message"
-                  rows={3}
-                  placeholder="Exposez ici les raisons de votre déclaration qui seront communiquées au déposant."
+                <AddMessageButton
+                  label={'Déclarer incomplet'}
+                  dossierId={dossier.id}
+                  onSaveMessage={(event, contenu) =>
+                    handleDeclarerIncomplet(contenu)
+                  }
                 />
               </React.Fragment>
             )}

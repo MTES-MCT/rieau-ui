@@ -41,6 +41,7 @@ const maxSize = parseInt(env('REACT_APP_MAX_SIZE_UPLOAD_FILE'));
 
 function FileUploadDialog(props) {
   const { handleFile, onClose, fullScreen, classes, acceptedFormats } = props;
+  window.console.log('acceptedFormats=', acceptedFormats);
   const [showDialog, setShowDialog] = useState(true);
   const onDrop = useCallback(
     acceptedFiles => {
@@ -152,7 +153,7 @@ FileUploadDialog.propTypes = {
   handleFile: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   fullScreen: PropTypes.bool.isRequired,
-  acceptedFormats: PropTypes.string.isRequired
+  acceptedFormats: PropTypes.array.isRequired
 };
 
 export default compose(

@@ -177,6 +177,14 @@ function typeFromCerfa(fileName) {
   return type;
 }
 
+function piecesAJoindre(type) {
+  let piecesAJoindre = [];
+  if (type.id === 'PCMI')
+    piecesAJoindre = ['1', '2', '3', '4', '5', '6', '7', '8'];
+  if (type.id === 'DPMI') piecesAJoindre = ['1'];
+  return piecesAJoindre;
+}
+
 function cerfaError(file) {
   return `Fichier CERFA ${file.name} non reconnu. Seuls les fichiers nommés cerfa_13406_PCMI.pdf ou cerfa_13703_DPMI.pdf sont reconnus.`;
 }
@@ -214,7 +222,7 @@ function ajouterDossier(formData) {
           fichierId: type.id + '0',
           dossierId: dossiersFixtures.length.toString()
         },
-        piecesAJoindre: ['1'],
+        piecesAJoindre: piecesAJoindre(type),
         piecesJointes: [],
         historiqueStatuts: [],
         messages: []
@@ -251,6 +259,22 @@ function savePieceJointe(dossierId, numero, formData) {
   });
 }
 
+function saveMessage(dossierId, contenu) {
+  console.log('dossierId=', JSON.stringify(dossierId));
+  console.log('contenu=', JSON.stringify(contenu));
+  return new Promise((resolve, reject) => {
+    setTimeout(function() {
+      let dossier = dossiersFixtures.find(dossier => dossier.id === dossierId);
+      dossier.messages.push({
+        date: now(),
+        contenu: contenu,
+        auteur: principal
+      });
+      return resolve();
+    }, waitingTime);
+  });
+}
+
 function lireFichier(id) {
   return new Promise((resolve, reject) => {
     setTimeout(function() {
@@ -274,6 +298,7 @@ const dossiers = {
   consulterDossier,
   ajouterDossier,
   savePieceJointe,
+  saveMessage,
   lireFichier,
   qualifierDossier,
   instruireDossier,

@@ -65,7 +65,7 @@ function FileUploadButton(props) {
 }
 FileUploadButton.propTypes = {
   classes: PropTypes.object.isRequired,
-  acceptedFormats: PropTypes.string.isRequired,
+  acceptedFormats: PropTypes.array.isRequired,
   variant: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,

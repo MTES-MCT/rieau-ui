@@ -27,11 +27,8 @@ function addDossierIdAndFichierId(pj, dossier, numero) {
 }
 
 function pieceJointe(dossier, numero) {
-  let typeDossier = dossier.type.id ? dossier.type.id.toLowerCase() : '';
-  if (typeDossier === '')
-    typeDossier = dossier.type ? dossier.type.toLowerCase() : '';
   let pj = {};
-  switch (typeDossier) {
+  switch (dossier.type.id) {
     case 'DPMI':
       pj = listePiecesJointesDPMI.find(pj => pj.numero === numero);
       console.log('pj=', JSON.stringify(pj));

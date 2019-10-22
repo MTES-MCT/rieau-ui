@@ -8,14 +8,14 @@ import { withStyles, LinearProgress } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import compose from 'utils/compose';
 import Typography from 'components/Typography';
-import PieceJointe from './PieceJointe';
+import Message from './Message';
 import api from 'utils/dossiers';
 import { useAsync } from 'react-async';
 import Error from 'pages/Error';
 import NotFound from 'pages/NotFound';
-import { pieceJointe } from 'utils/piecesjointes';
 import Button from 'components/Button';
 import BackIcon from '@material-ui/icons/ArrowBack';
+import AddMessageButton from './AddMessageButton';
 
 const styles = theme => ({
   grid: {
@@ -29,14 +29,12 @@ async function handleDossier({ id }) {
   return { dossier: await api.consulterDossier(id) };
 }
 
-function PiecesJointes(props) {
+function Messages(props) {
   const { classes, match, history } = props;
   const dossierId = match.params.dossierId;
-  console.log('dossierId=', dossierId);
   const {
     data = { dossier: null },
     error,
-    setError,
     isLoading,
     isRejected,
     reload
@@ -44,6 +42,11 @@ function PiecesJointes(props) {
     promiseFn: handleDossier,
     id: dossierId
   });
+  async function handleSaveMessage(contenu) {
+    console.log('contenu=', JSON.stringify(contenu));
+    await api.saveMessage(dossierId, contenu);
+    reload();
+  }
   if (isRejected) return <Error error={error.message} />;
   if (isLoading) return <LinearProgress />;
   if (data) {
@@ -55,7 +58,7 @@ function PiecesJointes(props) {
         <Grid container className={classes.grid}>
           <Grid item xs={12}>
             <Typography variant="h3" marked="center" align="center">
-              {`CERFA initial et pièces jointes`}
+              {`Messages`}
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -73,23 +76,17 @@ function PiecesJointes(props) {
               <BackIcon />
               {`Dossier`}
             </Button>
+            <AddMessageButton
+              label={'Ajouter'}
+              onSaveMessage={(event, contenu) => handleSaveMessage(contenu)}
+              dossierId={dossierId}
+            />
           </Grid>
         </Grid>
         <Grid container className={classes.grid}>
           <Grid item xs={12}>
-            <PieceJointe
-              key={dossier.cerfa.numero}
-              pieceJointe={pieceJointe(dossier, dossier.cerfa.numero)}
-              setError={setError}
-              reload={reload}
-            />
-            {dossier.piecesAJoindre.map(pieceAJoindre => (
-              <PieceJointe
-                key={pieceAJoindre}
-                pieceJointe={pieceJointe(dossier, pieceAJoindre)}
-                setError={setError}
-                reload={reload}
-              />
+            {dossier.messages.map((message, index) => (
+              <Message key={index} message={message} />
             ))}
           </Grid>
         </Grid>
@@ -98,7 +95,7 @@ function PiecesJointes(props) {
     );
   }
 }
-PiecesJointes.propTypes = {
+Messages.propTypes = {
   classes: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired
 };
@@ -107,4 +104,4 @@ export default compose(
   withRoot,
   withRouter,
   withStyles(styles)
-)(PiecesJointes);
+)(Messages);

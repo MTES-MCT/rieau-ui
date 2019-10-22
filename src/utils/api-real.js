@@ -260,6 +260,26 @@ function savePieceJointe(dossierId, numero, formData) {
   });
 }
 
+function saveMessage(dossierId, contenu) {
+  return new Promise((resolve, reject) => {
+    return keycloak
+      .init({ onLoad: 'check-sso' })
+      .success(authenticated => {
+        return resolve(
+          apiHttpClient
+            .post(`/dossiers/${dossierId}/messages`, { contenu: contenu })
+            .catch(function(error) {
+              console.log('error=', JSON.stringify(error));
+              return reject(error);
+            })
+        );
+      })
+      .error(error => {
+        return reject(new Error(error));
+      });
+  });
+}
+
 function extractFileInfo(response) {
   let regex_filename = /^attachment;filename=([\w- éèëàù€êôïî]+[.]{1}[\w]+)$/i;
   let content_disposition = response.headers['content-disposition'];
@@ -314,6 +334,7 @@ const dossiers = {
   ajouterDossier,
   supprimerDossier,
   savePieceJointe,
+  saveMessage,
   lireFichier,
   qualifierDossier,
   instruireDossier,

@@ -119,7 +119,7 @@ function PieceJointe(props) {
             color="inherit"
             onUploadFile={handleSavePieceJointe}
             setError={setError}
-            acceptedFormats={pieceJointe.formats}
+            acceptedFormats={pieceJointe.formats.split(',')}
           />
         )}
         {showPreview && isSettled && file && (
