@@ -21,4 +21,16 @@ test('compute workflow statuts', () => {
   console.log('dossierWorkflow(dossier1)=', JSON.stringify(dossier1Workflow));
   expect(dossier1Workflow.length).toBe(emptyWorkflow().length + 2);
   expect(dossier1Workflow.indexOf(incomplet)).toBe(3);
+
+  const decision = statuts.find(s => s.id === 'DECISION');
+  const h2 = emptyWorkflow().filter(s => s.ordre < 6);
+  h1.push(decision);
+  let dossier2 = {
+    statutActuel: decision,
+    historiqueStatuts: [...h2]
+  };
+  console.log('dossier2=', JSON.stringify(dossier2));
+  const dossier2Workflow = dossierWorkflow(dossier2);
+  console.log('dossierWorkflow(dossier2)=', JSON.stringify(dossier2Workflow));
+  expect(dossier2Workflow.length).toBe(emptyWorkflow().length);
 });

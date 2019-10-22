@@ -23,6 +23,9 @@ import Grid from '@material-ui/core/Grid';
 import EtapesStepper from 'pages/protected/Dossiers/EtapesStepper';
 import { useUser } from 'context/user-context';
 import AddMessageButton from 'pages/protected/Messages/AddMessageButton';
+import FileUploadButton from 'components/FileUploadButton';
+import EmailIcon from '@material-ui/icons/Email';
+import AttachIcon from '@material-ui/icons/AttachFile';
 
 const styles = theme => ({
   card: {
@@ -53,7 +56,8 @@ function Dossier(props) {
     error,
     isLoading,
     isRejected,
-    reload
+    reload,
+    setError
   } = useAsync({
     promiseFn: handleDossier,
     id: id
@@ -73,6 +77,14 @@ function Dossier(props) {
   }
   async function handleDeclarerComplet() {
     await api.declarerCompletDossier(id);
+    reload();
+  }
+  async function handleLancerConsultations() {
+    await api.lancerConsultations(id);
+    reload();
+  }
+  async function handlePrendreDecision(formData) {
+    await api.prendreDecision(id, formData);
     reload();
   }
 
@@ -108,6 +120,7 @@ function Dossier(props) {
               data-cy="piecesjointes-btn"
             >
               {`Pièces jointes`}
+              <AttachIcon />
             </Button>
             <Button
               variant="contained"
@@ -117,6 +130,7 @@ function Dossier(props) {
               data-cy="messages-btn"
             >
               {`Messages`}
+              <EmailIcon />
             </Button>
             {isMairie && dossier.statutActuel.id === 'DEPOSE' && (
               <Button
@@ -157,6 +171,27 @@ function Dossier(props) {
                   }
                 />
               </React.Fragment>
+            )}
+            {isInstructeur && dossier.statutActuel.id === 'COMPLET' && (
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={event => handleLancerConsultations()}
+                data-cy="lancer-consultations-btn"
+              >
+                {`Lancer les consultations`}
+              </Button>
+            )}
+            {isMairie && dossier.statutActuel.id === 'CONSULTATIONS' && (
+              <FileUploadButton
+                iconName="attach_file"
+                color="secondary"
+                label="Prendre décision"
+                variant="contained"
+                onUploadFile={handlePrendreDecision}
+                setError={setError}
+                acceptedFormats={['application/pdf']}
+              />
             )}
           </CardActions>
         </Card>

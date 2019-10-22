@@ -68,6 +68,7 @@ function PiecesJointes(props) {
               variant="contained"
               color="secondary"
               aria-label="Dossier"
+              data-cy="back-dossier-btn"
               onClick={event => history.push(`/dossiers/${dossierId}`)}
             >
               <BackIcon />
@@ -77,6 +78,14 @@ function PiecesJointes(props) {
         </Grid>
         <Grid container className={classes.grid}>
           <Grid item xs={12}>
+            {dossier.statutActuel.id === 'DECISION' && (
+              <PieceJointe
+                key={'d'}
+                pieceJointe={pieceJointe(dossier, 'd')}
+                setError={setError}
+                reload={reload}
+              />
+            )}
             <PieceJointe
               key={dossier.cerfa.numero}
               pieceJointe={pieceJointe(dossier, dossier.cerfa.numero)}

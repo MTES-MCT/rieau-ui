@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { Chip } from '@material-ui/core';
 import { withStyles } from '@material-ui/core';
+import compose from 'utils/compose';
+import withRoot from 'theme/withRoot';
 
 const classes = theme => ({
   icon: {
@@ -15,7 +17,7 @@ const classes = theme => ({
   success: {
     backgroundColor: theme.palette.success
   },
-  root: {
+  error: {
     backgroundColor: theme.palette.error
   },
   info: {
@@ -43,4 +45,7 @@ VariantChip.propTypes = {
   variantId: PropTypes.string.isRequired,
   variants: PropTypes.array.isRequired
 };
-export default withStyles(classes)(VariantChip);
+export default compose(
+  withRoot,
+  withStyles(classes)
+)(VariantChip);

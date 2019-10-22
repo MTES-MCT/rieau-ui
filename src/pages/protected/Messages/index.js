@@ -71,6 +71,7 @@ function Messages(props) {
               variant="contained"
               color="secondary"
               aria-label="Dossier"
+              data-cy="back-dossier-btn"
               onClick={event => history.push(`/dossiers/${dossierId}`)}
             >
               <BackIcon />

@@ -163,6 +163,22 @@ function declarerCompletDossier(id) {
   });
 }
 
+function lancerConsultations(id) {
+  return new Promise((resolve, reject) => {
+    setTimeout(function() {
+      const dossier = dossiersFixtures.find(dossier => dossier.id === id);
+      addStatut(dossier, 'CONSULTATIONS');
+      return resolve(dossier);
+    }, waitingTime);
+  });
+}
+
+function prendreDecision(dossierId, formData) {
+  const dossier = dossiersFixtures.find(dossier => dossier.id === dossierId);
+  addStatut(dossier, 'DECISION');
+  return this.savePieceJointe(dossierId, 'd', formData);
+}
+
 function typeFromCerfa(fileName) {
   let type = '';
   if (fileName && fileName.length > 0) {
@@ -303,7 +319,9 @@ const dossiers = {
   qualifierDossier,
   instruireDossier,
   declarerIncompletDossier,
-  declarerCompletDossier
+  declarerCompletDossier,
+  lancerConsultations,
+  prendreDecision
 };
 
 const api = {

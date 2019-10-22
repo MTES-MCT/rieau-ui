@@ -1,5 +1,12 @@
 const listePiecesJointesPCMI = [
   {
+    numero: 'd',
+    titre: 'Décision Mairie',
+    description: "La copie de l'arrêté de la décision de la collectivité",
+    formats: 'application/pdf',
+    required: false
+  },
+  {
     numero: '0',
     titre: 'CERFA 13406-06',
     description:

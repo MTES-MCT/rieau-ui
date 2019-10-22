@@ -46,6 +46,11 @@ function isCerfa(pieceJointe) {
   return pieceJointe.numero === '0';
 }
 
+function isDecision(pieceJointe) {
+  return pieceJointe.numero === 'd';
+}
+
 export { liste };
 export { pieceJointe };
 export { isCerfa };
+export { isDecision };

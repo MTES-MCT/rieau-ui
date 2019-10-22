@@ -42,7 +42,9 @@ function Message(props) {
 
   return (
     <Card className={classes.card}>
-      <CardHeader title={`De la part de ${message.auteur.id}`} />
+      <CardHeader
+        title={`De la part de ${message.auteur.id} le ${message.date}`}
+      />
       <CardContent className={classes.content}>{message.contenu}</CardContent>
     </Card>
   );

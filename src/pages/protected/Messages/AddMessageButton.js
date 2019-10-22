@@ -34,8 +34,8 @@ function AddMessageButton(props) {
         onClick={handleShowNewDialog}
         data-cy="message-ajouter-btn"
       >
-        <AddCommentIcon />
         {label}
+        <AddCommentIcon />
       </Button>
       {showNewDialog && (
         <NewMessageDialog

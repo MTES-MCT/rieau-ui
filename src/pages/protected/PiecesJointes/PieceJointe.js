@@ -13,7 +13,7 @@ import { useAsync } from 'react-async';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FileUploadButton from 'components/FileUploadButton';
 import Error from 'pages/Error';
-import { isCerfa } from 'utils/piecesjointes';
+import { isCerfa, isDecision } from 'utils/piecesjointes';
 
 const styles = theme => ({
   card: {
@@ -111,7 +111,7 @@ function PieceJointe(props) {
         {pieceJointe.description}
       </CardContent>
       <CardActions disableSpacing className={classes.actions}>
-        {!isCerfa(pieceJointe) && (
+        {!isCerfa(pieceJointe) && !isDecision(pieceJointe) && (
           <FileUploadButton
             iconName="cloud_upload"
             label="Téléverser"

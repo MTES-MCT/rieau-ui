@@ -42,6 +42,18 @@ function declarerCompletDossier(id) {
   });
 }
 
+function lancerConsultations(id) {
+  return api.then(handleDossiers).then(dossiers => {
+    return dossiers.lancerConsultations(id);
+  });
+}
+
+function prendreDecision(id, formData) {
+  return api.then(handleDossiers).then(dossiers => {
+    return dossiers.prendreDecision(id, formData);
+  });
+}
+
 function ajouterDossier(formData) {
   return api.then(handleDossiers).then(dossiers => {
     return dossiers.ajouterDossier(formData);
@@ -83,7 +95,9 @@ const dossiers = {
   qualifierDossier,
   instruireDossier,
   declarerIncompletDossier,
-  declarerCompletDossier
+  declarerCompletDossier,
+  lancerConsultations,
+  prendreDecision
 };
 
 export default dossiers;

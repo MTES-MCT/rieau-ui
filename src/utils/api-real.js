@@ -209,6 +209,50 @@ function declarerCompletDossier(id) {
   });
 }
 
+function lancerConsultations(id) {
+  return new Promise((resolve, reject) => {
+    return keycloak
+      .init({ onLoad: 'check-sso' })
+      .success(authenticated => {
+        console.log('id=', JSON.stringify(id));
+        return resolve(
+          apiHttpClient
+            .post(`/dossiers/${id}/lancer-consultations`)
+            .then(res => res.data)
+        );
+      })
+      .error(error => {
+        return reject(new Error(error));
+      });
+  });
+}
+
+function prendreDecision(id, formData) {
+  return new Promise((resolve, reject) => {
+    return keycloak
+      .init({ onLoad: 'check-sso' })
+      .success(authenticated => {
+        apiHttpClient
+          .post(`/dossiers/${id}/prendre-decision`, formData, {
+            headers: {
+              'content-type':
+                'multipart/form-data;boundary=gc0p4Jq0M2Yt08jU534c0p'
+            }
+          })
+          .then(function(response) {
+            return resolve(response);
+          })
+          .catch(function(error) {
+            console.log('error=', JSON.stringify(error));
+            return reject(error);
+          });
+      })
+      .error(error => {
+        return reject(new Error(error));
+      });
+  });
+}
+
 function ajouterDossier(formData) {
   return new Promise((resolve, reject) => {
     return keycloak
@@ -339,7 +383,9 @@ const dossiers = {
   qualifierDossier,
   instruireDossier,
   declarerIncompletDossier,
-  declarerCompletDossier
+  declarerCompletDossier,
+  lancerConsultations,
+  prendreDecision
 };
 
 const api = {

@@ -63,6 +63,7 @@ function MessageForm(props) {
         onChange={handleChange}
         onBlur={handleBlur}
         name="message"
+        data-cy="message-contenu-textarea"
       />
       <Button
         className={classes.button}
