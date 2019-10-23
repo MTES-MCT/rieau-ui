@@ -1,9 +1,10 @@
-import statuts, { dossierWorkflow, emptyWorkflow } from 'utils/statutsDossier';
-test('compute workflow statuts', () => {
+import steps, { dossierWorkflow, emptyWorkflow } from 'utils/steps';
+import statuts from 'utils/statuts-mock';
+test('compute workflow steps', () => {
   const depose = statuts.find(s => s.id === 'DEPOSE');
   let dossier0 = {
     statutActuel: depose,
-    historiqueStatuts: statuts.filter(s => s.id === 'DEPOSE')
+    statuts: statuts.filter(s => s.id === 'DEPOSE')
   };
   console.log('dossier0=', JSON.stringify(dossier0));
   const incomplet = statuts.find(s => s.id === 'INCOMPLET');
@@ -11,7 +12,7 @@ test('compute workflow statuts', () => {
   h1.push(incomplet);
   let dossier1 = {
     statutActuel: incomplet,
-    historiqueStatuts: [...h1]
+    statuts: [...h1]
   };
   console.log('dossier1=', JSON.stringify(dossier1));
   const dossier0Workflow = dossierWorkflow(dossier0);
@@ -27,7 +28,7 @@ test('compute workflow statuts', () => {
   h1.push(decision);
   let dossier2 = {
     statutActuel: decision,
-    historiqueStatuts: [...h2]
+    statuts: [...h2]
   };
   console.log('dossier2=', JSON.stringify(dossier2));
   const dossier2Workflow = dossierWorkflow(dossier2);

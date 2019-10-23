@@ -7,7 +7,7 @@ import compose from 'utils/compose';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
-import statuts from 'utils/statutsDossier';
+import statuts from 'utils/steps';
 
 const styles = theme => ({
   root: {

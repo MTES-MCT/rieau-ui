@@ -181,7 +181,7 @@ function declarerIncompletDossier(id, message) {
         console.log('message=', JSON.stringify(message));
         return resolve(
           apiHttpClient
-            .post(`/dossiers/${id}/declarer-incomplet`, { message: message })
+            .post(`/dossiers/${id}/declarer-incomplet`, message)
             .then(res => res.data)
         );
       })
@@ -311,7 +311,7 @@ function saveMessage(dossierId, contenu) {
       .success(authenticated => {
         return resolve(
           apiHttpClient
-            .post(`/dossiers/${dossierId}/messages`, { contenu: contenu })
+            .post(`/dossiers/${dossierId}/messages`, contenu)
             .catch(function(error) {
               console.log('error=', JSON.stringify(error));
               return reject(error);

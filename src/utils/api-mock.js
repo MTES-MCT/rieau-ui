@@ -1,5 +1,5 @@
-import users from './users-mock';
-import statuts from 'utils/statutsDossier';
+import users from 'utils/users-mock';
+import statuts from 'utils/statuts-mock';
 // API de test uniquement
 
 let principal = null;
@@ -113,7 +113,10 @@ function now() {
 function addStatut(dossier, statutId) {
   dossier.statutActuel = statuts.find(s => s.id === statutId);
   dossier.statutActuel.dateDebut = now();
-  dossier.historiqueStatuts.push(dossier.statutActuel);
+  dossier.statuts.push(dossier.statutActuel);
+  dossier.statutsRestants = statuts.filter(
+    statut => statut.ordre > dossier.statutActuel.ordre
+  );
 }
 
 function qualifierDossier(id) {
@@ -240,7 +243,8 @@ function ajouterDossier(formData) {
         },
         piecesAJoindre: piecesAJoindre(type),
         piecesJointes: [],
-        historiqueStatuts: [],
+        statuts: [],
+        statutsRestants: statuts,
         messages: []
       };
       addStatut(dossier, 'DEPOSE');

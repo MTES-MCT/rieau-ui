@@ -18,7 +18,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from 'components/Button';
 import { Link as RouterLink } from 'react-router-dom';
 import Typography from 'components/Typography';
-import { dossierWorkflow } from 'utils/statutsDossier';
+import { dossierWorkflow } from 'utils/steps';
 import Grid from '@material-ui/core/Grid';
 import EtapesStepper from 'pages/protected/Dossiers/EtapesStepper';
 import { useUser } from 'context/user-context';

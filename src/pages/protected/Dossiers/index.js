@@ -14,7 +14,7 @@ import { withRouter } from 'react-router';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { useUser } from 'context/user-context';
 import FileUploadButton from 'components/FileUploadButton';
-import statuts from 'utils/statutsDossier';
+import statuts from 'utils/steps';
 
 async function handleDossiers() {
   return await api.listerDossiers();
