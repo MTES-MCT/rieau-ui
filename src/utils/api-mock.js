@@ -97,6 +97,22 @@ function consulterDossier(id) {
   });
 }
 
+function supprimerDossier(id) {
+  return new Promise((resolve, reject) => {
+    setTimeout(function() {
+      console.log('id=', id);
+      const dossier = dossiersFixtures.find(dossier => dossier.id === id);
+      const index = dossiersFixtures.indexOf(dossier);
+      dossiersFixtures.splice(index, 1);
+      sessionStorage.removeItem(dossier.type.id + '0'); // CERFA
+      for (var pieceJointe in dossier.piecesJointes) {
+        sessionStorage.removeItem(pieceJointe.fichierId);
+      }
+      return resolve();
+    }, waitingTime);
+  });
+}
+
 function now() {
   const options = {
     year: 'numeric',
@@ -325,7 +341,8 @@ const dossiers = {
   declarerIncompletDossier,
   declarerCompletDossier,
   lancerConsultations,
-  prendreDecision
+  prendreDecision,
+  supprimerDossier
 };
 
 const api = {

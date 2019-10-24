@@ -8,13 +8,14 @@ import api from 'utils/dossiers';
 import { useAsync } from 'react-async';
 import Error from 'pages/Error';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import DataTable from 'components/DataTable';
 import compose from 'utils/compose';
 import { withRouter } from 'react-router';
-import VisibilityIcon from '@material-ui/icons/Visibility';
 import { useUser } from 'context/user-context';
 import FileUploadButton from 'components/FileUploadButton';
-import statuts from 'utils/steps';
+import MUIDataTable from 'mui-datatables';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 async function handleDossiers() {
   return await api.listerDossiers();
@@ -40,6 +41,10 @@ function Dossiers(props) {
     await api.ajouterDossier(formData);
     reload();
   }
+  async function handleSupprimerDossier(id) {
+    await api.supprimerDossier(id);
+    reload();
+  }
   async function handleReject(err) {
     setError(err);
   }
@@ -47,49 +52,92 @@ function Dossiers(props) {
   if (isRejected) return <Error error={error} />;
   if (isLoading) return <LinearProgress />;
   if (data && isFulfilled) {
+    console.log('data=', JSON.stringify(data));
     return (
       <React.Fragment>
         <AppAppBar />
-        <DataTable
+        <MUIDataTable
           title="Dossiers"
+          data={data}
           columns={[
-            { label: 'Id', id: 'id', numeric: true, disablePadding: false },
-            {
-              label: 'Type',
-              id: 'type',
-              numeric: false,
-              disablePadding: false
-            },
-            {
-              label: 'Statut',
-              id: 'statutActuel',
-              numeric: false,
-              disablePadding: false,
-              variantChip: true,
-              variants: statuts
-            }
+            { name: 'id', label: 'Id' },
+            { name: 'type.libelle', label: 'Type' },
+            { name: 'statutActuel.libelle', label: 'Statut' }
           ]}
-          rows={data}
-          onRowClick={{
-            icon: () => <VisibilityIcon />,
-            tooltip: 'Voir le dossier',
-            onClick: (event, rowId) => history.push(`/dossiers/${rowId}`)
+          options={{
+            filter: true,
+            filterType: 'dropdown',
+            responsive: 'scrollMaxHeight',
+            customToolbar: () => {
+              return isBeta && isDeposant ? (
+                <FileUploadButton
+                  iconName="add"
+                  color="secondary"
+                  label="Ajouter"
+                  variant="contained"
+                  onUploadFile={handleAjouterDossier}
+                  setError={setError}
+                  acceptedFormats={['application/pdf']}
+                />
+              ) : (
+                undefined
+              );
+            },
+            customToolbarSelect: (
+              selectedRows,
+              displayData,
+              setSelectedRows
+            ) => (
+              <Tooltip title={'Supprimer'}>
+                <IconButton
+                  onClick={() =>
+                    selectedRows.data.forEach(row =>
+                      handleSupprimerDossier(data[row.dataIndex].id)
+                    )
+                  }
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </Tooltip>
+            ),
+            onRowClick: (rowData, rowState) => {
+              history.push(`/dossiers/${rowData[0]}`);
+            },
+            textLabels: {
+              body: {
+                noMatch: 'Aucune donnée',
+                toolTip: 'Trier',
+                columnHeaderTooltip: column => `Trier par ${column.label}`
+              },
+              pagination: {
+                next: 'Page suivante',
+                previous: 'Page précédente',
+                rowsPerPage: 'Lignes par page:',
+                displayRows: 'de'
+              },
+              toolbar: {
+                search: 'Rechercher',
+                downloadCsv: 'Exporter en CSV',
+                print: 'Imprimer',
+                viewColumns: 'Voir les colonnes',
+                filterTable: 'Filtrer'
+              },
+              filter: {
+                all: 'Tout',
+                title: 'Filtres',
+                reset: 'Effacer'
+              },
+              viewColumns: {
+                title: 'Voir les colonnes',
+                titleAria: 'Voir/Cacher les colonnes'
+              },
+              selectedRows: {
+                text: 'ligne(s) sélectionnées',
+                delete: 'Supprimer',
+                deleteAria: 'Supprimer les lignes sélectionnées'
+              }
+            }
           }}
-          addComponent={
-            isBeta && isDeposant ? (
-              <FileUploadButton
-                iconName="add"
-                color="secondary"
-                label="Ajouter"
-                variant="contained"
-                onUploadFile={handleAjouterDossier}
-                setError={setError}
-                acceptedFormats={['application/pdf']}
-              />
-            ) : (
-              undefined
-            )
-          }
         />
         <AppFooter />
       </React.Fragment>

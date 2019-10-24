@@ -7,7 +7,8 @@ import compose from 'utils/compose';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
-import statuts from 'utils/steps';
+import steps from 'utils/steps';
+import StepConnector from '@material-ui/core/StepConnector';
 
 const styles = theme => ({
   root: {
@@ -45,10 +46,34 @@ const useColorlibStepIconStyles = makeStyles({
   }
 });
 
+const ColorlibConnector = withStyles({
+  alternativeLabel: {
+    top: 22
+  },
+  active: {
+    '& $line': {
+      backgroundImage:
+        'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)'
+    }
+  },
+  completed: {
+    '& $line': {
+      backgroundImage:
+        'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)'
+    }
+  },
+  line: {
+    height: 3,
+    border: 0,
+    backgroundColor: '#eaeaf0',
+    borderRadius: 1
+  }
+})(StepConnector);
+
 function ColorlibStepIcon(props) {
   const classes = useColorlibStepIconStyles();
   const { active, completed, icon } = props;
-  const icons = statuts.map(statut => statut.icon);
+  const icons = steps.map(step => step.icon);
   return (
     <div
       className={clsx(classes.root, {
@@ -72,13 +97,14 @@ function EtapesStepper(props) {
   const activeStepIndex = steps.lastIndexOf(activeStep);
   const stepProps = {};
   const labelProps = {};
-  console.log('steps=', JSON.stringify(steps));
-  console.log('activeStep=', JSON.stringify(activeStep));
-  console.log('activeStepIndex=', JSON.stringify(activeStepIndex));
 
   return (
     <div className={classes.root}>
-      <Stepper activeStep={activeStepIndex} alternativeLabel>
+      <Stepper
+        activeStep={activeStepIndex}
+        alternativeLabel
+        connector={<ColorlibConnector />}
+      >
         {steps.map(step => (
           <Step
             key={step.id}

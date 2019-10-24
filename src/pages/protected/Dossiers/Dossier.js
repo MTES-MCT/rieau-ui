@@ -26,6 +26,10 @@ import AddMessageButton from 'pages/protected/Messages/AddMessageButton';
 import FileUploadButton from 'components/FileUploadButton';
 import EmailIcon from '@material-ui/icons/Email';
 import AttachIcon from '@material-ui/icons/AttachFile';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Chip from '@material-ui/core/Chip';
+import steps from 'utils/steps';
 
 const styles = theme => ({
   card: {
@@ -51,6 +55,8 @@ function Dossier(props) {
   const { classes, match } = props;
   const id = match.params.id;
   const { isMairie, isInstructeur } = useUser();
+  const theme = useTheme();
+  const isSmallMedia = useMediaQuery(theme.breakpoints.down('sm'));
   const {
     data = { dossier: null },
     error,
@@ -104,10 +110,21 @@ function Dossier(props) {
           <CardContent className={classes.content}>
             <Grid container className={classes.grid}>
               <Grid item xs={12}>
-                <EtapesStepper
-                  steps={dossierWorkflow(dossier)}
-                  activeStepId={dossier.statutActuel.id}
-                />
+                {isSmallMedia ? (
+                  <Chip
+                    icon={
+                      steps.find(step => step.id === dossier.statutActuel.id)
+                        .icon
+                    }
+                    label={dossier.statutActuel.libelle}
+                    color="secondary"
+                  />
+                ) : (
+                  <EtapesStepper
+                    steps={dossierWorkflow(dossier)}
+                    activeStepId={dossier.statutActuel.id}
+                  />
+                )}
               </Grid>
             </Grid>
           </CardContent>
