@@ -16,6 +16,8 @@ import MUIDataTable from 'mui-datatables';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 async function handleDossiers() {
   return await api.listerDossiers();
@@ -36,6 +38,20 @@ function Dossiers(props) {
   });
   const { history } = props;
   const { isBeta, isDeposant } = useUser();
+  const theme = useTheme();
+  const isSmallMedia = useMediaQuery(theme.breakpoints.down('sm'));
+  const largeMediaColumns = [
+    { name: 'type.libelle', label: 'Type' },
+    { name: 'statutActuel.dateDebut', label: 'Depuis le' },
+    { name: 'statutActuel.joursRestants', label: 'Jours restants' }
+  ];
+  const smallMediaColumns = [
+    { name: 'id', label: 'Id' },
+    { name: 'statutActuel.libelle', label: 'Statut' }
+  ];
+  const columns = isSmallMedia
+    ? smallMediaColumns
+    : [...smallMediaColumns, ...largeMediaColumns];
 
   async function handleAjouterDossier(formData) {
     await api.ajouterDossier(formData);
@@ -59,15 +75,13 @@ function Dossiers(props) {
         <MUIDataTable
           title="Dossiers"
           data={data}
-          columns={[
-            { name: 'id', label: 'Id' },
-            { name: 'type.libelle', label: 'Type' },
-            { name: 'statutActuel.libelle', label: 'Statut' }
-          ]}
+          columns={columns}
           options={{
             filter: true,
             filterType: 'dropdown',
-            responsive: 'scrollMaxHeight',
+            responsive: 'scrollFullHeight',
+            rowsPerPage: 5,
+            rowsPerPageOptions: [5, 10, 15],
             customToolbar: () => {
               return isBeta && isDeposant ? (
                 <FileUploadButton

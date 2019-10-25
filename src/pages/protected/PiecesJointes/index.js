@@ -60,7 +60,7 @@ function PiecesJointes(props) {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="subtitle1" marked="center" align="center">
-              {`${dossier.type.libelle}`}
+              {`Du dossier n°${dossier.id}`}
             </Typography>
           </Grid>
           <Grid item xs={12}>

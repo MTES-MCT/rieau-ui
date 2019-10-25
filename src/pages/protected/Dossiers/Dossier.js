@@ -43,6 +43,7 @@ const styles = theme => ({
   },
   grid: {
     display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center'
   }
 });
@@ -50,6 +51,28 @@ const styles = theme => ({
 async function handleDossier({ id }) {
   return { dossier: await api.consulterDossier(id) };
 }
+
+function JoursRestants(props) {
+  const { dossier } = props;
+  return (
+    <Typography variant="body2" marked="center" align="center">
+      {dossier.statutsRestants.length > 0 &&
+        `Il reste ${
+          dossier.statutActuel.joursRestants
+        } jours avant qu'il soit ${
+          dossier.statutsRestants.length > 0
+            ? ['INCOMPLET', 'COMPLET'].includes(dossier.statutsRestants[0].id)
+              ? `déclaré ${dossier.statutsRestants[0].libelle} ou ${dossier.statutsRestants[1].libelle}`
+              : dossier.statutsRestants[0].libelle
+            : ''
+        }`}
+    </Typography>
+  );
+}
+JoursRestants.propTypes = {
+  classes: PropTypes.object,
+  dossier: PropTypes.object.isRequired
+};
 
 function Dossier(props) {
   const { classes, match } = props;
@@ -108,9 +131,9 @@ function Dossier(props) {
         <Card className={classes.card}>
           <CardHeader title={dossier.type.libelle} />
           <CardContent className={classes.content}>
-            <Grid container className={classes.grid}>
-              <Grid item xs={12}>
-                {isSmallMedia ? (
+            {isSmallMedia ? (
+              <Grid container className={classes.grid}>
+                <Grid item xs={12}>
                   <Chip
                     icon={
                       steps.find(step => step.id === dossier.statutActuel.id)
@@ -119,14 +142,23 @@ function Dossier(props) {
                     label={dossier.statutActuel.libelle}
                     color="secondary"
                   />
-                ) : (
+                  <Typography variant="body2" marked="center" align="center">
+                    {`Depuis le ${dossier.statutActuel.dateDebut}`}
+                  </Typography>
+                  <JoursRestants dossier={dossier} />
+                </Grid>
+              </Grid>
+            ) : (
+              <Grid container className={classes.grid}>
+                <Grid item xs={12}>
                   <EtapesStepper
                     steps={dossierWorkflow(dossier)}
                     activeStepId={dossier.statutActuel.id}
                   />
-                )}
+                  <JoursRestants dossier={dossier} />
+                </Grid>
               </Grid>
-            </Grid>
+            )}
           </CardContent>
           <CardActions>
             <Button

@@ -18,6 +18,8 @@ function addDossierIdAndFichierId(pj, dossier, numero) {
     pj.DossierId = dossier.id;
     if (numero === dossier.cerfa.numero) {
       pj.fichierId = dossier.cerfa.fichierId;
+    } else if (numero === dossier.decision.numero) {
+      pj.fichierId = dossier.decision.fichierId;
     } else {
       let pieceJointe = dossier.piecesJointes.find(pj => pj.numero === numero);
       pj.fichierId = pieceJointe ? pieceJointe.fichierId : null;
