@@ -14,6 +14,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import FileUploadButton from 'components/FileUploadButton';
 import Error from 'pages/Error';
 import { isCerfa, isDecision } from 'utils/piecesjointes';
+import { useUser } from 'context/user-context';
 
 const styles = theme => ({
   card: {
@@ -79,6 +80,7 @@ function PieceJointe(props) {
     fichierId: pieceJointe.fichierId
   });
   const { file } = data;
+  const { isDeposant } = useUser();
 
   useEffect(() => {
     if (isSettled) {
@@ -110,7 +112,7 @@ function PieceJointe(props) {
         {pieceJointe.description}
       </CardContent>
       <CardActions disableSpacing className={classes.actions}>
-        {!isCerfa(pieceJointe) && !isDecision(pieceJointe) && (
+        {isDeposant && !isCerfa(pieceJointe) && !isDecision(pieceJointe) && (
           <FileUploadButton
             iconName="cloud_upload"
             label="Téléverser"

@@ -16,6 +16,7 @@ import NotFound from 'pages/NotFound';
 import Button from 'components/Button';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import AddMessageButton from './AddMessageButton';
+import { useUser } from 'context/user-context';
 
 const styles = theme => ({
   grid: {
@@ -47,6 +48,7 @@ function Messages(props) {
     await api.saveMessage(dossierId, contenu);
     reload();
   }
+  const { isDeposant, isInstructeur } = useUser();
   if (isRejected) return <Error error={error.message} />;
   if (isLoading) return <LinearProgress />;
   if (data) {
@@ -77,11 +79,13 @@ function Messages(props) {
               <BackIcon />
               {`Dossier`}
             </Button>
-            <AddMessageButton
-              label={'Ajouter'}
-              onSaveMessage={(event, contenu) => handleSaveMessage(contenu)}
-              dossierId={dossierId}
-            />
+            {isDeposant && isInstructeur && (
+              <AddMessageButton
+                label={'Ajouter'}
+                onSaveMessage={(event, contenu) => handleSaveMessage(contenu)}
+                dossierId={dossierId}
+              />
+            )}
           </Grid>
         </Grid>
         <Grid container className={classes.grid}>

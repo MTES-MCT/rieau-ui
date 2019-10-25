@@ -97,23 +97,21 @@ function Dossiers(props) {
                 undefined
               );
             },
-            customToolbarSelect: (
-              selectedRows,
-              displayData,
-              setSelectedRows
-            ) => (
-              <Tooltip title={'Supprimer'}>
-                <IconButton
-                  onClick={() =>
-                    selectedRows.data.forEach(row =>
-                      handleSupprimerDossier(data[row.dataIndex].id)
-                    )
-                  }
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </Tooltip>
-            ),
+            customToolbarSelect: (selectedRows, displayData, setSelectedRows) =>
+              isBeta &&
+              isDeposant && (
+                <Tooltip title={'Supprimer'}>
+                  <IconButton
+                    onClick={() =>
+                      selectedRows.data.forEach(row =>
+                        handleSupprimerDossier(data[row.dataIndex].id)
+                      )
+                    }
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Tooltip>
+              ),
             onRowClick: (rowData, rowState) => {
               history.push(`/dossiers/${rowData[0]}`);
             },
