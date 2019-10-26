@@ -79,7 +79,7 @@ function Valeur(props) {
               </Typography>
               <Typography variant="h5">
                 {
-                  'En finir avec les délais de transmission par voie postale et les temps de déplacements en mairire.'
+                  'En finir avec les délais de transmission par voie postale et les temps de déplacements en mairie.'
                 }
               </Typography>
             </div>
