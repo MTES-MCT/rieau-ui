@@ -44,20 +44,16 @@ const steps = [
 ];
 
 function dossierWorkflow(dossier) {
-  console.log('dossier.statutActuel=', JSON.stringify(dossier.statutActuel));
-  console.log('dossier.statuts=', JSON.stringify(dossier.statuts));
   const statutsSuivants = dossier.statutsRestants;
   const instruit = emptyWorkflow().find(s => s.id === 'INSTRUCTION');
   if (dossier.statutActuel.id === 'INCOMPLET')
     statutsSuivants.splice(0, 0, instruit);
-  console.log('statutsSuivants=', JSON.stringify(statutsSuivants));
   const concat_array = [...dossier.statuts, ...statutsSuivants];
   return concat_array;
 }
 
 function emptyWorkflow() {
   const emptyWorkflow = steps.filter(step => step.id !== 'INCOMPLET');
-  console.log('emptyWorkflow=', JSON.stringify(emptyWorkflow));
   return emptyWorkflow;
 }
 

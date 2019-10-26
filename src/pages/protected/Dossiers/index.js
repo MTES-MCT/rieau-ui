@@ -68,7 +68,6 @@ function Dossiers(props) {
   if (isRejected) return <Error error={error} />;
   if (isLoading) return <LinearProgress />;
   if (data && isFulfilled) {
-    console.log('data=', JSON.stringify(data));
     return (
       <React.Fragment>
         <AppAppBar />

@@ -34,7 +34,6 @@ const formikValues = {
     values,
     { setSubmitting, props: { onSaveMessage, dossierId } }
   ) => {
-    console.log('values.message=', JSON.stringify(values.message));
     onSaveMessage(dossierId, values.message);
   },
   displayName: 'MessageForm'

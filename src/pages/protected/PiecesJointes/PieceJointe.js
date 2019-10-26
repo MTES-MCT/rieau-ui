@@ -62,7 +62,6 @@ async function handleFilePreview(fichierId) {
 
 function PieceJointe(props) {
   const { classes, pieceJointe, setError, reload } = props;
-  console.log('pieceJointe=', JSON.stringify(pieceJointe));
   const [showPreview, setShowPreview] = useState(
     pieceJointe.fichierId !== null
   );

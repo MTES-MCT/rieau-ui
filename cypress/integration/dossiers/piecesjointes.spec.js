@@ -18,7 +18,7 @@ describe('Pieces jointes deposees', () => {
         { subjectType: 'drag-n-drop' });
       });
       cy.contains("Dossiers").should('be.visible')
-      cy.get('[data-cy=piecejointe-preview-btn]').first().should('be.visible').click()
+      cy.get('[data-testid=MuiDataTableBodyCell-0-0]').first().should('be.visible').click()
       cy.contains("Dossier").should('be.visible')
     })
   })

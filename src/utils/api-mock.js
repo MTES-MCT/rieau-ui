@@ -100,7 +100,6 @@ function consulterDossier(id) {
 function supprimerDossier(id) {
   return new Promise((resolve, reject) => {
     setTimeout(function() {
-      console.log('id=', id);
       const dossier = dossiersFixtures.find(dossier => dossier.id === id);
       const index = dossiersFixtures.indexOf(dossier);
       dossiersFixtures.splice(index, 1);
@@ -296,8 +295,6 @@ function savePieceJointe(dossierId, numero, formData) {
 }
 
 function saveMessage(dossierId, contenu) {
-  console.log('dossierId=', JSON.stringify(dossierId));
-  console.log('contenu=', JSON.stringify(contenu));
   return new Promise((resolve, reject) => {
     setTimeout(function() {
       let dossier = dossiersFixtures.find(dossier => dossier.id === dossierId);

@@ -29,7 +29,7 @@ describe('Dossiers déposant', () => {
         { subjectType: 'drag-n-drop', force: true });
       });
       cy.contains("Dossiers").should('be.visible')
-      cy.get('[data-cy=piecejointe-preview-btn]').first().should('be.visible')
+      cy.get('[data-testid=MuiDataTableBodyCell-0-0]').first().should('be.visible')
     })    
   })
   it('cy.click() - ajouter dossier ko', () => {

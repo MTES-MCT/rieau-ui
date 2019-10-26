@@ -32,7 +32,6 @@ async function handleDossier({ id }) {
 function PiecesJointes(props) {
   const { classes, match, history } = props;
   const dossierId = match.params.dossierId;
-  console.log('dossierId=', dossierId);
   const {
     data = { dossier: null },
     error,

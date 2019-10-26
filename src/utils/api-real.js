@@ -19,7 +19,6 @@ const apiHttpClient = keycloak.createAxiosInstance({
 
 function login() {
   return new Promise((resolve, reject) => {
-    console.log('login');
     return keycloak
       .init({ onLoad: 'login-required' })
       .success(authenticated => {
@@ -145,7 +144,6 @@ function qualifierDossier(id) {
     return keycloak
       .init({ onLoad: 'check-sso' })
       .success(authenticated => {
-        console.log('id=', JSON.stringify(id));
         return resolve(
           apiHttpClient.post(`/dossiers/${id}/qualifier`).then(res => res.data)
         );
@@ -161,7 +159,6 @@ function instruireDossier(id) {
     return keycloak
       .init({ onLoad: 'check-sso' })
       .success(authenticated => {
-        console.log('id=', JSON.stringify(id));
         return resolve(
           apiHttpClient.post(`/dossiers/${id}/instruire`).then(res => res.data)
         );
@@ -177,8 +174,6 @@ function declarerIncompletDossier(id, message) {
     return keycloak
       .init({ onLoad: 'check-sso' })
       .success(authenticated => {
-        console.log('id=', JSON.stringify(id));
-        console.log('message=', JSON.stringify(message));
         return resolve(
           apiHttpClient
             .post(`/dossiers/${id}/declarer-incomplet`, message)
@@ -196,7 +191,6 @@ function declarerCompletDossier(id) {
     return keycloak
       .init({ onLoad: 'check-sso' })
       .success(authenticated => {
-        console.log('id=', JSON.stringify(id));
         return resolve(
           apiHttpClient
             .post(`/dossiers/${id}/declarer-complet`)
@@ -214,7 +208,6 @@ function lancerConsultations(id) {
     return keycloak
       .init({ onLoad: 'check-sso' })
       .success(authenticated => {
-        console.log('id=', JSON.stringify(id));
         return resolve(
           apiHttpClient
             .post(`/dossiers/${id}/lancer-consultations`)
@@ -336,12 +329,10 @@ function extractFileInfo(response) {
     nom: matches[1],
     type: content_type
   };
-  console.log('fileInfo=', fileInfo);
   return fileInfo;
 }
 
 function lireFichier(fichierId) {
-  console.log('fichierId=', fichierId);
   return new Promise((resolve, reject) => {
     return keycloak
       .init({ onLoad: 'check-sso' })

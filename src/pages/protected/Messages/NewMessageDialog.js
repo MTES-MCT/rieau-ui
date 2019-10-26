@@ -44,7 +44,6 @@ function NewMessageDialog(props) {
     setOpen(false);
   }
   function handleSaveMessage(contenu) {
-    console.log('contenu=', JSON.stringify(contenu));
     onSaveMessage(dossierId, contenu);
     setOpen(false);
   }

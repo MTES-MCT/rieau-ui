@@ -44,11 +44,10 @@ function Messages(props) {
     id: dossierId
   });
   async function handleSaveMessage(contenu) {
-    console.log('contenu=', JSON.stringify(contenu));
     await api.saveMessage(dossierId, contenu);
     reload();
   }
-  const { isDeposant, isInstructeur } = useUser();
+  const { isDeposant, isBeta, isInstructeur } = useUser();
   if (isRejected) return <Error error={error.message} />;
   if (isLoading) return <LinearProgress />;
   if (data) {
@@ -79,7 +78,7 @@ function Messages(props) {
               <BackIcon />
               {`Dossier`}
             </Button>
-            {isDeposant && isInstructeur && (
+            {((isDeposant && isBeta) || isInstructeur) && (
               <AddMessageButton
                 label={'Ajouter'}
                 onSaveMessage={(event, contenu) => handleSaveMessage(contenu)}

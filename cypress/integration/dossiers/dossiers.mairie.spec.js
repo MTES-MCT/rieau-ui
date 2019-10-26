@@ -21,7 +21,7 @@ describe('Dossiers mairie', () => {
         { subjectType: 'drag-n-drop', force: true });
       });
       cy.contains("Dossiers").should('be.visible')
-      cy.get('[data-cy=piecejointe-preview-btn]').first().should('be.visible')
+      cy.get('[data-testid=MuiDataTableBodyCell-0-0]').first().should('be.visible')
     })    
     cy.get('[data-cy=account-menu-appbar]').should('be.visible').click()
     cy.get('[data-cy=acount-menu-item-deconnexion]').should('be.visible').click()
@@ -38,7 +38,7 @@ describe('Dossiers mairie', () => {
   
   it('cy.click() - qualifier dossier ok', () => {
     cy.contains("Dossiers").should('be.visible')
-    cy.get('[data-cy=piecejointe-preview-btn]').first().should('be.visible').click()
+    cy.get('[data-testid=MuiDataTableBodyCell-0-0]').first().should('be.visible').click()
     cy.contains("Dossier").should('be.visible')
     cy.get("[data-cy=step-DEPOSE]").should('be.visible').children("div[class*='makeStyles-active']").should('not.be.empty')
     cy.get("[data-cy=qualifier-btn]").should('be.visible').click()
