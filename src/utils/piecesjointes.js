@@ -18,7 +18,7 @@ function addDossierIdAndFichierId(pj, dossier, numero) {
     pj.DossierId = dossier.id;
     if (numero === dossier.cerfa.numero) {
       pj.fichierId = dossier.cerfa.fichierId;
-    } else if (numero === dossier.decision.numero) {
+    } else if (dossier.decision && numero === dossier.decision.numero) {
       pj.fichierId = dossier.decision.fichierId;
     } else {
       let pieceJointe = dossier.piecesJointes.find(pj => pj.numero === numero);
@@ -33,11 +33,9 @@ function pieceJointe(dossier, numero) {
   switch (dossier.type.id) {
     case 'DPMI':
       pj = listePiecesJointesDPMI.find(pj => pj.numero === numero);
-      console.log('pj=', JSON.stringify(pj));
       return addDossierIdAndFichierId(pj, dossier, numero);
     case 'PCMI':
       pj = listePiecesJointesPCMI.find(pj => pj.numero === numero);
-      console.log('pj=', JSON.stringify(pj));
       return addDossierIdAndFichierId(pj, dossier, numero);
     default:
       return pj;
