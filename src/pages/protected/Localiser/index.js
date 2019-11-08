@@ -8,7 +8,7 @@ import DeckGL from '@deck.gl/react';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import withRoot from 'theme/withRoot';
+import AppTheme from 'components/AppTheme';
 import AppAppBar from 'components/AppAppBar';
 import compose from 'utils/compose';
 import Container from '@material-ui/core/Container';
@@ -167,7 +167,7 @@ function Localiser(props) {
   }
 
   return (
-    <React.Fragment>
+    <AppTheme>
       <AppAppBar />
       <Container className={classes.map} data-cy="map">
         <ReactMapGL
@@ -220,14 +220,11 @@ function Localiser(props) {
           )}
         </ReactMapGL>
       </Container>
-    </React.Fragment>
+    </AppTheme>
   );
 }
 Localiser.propTypes = {
   classes: PropTypes.object.isRequired,
   containerComponent: PropTypes.node
 };
-export default compose(
-  withRoot,
-  withStyles(styles)
-)(Localiser);
+export default compose(withStyles(styles))(Localiser);

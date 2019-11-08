@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AppAppBar from 'components/AppAppBar';
 import AppFooter from 'components/AppFooter';
-import withRoot from 'theme/withRoot';
+import AppTheme from 'components/AppTheme';
 import api from 'utils/dossiers';
 import { useAsync } from 'react-async';
 import Error from 'pages/Error';
@@ -69,7 +69,7 @@ function Dossiers(props) {
   if (isLoading) return <LinearProgress />;
   if (data && isFulfilled) {
     return (
-      <React.Fragment>
+      <AppTheme>
         <AppAppBar />
         <MUIDataTable
           title="Dossiers"
@@ -151,7 +151,7 @@ function Dossiers(props) {
           }}
         />
         <AppFooter />
-      </React.Fragment>
+      </AppTheme>
     );
   }
 }
@@ -159,7 +159,4 @@ Dossiers.propTypes = {
   history: PropTypes.object.isRequired
 };
 
-export default compose(
-  withRouter,
-  withRoot
-)(Dossiers);
+export default compose(withRouter)(Dossiers);

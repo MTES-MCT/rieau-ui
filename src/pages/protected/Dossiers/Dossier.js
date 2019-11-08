@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withRoot from 'theme/withRoot';
+import AppTheme from 'components/AppTheme';
 import { withRouter } from 'react-router-dom';
 import AppAppBar from 'components/AppAppBar';
 import AppFooter from 'components/AppFooter';
@@ -123,7 +123,7 @@ function Dossier(props) {
     const { dossier } = data;
     if (!dossier) return <NotFound />;
     return (
-      <React.Fragment>
+      <AppTheme>
         <AppAppBar />
         <Typography variant="h2" marked="center" align="center">
           {`Dossier n°${dossier.id}`}
@@ -245,7 +245,7 @@ function Dossier(props) {
           </CardActions>
         </Card>
         <AppFooter />
-      </React.Fragment>
+      </AppTheme>
     );
   }
 }
@@ -256,6 +256,5 @@ Dossier.propTypes = {
 
 export default compose(
   withStyles(styles),
-  withRoot,
   withRouter
 )(Dossier);

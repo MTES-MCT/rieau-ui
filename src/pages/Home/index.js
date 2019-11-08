@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import withRoot from 'theme/withRoot';
 import AppFooter from 'components/AppFooter';
 import Hero from './Hero';
 import Valeur from './Valeur';
 import CommentFaire from './CommentFaire';
 import AppAppBar from 'components/AppAppBar';
+import AppTheme from 'components/AppTheme';
 
 function Index() {
   const [showRemonter, setShowRemonter] = useState(false);
@@ -17,7 +17,7 @@ function Index() {
     }
   }
   return (
-    <React.Fragment>
+    <AppTheme>
       <AppAppBar />
       <div onWheel={handleShowRemonter}>
         <Hero />
@@ -25,8 +25,8 @@ function Index() {
         <CommentFaire showRemonter={showRemonter} />
       </div>
       <AppFooter />
-    </React.Fragment>
+    </AppTheme>
   );
 }
 
-export default withRoot(Index);
+export default Index;

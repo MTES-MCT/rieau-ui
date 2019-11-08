@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import AppAppBar from 'components/AppAppBar';
 import AppFooter from 'components/AppFooter';
-import withRoot from 'theme/withRoot';
+import AppTheme from 'components/AppTheme';
 import { withStyles, LinearProgress } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import compose from 'utils/compose';
@@ -54,7 +54,7 @@ function Messages(props) {
     const { dossier } = data;
     if (!dossier) return <NotFound />;
     return (
-      <React.Fragment>
+      <AppTheme>
         <AppAppBar />
         <Grid container className={classes.grid}>
           <Grid item xs={12}>
@@ -95,7 +95,7 @@ function Messages(props) {
           </Grid>
         </Grid>
         <AppFooter />
-      </React.Fragment>
+      </AppTheme>
     );
   }
 }
@@ -105,7 +105,6 @@ Messages.propTypes = {
 };
 
 export default compose(
-  withRoot,
   withRouter,
   withStyles(styles)
 )(Messages);

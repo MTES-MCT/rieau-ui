@@ -11,7 +11,7 @@ import AppAppBar from 'components/AppAppBar';
 import AppFooter from 'components/AppFooter';
 import { useUser } from 'context/user-context';
 import compose from 'utils/compose';
-import withRoot from 'theme/withRoot';
+import AppTheme from 'components/AppTheme';
 
 const styles = theme => ({
   root: {
@@ -35,7 +35,7 @@ function MonCompte(props) {
   isInstructeur && profils.push('INSTRUCTEUR');
   isBeta && profils.push('BETA');
   return (
-    <React.Fragment>
+    <AppTheme>
       <AppAppBar />
       {user && (
         <Grid container spacing={1} className={classes.root}>
@@ -71,13 +71,10 @@ function MonCompte(props) {
         </Grid>
       )}
       <AppFooter />
-    </React.Fragment>
+    </AppTheme>
   );
 }
 MonCompte.propTypes = {
   classes: PropTypes.object
 };
-export default compose(
-  withRoot,
-  withStyles(styles)
-)(MonCompte);
+export default compose(withStyles(styles))(MonCompte);

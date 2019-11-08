@@ -6,7 +6,6 @@ import { withStyles } from '@material-ui/core';
 import Button from 'components/Button';
 import SendIcon from '@material-ui/icons/Send';
 import compose from 'utils/compose';
-import withRoot from 'theme/withRoot';
 
 const styles = theme => ({
   container: {
@@ -96,7 +95,6 @@ MessageForm.propTypes = {
 };
 
 export default compose(
-  withRoot,
   withStyles(styles),
   withFormik(formikValues)
 )(MessageForm);

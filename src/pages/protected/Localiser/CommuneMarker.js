@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import withRoot from 'theme/withRoot';
+import AppTheme from 'components/AppTheme';
 import compose from 'utils/compose';
 import PropTypes from 'prop-types';
 import { Marker, Popup } from 'react-map-gl';
@@ -54,7 +54,7 @@ function CommuneMarker(props) {
     : null;
   const [showPopup, setShowPopup] = useState(true);
   return (
-    <React.Fragment>
+    <AppTheme>
       {commune && (
         <React.Fragment>
           <Marker longitude={longitude} latitude={latitude}>
@@ -119,7 +119,7 @@ function CommuneMarker(props) {
           )}
         </React.Fragment>
       )}
-    </React.Fragment>
+    </AppTheme>
   );
 }
 CommuneMarker.propTypes = {
@@ -132,7 +132,4 @@ CommuneMarker.propTypes = {
   resetAdresse: PropTypes.func.isRequired,
   setErreur: PropTypes.func.isRequired
 };
-export default compose(
-  withRoot,
-  withStyles(styles)
-)(CommuneMarker);
+export default compose(withStyles(styles))(CommuneMarker);

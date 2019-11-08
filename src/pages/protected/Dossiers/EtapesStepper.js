@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withRoot from 'theme/withRoot';
 import clsx from 'clsx';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import compose from 'utils/compose';
@@ -132,7 +131,4 @@ EtapesStepper.propTypes = {
   activeStepId: PropTypes.string.isRequired,
   steps: PropTypes.array.isRequired
 };
-export default compose(
-  withStyles(styles),
-  withRoot
-)(EtapesStepper);
+export default compose(withStyles(styles))(EtapesStepper);
