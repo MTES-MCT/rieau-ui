@@ -128,6 +128,7 @@ function now() {
 function addStatut(dossier, statutId) {
   dossier.statutActuel = statuts.find(s => s.id === statutId);
   dossier.statutActuel.dateDebut = now();
+  dossier.statutActuel.joursRestants = dossier.statutActuel.delai;
   dossier.statuts.push(dossier.statutActuel);
   dossier.statutsRestants = statuts.filter(
     statut => statut.ordre > dossier.statutActuel.ordre
@@ -303,6 +304,9 @@ function saveMessage(dossierId, contenu) {
         contenu: contenu,
         auteur: principal
       });
+      dossier.messages.sort((m1, m2) =>
+        new Date(m1.date).getTime() > new Date(m2.date).getTime() ? 1 : -1
+      );
       return resolve();
     }, waitingTime);
   });

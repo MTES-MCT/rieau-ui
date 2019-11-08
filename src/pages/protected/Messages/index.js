@@ -8,7 +8,6 @@ import { withStyles, LinearProgress } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import compose from 'utils/compose';
 import Typography from 'components/Typography';
-import Message from './Message';
 import api from 'utils/dossiers';
 import { useAsync } from 'react-async';
 import Error from 'pages/Error';
@@ -17,6 +16,7 @@ import Button from 'components/Button';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import AddMessageButton from './AddMessageButton';
 import { useUser } from 'context/user-context';
+import MessagesChat from './MessagesChat';
 
 const styles = theme => ({
   grid: {
@@ -87,13 +87,7 @@ function Messages(props) {
             )}
           </Grid>
         </Grid>
-        <Grid container className={classes.grid}>
-          <Grid item xs={12}>
-            {dossier.messages.map((message, index) => (
-              <Message key={index} message={message} />
-            ))}
-          </Grid>
-        </Grid>
+        <MessagesChat messages={dossier.messages} />
         <AppFooter />
       </AppTheme>
     );

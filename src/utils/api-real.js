@@ -85,8 +85,8 @@ function getUser() {
       .loadUserInfo()
       .success(userInfo => {
         return resolve({
-          firstName: userInfo.given_name,
-          lastName: userInfo.family_name,
+          prenom: userInfo.given_name,
+          nom: userInfo.family_name,
           email: userInfo.email
         });
       })

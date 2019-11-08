@@ -2,24 +2,24 @@ const users = [
   {
     id: 'jean.martin',
     email: 'jean.martin@monfai.fr',
-    firstName: 'Jean',
-    lastName: 'Martin',
+    prenom: 'Jean',
+    nom: 'Martin',
     profils: ['DEPOSANT', 'BETA']
   },
   {
     id: 'jacques.dupont',
     email: 'jacques.dupont@monfai.fr',
-    firstName: 'Jacques',
-    lastName: 'Dupont',
+    prenom: 'Jacques',
+    nom: 'Dupont',
     profils: ['INSTRUCTEUR']
   },
   {
     id: 'madame.le-maire',
     email: 'madame.le-maire@monfai.fr',
-    firstName: 'Madame',
-    lastName: 'Le Maire',
+    prenom: 'Madame',
+    nom: 'Le Maire',
     profils: ['MAIRIE', 'BETA'],
-    codePostal: ['44100']
+    codePostal: '44100'
   }
 ];
 

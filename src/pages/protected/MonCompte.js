@@ -5,13 +5,15 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Typography from 'components/Typography';
 import AppAppBar from 'components/AppAppBar';
 import AppFooter from 'components/AppFooter';
 import { useUser } from 'context/user-context';
 import compose from 'utils/compose';
 import AppTheme from 'components/AppTheme';
+import { userProfiles } from 'utils/profils';
+import PersonneAvatar from 'components/PersonneAvatar';
+import { nomComplet } from 'utils/people';
 
 const styles = theme => ({
   root: {
@@ -20,44 +22,32 @@ const styles = theme => ({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: theme.spacing(2)
-  },
-  card: {
-    maxWidth: 230
   }
 });
 
 function MonCompte(props) {
   const { classes } = props;
-  const { user, isDeposant, isInstructeur, isMairie, isBeta } = useUser();
-  const profils = [];
-  isDeposant && profils.push('DEPOSANT');
-  isMairie && profils.push('MAIRIE');
-  isInstructeur && profils.push('INSTRUCTEUR');
-  isBeta && profils.push('BETA');
+  const { user } = useUser();
   return (
     <AppTheme>
       <AppAppBar />
       {user && (
         <Grid container spacing={1} className={classes.root}>
           <Grid item xs={12}>
-            <Card className={classes.card}>
+            <Card>
               <CardHeader
-                avatar={
-                  <AccountCircleIcon
-                    color="secondary"
-                    fontSize="large"
-                    aria-label="mon compte"
-                  />
-                }
+                avatar={<PersonneAvatar personne={user} />}
                 title={'Mon Compte'}
-                subheader={user.firstName + ' ' + user.lastName}
+                subheader={nomComplet(user)}
               />
               <CardContent>
                 <Typography variant="h6" component="h2">
                   {'Profils'}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  {profils.toString()}
+                  {userProfiles(user)
+                    .map(profil => profil.libelle)
+                    .toString()}
                 </Typography>
                 <Typography variant="h6" component="h2">
                   {'Email'}

@@ -4,10 +4,11 @@ import { withStyles } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
+import PersonneAvatar from 'components/PersonneAvatar';
+import { nomCompletAvecProfils } from 'utils/people';
 
 const styles = theme => ({
   card: {
-    maxWidth: 400,
     marginBottom: theme.spacing(1)
   },
   content: {
@@ -43,7 +44,9 @@ function Message(props) {
   return (
     <Card className={classes.card}>
       <CardHeader
-        title={`De la part de ${message.auteur.id} le ${message.date}`}
+        avatar={<PersonneAvatar personne={message.auteur} />}
+        title={nomCompletAvecProfils(message.auteur)}
+        subheader={`Le ${message.date}`}
       />
       <CardContent className={classes.content}>{message.contenu}</CardContent>
     </Card>
