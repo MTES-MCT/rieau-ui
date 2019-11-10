@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import AppAppBar from 'components/AppAppBar';
 import AppFooter from 'components/AppFooter';
 import compose from 'utils/compose';
-import { withStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -31,8 +31,9 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Chip from '@material-ui/core/Chip';
 import steps from 'pages/protected/Dossiers/steps';
 import format from 'format/dates';
+import { Badge } from '@material-ui/core';
 
-const styles = theme => ({
+const styles = makeStyles({
   card: {
     display: 'flex',
     flexDirection: 'column',
@@ -46,7 +47,8 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center'
-  }
+  },
+  badge: {}
 });
 
 async function handleDossier({ id }) {
@@ -76,7 +78,8 @@ JoursRestants.propTypes = {
 };
 
 function Dossier(props) {
-  const { classes, match } = props;
+  const { match } = props;
+  const classes = styles(props);
   const id = match.params.id;
   const { isMairie, isInstructeur } = useUser();
   const theme = useTheme();
@@ -97,20 +100,12 @@ function Dossier(props) {
     await api.qualifierDossier(id);
     reload();
   }
-  async function handleInstruire() {
-    await api.instruireDossier(id);
-    reload();
-  }
   async function handleDeclarerIncomplet(contenu) {
     await api.declarerIncompletDossier(id, contenu);
     reload();
   }
   async function handleDeclarerComplet() {
     await api.declarerCompletDossier(id);
-    reload();
-  }
-  async function handleLancerConsultations() {
-    await api.lancerConsultations(id);
     reload();
   }
   async function handlePrendreDecision(formData) {
@@ -123,6 +118,7 @@ function Dossier(props) {
   if (data) {
     const { dossier } = data;
     if (!dossier) return <NotFound />;
+    console.log('piecesJointes=', JSON.stringify(dossier.piecesJointes));
     return (
       <AppTheme>
         <AppAppBar />
@@ -162,26 +158,40 @@ function Dossier(props) {
             )}
           </CardContent>
           <CardActions>
-            <Button
-              variant="contained"
-              color="secondary"
-              component={RouterLink}
-              to={`/dossiers/${dossier.id}/piecesjointes`}
-              data-cy="piecesjointes-btn"
+            <Badge
+              className={classes.badge}
+              badgeContent={dossier.piecesJointes.length}
+              max={10}
+              color="primary"
             >
-              {`Pièces jointes`}
-              <AttachIcon />
-            </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              component={RouterLink}
-              to={`/dossiers/${dossier.id}/messages`}
-              data-cy="messages-btn"
+              <Button
+                variant="contained"
+                color="secondary"
+                component={RouterLink}
+                to={`/dossiers/${dossier.id}/piecesjointes`}
+                data-cy="piecesjointes-btn"
+              >
+                {`Pièces jointes`}
+                <AttachIcon />
+              </Button>
+            </Badge>
+            <Badge
+              className={classes.badge}
+              badgeContent={dossier.messages.length}
+              max={10}
+              color="primary"
             >
-              {`Messages`}
-              <EmailIcon />
-            </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                component={RouterLink}
+                to={`/dossiers/${dossier.id}/messages`}
+                data-cy="messages-btn"
+              >
+                {`Messages`}
+                <EmailIcon />
+              </Button>
+            </Badge>
             {isMairie && dossier.statutActuel.id === 'DEPOSE' && (
               <Button
                 variant="contained"
@@ -194,45 +204,25 @@ function Dossier(props) {
             )}
             {isInstructeur &&
               ['QUALIFIE', 'INCOMPLET'].includes(dossier.statutActuel.id) && (
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={event => handleInstruire()}
-                  data-cy="instruire-btn"
-                >
-                  {`Instruire`}
-                </Button>
+                <React.Fragment>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={event => handleDeclarerComplet()}
+                    data-cy="declarer-complet-btn"
+                  >
+                    {`Déclarer complet`}
+                  </Button>
+                  <AddMessageButton
+                    label={'Déclarer incomplet'}
+                    dossierId={dossier.id}
+                    onSaveMessage={(event, contenu) =>
+                      handleDeclarerIncomplet(contenu)
+                    }
+                  />
+                </React.Fragment>
               )}
-            {isInstructeur && dossier.statutActuel.id === 'INSTRUCTION' && (
-              <React.Fragment>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={event => handleDeclarerComplet()}
-                  data-cy="declarer-complet-btn"
-                >
-                  {`Déclarer complet`}
-                </Button>
-                <AddMessageButton
-                  label={'Déclarer incomplet'}
-                  dossierId={dossier.id}
-                  onSaveMessage={(event, contenu) =>
-                    handleDeclarerIncomplet(contenu)
-                  }
-                />
-              </React.Fragment>
-            )}
-            {isInstructeur && dossier.statutActuel.id === 'COMPLET' && (
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={event => handleLancerConsultations()}
-                data-cy="lancer-consultations-btn"
-              >
-                {`Lancer les consultations`}
-              </Button>
-            )}
-            {isMairie && dossier.statutActuel.id === 'CONSULTATIONS' && (
+            {isMairie && dossier.statutActuel.id === 'COMPLET' && (
               <FileUploadButton
                 iconName="attach_file"
                 color="secondary"
@@ -251,11 +241,7 @@ function Dossier(props) {
   }
 }
 Dossier.propTypes = {
-  classes: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired
 };
 
-export default compose(
-  withStyles(styles),
-  withRouter
-)(Dossier);
+export default compose(withRouter)(Dossier);

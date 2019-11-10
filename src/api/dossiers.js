@@ -24,12 +24,6 @@ function qualifierDossier(id) {
   });
 }
 
-function instruireDossier(id) {
-  return api.then(handleDossiers).then(dossiers => {
-    return dossiers.instruireDossier(id);
-  });
-}
-
 function declarerIncompletDossier(id, message) {
   return api.then(handleDossiers).then(dossiers => {
     return dossiers.declarerIncompletDossier(id, message);
@@ -39,12 +33,6 @@ function declarerIncompletDossier(id, message) {
 function declarerCompletDossier(id) {
   return api.then(handleDossiers).then(dossiers => {
     return dossiers.declarerCompletDossier(id);
-  });
-}
-
-function lancerConsultations(id) {
-  return api.then(handleDossiers).then(dossiers => {
-    return dossiers.lancerConsultations(id);
   });
 }
 
@@ -93,10 +81,8 @@ const dossiers = {
   saveMessage,
   lireFichier,
   qualifierDossier,
-  instruireDossier,
   declarerIncompletDossier,
   declarerCompletDossier,
-  lancerConsultations,
   prendreDecision
 };
 

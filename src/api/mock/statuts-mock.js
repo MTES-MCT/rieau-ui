@@ -8,7 +8,7 @@ const statuts = [
   {
     id: 'QUALIFIE',
     ordre: 1,
-    libelle: 'qualifié',
+    libelle: "qualifié et l'instruction est en cours",
     delai: 30
   },
   {
@@ -18,21 +18,9 @@ const statuts = [
     delai: 7
   },
   {
-    id: 'INSTRUCTION',
-    ordre: 2,
-    libelle: 'instruit',
-    delai: 7
-  },
-  {
     id: 'COMPLET',
     ordre: 3,
     libelle: 'déclaré complet',
-    delai: 7
-  },
-  {
-    id: 'CONSULTATIONS',
-    ordre: 4,
-    libelle: 'consulté',
     delai: 7
   },
   {

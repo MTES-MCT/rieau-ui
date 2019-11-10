@@ -154,21 +154,6 @@ function qualifierDossier(id) {
   });
 }
 
-function instruireDossier(id) {
-  return new Promise((resolve, reject) => {
-    return keycloak
-      .init({ onLoad: 'check-sso' })
-      .success(authenticated => {
-        return resolve(
-          apiHttpClient.post(`/dossiers/${id}/instruire`).then(res => res.data)
-        );
-      })
-      .error(error => {
-        return reject(new Error(error));
-      });
-  });
-}
-
 function declarerIncompletDossier(id, message) {
   return new Promise((resolve, reject) => {
     return keycloak
@@ -194,23 +179,6 @@ function declarerCompletDossier(id) {
         return resolve(
           apiHttpClient
             .post(`/dossiers/${id}/declarer-complet`)
-            .then(res => res.data)
-        );
-      })
-      .error(error => {
-        return reject(new Error(error));
-      });
-  });
-}
-
-function lancerConsultations(id) {
-  return new Promise((resolve, reject) => {
-    return keycloak
-      .init({ onLoad: 'check-sso' })
-      .success(authenticated => {
-        return resolve(
-          apiHttpClient
-            .post(`/dossiers/${id}/lancer-consultations`)
             .then(res => res.data)
         );
       })
@@ -372,10 +340,8 @@ const dossiers = {
   saveMessage,
   lireFichier,
   qualifierDossier,
-  instruireDossier,
   declarerIncompletDossier,
   declarerCompletDossier,
-  lancerConsultations,
   prendreDecision
 };
 

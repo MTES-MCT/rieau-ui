@@ -122,7 +122,8 @@ function addStatut(dossier, statutId) {
   dossier.statutActuel.joursRestants = dossier.statutActuel.delai;
   dossier.statuts.push(dossier.statutActuel);
   dossier.statutsRestants = statuts.filter(
-    statut => statut.ordre > dossier.statutActuel.ordre
+    statut =>
+      statut.ordre > dossier.statutActuel.ordre && statut.id !== 'INCOMPLET'
   );
 }
 
@@ -136,28 +137,21 @@ function qualifierDossier(id) {
   });
 }
 
-function instruireDossier(id) {
-  return new Promise((resolve, reject) => {
-    setTimeout(function() {
-      const dossier = dossiersFixtures.find(dossier => dossier.id === id);
-      addStatut(dossier, 'INSTRUCTION');
-      return resolve(dossier);
-    }, waitingTime);
+function addMessage(dossier, contenu) {
+  dossier.messages.push({
+    date: now(),
+    contenu: contenu,
+    auteur: principal
   });
+  dossier.messages.sort((m1, m2) => -(m1.date - m2.date));
 }
 
-function declarerIncompletDossier(id, message) {
+function declarerIncompletDossier(id, contenu) {
   return new Promise((resolve, reject) => {
     setTimeout(function() {
       const dossier = dossiersFixtures.find(dossier => dossier.id === id);
       addStatut(dossier, 'INCOMPLET');
-      dossier.messages = [
-        {
-          contenu: message,
-          auteur: principal,
-          date: now()
-        }
-      ];
+      addMessage(dossier, contenu);
       return resolve(dossier);
     }, waitingTime);
   });
@@ -168,16 +162,6 @@ function declarerCompletDossier(id) {
     setTimeout(function() {
       const dossier = dossiersFixtures.find(dossier => dossier.id === id);
       addStatut(dossier, 'COMPLET');
-      return resolve(dossier);
-    }, waitingTime);
-  });
-}
-
-function lancerConsultations(id) {
-  return new Promise((resolve, reject) => {
-    setTimeout(function() {
-      const dossier = dossiersFixtures.find(dossier => dossier.id === id);
-      addStatut(dossier, 'CONSULTATIONS');
       return resolve(dossier);
     }, waitingTime);
   });
@@ -238,16 +222,17 @@ function ajouterDossier(formData) {
       let file = formData.get('file');
       const type = typeFromCerfa(file.name);
       if (type === '') return reject(new Error(cerfaError(file)));
+      const cerfa = {
+        type: type,
+        numero: '0',
+        fichierId: type.id + '0',
+        dossierId: dossiersFixtures.length.toString()
+      };
       const dossier = {
         id: dossiersFixtures.length.toString(),
         type: type,
         userId: principal.id,
-        cerfa: {
-          type: type,
-          numero: '0',
-          fichierId: type.id + '0',
-          dossierId: dossiersFixtures.length.toString()
-        },
+        cerfa: cerfa,
         piecesAJoindre: piecesAJoindre(type),
         piecesJointes: [],
         statuts: [],
@@ -290,12 +275,7 @@ function saveMessage(dossierId, contenu) {
   return new Promise((resolve, reject) => {
     setTimeout(function() {
       let dossier = dossiersFixtures.find(dossier => dossier.id === dossierId);
-      dossier.messages.push({
-        date: now(),
-        contenu: contenu,
-        auteur: principal
-      });
-      dossier.messages.sort((m1, m2) => -(m1.date - m2.date));
+      addMessage(dossier, contenu);
       return resolve();
     }, waitingTime);
   });
@@ -327,10 +307,8 @@ const dossiers = {
   saveMessage,
   lireFichier,
   qualifierDossier,
-  instruireDossier,
   declarerIncompletDossier,
   declarerCompletDossier,
-  lancerConsultations,
   prendreDecision,
   supprimerDossier
 };

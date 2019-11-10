@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import AppAppBar from 'components/AppAppBar';
 import AppFooter from 'components/AppFooter';
 import AppTheme from 'theme/AppTheme';
-import { withStyles, LinearProgress } from '@material-ui/core';
+import { makeStyles, LinearProgress } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import compose from 'utils/compose';
 import Typography from 'components/Typography';
@@ -18,7 +18,7 @@ import AddMessageButton from './AddMessageButton';
 import { useUser } from 'context/user-context';
 import MessagesChat from './MessagesChat';
 
-const styles = theme => ({
+const useStyles = makeStyles({
   grid: {
     display: 'flex',
     flexDirection: 'column',
@@ -31,7 +31,8 @@ async function handleDossier({ id }) {
 }
 
 function Messages(props) {
-  const { classes, match, history } = props;
+  const { match, history } = props;
+  const classes = useStyles(props);
   const dossierId = match.params.dossierId;
   const {
     data = { dossier: null },
@@ -94,11 +95,7 @@ function Messages(props) {
   }
 }
 Messages.propTypes = {
-  classes: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired
 };
 
-export default compose(
-  withRouter,
-  withStyles(styles)
-)(Messages);
+export default compose(withRouter)(Messages);

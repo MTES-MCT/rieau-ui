@@ -55,7 +55,7 @@ function AppAppBar(props) {
       <AppBar
         position="fixed"
         elevation={0}
-        color={isLightTheme(theme) ? 'secondary' : 'default'}
+        color={isLightTheme(theme) ? 'secondary' : 'inherit'}
       >
         <Toolbar>
           <Grid container spacing={1} wrap="nowrap">

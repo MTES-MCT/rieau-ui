@@ -2,26 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
-import compose from 'utils/compose';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import steps from 'pages/protected/Dossiers/steps';
 import StepConnector from '@material-ui/core/StepConnector';
 import format from 'format/dates';
-
-const styles = theme => ({
-  root: {
-    width: '90%'
-  },
-  backButton: {
-    marginRight: theme.spacing(1)
-  },
-  instructions: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1)
-  }
-});
 
 const useColorlibStepIconStyles = makeStyles({
   root: {
@@ -92,44 +78,41 @@ ColorlibStepIcon.propTypes = {
 };
 
 function EtapesStepper(props) {
-  const { classes, activeStepId, steps } = props;
+  const { activeStepId, steps } = props;
   const activeStep = steps.find(step => step.id === activeStepId);
   const activeStepIndex = steps.lastIndexOf(activeStep);
   const stepProps = {};
   const labelProps = {};
 
   return (
-    <div className={classes.root}>
-      <Stepper
-        activeStep={activeStepIndex}
-        alternativeLabel
-        connector={<ColorlibConnector />}
-      >
-        {steps.map(step => (
-          <Step
-            key={step.id}
-            data-cy={`step-${step.id}`}
-            {...stepProps}
-            error={step.error ? step.error.toString() : ''}
+    <Stepper
+      activeStep={activeStepIndex}
+      alternativeLabel
+      connector={<ColorlibConnector />}
+    >
+      {steps.map(step => (
+        <Step
+          key={step.id}
+          data-cy={`step-${step.id}`}
+          {...stepProps}
+          error={step.error ? step.error.toString() : ''}
+        >
+          <StepLabel
+            StepIconComponent={ColorlibStepIcon}
+            {...labelProps}
+            error={step.error ? step.error : false}
           >
-            <StepLabel
-              StepIconComponent={ColorlibStepIcon}
-              {...labelProps}
-              error={step.error ? step.error : false}
-            >
-              {`${step.libelle} ${
-                step.dateDebut ? 'le' + format(step.dateDebut) : ''
-              }`}
-            </StepLabel>
-          </Step>
-        ))}
-      </Stepper>
-    </div>
+            {`${step.libelle} ${
+              step.dateDebut ? 'le ' + format(step.dateDebut) : ''
+            }`}
+          </StepLabel>
+        </Step>
+      ))}
+    </Stepper>
   );
 }
 EtapesStepper.propTypes = {
-  classes: PropTypes.object.isRequired,
   activeStepId: PropTypes.string.isRequired,
   steps: PropTypes.array.isRequired
 };
-export default compose(withStyles(styles))(EtapesStepper);
+export default EtapesStepper;

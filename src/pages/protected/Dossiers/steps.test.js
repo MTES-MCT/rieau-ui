@@ -26,8 +26,8 @@ test('compute workflow steps', () => {
   const dossier0Workflow = dossierWorkflow(dossier0);
   expect(dossier0Workflow.length).toBe(emptyWorkflow().length);
   const dossier1Workflow = dossierWorkflow(dossier1);
-  expect(dossier1Workflow.length).toBe(emptyWorkflow().length + 2);
-  expect(dossier1Workflow.indexOf(incomplet)).toBe(3);
+  expect(dossier1Workflow.length).toBe(emptyWorkflow().length + 1);
+  expect(dossier1Workflow.indexOf(incomplet)).toBe(2);
 
   const decision = statuts.find(s => s.id === 'DECISION');
   const h2 = statutsWorkflow().filter(s => s.ordre < 6);
