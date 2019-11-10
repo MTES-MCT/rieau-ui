@@ -30,6 +30,7 @@ import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Chip from '@material-ui/core/Chip';
 import steps from 'utils/steps';
+import format from 'utils/dates';
 
 const styles = theme => ({
   card: {
@@ -143,7 +144,7 @@ function Dossier(props) {
                     color="secondary"
                   />
                   <Typography variant="body2" marked="center" align="center">
-                    {`Depuis le ${dossier.statutActuel.dateDebut}`}
+                    {`Depuis le ${format(dossier.statutActuel.dateDebut)}`}
                   </Typography>
                   <JoursRestants dossier={dossier} />
                 </Grid>

@@ -18,6 +18,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import format from 'utils/dates';
 
 async function handleDossiers() {
   return await api.listerDossiers();
@@ -42,7 +43,13 @@ function Dossiers(props) {
   const isSmallMedia = useMediaQuery(theme.breakpoints.down('sm'));
   const largeMediaColumns = [
     { name: 'type.libelle', label: 'Type' },
-    { name: 'statutActuel.dateDebut', label: 'Depuis le' },
+    {
+      name: 'statutActuel.dateDebut',
+      label: 'Depuis le',
+      options: {
+        customBodyRender: (value, tableMeta, updateValue) => format(value)
+      }
+    },
     { name: 'statutActuel.joursRestants', label: 'Jours restants' }
   ];
   const smallMediaColumns = [

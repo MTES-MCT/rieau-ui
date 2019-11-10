@@ -6,6 +6,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import PersonneAvatar from 'components/PersonneAvatar';
 import { nomCompletAvecProfils } from 'utils/people';
+import format from 'utils/dates';
 
 const styles = theme => ({
   card: {
@@ -46,7 +47,7 @@ function Message(props) {
       <CardHeader
         avatar={<PersonneAvatar personne={message.auteur} />}
         title={nomCompletAvecProfils(message.auteur)}
-        subheader={`Le ${message.date}`}
+        subheader={`Le ${format(message.date)}`}
       />
       <CardContent className={classes.content}>{message.contenu}</CardContent>
     </Card>

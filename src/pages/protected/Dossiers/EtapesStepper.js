@@ -8,6 +8,7 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import steps from 'utils/steps';
 import StepConnector from '@material-ui/core/StepConnector';
+import format from 'utils/dates';
 
 const styles = theme => ({
   root: {
@@ -117,7 +118,7 @@ function EtapesStepper(props) {
               error={step.error ? step.error : false}
             >
               {`${step.libelle} ${
-                step.dateDebut ? 'le ' + step.dateDebut : ''
+                step.dateDebut ? 'le' + format(step.dateDebut) : ''
               }`}
             </StepLabel>
           </Step>

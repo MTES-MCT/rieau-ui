@@ -113,16 +113,7 @@ function supprimerDossier(id) {
 }
 
 function now() {
-  const options = {
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    second: 'numeric',
-    hour12: false
-  };
-  return new Intl.DateTimeFormat('fr-FR', options).format(new Date());
+  return new Date();
 }
 
 function addStatut(dossier, statutId) {
@@ -304,9 +295,7 @@ function saveMessage(dossierId, contenu) {
         contenu: contenu,
         auteur: principal
       });
-      dossier.messages.sort((m1, m2) =>
-        new Date(m1.date).getTime() > new Date(m2.date).getTime() ? 1 : -1
-      );
+      dossier.messages.sort((m1, m2) => -(m1.date - m2.date));
       return resolve();
     }, waitingTime);
   });
