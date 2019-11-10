@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import AppTheme from 'components/AppTheme';
 import compose from 'utils/compose';
 import { withStyles } from '@material-ui/styles';
 import Button from 'components/Button';
@@ -41,7 +40,7 @@ function FileUploadButton(props) {
     closeDropzone();
   }
   return (
-    <AppTheme>
+    <React.Fragment>
       <Button
         className={classes.button}
         variant={variant}
@@ -60,7 +59,7 @@ function FileUploadButton(props) {
           acceptedFormats={acceptedFormats}
         />
       )}
-    </AppTheme>
+    </React.Fragment>
   );
 }
 FileUploadButton.propTypes = {

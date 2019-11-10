@@ -7,7 +7,7 @@ import green from '@material-ui/core/colors/green';
 import amber from '@material-ui/core/colors/amber';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-export default function AppTheme(props) {
+function AppTheme(props) {
   const { children } = props;
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
@@ -53,3 +53,4 @@ export default function AppTheme(props) {
 AppTheme.propTypes = {
   children: PropTypes.array.isRequired
 };
+export default AppTheme;
