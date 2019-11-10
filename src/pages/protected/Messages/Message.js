@@ -13,8 +13,7 @@ const styles = theme => ({
     marginBottom: theme.spacing(1)
   },
   content: {
-    display: 'flex',
-    flexWrap: 'wrap'
+    overflowWrap: 'break-word'
   },
   actions: {
     display: 'flex'

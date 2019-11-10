@@ -1,16 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withFormik } from 'formik';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import { withStyles } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
+import { withStyles, Grid } from '@material-ui/core';
 import Button from 'components/Button';
 import SendIcon from '@material-ui/icons/Send';
 import compose from 'utils/compose';
 
 const styles = theme => ({
-  container: {
+  grid: {
     display: 'flex',
-    flexWrap: 'wrap'
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1)
   }
 });
 
@@ -51,34 +56,45 @@ function MessageForm(props) {
   } = props;
 
   return (
-    <form className={classes.container} onSubmit={handleSubmit}>
-      <TextareaAutosize
-        aria-label="message"
-        rows={10}
-        cols={70}
-        placeholder="Votre message"
-        value={values.message}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        name="message"
-        data-cy="message-contenu-textarea"
-      />
-      <Button
-        className={classes.button}
-        type="submit"
-        variant="contained"
-        color="secondary"
-        aria-label="ajouter un nouveau message"
-        data-cy="message-envoyer-btn"
-        disabled={isSubmitting}
-      >
-        {`Envoyer`}
-        <SendIcon className={classes.rightIcon} />
-      </Button>
-      {errors.message && touched.message && (
-        <div id="feedback">{errors.message}</div>
-      )}
-    </form>
+    <Grid container className={classes.grid}>
+      <form onSubmit={handleSubmit}>
+        <Grid item xs={12}>
+          <TextField
+            label="Message"
+            rowsMax={10}
+            multiline
+            placeholder="Votre message"
+            value={values.message}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            name="message"
+            data-cy="message-contenu-textarea"
+            margin="normal"
+            variant="outlined"
+            className={classes.textField}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            className={classes.button}
+            type="submit"
+            variant="contained"
+            color="secondary"
+            aria-label="ajouter un nouveau message"
+            data-cy="message-envoyer-btn"
+            disabled={isSubmitting}
+          >
+            {`Envoyer`}
+            <SendIcon className={classes.rightIcon} />
+          </Button>
+        </Grid>
+        <Grid item xs={12}>
+          {errors.message && touched.message && (
+            <div id="feedback">{errors.message}</div>
+          )}
+        </Grid>
+      </form>
+    </Grid>
   );
 }
 MessageForm.propTypes = {
