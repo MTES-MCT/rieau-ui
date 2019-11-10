@@ -22,6 +22,9 @@ const styles = theme => ({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: theme.spacing(2)
+  },
+  content: {
+    overflowWrap: 'break-word'
   }
 });
 
@@ -40,7 +43,7 @@ function MonCompte(props) {
                 title={'Mon Compte'}
                 subheader={nomComplet(user)}
               />
-              <CardContent>
+              <CardContent className={classes.content}>
                 <Typography variant="h6" component="h2">
                   {'Profils'}
                 </Typography>
