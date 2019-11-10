@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import AppTheme from 'components/AppTheme';
+import AppTheme from 'theme/AppTheme';
 import compose from 'utils/compose';
 import PropTypes from 'prop-types';
 import { Marker, Popup } from 'react-map-gl';

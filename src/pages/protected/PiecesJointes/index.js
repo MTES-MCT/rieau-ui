@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import AppAppBar from 'components/AppAppBar';
 import AppFooter from 'components/AppFooter';
-import AppTheme from 'components/AppTheme';
+import AppTheme from 'theme/AppTheme';
 import { withStyles, LinearProgress } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import compose from 'utils/compose';

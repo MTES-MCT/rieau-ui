@@ -8,7 +8,7 @@ import DeckGL from '@deck.gl/react';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import AppTheme from 'components/AppTheme';
+import AppTheme from 'theme/AppTheme';
 import AppAppBar from 'components/AppAppBar';
 import compose from 'utils/compose';
 import Container from '@material-ui/core/Container';

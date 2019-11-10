@@ -4,7 +4,7 @@ import Hero from './Hero';
 import Valeur from './Valeur';
 import CommentFaire from './CommentFaire';
 import AppAppBar from 'components/AppAppBar';
-import AppTheme from 'components/AppTheme';
+import AppTheme from 'theme/AppTheme';
 
 function Index() {
   const [showRemonter, setShowRemonter] = useState(false);

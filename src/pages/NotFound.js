@@ -2,7 +2,7 @@ import React from 'react';
 import Typography from 'components/Typography';
 import AppAppBar from 'components/AppAppBar';
 import AppFooter from 'components/AppFooter';
-import AppTheme from 'components/AppTheme';
+import AppTheme from 'theme/AppTheme';
 
 function NotFound() {
   return (

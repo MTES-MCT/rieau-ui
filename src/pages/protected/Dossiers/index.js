@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AppAppBar from 'components/AppAppBar';
 import AppFooter from 'components/AppFooter';
-import AppTheme from 'components/AppTheme';
+import AppTheme from 'theme/AppTheme';
 import api from 'utils/dossiers';
 import { useAsync } from 'react-async';
 import Error from 'pages/Error';

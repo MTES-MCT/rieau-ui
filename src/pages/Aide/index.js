@@ -5,7 +5,7 @@ import Typography from 'components/Typography';
 import AppAppBar from 'components/AppAppBar';
 import AppFooter from 'components/AppFooter';
 import { importMDX } from 'mdx.macro';
-import AppTheme from 'components/AppTheme';
+import AppTheme from 'theme/AppTheme';
 
 const Faq = lazy(() => importMDX('./faq.mdx'));
 

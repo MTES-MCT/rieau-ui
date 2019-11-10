@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, useTheme } from '@material-ui/core/styles';
 import Toolbar, { styles as toolbarStyles } from 'components/Toolbar';
 import { Link as RouterLink } from 'react-router-dom';
 import logo from './marianne.png';
@@ -17,6 +17,7 @@ import Grid from '@material-ui/core/Grid';
 import DossiersMenu from './DossiersMenu';
 import ConnexionButton from 'components/ConnexionButton';
 import { env } from 'utils/env-helper';
+import { isLightTheme } from 'theme/theme';
 
 const styles = theme => ({
   placeholder: toolbarStyles(theme).root,
@@ -48,9 +49,14 @@ const styles = theme => ({
 function AppAppBar(props) {
   const { classes } = props;
   const { isAuthenticated } = useUser();
+  const theme = useTheme();
   return (
     <div id="app-bar">
-      <AppBar position="fixed" elevation={0} color="secondary">
+      <AppBar
+        position="fixed"
+        elevation={0}
+        color={isLightTheme(theme) ? 'secondary' : 'default'}
+      >
         <Toolbar>
           <Grid container spacing={1} wrap="nowrap">
             <Grid
@@ -109,7 +115,9 @@ function AppAppBar(props) {
                           </Button>
                         );
                       })}
-                    <ConnexionButton />
+                    <ConnexionButton
+                      color={isLightTheme(theme) ? 'primary' : 'secondary'}
+                    />
                   </React.Fragment>
                 )}
               </Hidden>
