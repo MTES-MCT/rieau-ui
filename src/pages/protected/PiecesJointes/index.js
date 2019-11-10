@@ -9,11 +9,11 @@ import Grid from '@material-ui/core/Grid';
 import compose from 'utils/compose';
 import Typography from 'components/Typography';
 import PieceJointe from './PieceJointe';
-import api from 'utils/dossiers';
+import api from 'api/dossiers';
 import { useAsync } from 'react-async';
 import Error from 'pages/Error';
 import NotFound from 'pages/NotFound';
-import { pieceJointe } from 'utils/piecesjointes';
+import { pieceJointe } from 'pages/protected/PiecesJointes/piecesjointes';
 import Button from 'components/Button';
 import BackIcon from '@material-ui/icons/ArrowBack';
 

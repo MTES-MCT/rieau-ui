@@ -1,5 +1,5 @@
-import AxiosKeycloak from 'utils/axios-keycloak';
-import { env } from 'utils/env-helper';
+import AxiosKeycloak from 'api/axios-keycloak';
+import { env } from 'config/env-helper';
 
 // API réelle
 

@@ -13,7 +13,7 @@ import './hero.css';
 import LazyLoad from 'react-lazyload';
 import IconButton from '@material-ui/core/IconButton';
 import { genericHashLink } from 'react-router-hash-link';
-import { env } from 'utils/env-helper';
+import { env } from 'config/env-helper';
 
 const styles = theme => ({
   root: {

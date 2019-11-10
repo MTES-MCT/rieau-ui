@@ -1,4 +1,4 @@
-import { userProfiles } from 'utils/profils';
+import { userProfiles } from 'users/profils';
 
 function initiale(texte) {
   return texte.toUpperCase().substring(0, 1);

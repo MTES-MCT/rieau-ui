@@ -6,9 +6,9 @@ import compose from 'utils/compose';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
-import steps from 'utils/steps';
+import steps from 'pages/protected/Dossiers/steps';
 import StepConnector from '@material-ui/core/StepConnector';
-import format from 'utils/dates';
+import format from 'format/dates';
 
 const styles = theme => ({
   root: {

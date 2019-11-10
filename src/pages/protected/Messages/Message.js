@@ -5,8 +5,8 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import PersonneAvatar from 'components/PersonneAvatar';
-import { nomCompletAvecProfils } from 'utils/people';
-import format from 'utils/dates';
+import { nomCompletAvecProfils } from 'users/people';
+import format from 'format/dates';
 
 const styles = theme => ({
   card: {

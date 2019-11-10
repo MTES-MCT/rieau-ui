@@ -11,7 +11,7 @@ import Paper from '@material-ui/core/Paper';
 import { Link as RouterLink } from 'react-router-dom';
 import Button from 'components/Button';
 import Box from '@material-ui/core/Box';
-import { parcellesSurfaceTotale } from 'utils/parcelles';
+import { parcellesSurfaceTotale } from 'pages/protected/Localiser/parcelles';
 
 const maxPopupWidth = 400;
 

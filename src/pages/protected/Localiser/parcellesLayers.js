@@ -1,4 +1,7 @@
-import { parcelleIsIncluded, parcelleIsContigue } from 'utils/parcelles';
+import {
+  parcelleIsIncluded,
+  parcelleIsContigue
+} from 'pages/protected/Localiser/parcelles';
 import { GeoJsonLayer, TextLayer, PolygonLayer } from '@deck.gl/layers';
 
 function parcellesUrl(commune) {

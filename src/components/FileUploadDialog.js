@@ -12,11 +12,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import Button from 'components/Button';
 import compose from 'utils/compose';
-import { formatFileSize } from 'utils/files';
+import { formatFileSize } from 'format/files';
 import Typography from './Typography';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import { env } from 'utils/env-helper';
+import { env } from 'config/env-helper';
 
 const styles = theme => ({
   dropzone: {

@@ -10,7 +10,7 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import { useAsync } from 'react-async';
-import api from 'utils/dossiers';
+import api from 'api/dossiers';
 import Error from 'pages/Error';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import NotFound from 'pages/NotFound';
@@ -18,7 +18,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from 'components/Button';
 import { Link as RouterLink } from 'react-router-dom';
 import Typography from 'components/Typography';
-import { dossierWorkflow } from 'utils/steps';
+import { dossierWorkflow } from 'pages/protected/Dossiers/steps';
 import Grid from '@material-ui/core/Grid';
 import EtapesStepper from 'pages/protected/Dossiers/EtapesStepper';
 import { useUser } from 'context/user-context';
@@ -29,8 +29,8 @@ import AttachIcon from '@material-ui/icons/AttachFile';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Chip from '@material-ui/core/Chip';
-import steps from 'utils/steps';
-import format from 'utils/dates';
+import steps from 'pages/protected/Dossiers/steps';
+import format from 'format/dates';
 
 const styles = theme => ({
   card: {

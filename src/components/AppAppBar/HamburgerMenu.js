@@ -16,7 +16,7 @@ import { useAuth } from 'context/auth-context';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { useUser } from 'context/user-context';
-import { isApiMock } from 'utils/api';
+import { isApiMock } from 'api/api';
 import MockUsersConnectionMenuItems from 'components/MockUsersConnectionMenuItems';
 
 const drawerWidth = 240;

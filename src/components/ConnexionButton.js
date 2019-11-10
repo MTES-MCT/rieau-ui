@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isApiMock } from 'utils/api';
+import { isApiMock } from 'api/api';
 import Button from './Button';
 import { useAuth } from 'context/auth-context';
 import Menu from '@material-ui/core/Menu';

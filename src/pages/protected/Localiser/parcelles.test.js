@@ -2,7 +2,7 @@ import {
   parcelleIsContigue,
   parcelleIsIncluded,
   parcelleCenter
-} from 'utils/parcelles';
+} from 'pages/protected/Localiser/parcelles';
 
 test('parcelles contigues', () => {
   let parcelles = [

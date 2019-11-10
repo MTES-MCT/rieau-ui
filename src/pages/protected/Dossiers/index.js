@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import AppAppBar from 'components/AppAppBar';
 import AppFooter from 'components/AppFooter';
 import AppTheme from 'theme/AppTheme';
-import api from 'utils/dossiers';
+import api from 'api/dossiers';
 import { useAsync } from 'react-async';
 import Error from 'pages/Error';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -18,7 +18,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import format from 'utils/dates';
+import format from 'format/dates';
 
 async function handleDossiers() {
   return await api.listerDossiers();

@@ -1,4 +1,4 @@
-import api, { isApiMock } from 'utils/api';
+import api, { isApiMock } from 'api/api';
 
 function handleAuth() {
   return api.then(api => {

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import compose from 'utils/compose';
-import { initiales } from 'utils/people';
+import { initiales } from 'users/people';
 import Avatar from '@material-ui/core/Avatar';
 
 const styles = theme => ({

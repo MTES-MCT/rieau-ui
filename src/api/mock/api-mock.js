@@ -1,5 +1,5 @@
-import users from 'utils/users-mock';
-import statuts from 'utils/statuts-mock';
+import users from 'api/mock/users-mock';
+import statuts from 'api/mock/statuts-mock';
 // API de test uniquement
 
 let principal = null;

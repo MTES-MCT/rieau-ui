@@ -8,7 +8,7 @@ import {
 import routesAuthenticated from 'routes/authenticated';
 import routesUnauthenticated from 'routes/unauthenticated';
 import NotFound from 'pages/NotFound';
-import { env } from 'utils/env-helper';
+import { env } from 'config/env-helper';
 import { useUser } from 'context/user-context';
 
 function Routes() {

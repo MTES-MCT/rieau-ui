@@ -16,7 +16,7 @@ import Typography from 'components/Typography';
 import Grid from '@material-ui/core/Grid';
 import DossiersMenu from './DossiersMenu';
 import ConnexionButton from 'components/ConnexionButton';
-import { env } from 'utils/env-helper';
+import { env } from 'config/env-helper';
 import { isLightTheme } from 'theme/theme';
 
 const styles = theme => ({

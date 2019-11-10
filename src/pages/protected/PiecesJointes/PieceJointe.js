@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import api from 'utils/dossiers';
+import api from 'api/dossiers';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -13,7 +13,10 @@ import { useAsync } from 'react-async';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FileUploadButton from 'components/FileUploadButton';
 import Error from 'pages/Error';
-import { isCerfa, isDecision } from 'utils/piecesjointes';
+import {
+  isCerfa,
+  isDecision
+} from 'pages/protected/PiecesJointes/piecesjointes';
 import { useUser } from 'context/user-context';
 
 const styles = theme => ({

@@ -1,5 +1,5 @@
-import { dossierWorkflow, emptyWorkflow } from 'utils/steps';
-import statuts from 'utils/statuts-mock';
+import { dossierWorkflow, emptyWorkflow } from 'pages/protected/Dossiers/steps';
+import statuts from 'api/mock/statuts-mock';
 
 function statutsWorkflow() {
   return emptyWorkflow().map(step =>

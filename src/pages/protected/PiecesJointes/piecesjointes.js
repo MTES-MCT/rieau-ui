@@ -1,5 +1,5 @@
-import { listePiecesJointesDPMI } from 'utils/listePiecesJointesDPMI';
-import { listePiecesJointesPCMI } from 'utils/listePiecesJointesPCMI';
+import { listePiecesJointesDPMI } from 'pages/protected/PiecesJointes/listePiecesJointesDPMI';
+import { listePiecesJointesPCMI } from 'pages/protected/PiecesJointes/listePiecesJointesPCMI';
 
 function liste(typeDemande) {
   let lowtypeDemande = typeDemande ? typeDemande.toLowerCase() : '';

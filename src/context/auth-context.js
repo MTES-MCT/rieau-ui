@@ -1,8 +1,8 @@
 import React from 'react';
-import auth from 'utils/auth';
+import auth from 'api/auth';
 import { useAsync } from 'react-async';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { isApiMock } from 'utils/api';
+import { isApiMock } from 'api/api';
 import Error from 'pages/Error';
 
 const AuthContext = React.createContext();

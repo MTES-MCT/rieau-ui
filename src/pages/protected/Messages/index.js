@@ -8,7 +8,7 @@ import { withStyles, LinearProgress } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import compose from 'utils/compose';
 import Typography from 'components/Typography';
-import api from 'utils/dossiers';
+import api from 'api/dossiers';
 import { useAsync } from 'react-async';
 import Error from 'pages/Error';
 import NotFound from 'pages/NotFound';

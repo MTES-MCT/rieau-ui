@@ -16,7 +16,7 @@ import ControlPanel from './ControlPanel';
 import communesPartenaires from './communesPartenaires';
 import Snackbar from 'components/Snackbar';
 import CommuneMarker from './CommuneMarker';
-import { parcelleCenter } from 'utils/parcelles';
+import { parcelleCenter } from 'pages/protected/Localiser/parcelles';
 import { renderLayers, parcellesUrl } from './parcellesLayers';
 
 const styles = theme => ({

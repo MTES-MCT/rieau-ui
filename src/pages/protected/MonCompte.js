@@ -11,9 +11,9 @@ import AppFooter from 'components/AppFooter';
 import { useUser } from 'context/user-context';
 import compose from 'utils/compose';
 import AppTheme from 'theme/AppTheme';
-import { userProfiles } from 'utils/profils';
+import { userProfiles } from 'users/profils';
 import PersonneAvatar from 'components/PersonneAvatar';
-import { nomComplet } from 'utils/people';
+import { nomComplet } from 'users/people';
 
 const styles = theme => ({
   root: {
