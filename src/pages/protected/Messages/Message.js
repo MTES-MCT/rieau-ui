@@ -10,31 +10,15 @@ import format from 'format/dates';
 
 const styles = theme => ({
   card: {
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  header: {
+    display: 'flex'
   },
   content: {
     overflowWrap: 'break-word'
-  },
-  actions: {
-    display: 'flex'
-  },
-  button: {
-    margin: theme.spacing(1)
-  },
-  buttonWrapper: {
-    margin: theme.spacing(1),
-    position: 'relative'
-  },
-  buttonProgress: {
-    color: 'inherit',
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: -12,
-    marginLeft: -12
-  },
-  rightIcon: {
-    marginLeft: theme.spacing(1)
   }
 });
 
@@ -47,6 +31,7 @@ function Message(props) {
         avatar={<PersonneAvatar personne={message.auteur} />}
         title={nomCompletAvecProfils(message.auteur)}
         subheader={`Le ${format(message.date)}`}
+        className={classes.header}
       />
       <CardContent className={classes.content}>{message.contenu}</CardContent>
     </Card>

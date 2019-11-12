@@ -8,6 +8,9 @@ import StepLabel from '@material-ui/core/StepLabel';
 import steps from 'pages/protected/Dossiers/steps';
 import StepConnector from '@material-ui/core/StepConnector';
 import format from 'format/dates';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { StepContent } from '@material-ui/core';
 
 const useColorlibStepIconStyles = makeStyles({
   root: {
@@ -77,18 +80,25 @@ ColorlibStepIcon.propTypes = {
   icon: PropTypes.node
 };
 
+function texteDate(dateDebut) {
+  return dateDebut ? 'le ' + format(dateDebut) : '';
+}
+
 function EtapesStepper(props) {
   const { activeStepId, steps } = props;
   const activeStep = steps.find(step => step.id === activeStepId);
   const activeStepIndex = steps.lastIndexOf(activeStep);
   const stepProps = {};
   const labelProps = {};
+  const theme = useTheme();
+  const isSmallMedia = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Stepper
       activeStep={activeStepIndex}
       alternativeLabel
       connector={<ColorlibConnector />}
+      orientation={isSmallMedia ? 'vertical' : 'horizontal'}
     >
       {steps.map(step => (
         <Step
@@ -102,10 +112,13 @@ function EtapesStepper(props) {
             {...labelProps}
             error={step.error ? step.error : false}
           >
-            {`${step.libelle} ${
-              step.dateDebut ? 'le ' + format(step.dateDebut) : ''
-            }`}
+            {isSmallMedia
+              ? step.libelle
+              : step.libelle + ' ' + texteDate(step.dateDebut)}
           </StepLabel>
+          {isSmallMedia && (
+            <StepContent>{texteDate(step.dateDebut)}</StepContent>
+          )}
         </Step>
       ))}
     </Stepper>

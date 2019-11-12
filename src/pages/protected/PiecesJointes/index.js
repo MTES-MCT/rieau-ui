@@ -54,7 +54,7 @@ function PiecesJointes(props) {
         <Grid container className={classes.grid}>
           <Grid item xs={12}>
             <Typography variant="h3" marked="center" align="center">
-              {`CERFA initial et pièces jointes`}
+              {`Pièces jointes`}
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -77,20 +77,6 @@ function PiecesJointes(props) {
         </Grid>
         <Grid container className={classes.grid}>
           <Grid item xs={12}>
-            {dossier.statutActuel.id === 'DECISION' && (
-              <PieceJointe
-                key={'d'}
-                pieceJointe={pieceJointe(dossier, 'd')}
-                setError={setError}
-                reload={reload}
-              />
-            )}
-            <PieceJointe
-              key={dossier.cerfa.numero}
-              pieceJointe={pieceJointe(dossier, dossier.cerfa.numero)}
-              setError={setError}
-              reload={reload}
-            />
             {dossier.piecesAJoindre.map(pieceAJoindre => (
               <PieceJointe
                 key={pieceAJoindre}
@@ -111,7 +97,4 @@ PiecesJointes.propTypes = {
   match: PropTypes.object.isRequired
 };
 
-export default compose(
-  withRouter,
-  withStyles(styles)
-)(PiecesJointes);
+export default compose(withRouter, withStyles(styles))(PiecesJointes);
