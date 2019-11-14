@@ -25,7 +25,7 @@ describe('Messages ajoutés', () => {
 
   it('cy.click() - go to dossier messages DP page format ok', () => {  
     cy.contains("Dossier").should('be.visible')
-    cy.get("[data-cy=messages-btn]").should('be.visible').click()
+    cy.get("[data-cy=messages-tab]").should('be.visible').click()
     cy.contains("Messages").should('be.visible')
     cy.get('[data-cy=message-ajouter-btn]').first().should('be.visible').click()
     cy.contains("Nouveau message").should('be.visible')

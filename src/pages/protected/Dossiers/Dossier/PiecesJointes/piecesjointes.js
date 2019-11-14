@@ -1,5 +1,5 @@
-import { listePiecesJointesDPMI } from 'pages/protected/PiecesJointes/listePiecesJointesDPMI';
-import { listePiecesJointesPCMI } from 'pages/protected/PiecesJointes/listePiecesJointesPCMI';
+import { listePiecesJointesDPMI } from 'pages/protected/Dossiers/Dossier/PiecesJointes/listePiecesJointesDPMI';
+import { listePiecesJointesPCMI } from 'pages/protected/Dossiers/Dossier/PiecesJointes/listePiecesJointesPCMI';
 
 function liste(typeDemande) {
   let lowtypeDemande = typeDemande ? typeDemande.toLowerCase() : '';
@@ -42,6 +42,14 @@ function pieceJointe(dossier, numero) {
   }
 }
 
+function cerfa(dossier) {
+  return pieceJointe(dossier, dossier.cerfa.numero);
+}
+
+function decision(dossier) {
+  return pieceJointe(dossier, dossier.decision.numero);
+}
+
 function isCerfa(pieceJointe) {
   return pieceJointe.numero === '0';
 }
@@ -52,5 +60,7 @@ function isDecision(pieceJointe) {
 
 export { liste };
 export { pieceJointe };
+export { cerfa };
 export { isCerfa };
+export { decision };
 export { isDecision };

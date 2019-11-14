@@ -25,9 +25,11 @@ describe('Pieces jointes deposees', () => {
 
   it('cy.click() - go to dossiers pieces jointes DP page format ok', () => {  
     cy.contains("Dossier").should('be.visible')
-    cy.get("[data-cy=piecesjointes-btn]").should('be.visible').click()
-    cy.contains("CERFA initial et pièces jointes").should('be.visible')
-    cy.contains('CERFA 13703-06').should('be.visible')
+    cy.contains("CERFA").should('be.visible')
+    cy.get('[data-cy=file-preview-btn]').first().should('be.visible').click()
+    cy.contains("Aperçu").should('be.visible')
+    cy.get("[data-cy=file-preview-close-btn]").should('be.visible').click()
+    cy.get("[data-cy=pieces-tab]").should('be.visible').click()
     cy.contains("DP1").should('be.visible')
     cy.get('[data-cy=file-upload-btn]').first().should('be.visible').click()
     cy.contains("Téléverser un fichier").should('be.visible')
@@ -38,16 +40,18 @@ describe('Pieces jointes deposees', () => {
       });
     })
     cy.wait(500)
-    cy.contains("CERFA initial et pièces jointes").should('be.visible')
-    cy.get('[data-cy=piecejointe-preview-btn]').first().should('be.visible').click()
+    cy.contains('1') // badge pieces tab 
+    cy.get('[data-cy=file-preview-btn]').last().should('be.visible').click()
     cy.contains("Aperçu").should('be.visible')
   })
 
   it('cy.click() - go to dossiers pieces jointes DP page format ko', () => {
     cy.contains("Dossier").should('be.visible')
-    cy.get("[data-cy=piecesjointes-btn]").should('be.visible').click()
-    cy.contains("CERFA initial et pièces jointes").should('be.visible')
-    cy.contains('CERFA 13703-06').should('be.visible')
+    cy.contains("CERFA").should('be.visible')
+    cy.get('[data-cy=file-preview-btn]').first().should('be.visible').click()
+    cy.contains("Aperçu").should('be.visible')
+    cy.get("[data-cy=file-preview-close-btn]").should('be.visible').click()
+    cy.get("[data-cy=pieces-tab]").should('be.visible').click()
     cy.contains("DP1").should('be.visible')
     cy.get('[data-cy=file-upload-btn]').first().should('be.visible').click()
     cy.contains("Téléverser un fichier").should('be.visible')

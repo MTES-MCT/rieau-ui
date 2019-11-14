@@ -11,23 +11,22 @@ import api from 'api/dossiers';
 import Error from 'pages/Error';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import NotFound from 'pages/NotFound';
-import Button from 'components/Button';
 import Typography from 'components/Typography';
 import { dossierWorkflow } from 'pages/protected/Dossiers/steps';
 import Grid from '@material-ui/core/Grid';
-import EtapesStepper from 'pages/protected/Dossiers/EtapesStepper';
 import { useUser } from 'context/user-context';
-import AddMessageButton from 'pages/protected/Messages/AddMessageButton';
-import FileUploadButton from 'components/FileUploadButton';
+import AddMessageButton from 'pages/protected/Dossiers/Dossier/Messages/AddMessageButton';
 import EmailIcon from '@material-ui/icons/Email';
 import AttachIcon from '@material-ui/icons/AttachFile';
 import { Badge } from '@material-ui/core';
-import PieceJointe from 'pages/protected/PiecesJointes/PieceJointe';
-import { pieceJointe } from 'pages/protected/PiecesJointes/piecesjointes';
+import PieceJointe from 'pages/protected/Dossiers/Dossier/PiecesJointes/PieceJointe';
+import { pieceJointe } from 'pages/protected/Dossiers/Dossier/PiecesJointes/piecesjointes';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import MessagesChat from 'pages/protected/Messages/MessagesChat';
+import MessagesChat from 'pages/protected/Dossiers/Dossier/Messages/MessagesChat';
+import Etapes from 'pages/protected/Dossiers/Dossier/Etapes';
+import Actions from 'pages/protected/Dossiers/Dossier/Etapes/Actions';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -79,114 +78,6 @@ function JoursRestants(props) {
 JoursRestants.propTypes = {
   classes: PropTypes.object,
   dossier: PropTypes.object.isRequired
-};
-
-function CerfaDecision(props) {
-  const { dossier, setError, reload } = props;
-  return (
-    <Grid container spacing={1}>
-      <Grid item xs={12}>
-        {dossier.statutActuel.id === 'DECISION' && (
-          <PieceJointe
-            key={'d'}
-            pieceJointe={pieceJointe(dossier, 'd')}
-            setError={setError}
-            reload={reload}
-          />
-        )}
-        <React.Fragment>
-          <Typography variant="h6" marked="center" align="center">
-            {`CERFA déposé initialement sur service-public.fr`}
-          </Typography>
-          <PieceJointe
-            key={dossier.cerfa.numero}
-            pieceJointe={pieceJointe(dossier, dossier.cerfa.numero)}
-            setError={setError}
-            reload={reload}
-          />
-        </React.Fragment>
-      </Grid>
-    </Grid>
-  );
-}
-CerfaDecision.propTypes = {
-  dossier: PropTypes.object.isRequired,
-  setError: PropTypes.func.isRequired,
-  reload: PropTypes.func.isRequired
-};
-
-function Actions(props) {
-  const { dossier, match, setError, reload } = props;
-  const id = match.params.id;
-  const { isMairie, isInstructeur } = useUser();
-
-  async function handleQualifier() {
-    await api.qualifierDossier(id);
-    reload();
-  }
-  async function handleDeclarerIncomplet(contenu) {
-    await api.declarerIncompletDossier(id, contenu);
-    reload();
-  }
-  async function handleDeclarerComplet() {
-    await api.declarerCompletDossier(id);
-    reload();
-  }
-  async function handlePrendreDecision(formData) {
-    await api.prendreDecision(id, formData);
-    reload();
-  }
-  return (
-    <div>
-      {isMairie && dossier.statutActuel.id === 'DEPOSE' && (
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={event => handleQualifier()}
-          data-cy="qualifier-btn"
-        >
-          {`Qualifier`}
-        </Button>
-      )}
-      {isInstructeur &&
-        ['QUALIFIE', 'INCOMPLET'].includes(dossier.statutActuel.id) && (
-          <React.Fragment>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={event => handleDeclarerComplet()}
-              data-cy="declarer-complet-btn"
-            >
-              {`Déclarer complet`}
-            </Button>
-            <AddMessageButton
-              label={'Déclarer incomplet'}
-              dossierId={dossier.id}
-              onSaveMessage={(event, contenu) =>
-                handleDeclarerIncomplet(contenu)
-              }
-            />
-          </React.Fragment>
-        )}
-      {isMairie && dossier.statutActuel.id === 'COMPLET' && (
-        <FileUploadButton
-          iconName="attach_file"
-          color="secondary"
-          label="Prendre décision"
-          variant="contained"
-          onUploadFile={handlePrendreDecision}
-          setError={setError}
-          acceptedFormats={['application/pdf']}
-        />
-      )}
-    </div>
-  );
-}
-Actions.propTypes = {
-  dossier: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
-  setError: PropTypes.func.isRequired,
-  reload: PropTypes.func.isRequired
 };
 
 function a11yProps(index) {
@@ -261,43 +152,46 @@ function Dossier(props) {
           {`Dossier n°${dossier.id}`}
         </Typography>
         <div className={classes.tabs}>
-          <AppBar position="static">
+          <AppBar position="static" color="inherit">
             <Tabs
               value={tabValue}
               onChange={handleChange}
               aria-label="onglets"
               centered
+              indicatorColor="secondary"
+              textColor="secondary"
               variant="fullWidth"
             >
-              <Tab label="Étapes" {...a11yProps(0)} />
-              <Tab label="CERFA" {...a11yProps(1)} />
+              <Tab label="Étapes" data-cy="etapes-tab" {...a11yProps(0)} />
               <Tab
                 icon={
                   <Badge
                     className={classes.badge}
                     badgeContent={dossier.piecesJointes.length}
-                    max={10}
-                    color="primary"
+                    max={100}
+                    color="secondary"
                   >
                     <AttachIcon />
                   </Badge>
                 }
                 label="Pièces"
-                {...a11yProps(2)}
+                data-cy="pieces-tab"
+                {...a11yProps(1)}
               />
               <Tab
                 icon={
                   <Badge
                     className={classes.badge}
                     badgeContent={dossier.messages.length}
-                    max={10}
-                    color="primary"
+                    max={100}
+                    color="secondary"
                   >
                     <EmailIcon />
                   </Badge>
                 }
                 label="Messages"
-                {...a11yProps(3)}
+                data-cy="messages-tab"
+                {...a11yProps(2)}
               />
             </Tabs>
           </AppBar>
@@ -305,7 +199,7 @@ function Dossier(props) {
             <Grid container spacing={1} className={classes.grid}>
               <Grid item xs={12}>
                 <JoursRestants dossier={dossier} />
-                <EtapesStepper
+                <Etapes
                   steps={dossierWorkflow(dossier)}
                   activeStepId={dossier.statutActuel.id}
                 />
@@ -319,13 +213,6 @@ function Dossier(props) {
             </Grid>
           </TabPanel>
           <TabPanel value={tabValue} index={1}>
-            <CerfaDecision
-              dossier={dossier}
-              setError={setError}
-              reload={reload}
-            />
-          </TabPanel>
-          <TabPanel value={tabValue} index={2}>
             {dossier.piecesAJoindre.map(pieceAJoindre => (
               <PieceJointe
                 key={pieceAJoindre}
@@ -335,21 +222,14 @@ function Dossier(props) {
               />
             ))}
           </TabPanel>
-          <TabPanel value={tabValue} index={3}>
-            <Grid container spacing={1} className={classes.grid}>
-              <Grid item xs={12}>
-                {((isDeposant && isBeta) || isInstructeur) && (
-                  <AddMessageButton
-                    label={'Ajouter'}
-                    onSaveMessage={(event, contenu) =>
-                      handleSaveMessage(contenu)
-                    }
-                    dossierId={dossier.id}
-                  />
-                )}
-                <MessagesChat messages={dossier.messages} />
-              </Grid>
-            </Grid>
+          <TabPanel value={tabValue} index={2}>
+            {((isDeposant && isBeta) || isInstructeur) && (
+              <AddMessageButton
+                onSaveMessage={(event, contenu) => handleSaveMessage(contenu)}
+                dossierId={dossier.id}
+              />
+            )}
+            <MessagesChat messages={dossier.messages} />
           </TabPanel>
         </div>
         <AppFooter />

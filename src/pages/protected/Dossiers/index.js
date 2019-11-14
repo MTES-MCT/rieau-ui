@@ -11,7 +11,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import compose from 'utils/compose';
 import { withRouter } from 'react-router';
 import { useUser } from 'context/user-context';
-import FileUploadButton from 'components/FileUploadButton';
+import FileUploadButton from 'components/files/FileUploadButton';
 import MUIDataTable from 'mui-datatables';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -19,6 +19,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import format from 'format/dates';
+import { Chip } from '@material-ui/core';
+import { step } from 'pages/protected/Dossiers/steps';
 
 async function handleDossiers() {
   return await api.listerDossiers();
@@ -42,7 +44,10 @@ function Dossiers(props) {
   const theme = useTheme();
   const isSmallMedia = useMediaQuery(theme.breakpoints.down('sm'));
   const largeMediaColumns = [
-    { name: 'type.libelle', label: 'Type' },
+    {
+      name: 'type.libelle',
+      label: 'Type'
+    },
     {
       name: 'statutActuel.dateDebut',
       label: 'Depuis le',
@@ -54,7 +59,19 @@ function Dossiers(props) {
   ];
   const smallMediaColumns = [
     { name: 'id', label: 'Id' },
-    { name: 'statutActuel.libelle', label: 'Statut' }
+    {
+      name: 'statutActuel',
+      label: 'Statut',
+      options: {
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Chip
+            icon={step(value).icon}
+            label={value.libelle}
+            color="secondary"
+          />
+        )
+      }
+    }
   ];
   const columns = isSmallMedia
     ? smallMediaColumns

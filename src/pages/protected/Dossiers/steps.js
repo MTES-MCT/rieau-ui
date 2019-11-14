@@ -32,11 +32,12 @@ const steps = [
   }
 ];
 
+function step(statut) {
+  return steps.find(step => step.id === statut.id);
+}
+
 function dossierWorkflow(dossier) {
   const statutsSuivants = dossier.statutsRestants;
-  // const instruit = emptyWorkflow().find(s => s.id === 'INSTRUCTION');
-  // if (dossier.statutActuel.id === 'INCOMPLET')
-  //   statutsSuivants.splice(0, 0, instruit);
   const concat_array = [...dossier.statuts, ...statutsSuivants];
   return concat_array;
 }
@@ -48,5 +49,6 @@ function emptyWorkflow() {
 
 export { dossierWorkflow };
 export { emptyWorkflow };
+export { step };
 
 export default steps;

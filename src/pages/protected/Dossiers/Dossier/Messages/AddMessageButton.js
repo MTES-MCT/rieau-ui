@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core';
-import AddCommentIcon from '@material-ui/icons/AddComment';
-import Button from 'components/Button';
-import NewMessageDialog from './NewMessageDialog';
+import { withStyles, Fab } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import NewMessageDialog from 'pages/protected/Dossiers/Dossier/Messages/NewMessageDialog';
 
 const styles = theme => ({
-  button: {
-    margin: theme.spacing(1)
-  },
-  rightIcon: {
-    marginLeft: theme.spacing(1)
+  fab: {
+    backgroundColor: theme.palette.secondary.main,
+    margin: theme.spacing(1),
+    position: 'fixed',
+    bottom: theme.spacing(2),
+    right: theme.spacing(3)
   }
 });
 
 function AddMessageButton(props) {
-  const { classes, label, dossierId, onSaveMessage } = props;
+  const { classes, dossierId, onSaveMessage } = props;
   const [showNewDialog, setShowNewDialog] = useState(false);
 
   function closeNewDialog() {
@@ -26,17 +26,15 @@ function AddMessageButton(props) {
   }
   return (
     <React.Fragment>
-      <Button
-        className={classes.button}
-        variant="contained"
-        color="secondary"
-        aria-label="ajouter un nouveau message"
-        onClick={handleShowNewDialog}
+      <Fab
+        color="primary"
         data-cy="message-ajouter-btn"
+        aria-label="Ajouter"
+        className={classes.fab}
+        onClick={handleShowNewDialog}
       >
-        {label}
-        <AddCommentIcon />
-      </Button>
+        <AddIcon color="primary" />
+      </Fab>
       {showNewDialog && (
         <NewMessageDialog
           dossierId={dossierId}
@@ -51,8 +49,7 @@ function AddMessageButton(props) {
 AddMessageButton.propTypes = {
   classes: PropTypes.object.isRequired,
   dossierId: PropTypes.string.isRequired,
-  onSaveMessage: PropTypes.func.isRequired,
-  label: PropTypes.string.isRequired
+  onSaveMessage: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(AddMessageButton);

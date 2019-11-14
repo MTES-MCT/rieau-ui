@@ -84,7 +84,7 @@ function texteDate(dateDebut) {
   return dateDebut ? 'le ' + format(dateDebut) : '';
 }
 
-function EtapesStepper(props) {
+function Etapes(props) {
   const { activeStepId, steps } = props;
   const activeStep = steps.find(step => step.id === activeStepId);
   const activeStepIndex = steps.lastIndexOf(activeStep);
@@ -96,8 +96,8 @@ function EtapesStepper(props) {
   return (
     <Stepper
       activeStep={activeStepIndex}
-      alternativeLabel
-      connector={<ColorlibConnector />}
+      alternativeLabel={!isSmallMedia}
+      connector={isSmallMedia ? undefined : <ColorlibConnector />}
       orientation={isSmallMedia ? 'vertical' : 'horizontal'}
     >
       {steps.map(step => (
@@ -124,8 +124,8 @@ function EtapesStepper(props) {
     </Stepper>
   );
 }
-EtapesStepper.propTypes = {
+Etapes.propTypes = {
   activeStepId: PropTypes.string.isRequired,
   steps: PropTypes.array.isRequired
 };
-export default EtapesStepper;
+export default Etapes;

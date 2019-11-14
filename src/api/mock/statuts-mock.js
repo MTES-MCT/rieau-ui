@@ -8,25 +8,25 @@ const statuts = [
   {
     id: 'QUALIFIE',
     ordre: 1,
-    libelle: "qualifié et l'instruction est en cours",
+    libelle: 'qualifié',
     delai: 30
   },
   {
     id: 'INCOMPLET',
     ordre: 2,
-    libelle: 'déclaré incomplet',
+    libelle: 'incomplet',
     delai: 7
   },
   {
     id: 'COMPLET',
     ordre: 3,
-    libelle: 'déclaré complet',
+    libelle: 'complet',
     delai: 7
   },
   {
     id: 'DECISION',
     ordre: 5,
-    libelle: 'décision prise',
+    libelle: 'décidé',
     delai: 7
   }
 ];

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import compose from 'utils/compose';
 import { withStyles } from '@material-ui/styles';
 import Button from 'components/Button';
-import FileUploadDialog from 'components/FileUploadDialog';
+import FileUploadDialog from 'components/files/FileUploadDialog';
 import Icon from '@material-ui/core/Icon';
 
 const styles = theme => ({

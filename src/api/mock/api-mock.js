@@ -168,9 +168,24 @@ function declarerCompletDossier(id) {
 }
 
 function prendreDecision(dossierId, formData) {
-  const dossier = dossiersFixtures.find(dossier => dossier.id === dossierId);
-  addStatut(dossier, 'DECISION');
-  return this.savePieceJointe(dossierId, 'd', formData);
+  return new Promise((resolve, reject) => {
+    setTimeout(function() {
+      let file = formData.get('file');
+      const dossier = dossiersFixtures.find(
+        dossier => dossier.id === dossierId
+      );
+      addStatut(dossier, 'DECISION');
+      const decision = {
+        type: dossier.type,
+        numero: 'd',
+        fichierId: dossier.type.id + 'd',
+        dossierId: dossiersFixtures.length.toString()
+      };
+      dossier.decision = decision;
+      saveInSessionStorage(dossier, 'd', file);
+      return resolve(dossier);
+    }, waitingTime);
+  });
 }
 
 function typeFromCerfa(fileName) {
@@ -228,7 +243,7 @@ function ajouterDossier(formData) {
         fichierId: type.id + '0',
         dossierId: dossiersFixtures.length.toString()
       };
-      const dossier = {
+      let dossier = {
         id: dossiersFixtures.length.toString(),
         type: type,
         userId: principal.id,
@@ -250,7 +265,10 @@ function ajouterDossier(formData) {
 function checkCode(code, file) {
   if (!file.name) return true; // hack because cypress dropzone command have undefined file.name
   const type = typeFromCerfa(file.name);
-  return code.includes('cerfa') ? code === type.id + '0' : true;
+  let checked = true;
+  if (code.includes('cerfa')) checked = code === type.id + '0';
+  if (code.includes(type)) checked = code === type.id + 'd';
+  return checked;
 }
 
 function savePieceJointe(dossierId, numero, formData) {

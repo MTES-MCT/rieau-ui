@@ -62,6 +62,7 @@ function MessageForm(props) {
           <TextField
             label="Message"
             rowsMax={10}
+            rows={10}
             multiline
             placeholder="Votre message"
             value={values.message}
@@ -70,7 +71,7 @@ function MessageForm(props) {
             name="message"
             data-cy="message-contenu-textarea"
             margin="normal"
-            variant="outlined"
+            variant="filled"
             className={classes.textField}
           />
         </Grid>
