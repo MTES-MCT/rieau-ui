@@ -1,15 +1,10 @@
+import moment from 'moment';
+
 function format(date) {
   if (date === undefined) return '';
-  const options = {
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    second: 'numeric',
-    hour12: false
-  };
-  return new Intl.DateTimeFormat('fr-FR', options).format(date);
+  console.log('date=', JSON.stringify(date));
+  let momentDate = moment(date);
+  return momentDate.format('DD/MM/YYYY à HH:mm');
 }
 
 export default format;
