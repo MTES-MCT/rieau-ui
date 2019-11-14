@@ -92,7 +92,7 @@ describe('Dossiers workflow', () => {
     cy.get('[data-cy=file-upload-dropzone]').first().should('be.visible').then(function() {
       cy.fixture('cerfa_13703_DPMI.pdf', 'base64').then(fileContent => {
         cy.get('[data-cy=file-upload-dropzone]').upload({ fileContent, fileName: 'cerfa_13703_DPMI.pdf', mimeType: 'application/pdf', encoding: 'base64' },
-        { subjectType: 'drag-n-drop' });
+        { subjectType: 'drag-n-drop', force: true });
       });
     })
     cy.wait(500)
