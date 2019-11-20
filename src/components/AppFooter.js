@@ -109,7 +109,4 @@ AppFooter.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default compose(
-  React.memo,
-  withStyles(styles)
-)(AppFooter);
+export default compose(React.memo, withStyles(styles))(AppFooter);

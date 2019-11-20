@@ -17,6 +17,8 @@ const apiHttpClient = keycloak.createAxiosInstance({
   withCredentials: true
 });
 
+const profils = ['DEPOSANT', 'BETA', 'INSTRUCTEUR', 'MAIRIE'];
+
 function login() {
   return new Promise((resolve, reject) => {
     return keycloak
@@ -79,6 +81,16 @@ function isBeta() {
   });
 }
 
+function addProfil(keycloak, profils, profil) {
+  if (keycloak.hasRealmRole(profil)) profils.push(profil);
+}
+
+function userProfils(keycloak) {
+  let hisProfiles = [];
+  profils.forEach(profil => addProfil(keycloak, hisProfiles, profil));
+  return hisProfiles;
+}
+
 function getUser() {
   return new Promise((resolve, reject) => {
     return keycloak
@@ -87,6 +99,7 @@ function getUser() {
         return resolve({
           prenom: userInfo.given_name,
           nom: userInfo.family_name,
+          profils: userProfils(keycloak),
           email: userInfo.email
         });
       })

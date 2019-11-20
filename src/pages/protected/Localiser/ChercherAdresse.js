@@ -141,7 +141,10 @@ function ChercherAddresse(props) {
       adresseUrl + adresseSanitized + '&citycode=' + commune.code
     )
       .then(res => res.json())
-      .then(result => buildSuggestions(result), error => setErreur(error));
+      .then(
+        result => buildSuggestions(result),
+        error => setErreur(error)
+      );
   }
 
   async function onSuggestionsFetchRequested() {

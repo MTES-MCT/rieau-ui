@@ -173,7 +173,4 @@ class HamburgerMenu extends React.Component {
 HamburgerMenu.propTypes = {
   classes: PropTypes.object.isRequired
 };
-export default compose(
-  withRouter,
-  withStyles(styles)
-)(HamburgerMenu);
+export default compose(withRouter, withStyles(styles))(HamburgerMenu);

@@ -77,7 +77,4 @@ function DossiersMenu(props) {
   );
 }
 
-export default compose(
-  withRouter,
-  withStyles(styles)
-)(DossiersMenu);
+export default compose(withRouter, withStyles(styles))(DossiersMenu);

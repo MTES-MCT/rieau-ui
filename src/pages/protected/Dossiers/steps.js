@@ -7,33 +7,38 @@ import CompletIcon from '@material-ui/icons/AssignmentTurnedIn';
 const steps = [
   {
     id: 'DEPOSE',
+    libelle: 'déposé',
     variant: 'info',
     icon: <DeposeIcon />
   },
   {
     id: 'QUALIFIE',
+    libelle: 'qualifié',
     variant: 'warning',
     icon: <QualifieIcon />
   },
   {
     id: 'INCOMPLET',
+    libelle: 'incomplet',
     variant: 'error',
     icon: <IncompletIcon />
   },
   {
     id: 'COMPLET',
+    libelle: 'complet',
     variant: 'success',
     icon: <CompletIcon />
   },
   {
     id: 'DECISION',
+    libelle: 'décidé',
     variant: 'success',
     icon: <CompletIcon />
   }
 ];
 
-function step(statut) {
-  return steps.find(step => step.id === statut.id);
+function step(statutId) {
+  return steps.find(step => step.id === statutId);
 }
 
 function dossierWorkflow(dossier) {

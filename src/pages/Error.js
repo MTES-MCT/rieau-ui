@@ -58,7 +58,4 @@ Error.propTypes = {
   history: PropTypes.object.isRequired
 };
 
-export default compose(
-  withRouter,
-  withStyles(styles)
-)(Error);
+export default compose(withRouter, withStyles(styles))(Error);

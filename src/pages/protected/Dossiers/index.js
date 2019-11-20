@@ -60,13 +60,13 @@ function Dossiers(props) {
   const smallMediaColumns = [
     { name: 'id', label: 'Id' },
     {
-      name: 'statutActuel',
+      name: 'statutActuel.id',
       label: 'Statut',
       options: {
         customBodyRender: (value, tableMeta, updateValue) => (
           <Chip
             icon={step(value).icon}
-            label={value.libelle}
+            label={step(value).libelle}
             color="secondary"
           />
         )

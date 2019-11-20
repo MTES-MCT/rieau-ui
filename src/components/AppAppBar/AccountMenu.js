@@ -64,7 +64,9 @@ function AccountMenu(props) {
         >
           {isAuthenticated && (
             <MenuList>
-              <MenuItemLink route={moncompte}>Profil</MenuItemLink>
+              <MenuItemLink data-cy="acount-menu-item-profil" route={moncompte}>
+                Profil
+              </MenuItemLink>
               <MenuItem
                 button
                 onClick={logout}
@@ -83,7 +85,4 @@ function AccountMenu(props) {
   );
 }
 
-export default compose(
-  withRouter,
-  withStyles(styles)
-)(AccountMenu);
+export default compose(withRouter, withStyles(styles))(AccountMenu);
