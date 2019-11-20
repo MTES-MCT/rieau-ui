@@ -5,6 +5,7 @@ import Message from 'pages/protected/Dossiers/Dossier/Messages/Message';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
+import { dateSortDesc } from 'format/dates';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -21,22 +22,20 @@ function MessagesBigMediaChat(props) {
   return (
     <React.Fragment>
       {messages.length > 1
-        ? messages
-            .sort((m1, m2) => -(m1.date - m2.date))
-            .map((message, index) => (
-              <React.Fragment key={index}>
-                <Grid item xs={6}>
-                  {isFromProfil(message, 'DEPOSANT') && (
-                    <Message message={message} />
-                  )}
-                </Grid>
-                <Grid item xs={6}>
-                  {isFromProfil(message, 'INSTRUCTEUR') && (
-                    <Message message={message} />
-                  )}
-                </Grid>
-              </React.Fragment>
-            ))
+        ? messages.sort(dateSortDesc).map((message, index) => (
+            <React.Fragment key={index}>
+              <Grid item xs={6}>
+                {isFromProfil(message, 'DEPOSANT') && (
+                  <Message message={message} />
+                )}
+              </Grid>
+              <Grid item xs={6}>
+                {isFromProfil(message, 'INSTRUCTEUR') && (
+                  <Message message={message} />
+                )}
+              </Grid>
+            </React.Fragment>
+          ))
         : messages.length > 0 && <Message message={messages[0]} />}
     </React.Fragment>
   );
