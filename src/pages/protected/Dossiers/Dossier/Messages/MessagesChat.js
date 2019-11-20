@@ -21,20 +21,22 @@ function MessagesBigMediaChat(props) {
   return (
     <React.Fragment>
       {messages.length > 1
-        ? messages.map((message, index) => (
-            <React.Fragment key={index}>
-              <Grid item xs={6}>
-                {isFromProfil(message, 'DEPOSANT') && (
-                  <Message message={message} />
-                )}
-              </Grid>
-              <Grid item xs={6}>
-                {isFromProfil(message, 'INSTRUCTEUR') && (
-                  <Message message={message} />
-                )}
-              </Grid>
-            </React.Fragment>
-          ))
+        ? messages
+            .sort((m1, m2) => -(m1.date - m2.date))
+            .map((message, index) => (
+              <React.Fragment key={index}>
+                <Grid item xs={6}>
+                  {isFromProfil(message, 'DEPOSANT') && (
+                    <Message message={message} />
+                  )}
+                </Grid>
+                <Grid item xs={6}>
+                  {isFromProfil(message, 'INSTRUCTEUR') && (
+                    <Message message={message} />
+                  )}
+                </Grid>
+              </React.Fragment>
+            ))
         : messages.length > 0 && <Message message={messages[0]} />}
     </React.Fragment>
   );
