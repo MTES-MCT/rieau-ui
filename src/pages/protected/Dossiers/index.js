@@ -63,13 +63,16 @@ function Dossiers(props) {
       name: 'statutActuel.id',
       label: 'Statut',
       options: {
-        customBodyRender: (value, tableMeta, updateValue) => (
-          <Chip
-            icon={step(value).icon}
-            label={step(value).libelle}
-            color="secondary"
-          />
-        )
+        customBodyRender: (value, tableMeta, updateValue) =>
+          isSmallMedia ? (
+            step(value).libelle
+          ) : (
+            <Chip
+              icon={step(value).icon}
+              label={step(value).libelle}
+              color="secondary"
+            />
+          )
       }
     }
   ];
